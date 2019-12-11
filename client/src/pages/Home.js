@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import Register from '../components/auth/Register';
 // import ButtonCart from '../components/buttons/ButtonCart';
 // import Title from '../components/Title';
 // <Title title="Nossa Vitrine" />
@@ -13,14 +14,10 @@ import React, { Component, Fragment } from 'react';
 // };
 // pageData.pageDescription = `Conheça nossa vitrine em ${pageData.pageURL}`;
 
-export default class Home extends Component {
-    render() {
-        return (
-            <Fragment>
-                {/*Testing updates only*/}
-                <h1 style={{ display: 'inline-block', background: '#000', color: '#fff' }}>{null}</h1>
-                {/*End Testing updates only*/}
-            </Fragment>
-        );
-    }
-}
+export default function Home() {
+    return(
+        <Fragment>
+            <Register />
+        </Fragment>
+    );
+};

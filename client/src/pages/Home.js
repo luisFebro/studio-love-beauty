@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import Register from '../components/auth/Register';
+import AuthCardHandler from '../components/auth/AuthCardHandler';
+
 // import ButtonCart from '../components/buttons/ButtonCart';
 // import Title from '../components/Title';
 // <Title title="Nossa Vitrine" />
@@ -17,7 +18,7 @@ import Register from '../components/auth/Register';
 export default function Home() {
     return(
         <Fragment>
-            <Register />
+            <AuthCardHandler />
         </Fragment>
     );
 };

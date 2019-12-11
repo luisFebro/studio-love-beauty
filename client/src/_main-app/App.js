@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
-import { loadReCaptcha } from 'react-recaptcha-google';
 // Redux
 import { useStoreDispatch } from 'easy-peasy'; // useStoreState
-import { readAdmin } from '../../redux/actions/adminActions';
+import { readAdmin } from '../redux/actions/adminActions';
 //
 import PrivateRouteAdm from '../components/auth/PrivateRouteAdm';
 import { loadUser } from '../redux/actions/authActions';
@@ -35,15 +34,11 @@ import AllModals from '../components/modals';
 import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
-// BUTTONS
-import WhatsappIcon from '../components/buttons/WhatsappIcon';
-// END BUTTONS
 function App() {
     const dispatch = useStoreDispatch();
     readAdmin(dispatch);
 
     useEffect(() => {
-        // loadReCaptcha();
         dispatch(loadUser(dispatch));
     }, [dispatch]);
 
@@ -65,13 +60,17 @@ function App() {
                 <SnackbarMulti />
                 {/*End Modals and Snackbars*/}
                 <Footer />
-                <WhatsappIcon />
             </ScrollToTop>
         </BrowserRouter>
     );
 }
 
 export default App;
+
+/*
+import WhatsappIcon from '../components/buttons/WhatsappIcon';
+<WhatsappIcon />
+ */
 
 /* n1 Every time the user clicks on the screen,he/she is updated
 // if(isUserAuthenticated) {

@@ -1,43 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
+    <title>Studio Love Beauty</title>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
     <meta
-      name="description"
-      content="Web site created using create-react-app"
+        name='viewport'
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <!-- META SEO -->
+    <meta name="generator" content="www.babadoo.herokuapp.com" />
+    <meta name="author" content="Studio Love Beauty" />
+    <meta name="description" content="Sexshop - lingeries e produtos eróticos com atendimento em Manaus e a todo o Brasil." />
+    <meta name="Keywords" content="salão de beleza, sistema, roraima" />
+    <!-- END META SEO -->
+    <!-- TOOLBAR COLOR - requires valid HTTPS certification to work -->
+    <meta name="theme-color" content="#232528" />
+    <meta name="msapplication-TileColor" content="#232528">
+    <meta name="msapplication-navbutton-color" content="#232528">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#232528">
+    <!-- END TOOLBAR COLOR -->
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+
+    <!-- FACEBOOK OPEN GRAPHS - TESTING -->
+    <meta property="og:title" content="Babadoo - Lingeries e Produtos Eróticos">
+    <meta property="og:image" content="i.imgur.com/9GjtAiW.png">
+    <!-- END FACEBOOK OPEN GRAPHS - TESTING -->
+
+    <!-- BEGIN - FAVICON -->
+   <!--  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#cb1525">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#b91d47">
+    <meta name="msapplication-config" content="favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff"> -->
+
+    <!-- SEMANTIC-UI -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    </link>
+    <!-- END SEMANTIC-UI -->
+
+    <!-- FONT AWESOME -->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <!-- END - FONT AWESOME -->
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Lato|Indie+Flower&display=swap" rel="stylesheet">
+    <!-- END GOOGLE FONTS -->
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"> -->
+
+    <!-- GOOGLE WEBMASTERS -->
+    <!-- search console -->
+    <meta name="google-site-verification" content="nAosncHFtMApONJPqtLZWwDLLuNJesQukVcbAKazoUw" />
+    <!-- END GOOGLE WEBMASTERS -->
+
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <script>
+        window.addEventListener('offline', () => {
+            alert("Você está sem internet. Tente Novamente!");
+        })
+    </script>
   </body>
 </html>

@@ -5,12 +5,15 @@ import App from './_main-app/App';
 import { createStore, StoreProvider } from 'easy-peasy';
 import { easyStore } from './redux/_easyStore';
 import * as serviceWorker from './serviceWorker';
+import { ProductProvider } from './data/contexts/mainContext';
 
 const store = createStore(easyStore);
 
 ReactDOM.render(
     <StoreProvider store={store}>
-        <App />
+        <ProductProvider>
+            <App />
+        </ProductProvider>
     </StoreProvider>,
     document.getElementById('root')
 );

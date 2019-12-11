@@ -3,23 +3,23 @@
     --mainPink: #e84393;
     --mainDark: #232528;
     /*End Primary Colors*/
-    --mainRed: #ed213a;
+    --mainRed: #232528; /*#ed213a */
     --lightRed: #ed213a;
     --mainWhite: #f3f3f3;
     --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
-    --mainYellow: #ffa400;
+    --mainYellow: #e84393;
     /*temp*/
     --mainBlue: #2a2a72;
     --lightBlue: #009ffd;
 }
 
-@font-face {
+/*@font-face {
     font-family: 'Organica 90 Regular';
     font-style: normal;
     font-weight: normal;
     src: local('Organica 90 Regular'), url('Organica 90.woff') format('woff');
 }
-
+*/
 * {
     box-sizing: border-box;
 }

@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 import BreadCrumbs from './BreadCrumbs';
-import CategorySlider from './CategorySlider';
+// import CategorySlider from './CategorySlider';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchCompleteWithImg from '../../SearchCompleteWithImg';
@@ -41,72 +41,7 @@ function Navbar({ history }) {
     // Render
     const showNav = () => (
         <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 text-nav-items">
-            <Link to="/">
-                <img
-                    src="img/babadoo-logo_no-slogon.png"
-                    alt="Logomarca da loja Babadoo Manaus"
-                    width="90rem"
-                    height="90rem"
-                    className="navbar-brand"
-                />
-            </Link>
-            <ul className="navbar-nav align-items-center">
-                <li className="nav-item">
-                    <Link to="/loja" className="nav-link">
-                        {isStoreOpen ? (
-                            <div className="store-container">
-                                <img
-                                    width="70rem"
-                                    height="70rem"
-                                    src={storeIcon.imgSrc}
-                                    alt={storeIcon.altTitle}
-                                    title={storeIcon.altTitle}
-                                />
-                                <div className="store-badge badge badge-danger">Aberto</div>
-                            </div>
-                        ) : (
-                            <span>loja</span>
-                        )}
-                    </Link>
-                </li>
-            </ul>
-            {isUserAuthenticated ? null : (
-                <ul className="animated zoomIn slow navbar-nav ml-3 ml-md-auto">
-                    <li className="nav-item mr-2 pt-2 align-items-center">
-                        <Link to="/favoritos" className="nav-link">
-                            <span>
-                                <i className="fas fa-heart"></i>
-                            </span>
-                        </Link>
-                    </li>
-                </ul>
-            )}
-            <ul className="navbar-nav mr-5 align-items-center">
-                <li className="nav-item">
-                    <Link to="/" className="nav-link">
-                        <span>
-                            <UserDropDown />
-                        </span>
-                    </Link>
-                </li>
-            </ul>
-            <div className="fixed pt-3" style={{ zIndex: 1011 }}>
-                <span>
-                    <i id="searchIcon" className="fas fa-search" onClick={addZoomout}></i>
-                </span>
-            </div>
-            {isSearchOpen ? (
-                <div className="backdrop-medium">
-                    <SearchCompleteWithImg style={{ transition: '.5s' }} className="animated zoomIn" />
-                    <span>
-                        <i
-                            id="closeBtn"
-                            className="fas fa-times-circle animated rotateIn delay-2s"
-                            onClick={closeBtn}
-                        ></i>
-                    </span>
-                </div>
-            ) : null}
+
         </NavWrapper>
     );
 
@@ -116,9 +51,9 @@ function Navbar({ history }) {
         </DivWrapper>
     );
 
-    const showCategorySlider = () => (
-        <CategorySlider />
-    );
+    // const showCategorySlider = () => (
+    //     <CategorySlider />
+    // );
 
     const showBreadCrumbs = history => (
         <BreadCrumbs history={history} />
@@ -134,7 +69,7 @@ function Navbar({ history }) {
         <Fragment>
             {showNav()}
             {showMenuLogin()}
-            {showCategorySlider()}
+            {/*showCategorySlider()*/}
             {showBreadCrumbs(history)}
             {showKeyAccessDashboard()}
         </Fragment>
@@ -142,6 +77,75 @@ function Navbar({ history }) {
 }
 
 export default withRouter(Navbar); // n1
+
+/*
+<Link to="/">
+    <img
+        src="img/babadoo-logo_no-slogon.png"
+        alt="Logomarca da loja Babadoo Manaus"
+        width="90rem"
+        height="90rem"
+        className="navbar-brand"
+    />
+</Link>
+<ul className="navbar-nav align-items-center">
+    <li className="nav-item">
+        <Link to="/loja" className="nav-link">
+            {isStoreOpen ? (
+                <div className="store-container">
+                    <img
+                        width="70rem"
+                        height="70rem"
+                        src={storeIcon.imgSrc}
+                        alt={storeIcon.altTitle}
+                        title={storeIcon.altTitle}
+                    />
+                    <div className="store-badge badge badge-danger">Aberto</div>
+                </div>
+            ) : (
+                <span>loja</span>
+            )}
+        </Link>
+    </li>
+</ul>
+{isUserAuthenticated ? null : (
+    <ul className="animated zoomIn slow navbar-nav ml-3 ml-md-auto">
+        <li className="nav-item mr-2 pt-2 align-items-center">
+            <Link to="/favoritos" className="nav-link">
+                <span>
+                    <i className="fas fa-heart"></i>
+                </span>
+            </Link>
+        </li>
+    </ul>
+)}
+<ul className="navbar-nav mr-5 align-items-center">
+    <li className="nav-item">
+        <Link to="/" className="nav-link">
+            <span>
+                <UserDropDown />
+            </span>
+        </Link>
+    </li>
+</ul>
+<div className="fixed pt-3" style={{ zIndex: 1011 }}>
+    <span>
+        <i id="searchIcon" className="fas fa-search" onClick={addZoomout}></i>
+    </span>
+</div>
+{isSearchOpen ? (
+    <div className="backdrop-medium">
+        <SearchCompleteWithImg style={{ transition: '.5s' }} className="animated zoomIn" />
+        <span>
+            <i
+                id="closeBtn"
+                className="fas fa-times-circle animated rotateIn delay-2s"
+                onClick={closeBtn}
+            ></i>
+        </span>
+    </div>
+) : null}
+ */
 
 // STYLES
 const DivWrapper = styled.div`

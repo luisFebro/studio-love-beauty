@@ -3,7 +3,8 @@ import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { phoneMaskBr } from '../../utils/validation/masks/phoneMaskBr';
+import phoneMaskBr from '../../utils/validation/masks/phoneMaskBr';
+import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
 // import ReCaptchaCheckbox from "../ReCaptcha";
 // Redux
 import { useStoreDispatch } from 'easy-peasy';
@@ -124,6 +125,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                 onChange={handleChange(setData, data)}
                 error={errorCpf ? true : false}
                 name="cpf"
+                onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
                 value={cpf}
                 type="text"
                 label="Insira seu CPF"

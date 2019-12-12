@@ -3,7 +3,7 @@
 // onblur="mascaraDeTelefone(this)"
 // onfocus="tiraHifen(this)"
 
-function phoneMaskBr(telefone){
+export default function phoneMaskBr(telefone){
     const isNotString = typeof telefone !== "string";
     if(isNotString) {
         telefone = telefone.toString().trim().replace(/\s/g, '');
@@ -53,5 +53,3 @@ function phoneMaskBr(telefone){
 //     console.log(telefone);
 //     return telefone;
 // }
-
-export { phoneMaskBr }

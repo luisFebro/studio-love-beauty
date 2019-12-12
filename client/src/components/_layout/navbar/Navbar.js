@@ -39,9 +39,79 @@ function Navbar({ history }) {
     };
 
     // Render
+    const showLogo = () => (
+        <Link to="/">
+            <img
+                src="img/official-logo.jpg"
+                alt="Logomarca"
+                width="170rem"
+                height="90rem"
+                className="navbar-brand animated pulse"
+                style={{ animationIterationCount: '3'}}
+            />
+        </Link>
+    );
+
+    const showStoreBtn = () => (
+        <ul className="navbar-nav align-items-center">
+            <li className="nav-item">
+                <Link to="/loja" className="nav-link">
+                    {isStoreOpen ? (
+                        <div className="store-container">
+                            <img
+                                width="70rem"
+                                height="70rem"
+                                src={storeIcon.imgSrc}
+                                alt={storeIcon.altTitle}
+                                title={storeIcon.altTitle}
+                            />
+                            <div className="store-badge badge badge-danger">Aberto</div>
+                        </div>
+                    ) : (
+                        <span>loja</span>
+                    )}
+                </Link>
+            </li>
+        </ul>
+    );
+
+    const showAccountBtn = () => (
+        <Fragment>
+            {isUserAuthenticated ?
+                null : (
+                <ul
+                    className="animated zoomIn slow navbar-nav ml-3 mr-3 ml-md-auto align-items-center"
+                >
+                    <li className="nav-item">
+                        <Link to="/" className="nav-link">
+                            <span>
+                                Acessar conta
+                            </span>
+                        </Link>
+                    </li>
+                </ul>
+            )}
+        </Fragment>
+    );
+
+    const showBookingBtn = () => (
+        <ul className="navbar-nav mr-3 align-items-center">
+            <li className="nav-item">
+                <Link to="/" className="nav-link">
+                    <span>
+                        Agendar
+                    </span>
+                </Link>
+            </li>
+        </ul>
+    );
+    // Render
     const showNav = () => (
         <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 text-nav-items">
-
+            {showLogo()}
+            {showStoreBtn()}
+            {showAccountBtn()}
+            {showBookingBtn()}
         </NavWrapper>
     );
 
@@ -79,55 +149,7 @@ function Navbar({ history }) {
 export default withRouter(Navbar); // n1
 
 /*
-<Link to="/">
-    <img
-        src="img/babadoo-logo_no-slogon.png"
-        alt="Logomarca da loja Babadoo Manaus"
-        width="90rem"
-        height="90rem"
-        className="navbar-brand"
-    />
-</Link>
-<ul className="navbar-nav align-items-center">
-    <li className="nav-item">
-        <Link to="/loja" className="nav-link">
-            {isStoreOpen ? (
-                <div className="store-container">
-                    <img
-                        width="70rem"
-                        height="70rem"
-                        src={storeIcon.imgSrc}
-                        alt={storeIcon.altTitle}
-                        title={storeIcon.altTitle}
-                    />
-                    <div className="store-badge badge badge-danger">Aberto</div>
-                </div>
-            ) : (
-                <span>loja</span>
-            )}
-        </Link>
-    </li>
-</ul>
-{isUserAuthenticated ? null : (
-    <ul className="animated zoomIn slow navbar-nav ml-3 ml-md-auto">
-        <li className="nav-item mr-2 pt-2 align-items-center">
-            <Link to="/favoritos" className="nav-link">
-                <span>
-                    <i className="fas fa-heart"></i>
-                </span>
-            </Link>
-        </li>
-    </ul>
-)}
-<ul className="navbar-nav mr-5 align-items-center">
-    <li className="nav-item">
-        <Link to="/" className="nav-link">
-            <span>
-                <UserDropDown />
-            </span>
-        </Link>
-    </li>
-</ul>
+//SEARCH BUTTON
 <div className="fixed pt-3" style={{ zIndex: 1011 }}>
     <span>
         <i id="searchIcon" className="fas fa-search" onClick={addZoomout}></i>
@@ -200,7 +222,7 @@ const NavWrapper = styled.nav`
     & .navbar-nav span i:hover,
     #searchIcon:hover {
         transform: scale(1.1);
-        filter: drop-shadow(0.001em 0.1em 0.1em var(--mainYellow));
+        filter: drop-shadow(0.001em 0.2em 0.1em var(--mainYellow));
     }
 `;
 

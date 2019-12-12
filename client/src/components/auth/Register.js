@@ -267,9 +267,12 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                 {showForm()}
                 {showButtonActions()}
             </Card>
-            <div style={{whiteSpace: 'wrap'}}>
-                {JSON.stringify(data)}
-            </div>
         </div>
     );
 }
+
+/*
+<div style={{whiteSpace: 'wrap'}}>
+    {JSON.stringify(data)}
+</div>
+ */

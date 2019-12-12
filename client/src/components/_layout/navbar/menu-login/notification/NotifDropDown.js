@@ -132,12 +132,12 @@ export default function NotifDropDown() {
         <div>
             {/*Notification Button*/}
             <IconButton href="" className="no-outline" style={{color: 'var(--mainWhite)'}} onClick={handleClick}>
-                <BorderedBadge className="animated bounce slow" badgeContent={allMessagesList.length}>
+                <BorderedBadge className="animated bounce slow" badgeContent={null/*allMessagesList.length*/}>
                     <NotificationsIcon className="icon-svg" />
                 </BorderedBadge>
             </IconButton>
             <StyledMenu id="customized-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-                {allMessagesList.length === 0 ? (
+                {/*allMessagesList.length === 0*/true ? (
                     <section>
                         <div className="pb-3 text-center text-sub-container">Sem notificações</div>
                         <div>
@@ -148,8 +148,8 @@ export default function NotifDropDown() {
                     <section>
                         <div>
                             <h2 className="text-center text-sub-container pb-3">Suas Notificações</h2>
-                            <p className="text-sub-container">Total: {allMessagesList.length}</p>
-                            <MessagesList data={allMessagesList} />
+                            <p className="text-sub-container">Total: {/*allMessagesList.length*/}</p>
+                            <MessagesList data={null/*allMessagesList*/} />
                         </div>
                         <div>
                             {userName !== 'admin' ? SendMsgToStoreBtn(dispatch, allUsers, _idUser, userName) : null}

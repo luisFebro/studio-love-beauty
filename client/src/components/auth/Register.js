@@ -1,10 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import moment from 'moment';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from "@date-io/moment";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import phoneMaskBr from '../../utils/validation/masks/phoneMaskBr';
 import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
+import getDayMonthBr from '../../utils/dates/getDayMonthBr';
 // import ReCaptchaCheckbox from "../ReCaptcha";
 // Redux
 import { useStoreDispatch } from 'easy-peasy';
@@ -25,6 +27,8 @@ import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import CakeIcon from '@material-ui/icons/Cake';
 import Card from '@material-ui/core/Card';
 import ButtonMulti from '../buttons/material-ui/ButtonMulti';
+
+// moment.locale = "pt-br";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -56,6 +60,10 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
     const dispatch = useStoreDispatch();
 
     const classes = useStyles();
+
+    useEffect(() => {
+        setData({ ...data, birthday: getDayMonthBr(selectedDate) })
+    }, [selectedDate])
 
     const clearData = () => {
         clearForm(setData, data);
@@ -159,24 +167,30 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                   ),
                 }}
             />
-            <TextField
-                required
-                margin="dense"
-                onChange={handleChange(setData, data)}
-                error={errorBirthday ? true : false}
-                name="birthday"
-                value={birthday}
-                type="date"
-                label="Quando é seu aniversário?"
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CakeIcon />
-                    </InputAdornment>
-                  ),
-                }}
-            />
+            <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>
+                <DatePicker
+                    required
+                    variant="inline"
+                    margin="dense"
+                    error={errorBirthday ? true : false}
+                    openTo="month"
+                    autoOk={true}
+                    disableToolbar={true}
+                    placeholder="Dia e Mês"
+                    views={["month", "date"]}
+                    label="Quando é o seu aniversário?"
+                    name="birthday"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <CakeIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                />
+            </MuiPickersUtilsProvider>
             <TextField
                 required
                 margin="dense"
@@ -236,7 +250,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
             <div className="text-center my-3 font-weight-bold">
                 <span style={{color: 'green'}}>
                     <i className="fas fa-lock"></i>
-                </span> Ambiente seguro!<br />
+                </span>   Ambiente seguro!<br />
                 Envio de dados encriptografados<br />
                 e mantidos de forma privada.
             </div>
@@ -277,17 +291,6 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                 {showTitle()}
                 {showForm()}
                 {showButtonActions()}
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                        variant="inline"
-                        openTo="year"
-                        views={["year", "month"]}
-                        label="Year and Month"
-                        helperText="Start from year selection"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                    />
-                </MuiPickersUtilsProvider>
             </Card>
         </div>
     );

@@ -42,6 +42,11 @@ exports.loadAuthUser = (req, res) => {
 
 exports.register = (req, res) => {
     let { name, email, cpf, birthday, phone, maritalStatus } = req.body;
+
+    if(maritalStatus === "selecione estado civil") {
+        maritalStatus = "cliente não informou";
+    }
+
     const newUser = new User({
         name,
         email,
@@ -51,8 +56,7 @@ exports.register = (req, res) => {
         maritalStatus
     });
 
-    maritalStatus === "selecione estado civil" ? maritalStatus = "cliente não informou" : null;
-    console.log(maritalStatus);
+
     newUser.save()
     .then(user => {
         jwt.sign(

@@ -3,7 +3,7 @@ function validatePhone(phone) { // n1
     return regEx.test(phone);
 }
 
-// module.exports = validatePhone;
+module.exports = validatePhone;
 
 // reference: https://pt.stackoverflow.com/questions/46672/como-fazer-uma-express%C3%A3o-regular-para-telefone-celular
 /*

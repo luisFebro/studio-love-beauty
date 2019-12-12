@@ -229,6 +229,11 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
               <MenuItem value={"Divorciado(a)"}>Divorciado(a)</MenuItem>
               <MenuItem value={"Viúva(a)"}>Viúva(a)</MenuItem>
             </Select>
+            <div className="text-center my-3 font-weight-bold" style={{color: 'green'}}>
+                <i className="fas fa-lock"></i> Ambiente seguro!<br />
+                Envio de dados encriptografados<br />
+                e mantidos de forma privada.
+            </div>
         </form>
     );
 
@@ -259,6 +264,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     return (
         <div
+            className="animated rotateInDownLeft slower delay-3s"
             ref={refRegister}
             style={{ display: !isLoginOpen ? "block" : "none" }}
         >

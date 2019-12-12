@@ -25,16 +25,21 @@ const msg = (typeAndMsgName, customized = 'NeedCustomWord', options) => {
     error.anyFieldFilled = "Você precisa preencher todos os campos";
     error.noDigitFound = 'Sua senha deve conter pelo menos um dígito';
     error.noName = 'Por favor, insira o seu nome';
-    error.noEmail = 'Por favor, insira o seu email';
-    error.noEmailOrName = 'Por favor, insira o seu email ou nome';
     error.noPassword = 'Por favor, insira uma senha';
+    error.noCpf = 'Por favor, insira o seu CPF';
+    error.noBirthday = 'Por favor, insira o DIA e MÊS do seu aniversário';
+    error.noEmail = 'Por favor, insira o seu email';
+    error.noPhone = 'Por favor, insira um número para contato';
+    error.noEmailOrName = 'Por favor, insira o seu email ou nome';
     error.noReCaptchaToken = "Último passo. Clique na caixa do Google ReCaptcha"
     error.notFound = "Sem registro. O usuário ou email não foi encontrado";
     error.notEnoughCharacters = 'Sua senha deve conter pelo menos 6 dígitos';
+    error.notRegistedCpf = "O CPF informado ainda não possui cadastro";
     error.invalidEmail = "Email Inválido. Tente outro.";
     error.invalidCredentials = "Credenciais Inválidas. Se for o caso, tente colocar em minúsculas";
     error.userAlreadyRegistered = 'Esse Nome de usuário já foi registrado. Tente um outro.';
     error.emailAlreadyRegistered = 'Esse Email já foi registrado. Tente um outro.';
+    error.cpfAlreadyRegistered = 'Esse CPF já foi registrado. Tente um outro.';
     // END MESSAGES
 
     foundMsg = authMsgs[type][msgName];

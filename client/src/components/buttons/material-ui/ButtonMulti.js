@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 ButtonMulti.propTypes = {
     children: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
     iconFontAwesome: PropTypes.string,
     variant: PropTypes.oneOf(['link', 'contained', 'outlined']),
     props: PropTypes.shape({

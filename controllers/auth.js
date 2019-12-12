@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const { msgG } = require('./_msgs/globalMsgs');
 const { msg } = require('./_msgs/auth');
 
@@ -34,7 +33,7 @@ exports.mwAuth = (req, res, next) => { // n1
 exports.loadAuthUser = (req, res) => {
     const userId = req.authObj.id;
     User.findById(userId)
-        .select('-password')
+        .select('-cpf')
         .exec((err, profile) => {
             if(err) return res.status(500).json(msgG('error.systemError', err))
             res.json({ profile });
@@ -42,36 +41,37 @@ exports.loadAuthUser = (req, res) => {
 }
 
 exports.register = (req, res) => {
-    const { name, email, password, registeredBy } = req.body;
-
+    let { name, email, cpf, birthday, phone, maritalStatus } = req.body;
     const newUser = new User({
         name,
         email,
-        password,
-        registeredBy
+        cpf,
+        birthday,
+        phone,
+        maritalStatus
     });
 
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) return res.status(500).json(msgG('error.systemError', err));
-            newUser.password = hash;
-            newUser.save()
-            .then(user => {
-                jwt.sign({ id: user._id },
-                    process.env.JWT_SECRET, { expiresIn: '30d' }, //30 days - "expiresIn" should be a number of seconds or string that repesents a timespan eg: "1d", "20h",
-                    (err, token) => {
-                        if(err) return res.status(500).json(msgG('error.systemError', err));
-                        const { _id } = user
-                        res.json({
-                            token,
-                            authUserId: _id,
-                            msg: msg('ok.successRegister', 'onlyMsg')
-                        });
-                    }
-                )
-            });
-        })
-    })
+    maritalStatus === "selecione estado civil" ? maritalStatus = "cliente não informou" : null;
+    console.log(maritalStatus);
+    newUser.save()
+    .then(user => {
+        jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '30d' }, //30 days - "expiresIn" should be a number of seconds or string that repesents a timespan eg: "1d", "20h",
+            (err, token) => {
+                if(err) return res.status(500).json(msgG('error.systemError', err));
+                const { _id } = user
+                res.json({
+                    token,
+                    authUserId: _id,
+                    msg: msg('ok.successRegister', 'onlyMsg')
+                });
+            }
+        )
+    });
+
+
 }
 
 exports.login = (req, res) => {
@@ -80,22 +80,20 @@ exports.login = (req, res) => {
     const registeredPass = req.profile.password;
     const expireAuthDays = needKeepLoggedIn ? '30d' : '7d';
 
-    bcrypt.compare(password, registeredPass)
-    .then(isMatch => {
-        if(!isMatch) return res.status(400).json(msg('error.invalidCredentials'));
+    jwt.sign(
+        { id: _id },
+        process.env.JWT_SECRET,
+        { expiresIn: expireAuthDays }, //7 days - "expiresIn" should be a number of seconds or string that repesents a timespan eg: "1d", "20h",
+        (err, token) => {
+            if(err) return res.status(500).json(msgG('error.systemError', err));
+            res.json({
+                token,
+                authUserId: _id,
+                msg: msg('ok.welcomeBack', name, 'onlyMsg')
+            });
+        }
+    )
 
-        jwt.sign({ id: _id },
-            process.env.JWT_SECRET, { expiresIn: expireAuthDays }, //7 days - "expiresIn" should be a number of seconds or string that repesents a timespan eg: "1d", "20h",
-            (err, token) => {
-                if(err) return res.status(500).json(msgG('error.systemError', err));
-                res.json({
-                    token,
-                    authUserId: _id,
-                    msg: msg('ok.welcomeBack', name, 'onlyMsg')
-                });
-            }
-        )
-    })
 }
 
 exports.changePassword = (req, res) => {

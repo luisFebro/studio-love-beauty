@@ -5,6 +5,7 @@ import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
 import { useStoreDispatch } from 'easy-peasy'; // useStoreState
 import { readAdmin } from '../redux/actions/adminActions';
+import { loadReCaptcha } from 'react-recaptcha-google';
 //
 import PrivateRouteAdm from '../components/auth/PrivateRouteAdm';
 import { loadUser } from '../redux/actions/authActions';
@@ -39,6 +40,7 @@ function App() {
     readAdmin(dispatch);
 
     useEffect(() => {
+        loadReCaptcha();
         dispatch(loadUser(dispatch));
     }, [dispatch]);
 

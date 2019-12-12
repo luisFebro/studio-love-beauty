@@ -6,6 +6,10 @@ const dbCommonFieldsTrans = {
     user: 'usuário',
     email: 'email',
     whatsapp: 'whatsapp',
+    cpf: 'cpf',
+    birthday: "data de aniversário",
+    phone: "contato",
+    maritalStatus: "estado civil"
 }
 
 const findAndConvertFieldNameToPtBr = key => {
@@ -16,7 +20,7 @@ const findAndConvertFieldNameToPtBr = key => {
 }
 
 /**
- * this function is invoked only when there is certainly an error and always return one error message.
+ * return an obj of booleans indicating whether a message (portuguese) got a certain word.
  * @param  {String} msg
  * @param  {Array} fields array with all obj keys
  * @return {Object}

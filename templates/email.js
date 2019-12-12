@@ -7,13 +7,15 @@ exports.showConfirmTemplate = (reqEmail, reqBody) => {
         html: `
             <center>
                 <header">
-                     <img style="box-shadow: 0 19px 38px rgba(0,0,0,0.20), 0 15px 12px rgba(0,0,0,0.12);" src="https://imgur.com/9GjtAiW.png" width="200px" height="200px"/>
+                     <img
+                        style="box-shadow: 0 19px 38px rgba(0,0,0,0.20), 0 15px 12px rgba(0,0,0,0.12);"
+                        src="https://i.imgur.com/XdDK2cy.png" width="500px" height="200px"/>
                 </header>
             </center>
             <h1><center>${bizSlogon}</center></h1>
-            <h3>Tenha acesso a todos as funcionalidades da ${bizName}</h3>
-            <h3>Para ativar sua conta, por favor verifique seu endereço de email:</h3>
-            <h4><a href=${authLink}>CONFIRMAR SEU EMAIL</a></h4>
+            <h3>Seja bem-vindo(a) aqui na ${bizName}</h3>
+            <h3>Você está recebendo este email porque você foi cadastrado(a) com sucesso!</h3>
+            <h3>Visite nosso Instagram: <a href=${authLink}></a>${authLink}</h3>
             <h4>Ou acesse pelo link: <a href=${authLink}>${authLink}</a></h4>
             <footer>
                 <h5>Se você tiver qualquer dúvida, entre em contato com nosso <strong>Whatsapp ${bizWhatsapp}</strong> ou responda a esse email que ficaremos contentes em ajudar.</h5>

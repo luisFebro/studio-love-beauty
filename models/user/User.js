@@ -26,49 +26,31 @@ const data = {
         maxlength: 40,
         required: true,
         lowercase: false,
-        unique: true
     },
     email: {
         type: String,
         required: true,
-        unique: true
     },
-    password: {
+    cpf:{
         type: String,
-        required: true
+        unique: true,
     },
-    picture: {
+    phone: {
         type: String,
-        default: ""
     },
-    favoriteList: {
-        type: Array,
-        default: []
-    },
-    inCartList: {
-        type: Array,
-        default: []
-    },
-    messageList: {
-        type: Array,
-        default: []
-    },
-    couponList: {
-        type: Array,
-        default: []
-    },
-    registeredBy: {
+    birthday: {
         type: String,
-        default: 'email',
     },
-    isUserConfirmed: {
-        type: Boolean,
-        default: false,
+    maritalStatus: {
+        type: String,
+        default: "Não selecionado"
     },
-    tempAuthUserToken: UserTokenSchema
 }
 
 const userSchema = new Schema(data, { timestamps: true });
 module.exports = mongoose.model('User', userSchema, collectionName);
 
 
+/* COMMENTS
+n1: LESSON: JSON does not accept numbers which starts with 0
+*/

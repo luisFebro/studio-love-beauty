@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import ToggleVisibilityPassword from '../forms/fields/ToggleVisibilityPassword';
-import ReCaptchaInvisible from "../ReCaptcha";
+import ReCaptchaCheckbox from "../ReCaptcha";
 // Helpers
 import detectErrorField from '../../utils/validation/detectErrorField';
 import clearForm from '../../utils/form/use-state/clearForm';
@@ -141,7 +141,7 @@ export default function ModalRegister() {
     // Form
     const showReCaptcha = () => (
         <div className="container-center mt-3">
-            <ReCaptchaInvisible setToken={setData} data={data} />
+            <ReCaptchaCheckbox setToken={setData} data={data} />
         </div>
     );
 

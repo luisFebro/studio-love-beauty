@@ -4,11 +4,11 @@ import { ReCaptcha } from 'react-recaptcha-google';
 import PropTypes from 'prop-types';
 
 ReCaptcha.propTypes = {
-    setToken: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired,
+    setToken: PropTypes.func,
+    data: PropTypes.object,
 }
 
-class ReCaptchaInvisible extends Component {
+class ReCaptchaCheckbox extends Component {
   constructor(props, context) {
     super(props, context);
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
@@ -50,4 +50,4 @@ class ReCaptchaInvisible extends Component {
   };
 };
 
-export default ReCaptchaInvisible;
+export default ReCaptchaCheckbox;

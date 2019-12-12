@@ -71,9 +71,9 @@ export default function MenuLogin() {
                         <Link to="/" className="px-1" id="logo-login-wrapper" style={{ display: 'none' }}>
                             <img
                                 id="logo-login-img"
-                                src="img/babadoo-logo_no-slogon-550.jpg"
-                                alt="Logomarca da loja Babadoo Manaus"
-                                width="50rem"
+                                src="img/official-logo.jpg"
+                                alt="Logomarca da Studio Love Beauty"
+                                width="120rem"
                                 height="50rem"
                                 className="navbar-brand"
                             />
@@ -107,20 +107,6 @@ export default function MenuLogin() {
                         </ul>
                         <ul className="navbar-nav ml-3">
                             <li className="nav-item">
-                                <Link to="/favoritos" className="nav-link">
-                                    <span style={{ position: 'relative' }}>
-                                        <BorderedBadge
-                                            className="animated bounce slow"
-                                            badgeContent={favoriteList && favoriteList.length}
-                                        >
-                                            <i className="fas fa-heart animated bounce slow"></i>
-                                        </BorderedBadge>
-                                    </span>
-                                </Link>
-                            </li>
-                        </ul>
-                        <ul className="navbar-nav ml-3">
-                            <li className="nav-item">
                                 <div className="nav-link">
                                     <span>
                                         <NotifDropDown />
@@ -130,13 +116,6 @@ export default function MenuLogin() {
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <div className="nav-link" style={{ position: 'relative' }}>
-                                    <i className="fab fa-whatsapp mr-2 pt-0"></i>
-                                    <span>{bizWhatsapp}</span>
-                                    <span style={{ position: 'absolute', top: '0.1rem', right: '2.7rem' }}>
-                                        Dúvidas?
-                                    </span>
-                                </div>
                                 <button
                                     style={{ cursor: 'pointer', padding: '0 4px', border: 'none' }}
                                     className="logout-btn badge badge-danger"
@@ -145,7 +124,7 @@ export default function MenuLogin() {
                                         logout(dispatch);
                                     }}
                                 >
-                                    sair
+                                    SAIR
                                 </button>
                             </li>
                         </ul>

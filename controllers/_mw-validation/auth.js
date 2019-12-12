@@ -1,10 +1,12 @@
 const User = require('../../models/user');
 const validateEmail = require('../../utils/validation/validateEmail');
+const CPF = require('../../utils/validation/validateCpf');
 const { msg } = require('../_msgs/auth');
 const { msgG } = require('../_msgs/globalMsgs');
 
 exports.mwValidateRegister = (req, res, next) => {
     const { name, email, cpf, birthday, phone } = req.body;
+    const isCpfValid = new CPF().validate(cpf);
 
     User.findOne({ cpf })
     .then(user => {
@@ -16,6 +18,7 @@ exports.mwValidateRegister = (req, res, next) => {
         if(!phone) return res.status(400).json(msg('error.noPhone'));
         if(!birthday) return res.status(400).json(msg('error.noBirthday'));
         if(!validateEmail(email)) return res.status(400).json(msg('error.invalidEmail'));
+        if(!isCpfValid) return res.status(400).json(msg('error.invalidCpf'));
         //if(reCaptchaToken) return res.status(400).json(msg('error.noReCaptchaToken'));
         next();
     })
@@ -24,10 +27,12 @@ exports.mwValidateRegister = (req, res, next) => {
 
 exports.mwValidateLogin = (req, res, next) => {
     const { cpf } = req.body;
+    const isCpfValid = new CPF().validate(cpf);
 
     User.findOne({ cpf })
     .then(user => {
         if(!cpf) return res.status(400).json(msg('error.noCpf'));
+        if(!isCpfValid) return res.status(400).json(msg('error.invalidCpf'));
         if(!user) return res.status(400).json(msg('error.notRegistedCpf'));
         req.profile = user;
         next();

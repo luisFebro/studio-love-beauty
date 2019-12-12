@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { DatePicker } from "@material-ui/pickers";
+import React, { Fragment, useState, useRef } from 'react';
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 // import ReCaptchaCheckbox from "../ReCaptcha";
@@ -30,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Register({ setIsLoginOpen, isLoginOpen }) {
+    const [selectedDate, handleDateChange] = useState(new Date());
     const [data, setData] = useState({
         name: '',
         email: '',
@@ -229,8 +231,10 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
               <MenuItem value={"Divorciado(a)"}>Divorciado(a)</MenuItem>
               <MenuItem value={"Viúva(a)"}>Viúva(a)</MenuItem>
             </Select>
-            <div className="text-center my-3 font-weight-bold" style={{color: 'green'}}>
-                <i className="fas fa-lock"></i> Ambiente seguro!<br />
+            <div className="text-center my-3 font-weight-bold">
+                <span style={{color: 'green'}}>
+                    <i className="fas fa-lock"></i>
+                </span> Ambiente seguro!<br />
                 Envio de dados encriptografados<br />
                 e mantidos de forma privada.
             </div>
@@ -272,6 +276,17 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                 {showTitle()}
                 {showForm()}
                 {showButtonActions()}
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                        variant="inline"
+                        openTo="year"
+                        views={["year", "month"]}
+                        label="Year and Month"
+                        helperText="Start from year selection"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                    />
+                </MuiPickersUtilsProvider>
             </Card>
         </div>
     );

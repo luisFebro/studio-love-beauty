@@ -138,7 +138,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                 type="text"
                 label="Insira seu CPF"
                 autoComplete="cpf"
-                helperText="Você acessa sua conta pelo seu CPF."
+                helperText="Digite apenas números."
                 fullWidth
                 InputProps={{
                   startAdornment: (

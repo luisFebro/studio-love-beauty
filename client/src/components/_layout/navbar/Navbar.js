@@ -68,7 +68,7 @@ function Navbar({ history }) {
                             <div className="store-badge badge badge-danger">Aberto</div>
                         </div>
                     ) : (
-                        <span>loja</span>
+                        <span className="animated zoomIn slow">loja</span>
                     )}
                 </Link>
             </li>
@@ -80,7 +80,7 @@ function Navbar({ history }) {
             {isUserAuthenticated ?
                 null : (
                 <ul
-                    className="animated zoomIn slow navbar-nav ml-3 mr-3 ml-md-auto align-items-center"
+                    className="animated zoomIn slow navbar-nav ml-3 ml-md-auto align-items-center"
                 >
                     <li className="nav-item">
                         <Link to="/" className="nav-link">
@@ -95,7 +95,7 @@ function Navbar({ history }) {
     );
 
     const showBookingBtn = () => (
-        <ul className="navbar-nav mr-3 align-items-center">
+        <ul className="animated zoomIn slow navbar-nav ml-3 mr-3 align-items-center">
             <li className="nav-item">
                 <Link to="/" className="nav-link">
                     <span>
@@ -107,7 +107,7 @@ function Navbar({ history }) {
     );
     // Render
     const showNav = () => (
-        <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 text-nav-items">
+        <NavWrapper className="navbar navbar-expand-sm navbar-dark text-nav-items">
             {showLogo()}
             {showStoreBtn()}
             {showAccountBtn()}

@@ -264,7 +264,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     return (
         <div
-            className="animated rotateInDownLeft slower delay-3s"
+            className="animated slideInLeft fast"
             ref={refRegister}
             style={{ display: !isLoginOpen ? "block" : "none" }}
         >

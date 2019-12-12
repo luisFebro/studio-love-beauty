@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import NotifDropDown from './notification/NotifDropDown';
 import Badge from '@material-ui/core/Badge';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { logout } from '../../../../redux/actions/authActions';
@@ -12,17 +12,17 @@ import truncateWords from '../../../../utils/string/truncateWords';
 // End Utils
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { bizWhatsapp } from '../../../../data/dataBiz';
+// import { bizWhatsapp } from '../../../../data/dataBiz';
 
-const BorderedBadge = withStyles(theme => ({
-    badge: {
-        right: 1,
-        top: 7,
-        border: `2px solid var(--mainDark)`,
-        // padding: '0 4px',
-        backgroundColor: 'var(--mainRed)'
-    }
-}))(Badge);
+// const BorderedBadge = withStyles(theme => ({
+//     badge: {
+//         right: 1,
+//         top: 7,
+//         border: `2px solid var(--mainDark)`,
+//         // padding: '0 4px',
+//         backgroundColor: 'var(--mainRed)'
+//     }
+// }))(Badge);
 
 export default function MenuLogin() {
     // Redux
@@ -30,7 +30,7 @@ export default function MenuLogin() {
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
         currUser: state.userReducer.cases.currentUser,
     }));
-    const { name, picture, favoriteList } = currUser;
+    const { name, picture } = currUser; //favoriteList
 
     const dispatch = useStoreDispatch();
     // End Redux

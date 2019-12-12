@@ -9,7 +9,7 @@ import ButtonMulti from '../../../../buttons/material-ui/ButtonMulti';
 import {useStoreState, useStoreDispatch} from 'easy-peasy';
 import {findAnItem} from '../../../../../redux/actions/globalActions';
 import {showModalTextField} from '../../../../../redux/actions/modalActions';
-import MessagesList from './MessagesList';
+// import MessagesList from './MessagesList';
 // End Redux
 // MATERIAL UI
 // menu composition
@@ -149,7 +149,7 @@ export default function NotifDropDown() {
                         <div>
                             <h2 className="text-center text-sub-container pb-3">Suas Notificações</h2>
                             <p className="text-sub-container">Total: {/*allMessagesList.length*/}</p>
-                            <MessagesList data={null/*allMessagesList*/} />
+                            {/*<MessagesList data={null/*allMessagesList*/} />*/}
                         </div>
                         <div>
                             {userName !== 'admin' ? SendMsgToStoreBtn(dispatch, allUsers, _idUser, userName) : null}

@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import MenuItem from '@material-ui/core/MenuItem';
@@ -63,7 +62,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     useEffect(() => {
         setData({ ...data, birthday: getDayMonthBr(selectedDate) })
-    }, [selectedDate])
+    }, [selectedDate, data])
 
     const clearData = () => {
         clearForm(setData, data);

@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 import BreadCrumbs from './BreadCrumbs';
+// import ShowImgOrSkeleton from '../../ShowImgOrSkeleton';
 // import CategorySlider from './CategorySlider';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -14,6 +15,7 @@ import { dataWorkingHour } from '../../../utils/GetWorkingHour';
 
 const isStoreOpen = dataWorkingHour[1];
 function Navbar({ history }) {
+    // const [showSkeleton, setShowSkeleton] = useState(true);
     const [isSearchOpen, setSearchOpen] = useState(false);
     const { isUserAuthenticated } = useStoreState(state => state.authReducer.cases);
 
@@ -147,6 +149,18 @@ function Navbar({ history }) {
 }
 
 export default withRouter(Navbar); // n1
+
+/*
+SKELETON
+<ShowImgOrSkeleton
+    setStatus={setShowSkeleton}
+    status={showSkeleton}
+    skeletonOpt={{
+        width: "70rem";
+        height: "70rem";
+    }}
+/>
+ */
 
 /*
 //SEARCH BUTTON

@@ -1,4 +1,4 @@
-// Referenece: https://github.com/tome-vilela/geracpf/blob/master/jss/all.js
+// Referenece: geracpf.com || https://github.com/tome-vilela/geracpf/blob/master/jss/all.js
 // usage: new CPF().validate(cpf)
 function CPF() {
     this.validate = function (cpf) {

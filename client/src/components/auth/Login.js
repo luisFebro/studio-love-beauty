@@ -83,7 +83,7 @@ export default function Login({ setIsLoginOpen, isLoginOpen }) {
     return (
         <div
             className='animated slideInRight fast'
-            style={{    display: isLoginOpen ? "block" : "none"}}
+            style={{ display: isLoginOpen ? "block" : "none" }}
         >
             <Card className={classes.card}>
                 {showTitle()}

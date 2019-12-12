@@ -1,8 +1,9 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState } from 'react';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { phoneMaskBr } from '../../utils/validation/masks/phoneMaskBr';
 // import ReCaptchaCheckbox from "../ReCaptcha";
 // Redux
 import { useStoreDispatch } from 'easy-peasy';
@@ -53,7 +54,6 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     const dispatch = useStoreDispatch();
 
-    const refRegister = useRef(null);
     const classes = useStyles();
 
     const clearData = () => {
@@ -91,8 +91,6 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
     };
 
     const changeToLogin = () => {
-        const div = refRegister.current;
-        div.style.className = "animated zoomOut" // Not working animation yet
         setIsLoginOpen(!isLoginOpen);
     }
 
@@ -201,7 +199,9 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
                 margin="dense"
                 onChange={handleChange(setData, data)}
                 error={errorPhone ? true : false}
+                onBlur={() => setData({ ...data, phone: phoneMaskBr(phone)})}
                 name="phone"
+                helperText={"Digite apenas números com DDD"}
                 value={phone}
                 type="tel"
                 label="Contato"
@@ -269,7 +269,6 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
     return (
         <div
             className="animated slideInLeft fast"
-            ref={refRegister}
             style={{ display: !isLoginOpen ? "block" : "none" }}
         >
             <Card className={classes.card}>

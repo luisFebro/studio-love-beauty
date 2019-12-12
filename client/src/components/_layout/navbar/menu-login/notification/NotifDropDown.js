@@ -118,7 +118,7 @@ export default function NotifDropDown() {
 
     // Redux
     //> Set State
-    let {allMessagesList, allUsers, _idUser, userName} = useStoreState(state => ({
+    let { allUsers, _idUser, userName} = useStoreState(state => ({
         allUsers: state.userReducer.cases.allUsers,
         allMessagesList: state.userReducer.cases.allMessagesList,
         _idUser: state.userReducer.cases.currentUser._id,
@@ -149,7 +149,7 @@ export default function NotifDropDown() {
                         <div>
                             <h2 className="text-center text-sub-container pb-3">Suas Notificações</h2>
                             <p className="text-sub-container">Total: {/*allMessagesList.length*/}</p>
-                            {/*<MessagesList data={null/*allMessagesList*/} />*/}
+                            {/*<MessagesList data={null/*allMessagesList*/}
                         </div>
                         <div>
                             {userName !== 'admin' ? SendMsgToStoreBtn(dispatch, allUsers, _idUser, userName) : null}

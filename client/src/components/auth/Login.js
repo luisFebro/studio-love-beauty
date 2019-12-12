@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 // material-ui
 import { makeStyles } from '@material-ui/core/styles';
+import { useStoreDispatch } from 'easy-peasy';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
+import { showSnackbar } from '../../redux/actions/snackbarActions';
+import { loginEmail } from '../../redux/actions/authActions';
 import ButtonMulti from '../buttons/material-ui/ButtonMulti';
+import handleChange from '../../utils/form/use-state/handleChange';
+import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
+import detectErrorField from '../../utils/validation/detectErrorField';
+import clearForm from '../../utils/form/use-state/clearForm';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -14,11 +21,44 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Login({ setIsLoginOpen, isLoginOpen }) {
+    const [data, setData] = useState({
+        cpf: '',
+    })
+    const { cpf } = data;
+    const [fieldError, setFieldError] = useState(null);
+    const errorCpf = fieldError && fieldError.cpf;
+
     const classes = useStyles();
+    const dispatch = useStoreDispatch();
 
     const changeToRegister = () => {
         setIsLoginOpen(!isLoginOpen);
     }
+
+    const clearData = () => {
+        clearForm(setData, data);
+        setFieldError(null);
+    }
+
+    const signInThisUser = e => {
+        const userData = {
+            cpf
+        };
+
+        loginEmail(dispatch, userData)
+        .then(res => {
+            if(res.status !== 200) {
+                showSnackbar(dispatch, res.data.msg, 'error');
+                // detect field errors
+                const objFields = Object.keys(data);
+                const foundObjError = detectErrorField(res.data.msg, objFields);
+                setFieldError(foundObjError);
+                return;
+            }
+            showSnackbar(dispatch, res.data.msg, 'success');
+            clearData();
+        })
+    };
 
     const showTitle = () => (
         <div className="text-center text-main-container mb-4 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
@@ -47,12 +87,13 @@ export default function Login({ setIsLoginOpen, isLoginOpen }) {
             <TextField
                 required
                 margin="dense"
-                onChange={null} // handleChange(setData, data)
-                error={null} // errorEmail ? true : false
+                onChange={handleChange(setData, data)}
+                error={errorCpf ? true : false}
                 name="cpf"
                 type="text"
                 label="Insira seu CPF"
                 autoComplete="cpf"
+                onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
                 fullWidth
                 InputProps={{
                   startAdornment: (
@@ -68,7 +109,7 @@ export default function Login({ setIsLoginOpen, isLoginOpen }) {
     const showButtonActions = () => (
         <div className="container-center">
             <ButtonMulti
-                onClick={null}
+                onClick={signInThisUser}
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainPink)"
                 backColorOnHover="var(--mainPink)"

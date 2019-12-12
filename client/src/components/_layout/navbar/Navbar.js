@@ -67,7 +67,7 @@ function Navbar({ history }) {
                                 alt={storeIcon.altTitle}
                                 title={storeIcon.altTitle}
                             />
-                            <div className="store-badge badge badge-danger">Aberto</div>
+                            <div style={{ background: "var(--mainDark)"}} className="store-badge badge">Aberto</div>
                         </div>
                     ) : (
                         <span className="animated zoomIn slow">loja</span>

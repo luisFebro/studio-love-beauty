@@ -14,12 +14,36 @@ const dataTempAuthUserToken = {
 const UserTokenSchema = new Schema(dataTempAuthUserToken);
 // END TEMP AUTH USER ID
 
+// TEMP AUTH USER ID
+const dataLoyaltyScores = {
+    cashCurrentScore: {
+        type: String,
+        default: "0"
+    },
+    lastScore: {
+        type: String,
+        default: "0"
+    },
+    currentScore: {
+        type: String,
+        default: "0"
+    },
+}
+
+const LoyaltyScoresSchema = new Schema(dataLoyaltyScores);
+// END TEMP AUTH USER ID
+
 
 const data = {
     isAdmin: {
         type: Boolean,
         default: false
     },
+    isStaff: {
+        type: Boolean,
+        default: false
+    },
+    loyaltyScores: LoyaltyScoresSchema,
     name: {
         type: String,
         trim: true,

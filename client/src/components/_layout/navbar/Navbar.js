@@ -16,7 +16,11 @@ const isStoreOpen = dataWorkingHour[1];
 function Navbar({ history }) {
     // const [showSkeleton, setShowSkeleton] = useState(true);
     const [isSearchOpen, setSearchOpen] = useState(false);
-    const { isUserAuthenticated } = useStoreState(state => state.authReducer.cases);
+    const { isUserAuthenticated, isStaff, isAdmin } = useStoreState(state => ({
+       isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
+       isStaff: state.userReducer.cases.currentUser.isStaff,
+       isAdmin: state.userReducer.cases.currentUser.isAdmin,
+    }));
 
     const addZoomout = () => {
         const icon = document.getElementById('searchIcon');
@@ -47,9 +51,39 @@ function Navbar({ history }) {
                 className="nav-item"
                 style={{color: "black"}}
             >
-                <span className="animated zoomIn slow">Seja Bem Vindo!</span>
+                <Link to="/">
+                    <span className="animated zoomIn slow">
+                        Seja Bem Vindo!
+                    </span>
+                </Link>
             </li>
         </ul>
+    );
+
+    const titleByRoleHandler = () => (
+        <Fragment>
+            {!isUserAuthenticated ? (
+                <Link to="/acesso/verificacao" className="nav-link">
+                    Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                </Link>
+            ) : (
+                <Fragment>
+                    {isAdmin &&
+                    <Link to="/admin/painel-de-controle" className="nav-link">
+                        Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                    </Link>}
+
+                    {isStaff &&
+                    <Link to="/staff/painel-de-controle" className="nav-link">
+                        Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                    </Link>}
+
+                    {!isStaff && !isAdmin &&
+                        <span>Acesso Cliente <i className="fas fa-user" style={{fontSize: '1.9rem'}}></i></span>
+                    }
+                </Fragment>
+            )}
+        </Fragment>
     );
 
     const showManagingBtn = () => (
@@ -58,10 +92,7 @@ function Navbar({ history }) {
                 className="nav-item"
                 style={{color: "black"}}
             >
-                <Link to="/" className="nav-link">
-                    Gerenciamento <span className="fas fa-lock" style={{fontSize: '1.9rem'}}></span>
-
-                </Link>
+                {titleByRoleHandler()}
             </li>
         </ul>
     );

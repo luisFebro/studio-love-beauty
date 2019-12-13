@@ -1,8 +1,30 @@
 const Admin = require('../models/admin');
+const formidable = require('formidable');
+const fs = require('fs');
 const BusinessInfo = require("../models/admin/BusinessInfo");
 const adminId = '5db4301ed39a4e12546277a8';
 const businessInfoId = "5dcc77a0db168f112884b27f"; //n1a
 const { msgG } = require('./_msgs/globalMsgs');
+
+// MIDDLEWARES
+exports.mwAdminId = (req, res, next, id) => {
+    Admin.findOne({ _id: id })
+    .exec((err, admin) => {
+        if (!admin) return res.status(400).json(msgG('error.notFound', "O admin"));
+
+        req.admin = admin;
+        next();
+    });
+}
+
+exports.mwPhoto = (req, res, next) => {
+    if (req.admin.trademark.data) {
+        res.set("Content-Type", req.admin.trademark.contentType);
+        return res.send(req.admin.trademark.data);
+    }
+    next();
+};
+// END MIDDLEWARES
 
 exports.createOrUpdate = (req, res) => {
     Admin.findOneAndUpdate(
@@ -37,6 +59,38 @@ exports.updateBusinessInfo = (req, res) => {
         }
     );
 };
+
+exports.createPhoto = (req, res) => {
+    let form = new formidable.IncomingForm();
+
+    form.keepExtensions = true;
+    form.parse(req, (err, fields, files) => { // fields from doc
+        if (err) return res.status(400).json(msgG('error.systemErr', err));
+
+        Admin.findById(adminId)
+        .exec((err, admin) => {
+            if(err) return res.status(500).json(msgG('error.systemError', err))
+
+            // Photo File Size Reference
+            // 1kb = 1000
+            // 1mb = 1.000.000
+
+            if (files.trademark) {
+                if (files.trademark > 1000000) return res.status(400).json({ msg: "Tamanho de imagem excedido"})
+                admin.trademark.data = fs.readFileSync(files.trademark.path); // provide media info
+                admin.trademark.contentType = files.trademark.type;
+            } else {
+                return res.status(400).json(msg('error.noPhoto'))
+            }
+
+            admin.save((err, result) => {
+                if (err) return res.status(500).json(msgG('error.systemError', err));
+                res.json(result);
+            });
+        })
+    });
+
+}
 
 /* COMMENTS
 n1: You can add or remove any field from businessInfo according to the client needs.

@@ -5,7 +5,10 @@ const {
     updateBusinessInfo,
     read,
     getCoupon,
-    updateCoupon
+    updateCoupon,
+    mwPhoto,
+    mwAdminId,
+    createPhoto,
 } = require('../controllers/admin');
 
 // @ routes api/admin
@@ -13,7 +16,10 @@ const {
 router.get("/", read);
 router.put("/", createOrUpdate);
 
+router.get("/photo/:adminId", mwPhoto);
+router.put("/media", createPhoto);
 router.put("/business-info/update", updateBusinessInfo);
 
+router.param('adminId', mwAdminId);
 
 module.exports = router;

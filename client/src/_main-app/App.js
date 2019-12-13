@@ -8,6 +8,7 @@ import { readAdmin } from '../redux/actions/adminActions';
 import { loadReCaptcha } from 'react-recaptcha-google';
 //
 import PrivateRouteAdm from '../components/auth/PrivateRouteAdm';
+import PrivateRouteStaff from '../components/auth/PrivateRouteStaff';
 import { loadUser } from '../redux/actions/authActions';
 import './App.css';
 import '../utils/globalHelpers';
@@ -18,6 +19,8 @@ import 'animate.css/animate.min.css';
 
 // PAGES
 import Home from '../pages/Home';
+import LoginPage from '../pages/LoginPage';
+import LoyaltyScoreHandler from '../pages/loyalty-client-scores';
 import ChangePassword from '../pages/client/ChangePassword';
 import InsertNewPassword from '../pages/client/InsertNewPassword';
 import ConfirmAccount from '../pages/client/ConfirmAccount';
@@ -51,10 +54,13 @@ function App() {
                 <Navbar />
                 <Switch>
                     <Route path="/" exact component={Home} />
+                    <Route path="/acesso/verificacao" exact component={LoginPage} />
+                    <Route path="/cliente/pontos-fidelidade" exact component={LoyaltyScoreHandler} />
                     <Route path="/cliente/trocar-senha" exact component={ChangePassword} />
                     <Route path="/cliente/trocar-senha/:token" exact component={InsertNewPassword} />
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
-                    <PrivateRouteAdm path="/painel-controle-admin" exact component={Dashboard} />
+                    <PrivateRouteStaff path="/colaborador/quadro-administrativo" exact component={null} />
+                    <PrivateRouteAdm path="/admin/painel-de-controle" exact component={null} />
                     <Route component={Default} />
                 </Switch>
                 {/*Modals and Snackbars*/}

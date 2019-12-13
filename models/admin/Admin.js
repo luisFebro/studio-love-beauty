@@ -6,15 +6,19 @@ const data = {
     adminPreferences: {
         siteBackgroundColor: String,
     },
+    trademark: {
+        data: Buffer,
+        contentType: String
+    },
     businessInfo: {
         type: Schema.ObjectId,
         ref: 'BusinessInfo',
-        required: true
+        //required: true
     }
 }
 
-const productSchema = new Schema(data, { timestamps: true });
-module.exports = mongoose.model('Admin', productSchema, collectionName);
+const adminSchema = new Schema(data, { timestamps: true });
+module.exports = mongoose.model('Admin', adminSchema, collectionName);
 
 
 

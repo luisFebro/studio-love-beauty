@@ -98,28 +98,12 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     };
 
-    const changeToLogin = () => {
-        setIsLoginOpen(!isLoginOpen);
-    }
-
     const showTitle = () => (
         <div className="text-center text-main-container my-1 mx-1 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
-            CADASTRO CLIENTE
+            CADASTRE-SE
             <br />
             <span className="text-default">
-                ou faça{' '}
-                <button
-                    style={{
-                        color: "white",
-                        padding: '2px 5px',
-                        borderRadius: '20px',
-                        backgroundColor: 'var(--mainPink)',
-                        outline: "none"
-                    }}
-                    onClick={changeToLogin}
-                >
-                    Seu Login
-                </button>
+                É rápido e fácil!
             </span>
         </div>
     );
@@ -256,6 +240,20 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
         </form>
     );
 
+/*
+MODEL BTN PINK CIRCULAR
+<button
+    style={{
+        color: "white",
+        padding: '2px 5px',
+        borderRadius: '20px',
+        backgroundColor: 'var(--mainPink)',
+        outline: "none"
+    }}
+    onClick={changeToLogin}
+>
+</button>
+ */
     // const showReCaptcha = () => (
     //     <div className="container-center mt-3">
     //         <ReCaptchaCheckbox setToken={setData} data={data} />
@@ -283,7 +281,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     return (
         <div
-            className="animated slideInLeft fast"
+            className="animated zoomIn fast"
             style={{ display: !isLoginOpen ? "block" : "none" }}
         >
             <Card className={classes.card}>

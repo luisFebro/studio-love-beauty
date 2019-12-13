@@ -41,6 +41,7 @@ export default function Login({ setIsLoginOpen, isLoginOpen }) {
     }
 
     const signInThisUser = e => {
+        console.log("user signin");
         const userData = {
             cpf
         };
@@ -123,8 +124,7 @@ export default function Login({ setIsLoginOpen, isLoginOpen }) {
 
     return (
         <div
-            className='animated slideInRight fast'
-            style={{ display: isLoginOpen ? "block" : "none" }}
+            className='animated zoomIn fast'
         >
             <Card className={classes.card}>
                 {showTitle()}

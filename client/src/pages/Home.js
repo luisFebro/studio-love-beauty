@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import AuthCardHandler from '../components/auth/AuthCardHandler';
+import Register from '../components/auth/Register';
 import ImageLogo from "../components/ImageLogo";
 // import ButtonCart from '../components/buttons/ButtonCart';
 // import Title from '../components/Title';
@@ -17,10 +17,12 @@ import ImageLogo from "../components/ImageLogo";
 
 export default function Home() {
     const showMainContent = () => (
-        <div className="mr-md-5">
-            <div className="ml-3 text-container text-center">Amigo cliente, faça já o seu cadastro e participe de nosso plano de fidelidade</div>
-            <AuthCardHandler />
-            <div className="ml-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>
+        <div className="mr-md-5 ml-md-4">
+            <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro e participe de nosso plano de fidelidade</div>
+            <div className="ml-5">
+                <Register />
+            </div>
+            <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>
             <div
                 className="my-5 text-container font-weight-italic text-center"
                 style={{color: "var(--mainPink)"}}

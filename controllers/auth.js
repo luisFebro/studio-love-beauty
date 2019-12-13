@@ -62,7 +62,7 @@ exports.register = (req, res) => {
         jwt.sign(
             { id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: '30d' }, //30 days - "expiresIn" should be a number of seconds or string that repesents a timespan eg: "1d", "20h",
+            { expiresIn: 1000 },
             (err, token) => {
                 if(err) return res.status(500).json(msgG('error.systemError', err));
                 const { _id } = user
@@ -82,7 +82,7 @@ exports.login = (req, res) => {
     const { password, needKeepLoggedIn } = req.body;
     const { _id, name } = req.profile;
     const registeredPass = req.profile.password;
-    const expireAuthDays = needKeepLoggedIn ? '30d' : '7d';
+    const expireAuthDays = '1d';
 
     jwt.sign(
         { id: _id },

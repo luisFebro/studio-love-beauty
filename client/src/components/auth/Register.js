@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Register({ setIsLoginOpen, isLoginOpen }) {
+export default function Register() {
     const [selectedDate, handleDateChange] = useState(new Date());
     const [data, setData] = useState({
         name: '',
@@ -282,7 +282,6 @@ MODEL BTN PINK CIRCULAR
     return (
         <div
             className="animated zoomIn fast"
-            style={{ display: !isLoginOpen ? "block" : "none" }}
         >
             <Card className={classes.card}>
                 {showTitle()}

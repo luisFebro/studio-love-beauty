@@ -3,9 +3,18 @@ import Login from '../components/auth/Login';
 import ImageLogo from '../components/ImageLogo';
 export default function LoginPage({ location }) {
     const showMainContent = () => (
-        <div className="mr-md-5">
-            <div className="animated slideInLeft ml-3 text-container text-center">Faça seu acesso para ver seus pontos de fidelidade ou acesso coloborador</div>
-            <Login />
+        <div className="mr-md-5 ml-md-4">
+            <div
+                className="my-4 animated slideInLeft ml-3 text-container text-center"
+            >
+                Identifique-se para ver seus pontos de fidelidade
+                <br />
+                ou
+                <br />
+                acesso à gerência</div>
+            <div className="ml-5">
+                <Login />
+            </div>
         </div>
     );
 

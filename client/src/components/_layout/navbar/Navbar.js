@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useStoreState } from 'easy-peasy';
+import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import { logout } from '../../../redux/actions/authActions';
 // import ShowImgOrSkeleton from '../../ShowImgOrSkeleton';
 // import CategorySlider from './CategorySlider';
 import { Link } from 'react-router-dom';
@@ -21,6 +22,8 @@ function Navbar({ history }) {
        isStaff: state.userReducer.cases.currentUser.isStaff,
        isAdmin: state.userReducer.cases.currentUser.isAdmin,
     }));
+
+    const dispatch = useStoreDispatch();
 
     const addZoomout = () => {
         const icon = document.getElementById('searchIcon');
@@ -81,6 +84,21 @@ function Navbar({ history }) {
                     {!isStaff && !isAdmin &&
                         <span>Acesso Cliente <i className="fas fa-user" style={{fontSize: '1.9rem'}}></i></span>
                     }
+                    <button
+                        style={{
+                            position: 'absolute',
+                            top: '35px',
+                            right: '5px',
+                            color: "white",
+                            padding: '2px 5px',
+                            borderRadius: '20px',
+                            backgroundColor: 'var(--mainPink)',
+                            outline: "none"
+                        }}
+                        onClick={() => logout(dispatch)}
+                    >
+                        sair
+                    </button>
                 </Fragment>
             )}
         </Fragment>
@@ -126,7 +144,7 @@ function Navbar({ history }) {
     return (
         <Fragment>
             {showNav()}
-            {showMenuLogin()}
+            {/*showMenuLogin()*/}
             {/*showCategorySlider()*/}
             {showKeyAccessDashboard()}
         </Fragment>

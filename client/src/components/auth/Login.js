@@ -66,19 +66,7 @@ export default function Login({ setIsLoginOpen, isLoginOpen }) {
             ACESSAR CONTA
             <br />
             <span className="text-default">
-                ou faça{' '}
-                <button
-                    style={{
-                        color: "white",
-                        padding: '2px 5px',
-                        borderRadius: '20px',
-                        backgroundColor: 'var(--mainPink)',
-                        outline: "none"
-                    }}
-                    onClick={changeToRegister}
-                >
-                    Cadastro
-                </button>
+                Digite apenas números
             </span>
         </div>
     );

@@ -89,7 +89,7 @@ export const registerFacebook = (dispatch, body, resFacebook) => {
 export const logout = dispatch => {
     dispatch({ type: 'LOGOUT_SUCCESS' });
     dispatch({ type: 'USER_CLEARED' });
-    setTimeout(() => showSnackbar(dispatch, 'Sua sessão foi finalizada com sucesso. Volte Sempre!', 4000), 2000);
+    setTimeout(() => showSnackbar(dispatch, 'Sua sessão foi finalizada com sucesso!', 4000), 2000);
 };
 
 export const changePassword = async (dispatch, bodyPass, userId) => {

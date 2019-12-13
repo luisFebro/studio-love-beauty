@@ -62,7 +62,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
 
     useEffect(() => {
         setData({ ...data, birthday: getDayMonthBr(selectedDate) })
-    }, [selectedDate, data])
+    }, [selectedDate])
 
     const clearData = () => {
         clearForm(setData, data);
@@ -103,7 +103,7 @@ export default function Register({ setIsLoginOpen, isLoginOpen }) {
     }
 
     const showTitle = () => (
-        <div className="text-center text-main-container mb-4 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
+        <div className="text-center text-main-container my-1 mx-1 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
             CADASTRO CLIENTE
             <br />
             <span className="text-default">

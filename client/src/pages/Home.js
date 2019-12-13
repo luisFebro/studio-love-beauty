@@ -17,8 +17,19 @@ import AuthCardHandler from '../components/auth/AuthCardHandler';
 
 export default function Home() {
     return(
-        <Fragment>
-            <AuthCardHandler />
-        </Fragment>
+        <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
+            <div className="mr-md-5">
+                <div className="ml-3 text-container text-center">Amigo cliente, faça já o seu cadastro e participe de nosso plano de fidelidade</div>
+                <AuthCardHandler />
+                <div className="ml-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>
+                <div
+                    className="my-5 text-container font-weight-italic text-center"
+                    style={{color: "var(--mainPink)"}}
+                >Consulte<br />as Regras</div>
+            </div>
+            <div className="mr-md-5 mt-md-5">
+                <img className="image" width="500" height="300" src="img/official-logo.jpg" alt="logomarca"/>
+            </div>
+        </div>
     );
 };

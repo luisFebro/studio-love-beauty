@@ -2,6 +2,7 @@
     /*Primary Colors*/
     --mainPink: #e84393;
     --mainDark: #232528;
+    --mainBlack: "black";
     /*End Primary Colors*/
     --mainRed: #232528; /*#ed213a */
     --lightRed: #ed213a;
@@ -34,7 +35,7 @@ body {
 /*End Preventing the scrollbar to disappear in mobile apps*/
 
 body {
-    background: var(--mainWhite) !important;
+    background: #000 !important;
     color: var(--mainDark) !important;
     user-select: none;
 }

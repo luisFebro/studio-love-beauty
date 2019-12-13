@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
-import BreadCrumbs from './BreadCrumbs';
 // import ShowImgOrSkeleton from '../../ShowImgOrSkeleton';
 // import CategorySlider from './CategorySlider';
 import { Link } from 'react-router-dom';
@@ -41,79 +40,39 @@ function Navbar({ history }) {
     };
 
     // Render
-    const showLogo = () => (
-        <Link to="/">
-            <img
-                src="img/official-logo.jpg"
-                alt="Logomarca"
-                width="170rem"
-                height="90rem"
-                className="navbar-brand animated pulse"
-                style={{ animationIterationCount: '3'}}
-            />
-        </Link>
-    );
 
-    const showStoreBtn = () => (
+    const showGreeting = () => (
         <ul className="navbar-nav align-items-center">
-            <li className="nav-item">
-                <Link to="/loja" className="nav-link">
-                    {isStoreOpen ? (
-                        <div className="store-container">
-                            <img
-                                width="70rem"
-                                height="70rem"
-                                src={storeIcon.imgSrc}
-                                alt={storeIcon.altTitle}
-                                title={storeIcon.altTitle}
-                            />
-                            <div style={{ background: "var(--mainDark)"}} className="store-badge badge">Aberto</div>
-                        </div>
-                    ) : (
-                        <span className="animated zoomIn slow">loja</span>
-                    )}
-                </Link>
+            <li
+                className="nav-item"
+                style={{color: "black"}}
+            >
+                <span className="animated zoomIn slow">Seja Bem Vindo!</span>
             </li>
         </ul>
     );
 
-    const showAccountBtn = () => (
-        <Fragment>
-            {isUserAuthenticated ?
-                null : (
-                <ul
-                    className="animated zoomIn slow navbar-nav ml-3 ml-md-auto align-items-center"
-                >
-                    <li className="nav-item">
-                        <Link to="/" className="nav-link">
-                            <span>
-                                Acessar conta
-                            </span>
-                        </Link>
-                    </li>
-                </ul>
-            )}
-        </Fragment>
-    );
-
-    const showBookingBtn = () => (
-        <ul className="animated zoomIn slow navbar-nav ml-3 mr-3 align-items-center">
-            <li className="nav-item">
+    const showManagingBtn = () => (
+        <ul className="animated zoomIn slow navbar-nav ml-3 ml-md-auto mr-3 align-items-center">
+            <li
+                className="nav-item"
+                style={{color: "black"}}
+            >
                 <Link to="/" className="nav-link">
-                    <span>
-                        Agendar
-                    </span>
+                    Gerenciamento <span className="fas fa-lock" style={{fontSize: '1.9rem'}}></span>
+
                 </Link>
             </li>
         </ul>
     );
     // Render
     const showNav = () => (
-        <NavWrapper className="navbar navbar-expand-sm navbar-dark text-nav-items">
-            {showLogo()}
-            {showStoreBtn()}
-            {showAccountBtn()}
-            {showBookingBtn()}
+        <NavWrapper
+            style={{background: "var(--mainWhite)"}}
+            className="navbar navbar-expand-sm text-nav-items"
+        >
+            {showGreeting()}
+            {showManagingBtn()}
         </NavWrapper>
     );
 
@@ -127,10 +86,6 @@ function Navbar({ history }) {
     //     <CategorySlider />
     // );
 
-    const showBreadCrumbs = history => (
-        <BreadCrumbs history={history} />
-    );
-
     const showKeyAccessDashboard = () => (
         <Link to="/painel-controle-admin">
             <KeyAccessDashboard />
@@ -142,7 +97,6 @@ function Navbar({ history }) {
             {showNav()}
             {showMenuLogin()}
             {/*showCategorySlider()*/}
-            {showBreadCrumbs(history)}
             {showKeyAccessDashboard()}
         </Fragment>
     );
@@ -228,7 +182,6 @@ const NavWrapper = styled.nav`
     background: var(--mainRed);
     .nav-link,
     #searchIcon {
-        color: var(--mainWhite) !important;
         text-transform: capitalize;
     }
 

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import TitleComponent from '../TitleComponent';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import phoneMaskBr from '../../utils/validation/masks/phoneMaskBr';
 import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
 import getDayMonthBr from '../../utils/dates/getDayMonthBr';
+import SafeEnvironmentMsg from '../SafeEnvironmentMsg';
 // import ReCaptchaCheckbox from "../ReCaptcha";
 // Redux
 import { useStoreDispatch } from 'easy-peasy';
@@ -99,17 +101,18 @@ export default function Register() {
     };
 
     const showTitle = () => (
-        <div className="text-center text-main-container my-1 mx-1 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
+        <TitleComponent
+            subtitle="É rápido e fácil"
+        >
             CADASTRE-SE
-            <br />
-            <span className="text-default">
-                É rápido e fácil!
-            </span>
-        </div>
+        </TitleComponent>
     );
 
     const showForm = () => (
-        <form style={{margin: 'auto', width: '80%'}}>
+        <form
+            style={{margin: 'auto', width: '80%'}}
+            onBlur={() => setFieldError(null)}
+        >
             <TextField
                 required
                 margin="dense"
@@ -230,30 +233,10 @@ export default function Register() {
               <MenuItem value={"Divorciado(a)"}>Divorciado(a)</MenuItem>
               <MenuItem value={"Viúva(a)"}>Viúva(a)</MenuItem>
             </Select>
-            <div className="text-center my-3 font-weight-bold">
-                <span style={{color: 'green'}}>
-                    <i className="fas fa-lock"></i>
-                </span>   Ambiente seguro!<br />
-                Envio de dados encriptografados<br />
-                e mantidos de forma privada.
-            </div>
+            <SafeEnvironmentMsg />
         </form>
     );
 
-/*
-MODEL BTN PINK CIRCULAR
-<button
-    style={{
-        color: "white",
-        padding: '2px 5px',
-        borderRadius: '20px',
-        backgroundColor: 'var(--mainPink)',
-        outline: "none"
-    }}
-    onClick={changeToLogin}
->
-</button>
- */
     // const showReCaptcha = () => (
     //     <div className="container-center mt-3">
     //         <ReCaptchaCheckbox setToken={setData} data={data} />
@@ -296,4 +279,19 @@ MODEL BTN PINK CIRCULAR
 <div style={{whiteSpace: 'wrap'}}>
     {JSON.stringify(data)}
 </div>
+ */
+
+/*
+MODEL BTN PINK CIRCULAR
+<button
+    style={{
+        color: "white",
+        padding: '2px 5px',
+        borderRadius: '20px',
+        backgroundColor: 'var(--mainPink)',
+        outline: "none"
+    }}
+    onClick={changeToLogin}
+>
+</button>
  */

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-// material-ui
+import TitleComponent from '../../components/TitleComponent';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStoreDispatch } from 'easy-peasy';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
-import { showComponent, hideComponent } from '../../../redux/actions/componentActions';
-import { showSnackbar } from '../../../redux/actions/snackbarActions';
-import ButtonMulti from '../../buttons/material-ui/ButtonMulti';
-import handleChange from '../../../utils/form/use-state/handleChange';
-import cpfMaskBr from '../../../utils/validation/masks/cpfMaskBr';
-import detectErrorField from '../../../utils/validation/detectErrorField';
-import clearForm from '../../../utils/form/use-state/clearForm';
+import { showComponent, hideComponent } from '../../redux/actions/componentActions';
+import { showSnackbar } from '../../redux/actions/snackbarActions';
+import ButtonMulti from '../buttons/material-ui/ButtonMulti';
+import handleChange from '../../utils/form/use-state/handleChange';
+import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
+import detectErrorField from '../../utils/validation/detectErrorField';
+import clearForm from '../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
 
 InsertValue.propTypes = {
@@ -50,26 +50,28 @@ export default function InsertValue({ success }) {
     };
 
     const showTitle = () => (
-        <div className="text-center text-main-container mb-4 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
-            ACESSAR CONTA
-            <br />
-            <span className="text-default">
-                Digite apenas números
-            </span>
-        </div>
+        <TitleComponent
+            subtitle="Digite apenas números e vírgula"
+        >
+            INSIRA O VALOR GASTO
+        </TitleComponent>
     );
 
     const showForm = () => (
-        <form style={{margin: 'auto', width: '80%'}}>
+        <form
+            style={{margin: 'auto', width: '80%'}}
+            onBlur={() => setFieldError(null)}
+        >
             <TextField
                 required
+                variant="outlined"
                 margin="dense"
                 onChange={handleChange(setData, data)}
-                error={errorCpf ? true : false}
-                name="cpf"
+                error={null}
+                name="valuePaid"
+                label="Insira seu Valor"
                 type="text"
-                label="Insira seu CPF"
-                autoComplete="cpf"
+                autoComplete="Valor da Nota Fiscal"
                 onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
                 fullWidth
                 InputProps={{
@@ -90,10 +92,10 @@ export default function InsertValue({ success }) {
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainPink)"
                 backColorOnHover="var(--mainPink)"
-                iconFontAwesome="fas fa-paper-plane"
+                iconFontAwesome="fas fa-check"
                 textTransform='uppercase'
             >
-                Entrar
+                Confirmar
             </ButtonMulti>
         </div>
     );

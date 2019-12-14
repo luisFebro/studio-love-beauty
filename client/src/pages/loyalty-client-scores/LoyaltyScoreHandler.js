@@ -3,6 +3,7 @@ import { useStoreState } from 'easy-peasy';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
+import ImageLogo from '../../components/ImageLogo';
 
 export default function LoyaltyScoreHandler() {
     const {
@@ -16,10 +17,11 @@ export default function LoyaltyScoreHandler() {
     }))
 
     return (
-        <Fragment>
+        <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             <PurchaseValue success={showPurchaseValue} />
             <StaffConfirmation success={showStaffConfirmation} />
             <ClientScoresPanel success={showClientScoresPanel}/>
-        </Fragment>
+            <ImageLogo />
+        </div>
     );
 }

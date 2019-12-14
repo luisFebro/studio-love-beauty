@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import InsertValue from '../../components/_layout/loyaltyScores/InsertValue';
+import InsertValue from '../../components/loyaltyScores/InsertValue';
 
 PurchaseValue.propTypes = {
     success: PropTypes.bool,
@@ -15,7 +15,7 @@ export default function PurchaseValue({ success }) {
             >
                 Insira o valor da compra da nota fiscal.
             </div>
-            <div className="ml-5">
+            <div className="ml-5 center-small">
                 <InsertValue success={success} />
             </div>
         </Fragment>

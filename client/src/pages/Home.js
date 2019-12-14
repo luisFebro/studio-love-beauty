@@ -19,7 +19,7 @@ export default function Home() {
     const showMainContent = () => (
         <div className="mr-md-5 ml-md-4">
             <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro e participe de nosso plano de fidelidade</div>
-            <div className="ml-5">
+            <div className="ml-md-5">
                 <Register />
             </div>
             <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>

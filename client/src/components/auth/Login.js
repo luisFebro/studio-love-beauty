@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-// material-ui
+import TitleComponent from '../../components/TitleComponent';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStoreDispatch } from 'easy-peasy';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
+import SafeEnvironmentMsg from '../SafeEnvironmentMsg';
 import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { loginEmail } from '../../redux/actions/authActions';
@@ -26,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Login({ okChecked }) {
+function Login({ okChecked, history }) {
     const [data, setData] = useState({
         cpf: '',
     })
@@ -63,24 +65,28 @@ export default function Login({ okChecked }) {
             if(okChecked) {
                 hideComponent(dispatch, "login");
                 showComponent(dispatch, "purchaseValue");
+                history.push("/cliente/pontos-fidelidade");
             }
         })
     };
 
     const showTitle = () => (
-        <div className="text-center text-main-container mb-4 p-3" style={{color: 'white', backgroundColor: "var(--mainDark)", width: '100%'}}>
+        <TitleComponent
+            subtitle="Digite apenas números"
+        >
             ACESSAR CONTA
-            <br />
-            <span className="text-default">
-                Digite apenas números
-            </span>
-        </div>
+        </TitleComponent>
     );
 
     const showForm = () => (
-        <form style={{margin: 'auto', width: '80%'}}>
+        <form
+            style={{margin: 'auto', width: '80%'}}
+            onBlur={() => setFieldError(null)}
+        >
             <TextField
                 required
+                autoFocus
+                variant="outlined"
                 margin="dense"
                 onChange={handleChange(setData, data)}
                 error={errorCpf ? true : false}
@@ -98,6 +104,7 @@ export default function Login({ okChecked }) {
                   ),
                 }}
             />
+            <SafeEnvironmentMsg />
         </form>
     );
 
@@ -128,3 +135,5 @@ export default function Login({ okChecked }) {
         </div>
     );
 }
+
+export default withRouter(Login);

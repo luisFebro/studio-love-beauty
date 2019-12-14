@@ -4,12 +4,12 @@ import { spin } from '../../keyframes/spin';
 import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
-    height: 40px;
-    width: 40px;
-    margin: auto;
+    height: 100px;
+    width: 100px;
+    margin: 0 150px;
 
     border: 2px solid #f3f3f3;
-    border-top: 3px solid #f25a41;
+    border-top: 3px solid var(--mainPink);
     border-radius: 100%;
 
     animation: ${spin} .8s linear infinite;

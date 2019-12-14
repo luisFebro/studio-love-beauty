@@ -311,11 +311,20 @@ footer {
 
 /*END MENU DROPDOWN*/
 
+/*POSITION*/
+.center-small {
+    display: flex;
+    justify-content: center;
+}
 
 /*MOBILE FIRST RESPONSIVE MEDIA QUERIES*/
 /*media portrait tablets and large phones || for large devices, use min-width: 992px and up*/
 @media only screen and (min-width: 600px) {
     .image-center {
         max-width: 60%;
+    }
+    .center-small {
+        display: block;
+        justify-content: "";
     }
 }

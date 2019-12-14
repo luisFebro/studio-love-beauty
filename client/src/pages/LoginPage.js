@@ -37,7 +37,7 @@ export default function LoginPage() {
                         <br />
                         ter acesso ao gerenciamento
                     </div>
-                    <div className="ml-5">
+                    <div className="ml-md-5 center-small">
                         <Login okChecked={showLoyaltyPageHandler()} />
                     </div>
                 </Fragment>

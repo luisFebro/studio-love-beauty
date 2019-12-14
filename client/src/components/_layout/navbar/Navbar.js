@@ -56,7 +56,7 @@ function Navbar({ history }) {
             >
                 <Link to="/">
                     <span className="animated zoomIn slow">
-                        Seja Bem Vindo!
+                        Seja Bem Vindo(a)!
                     </span>
                 </Link>
             </li>

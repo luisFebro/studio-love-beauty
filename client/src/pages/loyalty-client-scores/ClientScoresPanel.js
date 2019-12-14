@@ -1,7 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ClientScoresPanel() {
+ClientScoresPanel.propTypes = {
+    success: PropTypes.bool,
+}
+
+export default function ClientScoresPanel({ success }) {
     return (
+        success &&
         <div>
             I am the scorepanel
         </div>

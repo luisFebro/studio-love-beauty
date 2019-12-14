@@ -6,18 +6,17 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
-import { showComponent, hideComponent } from '../../redux/actions/componentActions';
-import { showSnackbar } from '../../redux/actions/snackbarActions';
-import { loginEmail } from '../../redux/actions/authActions';
-import ButtonMulti from '../buttons/material-ui/ButtonMulti';
-import handleChange from '../../utils/form/use-state/handleChange';
-import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
-import detectErrorField from '../../utils/validation/detectErrorField';
-import clearForm from '../../utils/form/use-state/clearForm';
+import { showComponent, hideComponent } from '../../../redux/actions/componentActions';
+import { showSnackbar } from '../../../redux/actions/snackbarActions';
+import ButtonMulti from '../../buttons/material-ui/ButtonMulti';
+import handleChange from '../../../utils/form/use-state/handleChange';
+import cpfMaskBr from '../../../utils/validation/masks/cpfMaskBr';
+import detectErrorField from '../../../utils/validation/detectErrorField';
+import clearForm from '../../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
 
-Login.propTypes = {
-    okChecked: PropTypes.bool,
+InsertValue.propTypes = {
+    success: PropTypes.bool,
 }
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Login({ okChecked }) {
+export default function InsertValue({ success }) {
     const [data, setData] = useState({
         cpf: '',
     })
@@ -43,28 +42,11 @@ export default function Login({ okChecked }) {
         setFieldError(null);
     }
 
-    const signInThisUser = e => {
-        const userData = {
-            cpf
-        };
-
-        loginEmail(dispatch, userData)
-        .then(res => {
-            if(res.status !== 200) {
-                showSnackbar(dispatch, res.data.msg, 'error');
-                // detect field errors
-                const objFields = Object.keys(data);
-                const foundObjError = detectErrorField(res.data.msg, objFields);
-                setFieldError(foundObjError);
-                return;
-            }
-            showSnackbar(dispatch, res.data.msg, 'success');
-            clearData();
-            if(okChecked) {
-                hideComponent(dispatch, "login");
-                showComponent(dispatch, "purchaseValue");
-            }
-        })
+    const handleSwitch = () => {
+        if(success) {
+            hideComponent(dispatch, 'purchaseValue')
+            showComponent(dispatch, 'staffConfirmation')
+        }
     };
 
     const showTitle = () => (
@@ -104,7 +86,7 @@ export default function Login({ okChecked }) {
     const showButtonActions = () => (
         <div className="container-center">
             <ButtonMulti
-                onClick={signInThisUser}
+                onClick={handleSwitch}
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainPink)"
                 backColorOnHover="var(--mainPink)"

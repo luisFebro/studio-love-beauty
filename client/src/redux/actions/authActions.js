@@ -28,8 +28,8 @@ export const loginEmail = async (dispatch, objToSend) => {
     setLoadingProgress(dispatch, true);
     try {
         const res = await axios.post('/api/auth/login', objToSend, configTypeJson);
-        dispatch({ type: 'LOGIN_EMAIL', payload: res.data.token });
         readUser(dispatch, res.data.authUserId);
+        // dispatch({ type: 'LOGIN_EMAIL', payload: res.data.token });
         setLoadingProgress(dispatch, false);
         return res;
     } catch (err) {
@@ -89,6 +89,7 @@ export const registerFacebook = (dispatch, body, resFacebook) => {
 export const logout = dispatch => {
     dispatch({ type: 'LOGOUT_SUCCESS' });
     dispatch({ type: 'USER_CLEARED' });
+    dispatch({ type: 'ALL_COMPONENTS_CLEARED' });
     setTimeout(() => showSnackbar(dispatch, 'Sua sessão foi finalizada com sucesso!', 4000), 2000);
 };
 

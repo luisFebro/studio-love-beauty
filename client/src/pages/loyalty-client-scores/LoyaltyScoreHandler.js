@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
 import { useStoreState } from 'easy-peasy';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
 
 export default function LoyaltyScoreHandler() {
-    const { isStaff, isAdmin } = useStoreState(state => ({
-        isStaff: state.userReducer.cases.currentUser.isStaff,
-        isAdmin: state.userReducer.cases.currentUser.isAdmin,
+    const {
+        showPurchaseValue,
+        showStaffConfirmation,
+        showClientScoresPanel
+    } = useStoreState(state => ({
+        showPurchaseValue: state.componentReducer.cases.showPurchaseValue,
+        showStaffConfirmation: state.componentReducer.cases.showStaffConfirmation,
+        showClientScoresPanel: state.componentReducer.cases.showClientScoresPanel,
     }))
 
-    const showLayaltyHandler = (isAdmin, isStaff) => (
-        (!isAdmin && !isStaff) &&
-        <div>
-            <PurchaseValue />
-            <StaffConfirmation />
-            <ClientScoresPanel />
-        </div>
-    );
-
     return (
-        <div>
-            {showLayaltyHandler(isAdmin, isStaff)}
-        </div>
+        <Fragment>
+            <PurchaseValue success={showPurchaseValue} />
+            <StaffConfirmation success={showStaffConfirmation} />
+            <ClientScoresPanel success={showClientScoresPanel}/>
+        </Fragment>
     );
 }

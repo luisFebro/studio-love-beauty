@@ -21,6 +21,16 @@ export default function LoginPage() {
         return false;
     }
 
+    const redirectAdmin = () => {
+        if(isAdmin) return true;
+        return false;
+    }
+
+    const redirectStaff = () => {
+        if(isStaff) return true;
+        return false;
+    }
+
     const showMainContent = () => (
         <div className="mr-md-5 ml-md-4">
             {showLogin ? (
@@ -35,7 +45,11 @@ export default function LoginPage() {
                         ter acesso ao gerenciamento
                     </div>
                     <div className="ml-md-5 center-small">
-                        <Login okChecked={showLoyaltyPageHandler()} />
+                        <Login
+                            okClient={showLoyaltyPageHandler()}
+                            okStaff={redirectStaff()}
+                            okAdmin={redirectAdmin()}
+                        />
                     </div>
                 </Fragment>
             ) : (

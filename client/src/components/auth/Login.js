@@ -19,7 +19,9 @@ import clearForm from '../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
 
 Login.propTypes = {
-    okChecked: PropTypes.bool,
+    okClient: PropTypes.bool,
+    okAdmin: PropTypes.bool,
+    okStaff: PropTypes.bool,
 }
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Login({ okChecked, history }) {
+function Login({ okClient, okStaff, okAdmin, history }) {
     const [data, setData] = useState({
         cpf: '',
     })
@@ -62,7 +64,13 @@ function Login({ okChecked, history }) {
             }
             showSnackbar(dispatch, res.data.msg, 'success', 9000);
             clearData();
-            if(okChecked) {
+            if(okAdmin) {
+                history.push("/admin/painel-de-controle");
+            }
+            if(okStaff) {
+                history.push("/colaborador/quadro-administrativo");
+            }
+            if(okClient) {
                 hideComponent(dispatch, "login");
                 showComponent(dispatch, "purchaseValue");
                 history.push("/cliente/pontos-fidelidade");

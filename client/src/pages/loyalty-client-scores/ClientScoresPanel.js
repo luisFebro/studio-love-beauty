@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import ButtonMulti from '../../components/buttons/material-ui/ButtonMulti';
+import HomeButton from '../../components/buttons/HomeButton';
 import { updateUser } from "../../redux/actions/userActions";
-import { hideComponent, showComponent } from "../../redux/actions/componentActions";
 import { showSnackbar } from "../../redux/actions/snackbarActions";
 import TitleComponent from '../../components/TitleComponent';
 import animateNumber from '../../utils/numbers/animateNumber';
@@ -68,7 +66,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
     return (
         success &&
         <div className="mr-md-5 ml-md-4 mt-5 animated slideInLeft fast">
-            <div>
+            <div style={{minWidth: 300}} className="mx-2">
                 <span className="text-main-container">{name},</span>
                 <TitleComponent>
                    Veja aqui seus Pontos
@@ -97,23 +95,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     </div>
                 </div>
                 <p style={{fontSize: "18px"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*Valor Decimal Arredondado." : null}</p>
-                <div className="my-3">
-                    <Link to="/">
-                        <ButtonMulti
-                            onClick={() => {
-                                hideComponent(dispatch, "clientScoresPanel")
-                                showComponent(dispatch, "login")
-                            }}
-                            color="var(--mainWhite)"
-                            backgroundColor="var(--mainPink)"
-                            backColorOnHover="var(--mainPink)"
-                            iconFontAwesome="fas fa-home"
-                            textTransform='uppercase'
-                        >
-                            Voltar
-                        </ButtonMulti>
-                    </Link>
-                </div>
+                <HomeButton hideComp="clientScoresPanel" />
             </div>
         </div>
     );

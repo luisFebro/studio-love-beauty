@@ -26,6 +26,7 @@ import InsertNewPassword from '../pages/client/InsertNewPassword';
 import ConfirmAccount from '../pages/client/ConfirmAccount';
 import Default from '../pages/Default';
 import Dashboard from '../pages/dashboard-admin';
+import DashboardStaff from '../pages/dashboard-staff';
 //END PAGES
 
 //LAYOUT
@@ -59,8 +60,8 @@ function App() {
                     <Route path="/cliente/trocar-senha" exact component={ChangePassword} />
                     <Route path="/cliente/trocar-senha/:token" exact component={InsertNewPassword} />
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
-                    <PrivateRouteStaff path="/colaborador/quadro-administrativo" exact component={null} />
-                    <PrivateRouteAdm path="/admin/painel-de-controle" exact component={null} />
+                    <PrivateRouteStaff path="/colaborador/quadro-administrativo" exact component={DashboardStaff} />
+                    <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
                     <Route component={Default} />
                 </Switch>
                 {/*Modals and Snackbars*/}

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import StaffConf from '../../components/loyaltyScores/StaffConf';
+import HomeButton from '../../components/buttons/HomeButton';
 
 StaffConfirmation.propTypes = {
     success: PropTypes.bool,
@@ -15,6 +16,7 @@ export default function StaffConfirmation({ success, setVerification }) {
                 <div className="ml-5">
                     <StaffConf success={success} setVerification={setVerification} />
                 </div>
+                <HomeButton hideComp="staffConfirmation" />
             </Fragment>
         </div>
     );

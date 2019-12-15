@@ -4,6 +4,7 @@ import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
 import ImageLogo from '../../components/ImageLogo';
+import HomeButton from '../../components/buttons/HomeButton';
 
 export default function LoyaltyScoreHandler() {
     const [valuePaid, setValuePaid]  = useState("0");
@@ -35,6 +36,14 @@ export default function LoyaltyScoreHandler() {
                 verification={verification}
             />
             <ImageLogo />
+            <Fragment>
+               {
+                    !showPurchaseValue &&
+                    !showStaffConfirmation &&
+                    !showClientScoresPanel &&
+                    <HomeButton />
+               }
+            </Fragment>
         </div>
     );
 }

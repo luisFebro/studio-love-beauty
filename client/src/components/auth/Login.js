@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TitleComponent from '../../components/TitleComponent';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { useStoreDispatch } from 'easy-peasy';
+import { useStoreDispatch, useStoreState } from 'easy-peasy';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
@@ -34,6 +34,15 @@ function Login({ okClient, okStaff, okAdmin, history }) {
     const [data, setData] = useState({
         cpf: '',
     })
+
+    const { showLogin, isUserAuthenticated, isStaff, isAdmin, currUser } = useStoreState(state => ({
+        isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
+        currUser: state.userReducer.cases.currentUser,
+        isAdmin: state.userReducer.cases.currentUser.isAdmin,
+        showLogin: state.componentReducer.cases.showLogin,
+    }))
+    console.log("isStaff", currUser && currUser.isStaff);
+    console.log("isAdmin", currUser && currUser.isAdmin);
 
     const { cpf } = data;
     const [fieldError, setFieldError] = useState(null);

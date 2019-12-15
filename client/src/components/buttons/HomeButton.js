@@ -10,7 +10,6 @@ HomeButton.propTypes = {
 }
 
 export default function HomeButton({ hideComp }) {
-    console.log(hideComponent);
     const dispatch = useStoreDispatch();
 
     return (

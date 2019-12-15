@@ -14,7 +14,7 @@ const msg = (typeAndMsgName, customized = 'NeedCustomWord', options) => {
 
     // MESSAGES
     ok.welcomeBack = `Olá de volta, ${customized}`;
-    ok.successRegister = `Cadastro realizado com sucesso. Você já está participando do nosso programa de fidelidade`;
+    ok.successRegister = `${customized}, cadastro realizado com sucesso. Você já está participando do nosso plano de fidelidade. Agradecemos sua visita!`;
     ok.changedPassword = `Sua senha foi alterada com sucesso, ${customized}!`;
     error.jwtNotFound = "JWT token não foi encontrado";
     error.notAuthorized = "Você não está autorizado para executar esta ação";

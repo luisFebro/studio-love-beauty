@@ -20,7 +20,6 @@ exports.mwValidateRegister = (req, res, next) => {
         if(!birthday) return res.status(400).json(msg('error.noBirthday'));
         if(!validateEmail(email)) return res.status(400).json(msg('error.invalidEmail'));
         if(!isCpfValid) return res.status(400).json(msg('error.invalidCpf'));
-        console.log(!validatePhone(phone));
         if(!validatePhone(phone)) return res.status(400).json(msg('error.invalidPhone'));
         //if(reCaptchaToken) return res.status(400).json(msg('error.noReCaptchaToken'));
         next();

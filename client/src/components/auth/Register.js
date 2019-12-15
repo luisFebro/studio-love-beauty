@@ -15,7 +15,6 @@ import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { registerEmail } from '../../redux/actions/authActions';
 // Helpers
 import detectErrorField from '../../utils/validation/detectErrorField';
-import clearForm from '../../utils/form/use-state/clearForm';
 import handleChange from '../../utils/form/use-state/handleChange';
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
@@ -67,7 +66,14 @@ export default function Register() {
     }, [selectedDate])
 
     const clearData = () => {
-        clearForm(setData, data);
+        setData({
+            ...data,
+            name: '',
+            email: '',
+            phone: '',
+            birthday: '',
+            cpf: '',
+        })
         setFieldError(null);
     }
 
@@ -91,10 +97,9 @@ export default function Register() {
                     setFieldError(foundObjError);
                     return;
                 }
-
-                showSnackbar(dispatch, res.data.msg, 'success', 8000);
-                //sendEmail(res.data.authUserId);
                 clearData();
+                showSnackbar(dispatch, res.data.msg, 'success', 9000);
+                //sendEmail(res.data.authUserId);
 
             })
 

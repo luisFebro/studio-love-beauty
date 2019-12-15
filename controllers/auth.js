@@ -69,7 +69,7 @@ exports.register = (req, res) => {
                 res.json({
                     token,
                     authUserId: _id,
-                    msg: msg('ok.successRegister', 'onlyMsg')
+                    msg: msg('ok.successRegister', name, 'onlyMsg')
                 });
             }
         )

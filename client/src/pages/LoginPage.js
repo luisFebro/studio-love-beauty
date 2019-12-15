@@ -5,9 +5,9 @@ import ImageLogo from '../components/ImageLogo';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 
 export default function LoginPage() {
-    const { showLogin, isUserAuthenticated, isStaff, isAdmin } = useStoreState(state => ({ //isStaff, isAdmin, isUserAuthenticated,
+    const { showLogin, isUserAuthenticated, isStaff, isAdmin, currUser } = useStoreState(state => ({
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
-        isStaff: state.userReducer.cases.currentUser.isStaff,
+        currUser: state.userReducer.cases.currentUser,
         isAdmin: state.userReducer.cases.currentUser.isAdmin,
         showLogin: state.componentReducer.cases.showLogin,
     }))
@@ -48,7 +48,7 @@ export default function LoginPage() {
                         <Login
                             okClient={showLoyaltyPageHandler()}
                             okStaff={redirectStaff()}
-                            okAdmin={redirectAdmin()}
+                            okAdmin={redirectAdmin(isAdmin)}
                         />
                     </div>
                 </Fragment>

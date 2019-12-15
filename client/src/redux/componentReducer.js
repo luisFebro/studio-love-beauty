@@ -2,10 +2,10 @@ import { reducer } from 'easy-peasy';
 
 // REDUCERS
 const initialState = {
-    showLogin: true,
+    showLogin: false,
     showPurchaseValue: false,
     showStaffConfirmation: false,
-    showClientScoresPanel: false,
+    showClientScoresPanel: true,
 };
 
 export const componentReducer = {

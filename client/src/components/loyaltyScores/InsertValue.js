@@ -43,6 +43,9 @@ export default function InsertValue({ success, setValuePaid }) {
     }
 
     const handleSwitch = () => {
+        if(valuePaid === "") return showSnackbar(dispatch, "Você precisa digitar um valor.", "error")
+        if(valuePaid.includes("-")) return showSnackbar(dispatch, "O valor não pode ser negativo", "error")
+        if(valuePaid === "0") return showSnackbar(dispatch, "O valor não pode ser zero", "error")
         if(success) {
             setValuePaid(valuePaid);
             hideComponent(dispatch, 'purchaseValue')

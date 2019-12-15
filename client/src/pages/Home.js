@@ -18,9 +18,9 @@ import ImageLogo from "../components/ImageLogo";
 export default function Home() {
 
     const showMainContent = () => (
-        <div className="mr-md-5 ml-md-4">
-            <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro e participe de nosso plano de fidelidade</div>
-            <div className="ml-md-5">
+        <div className="ml-md-4">
+            <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro <br /> e <br />participe de nosso plano de fidelidade</div>
+            <div className="center-small">
                 <Register />
             </div>
             <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>

@@ -77,7 +77,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     className="text-weight-bold text-center text-main-container mt-3 m-1 p-3"
                     style={{ color: "var(--mainPink)", backgroundColor: "var(--mainDark)" }}
                 >
-                    <p>Pontuação Anterior: {convertDotToComma(lastScore)}</p>
+                    <p>Pontuação Anterior:<br />{convertDotToComma(lastScore)}</p>
                     <p>
                         <span>Você Ganhou: </span>
                         <span ref={animatedNumber}>...</span>
@@ -90,7 +90,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                             animationIterationCount: 4
                         }}
                     >
-                        <p>Pontuação Atual: {convertDotToComma(currentScore)}</p>
+                        <p>Pontuação Atual:<br />{convertDotToComma(currentScore)}</p>
                         <p className="text-center text-default">Volte sempre!</p>
                         <br/>
                         <br/>

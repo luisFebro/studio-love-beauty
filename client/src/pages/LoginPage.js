@@ -28,7 +28,7 @@ export default function LoginPage() {
                     <div
                         className="my-4 ml-3 text-container text-center"
                     >
-                        Identifique-se para atualizar seus <br /> pontos de fidelidade
+                        Identifique-se para atualizar seus pontos <br /> de fidelidade
                         <br />
                         ou
                         <br />

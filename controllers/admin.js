@@ -41,6 +41,7 @@ exports.createOrUpdate = (req, res) => {
 exports.read = (req, res) => {
     Admin.findById(adminId)
     .populate('businessInfo', '-bizWorkingHours')
+    .select("-trademark -verificationPass")
     .then(bizInfo => res.json(bizInfo))
     .catch(err => res.json(msgG("error.systemError", err)))
 }
@@ -91,6 +92,30 @@ exports.createPhoto = (req, res) => {
     });
 
 }
+
+exports.checkVerificationPass = (req, res) => {
+    const { pass } = req.body;
+
+    Admin.findById({ _id: adminId })
+    .exec((err, admin) => {
+        if (err) return res.status(400).json(msgG("error.systemError", err));
+        const { verificationPass } = admin;
+        if(verificationPass !== pass) return res.status(401).json({ msg: "A senha de verificação está errada." })
+        res.json({ msg: "A verificação foi realizada com sucesso!"})
+    })
+};
+
+exports.updateVerificationPass = (req, res) => {
+    const query = req.body;
+    Admin.findOneAndUpdate(
+    { _id: adminId },
+    { $set: query },
+    { new: true })
+    .exec(err => {
+        if (err) return res.status(400).json(msgG("error.systemError", err));
+        res.json({ msg: "A senha foi alterada com sucesso!"})
+    })
+};
 
 /* COMMENTS
 n1: You can add or remove any field from businessInfo according to the client needs.

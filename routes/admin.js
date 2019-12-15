@@ -9,6 +9,8 @@ const {
     mwPhoto,
     mwAdminId,
     createPhoto,
+    checkVerificationPass,
+    updateVerificationPass,
 } = require('../controllers/admin');
 
 // @ routes api/admin
@@ -19,6 +21,9 @@ router.put("/", createOrUpdate);
 router.get("/photo/:adminId", mwPhoto);
 router.put("/media", createPhoto);
 router.put("/business-info/update", updateBusinessInfo);
+
+router.post("/verification-pass", checkVerificationPass);
+router.put("/verification-pass", updateVerificationPass);
 
 router.param('adminId', mwAdminId);
 

@@ -10,13 +10,13 @@ import { showComponent, hideComponent } from '../../redux/actions/componentActio
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import ButtonMulti from '../buttons/material-ui/ButtonMulti';
 import handleChange from '../../utils/form/use-state/handleChange';
-import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
 import detectErrorField from '../../utils/validation/detectErrorField';
 import clearForm from '../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
 
 InsertValue.propTypes = {
     success: PropTypes.bool,
+    setValuePaid: PropTypes.func,
 }
 
 const useStyles = makeStyles(theme => ({
@@ -25,12 +25,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function InsertValue({ success }) {
+export default function InsertValue({ success, setValuePaid }) {
     const [data, setData] = useState({
-        cpf: '',
+        valuePaid: '',
     })
 
-    const { cpf } = data;
+    const { valuePaid } = data;
     const [fieldError, setFieldError] = useState(null);
     const errorCpf = fieldError && fieldError.cpf;
 
@@ -44,6 +44,7 @@ export default function InsertValue({ success }) {
 
     const handleSwitch = () => {
         if(success) {
+            setValuePaid(valuePaid);
             hideComponent(dispatch, 'purchaseValue')
             showComponent(dispatch, 'staffConfirmation')
         }
@@ -72,7 +73,6 @@ export default function InsertValue({ success }) {
                 label="Insira seu Valor"
                 type="text"
                 autoComplete="Valor da Nota Fiscal"
-                onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
                 fullWidth
                 InputProps={{
                   startAdornment: (

@@ -20,10 +20,6 @@ const dataLoyaltyScores = {
         type: String,
         default: "0"
     },
-    lastScore: {
-        type: String,
-        default: "0"
-    },
     currentScore: {
         type: String,
         default: "0"

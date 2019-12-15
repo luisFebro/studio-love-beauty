@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import TitleComponent from '../../components/TitleComponent';
-import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStoreDispatch } from 'easy-peasy';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
-import SafeEnvironmentMsg from '../SafeEnvironmentMsg';
 import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
-import { loginEmail } from '../../redux/actions/authActions';
 import ButtonMulti from '../buttons/material-ui/ButtonMulti';
 import handleChange from '../../utils/form/use-state/handleChange';
-import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
 import detectErrorField from '../../utils/validation/detectErrorField';
 import clearForm from '../../utils/form/use-state/clearForm';
+import { checkVerificationPass } from "../../redux/actions/adminActions";
 import PropTypes from 'prop-types';
 
-Login.propTypes = {
-    okChecked: PropTypes.bool,
+StaffConf.propTypes = {
+    success: PropTypes.bool,
+    setVerification: PropTypes.func,
 }
 
 const useStyles = makeStyles(theme => ({
@@ -28,12 +26,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Login({ okChecked, history }) {
+export default function StaffConf({ success, setVerification }) {
     const [data, setData] = useState({
-        cpf: '',
+        pass: '',
     })
 
-    const { cpf } = data;
+    const { pass } = data;
     const [fieldError, setFieldError] = useState(null);
     const errorCpf = fieldError && fieldError.cpf;
 
@@ -45,56 +43,40 @@ function Login({ okChecked, history }) {
         setFieldError(null);
     }
 
-    const signInThisUser = e => {
-        const userData = {
-            cpf
-        };
-
-        loginEmail(dispatch, userData)
+    const checkAccess = () => {
+        const bodyToSend = {
+            pass
+        }
+        checkVerificationPass(dispatch, bodyToSend)
         .then(res => {
-            if(res.status !== 200) {
-                showSnackbar(dispatch, res.data.msg, 'error');
-                // detect field errors
-                const objFields = Object.keys(data);
-                const foundObjError = detectErrorField(res.data.msg, objFields);
-                setFieldError(foundObjError);
-                return;
-            }
-            showSnackbar(dispatch, res.data.msg, 'success', 9000);
-            clearData();
-            if(okChecked) {
-                hideComponent(dispatch, "login");
-                showComponent(dispatch, "purchaseValue");
-                history.push("/cliente/pontos-fidelidade");
-            }
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            showSnackbar(dispatch, res.data.msg, 'success');
+            setVerification(true);
+            hideComponent(dispatch, 'staffConfirmation')
+            showComponent(dispatch, 'clientScoresPanel')
         })
     };
 
     const showTitle = () => (
-        <TitleComponent
-            subtitle="Digite apenas números"
-        >
-            ACESSAR CONTA
+        <TitleComponent>
+            INSIRA A SENHA DE VERIFICAÇÃO
         </TitleComponent>
     );
 
     const showForm = () => (
         <form
-            style={{margin: 'auto', width: '80%'}}
+            style={{margin: 'auto', width: '80%', backgroundColor: "white"}}
             onBlur={() => setFieldError(null)}
         >
             <TextField
                 required
-                variant="outlined"
+                variant="standard"
                 margin="dense"
                 onChange={handleChange(setData, data)}
-                error={errorCpf ? true : false}
-                name="cpf"
-                value={cpf}
-                type="text"
-                label="Insira seu CPF"
-                autoComplete="cpf"
-                onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
+                error={null}
+                name="pass"
+                value={pass}
+                type="password"
                 fullWidth
                 InputProps={{
                   startAdornment: (
@@ -104,30 +86,32 @@ function Login({ okChecked, history }) {
                   ),
                 }}
             />
-            <SafeEnvironmentMsg />
         </form>
     );
 
     const showButtonActions = () => (
         <div className="container-center">
             <ButtonMulti
-                onClick={signInThisUser}
+                onClick={checkAccess}
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainPink)"
                 backColorOnHover="var(--mainPink)"
-                iconFontAwesome="fas fa-paper-plane"
+                iconFontAwesome="fas fa-check"
                 textTransform='uppercase'
             >
-                Entrar
+                Verificar
             </ButtonMulti>
         </div>
     );
 
     return (
         <div
-            className='animated zoomIn fast'
+            className='animated slideInLeft fast'
         >
-            <Card className={classes.card}>
+            <Card
+                className={classes.card}
+                style={{ backgroundColor: "var(--mainDark)" }}
+            >
                 {showTitle()}
                 {showForm()}
                 {showButtonActions()}
@@ -135,5 +119,3 @@ function Login({ okChecked, history }) {
         </div>
     );
 }
-
-export default withRouter(Login);

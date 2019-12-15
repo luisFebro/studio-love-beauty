@@ -10,6 +10,10 @@ const data = {
         data: Buffer,
         contentType: String
     },
+    verificationPass: {
+        type: String,
+        default: "slb19"
+    },
     businessInfo: {
         type: Schema.ObjectId,
         ref: 'BusinessInfo',

@@ -1,23 +1,21 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-// import StaffConf
+import StaffConf from '../../components/loyaltyScores/StaffConf';
 
 StaffConfirmation.propTypes = {
     success: PropTypes.bool,
+    setVerification: PropTypes.func
 }
 
-export default function StaffConfirmation({ success }) {
+export default function StaffConfirmation({ success, setVerification }) {
     return (
         success &&
-        <Fragment>
-            <div
-                className="my-4 animated slideInLeft fast ml-3 text-container text-center"
-            >
-                ...
-            </div>
-            <div className="ml-5">
-                {/*<StaffConf success={success} />*/}
-            </div>
-        </Fragment>
+        <div className="mr-md-5 ml-md-4 mt-5">
+            <Fragment>
+                <div className="ml-5">
+                    <StaffConf success={success} setVerification={setVerification} />
+                </div>
+            </Fragment>
+        </div>
     );
 }

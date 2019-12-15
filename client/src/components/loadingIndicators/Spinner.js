@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const Wrapper = styled.div`
     height: 100px;
     width: 100px;
-    margin: 0 150px;
+    margin: 50px 150px;
 
     border: 2px solid #f3f3f3;
     border-top: 3px solid var(--mainPink);

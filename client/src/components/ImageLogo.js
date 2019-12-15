@@ -19,6 +19,9 @@ export default function ImageLogo() {
                     height: 300,
                     backgroundColor: "grey",
                 }}
+                imgOpt= {{
+                    className: "image-apresentation"
+                }}
             />
         </div>
     );

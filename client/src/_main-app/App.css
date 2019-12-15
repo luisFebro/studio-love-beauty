@@ -156,6 +156,11 @@ footer {
     height: auto;
 }
 
+.image-apresentation {
+    width: 100%;
+    height: auto;
+}
+
 .image-responsive-80 {
     width: 80%;
     height: auto;
@@ -331,6 +336,12 @@ footer {
     .image-center {
         max-width: 60%;
     }
+
+    .image-apresentation {
+        width: "500px";
+        height: "300px";
+    }
+
     .center-small {
         display: block;
         justify-content: "";

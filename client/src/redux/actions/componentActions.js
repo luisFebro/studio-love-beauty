@@ -1,8 +1,12 @@
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 
-
+// Make sure to use showComponent and hideComponent in pairs.
+// When the last component is out, then it is necessary that the first one to become true again.
 export const showComponent = (dispatch, option) => {
     switch(option) {
+        case "login":
+            dispatch({ type: "LOGIN_DISPLAYED" });
+            break;
         case "purchaseValue":
             dispatch({ type: "PURCHASE_VALUE_DISPLAYED" });
             break;

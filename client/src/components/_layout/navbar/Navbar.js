@@ -71,11 +71,10 @@ function Navbar({ history, location }) {
                         </Link>}
 
                         {locationNow === "/cliente/pontos-fidelidade" &&
-                        <Link to="/">
                             <p className="ml-4 text-container-main font-weight-bold text-pink">
                                 PONTOS DE FIDELIDADE
                             </p>
-                        </Link>}
+                        }
                     </Fragment>
                 )
                 }

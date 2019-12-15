@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import ButtonMulti from '../../components/buttons/material-ui/ButtonMulti';
 import { updateUser } from "../../redux/actions/userActions";
+import { hideComponent, showComponent } from "../../redux/actions/componentActions";
 import { showSnackbar } from "../../redux/actions/snackbarActions";
 import TitleComponent from '../../components/TitleComponent';
 import animateNumber from '../../utils/numbers/animateNumber';
@@ -78,7 +81,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     <p>
                         <span>Você Ganhou: </span>
                         <span ref={animatedNumber}>...</span>
-                        <span style={{color: "white"}}>{showTotalPoints ? "*" : null}</span>
+                        <span style={{color: "white"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*" : null}</span>
                     </p>
                     <div
                         className="animated bounce slow"
@@ -93,7 +96,24 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                         <br/>
                     </div>
                 </div>
-                <p style={{fontSize: "18px"}}>{showTotalPoints ? "*Valores arredondados se decimal" : null}</p>
+                <p style={{fontSize: "18px"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*Valor Decimal Arredondado." : null}</p>
+                <div className="my-3">
+                    <Link to="/">
+                        <ButtonMulti
+                            onClick={() => {
+                                hideComponent(dispatch, "clientScoresPanel")
+                                showComponent(dispatch, "login")
+                            }}
+                            color="var(--mainWhite)"
+                            backgroundColor="var(--mainPink)"
+                            backColorOnHover="var(--mainPink)"
+                            iconFontAwesome="fas fa-home"
+                            textTransform='uppercase'
+                        >
+                            Voltar
+                        </ButtonMulti>
+                    </Link>
+                </div>
             </div>
         </div>
     );

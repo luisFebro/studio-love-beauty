@@ -12,6 +12,11 @@ export const componentReducer = {
     cases: reducer((state = initialState, action) => {
         switch(action.type) {
             // SHOW
+            case 'LOGIN_DISPLAYED':
+                return {
+                    ...state,
+                    showLogin: true,
+                };
             case 'PURCHASE_VALUE_DISPLAYED':
                 return {
                     ...state,

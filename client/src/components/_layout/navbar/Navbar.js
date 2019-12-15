@@ -84,6 +84,24 @@ function Navbar({ history, location }) {
         </ul>
     );
 
+    const btnLogout = () => (
+        <button
+            style={{
+                position: 'absolute',
+                top: '35px',
+                right: '5px',
+                color: "white",
+                padding: '2px 5px',
+                borderRadius: '20px',
+                backgroundColor: 'var(--mainPink)',
+                outline: "none"
+            }}
+            onClick={() => logout(dispatch)}
+        >
+            sair
+        </button>
+    );
+
     const titleByRoleHandler = () => (
         <Fragment>
             {!isUserAuthenticated ? (
@@ -95,31 +113,20 @@ function Navbar({ history, location }) {
                     {isAdmin &&
                     <Link to="/admin/painel-de-controle" className="nav-link">
                         Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                    </Link>}
+                    </Link>
+                    {btnLogout()}}
 
                     {isStaff &&
                     <Link to="/staff/painel-de-controle" className="nav-link">
                         Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                    </Link>}
+                    </Link>
+                    {btnLogout()}}
 
                     {!isStaff && !isAdmin &&
-                        <span>Acesso Cliente <i className="fas fa-user" style={{fontSize: '1.9rem'}}></i></span>
+                    <Link to="/acesso/verificacao" className="nav-link">
+                        Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                    </Link>
                     }
-                    <button
-                        style={{
-                            position: 'absolute',
-                            top: '35px',
-                            right: '5px',
-                            color: "white",
-                            padding: '2px 5px',
-                            borderRadius: '20px',
-                            backgroundColor: 'var(--mainPink)',
-                            outline: "none"
-                        }}
-                        onClick={() => logout(dispatch)}
-                    >
-                        sair
-                    </button>
                 </Fragment>
             )}
         </Fragment>

@@ -6,9 +6,9 @@
 export default function phoneMaskBr(telefone){
     const isNotString = typeof telefone !== "string";
     if(isNotString) {
-        telefone = telefone.toString().trim().replace(/\s/g, '');
+        telefone = telefone.toString().trim(); // replace(/\s/g, '')
     } else {
-        telefone = telefone.trim().replace(/\s/g, '');
+        telefone = telefone.trim(); // .replace(/\s/g, '')
     }
 
     const startWithZero = telefone.charAt(0) === "0";

@@ -67,12 +67,12 @@ export default function Register() {
 
     const clearData = () => {
         setData({
-            ...data,
             name: '',
             email: '',
             phone: '',
             birthday: '',
             cpf: '',
+            maritalStatus: 'selecione estado civil'
         })
         setFieldError(null);
     }

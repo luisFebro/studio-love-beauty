@@ -113,6 +113,10 @@ footer {
     color: var(--mainYellow);
 }
 
+.text-pink {
+    color: var(--mainPink);
+}
+
 .text-white {
     color: var(--mainWhite);
 }

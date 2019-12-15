@@ -15,7 +15,7 @@ export default function LoginPage() {
     const dispatch = useStoreDispatch();
 
     const showLoyaltyPageHandler = () => {
-        if(!isAdmin && !isStaff && isUserAuthenticated) {
+        if(!isAdmin && !isStaff) { //  && isUserAuthenticated needs to includes it after fix userAlthentication
             return true;
         }
         return false;

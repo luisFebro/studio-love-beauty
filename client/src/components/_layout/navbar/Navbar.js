@@ -14,7 +14,7 @@ import { storeIcon } from '../../../data/dataIcons';
 import { dataWorkingHour } from '../../../utils/GetWorkingHour';
 
 const isStoreOpen = dataWorkingHour[1];
-function Navbar({ history }) {
+function Navbar({ history, location }) {
     // const [showSkeleton, setShowSkeleton] = useState(true);
     const [isSearchOpen, setSearchOpen] = useState(false);
     const { isUserAuthenticated, isStaff, isAdmin } = useStoreState(state => ({
@@ -47,18 +47,39 @@ function Navbar({ history }) {
     };
 
     // Render
-
+    const locationNow = location.pathname;
     const showGreeting = () => (
         <ul className="navbar-nav align-items-center">
             <li
                 className="nav-item"
                 style={{color: "black"}}
             >
-                <Link to="/">
-                    <span className="animated zoomIn slow">
-                        Seja Bem Vindo(a)!
-                    </span>
-                </Link>
+                {locationNow === "/"
+                ? (
+                    <Link to="/">
+                        <span className="animated zoomIn slow">
+                            Seja Bem Vindo(a)!
+                        </span>
+                    </Link>
+                ) : (
+                    <Fragment>
+                        {locationNow === "/acesso/verificacao" &&
+                        <Link to="/">
+                            <p className="ml-4 text-container-main font-weight-bold text-pink">
+                                ACESSO
+                            </p>
+                        </Link>}
+
+                        {locationNow === "/cliente/pontos-fidelidade" &&
+                        <Link to="/">
+                            <p className="ml-4 text-container-main font-weight-bold text-pink">
+                                PONTOS DE FIDELIDADE
+                            </p>
+                        </Link>}
+                    </Fragment>
+                )
+                }
+
             </li>
         </ul>
     );

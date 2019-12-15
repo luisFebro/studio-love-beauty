@@ -34,8 +34,12 @@ export default function Home({ location }) {
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             {showMainContent()}
             <span style={{ display: location.pathname === "/" ? "block" : "none"}}>
-                <ImageLogo />
+
             </span>
         </div>
     );
 };
+
+/*
+<ImageLogo />
+ */

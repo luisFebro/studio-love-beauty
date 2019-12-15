@@ -92,7 +92,7 @@ export default function Register() {
                     return;
                 }
 
-                showSnackbar(dispatch, res.data.msg, 'success', 4000);
+                showSnackbar(dispatch, res.data.msg, 'success', 8000);
                 //sendEmail(res.data.authUserId);
                 clearData();
 

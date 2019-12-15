@@ -4,7 +4,7 @@ import LoyaltyScoreHandler from './loyalty-client-scores';
 import ImageLogo from '../components/ImageLogo';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 
-export default function LoginPage() {
+export default function LoginPage({ location }) {
     const { showLogin, isUserAuthenticated, isStaff, isAdmin } = useStoreState(state => ({ //isStaff, isAdmin, isUserAuthenticated,
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
         isStaff: state.userReducer.cases.currentUser.isStaff,
@@ -47,7 +47,9 @@ export default function LoginPage() {
     return (
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             {showMainContent()}
-            <ImageLogo />
+            <span style={{ display: location.pathname === "/acesso/verificacao" ? "block" : "none"}}>
+                <ImageLogo />
+            </span>
         </div>
     );
 }

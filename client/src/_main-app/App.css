@@ -210,6 +210,10 @@ footer {
     z-index: 999;
 }
 
+.disabled-link {
+  pointer-events: none;
+}
+
 .z-index-top2 {
     z-index: 989;
 }

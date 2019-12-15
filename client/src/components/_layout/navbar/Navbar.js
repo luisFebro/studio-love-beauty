@@ -105,14 +105,14 @@ function Navbar({ history, location }) {
     const titleByRoleHandler = () => (
         <Fragment>
             {!isUserAuthenticated ? (
-                <Link to="/acesso/verificacao" className="nav-link">
+                <Link className="nav-link" to="/acesso/verificacao" className={locationNow === "/cliente/pontos-fidelidade" ? "disabled-link" : ""}>
                     Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                 </Link>
             ) : (
                 <Fragment>
                     {isAdmin &&
                     <Fragment>
-                        <Link to="/admin/painel-de-controle" className="nav-link">
+                        <Link className="nav-link" to="/admin/painel-de-controle">
                             Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                         </Link>
                         {btnLogout()}
@@ -120,14 +120,14 @@ function Navbar({ history, location }) {
 
                     {isStaff &&
                     <Fragment>
-                        <Link to="/staff/painel-de-controle" className="nav-link">
+                        <Link className="nav-link" to="/staff/painel-de-controle">
                             Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                         </Link>
                         {btnLogout()}
                     </Fragment>}
 
                     {!isStaff && !isAdmin &&
-                    <Link to="/acesso/verificacao" className="nav-link">
+                    <Link className="nav-link" to="/acesso/verificacao" className={locationNow === "/cliente/pontos-fidelidade" ? "disabled-link" : ""}>
                         Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                     </Link>
                     }

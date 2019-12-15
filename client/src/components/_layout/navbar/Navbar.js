@@ -111,16 +111,20 @@ function Navbar({ history, location }) {
             ) : (
                 <Fragment>
                     {isAdmin &&
-                    <Link to="/admin/painel-de-controle" className="nav-link">
-                        Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                    </Link>
-                    {btnLogout()}}
+                    <Fragment>
+                        <Link to="/admin/painel-de-controle" className="nav-link">
+                            Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        </Link>
+                        {btnLogout()}
+                    </Fragment>}
 
                     {isStaff &&
-                    <Link to="/staff/painel-de-controle" className="nav-link">
-                        Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                    </Link>
-                    {btnLogout()}}
+                    <Fragment>
+                        <Link to="/staff/painel-de-controle" className="nav-link">
+                            Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        </Link>
+                        {btnLogout()}
+                    </Fragment>}
 
                     {!isStaff && !isAdmin &&
                     <Link to="/acesso/verificacao" className="nav-link">

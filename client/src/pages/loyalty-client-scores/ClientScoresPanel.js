@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useStoreState } from 'easy-peasy';
+import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import { updateUser } from "../../redux/actions/userActions";
+import { showSnackbar } from "../../redux/actions/snackbarActions";
 import TitleComponent from '../../components/TitleComponent';
 import animateNumber from '../../utils/numbers/animateNumber';
 import { convertDotToComma, convertCommaToDot } from '../../utils/numbers/convertDotComma';
@@ -14,31 +16,18 @@ ClientScoresPanel.propTypes = {
 }
 
 export default function ClientScoresPanel({ success, valuePaid, verification }) {
-    console.log([valuePaid, verification]);
     const [showTotalPoints, setShowTotalPoints] = useState(false);
     const animatedNumber = useRef(null);
 
-    const { name } = useStoreState(state => ({
+    const { name, userId, loyaltyScores } = useStoreState(state => ({
+        loyaltyScores: state.userReducer.cases.currentUser.loyaltyScores,
         name: state.userReducer.cases.currentUser.name,
+        userId: state.userReducer.cases.currentUser._id,
     }))
 
-    useEffect(() => {
-        if(success && verification) {
-            animateNumber(
-                animatedNumber.current,
-                0,
-                cashCurrentScore,
-                3000,
-                setShowTotalPoints
-            );
-        }
-    }, [success, verification])
+    const dispatch = useStoreDispatch();
 
-    const { loyaltyScores } = useStoreState(state => ({
-        loyaltyScores: state.userReducer.cases.loyaltyScores,
-    }))
-
-    let lastScore = "100.2"; // loyaltyScores && loyaltyScores.lastScore;
+    let lastScore = loyaltyScores && loyaltyScores.currentScore;
     let cashCurrentScore = convertCommaToDot(valuePaid);
     lastScore =
     isInteger(lastScore)
@@ -49,8 +38,29 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
     isInteger(cashCurrentScore)
     ? parseInt(cashCurrentScore)
     : parseFloat(cashCurrentScore).toFixed(1);
-
     const currentScore = (parseFloat(lastScore) + parseFloat(cashCurrentScore)).toFixed(1);
+
+    useEffect(() => {
+        if(success && verification) {
+            animateNumber(
+                animatedNumber.current,
+                0,
+                cashCurrentScore,
+                3000,
+                setShowTotalPoints
+            );
+
+            const objToSend = {
+                "loyaltyScores.cashCurrentScore": cashCurrentScore,
+                "loyaltyScores.currentScore": currentScore.toString()
+            }
+            updateUser(dispatch, objToSend, userId)
+            .then(res => {
+                if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+                showSnackbar(dispatch, "Opa, sua pontuação foi realizada com sucesso!", 'success', 8000);
+            })
+        }
+    }, [success, verification])
 
     return (
         success &&

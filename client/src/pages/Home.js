@@ -15,7 +15,8 @@ import ImageLogo from "../components/ImageLogo";
 // };
 // pageData.pageDescription = `Conheça nossa vitrine em ${pageData.pageURL}`;
 
-export default function Home() {
+export default function Home({ location }) {
+
     const showMainContent = () => (
         <div className="mr-md-5 ml-md-4">
             <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro e participe de nosso plano de fidelidade</div>
@@ -29,11 +30,12 @@ export default function Home() {
             >Consulte<br />as Regras</div>
         </div>
     );
-
     return(
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             {showMainContent()}
-            <ImageLogo />
+            <span style={{ display: location.pathname === "/" ? "block" : "none"}}>
+                <ImageLogo />
+            </span>
         </div>
     );
 };

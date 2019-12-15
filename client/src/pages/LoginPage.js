@@ -5,7 +5,7 @@ import ImageLogo from '../components/ImageLogo';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 
 export default function LoginPage() {
-    const { showLogin } = useStoreState(state => ({ //isStaff, isAdmin, isUserAuthenticated,
+    const { showLogin, isUserAuthenticated, isStaff, isAdmin } = useStoreState(state => ({ //isStaff, isAdmin, isUserAuthenticated,
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
         isStaff: state.userReducer.cases.currentUser.isStaff,
         isAdmin: state.userReducer.cases.currentUser.isAdmin,
@@ -13,9 +13,6 @@ export default function LoginPage() {
     }))
 
     const dispatch = useStoreDispatch();
-    const isStaff = false;
-    const isAdmin = false;
-    const isUserAuthenticated = true;
 
     const showLoyaltyPageHandler = () => {
         if(!isAdmin && !isStaff && isUserAuthenticated) {
@@ -29,7 +26,7 @@ export default function LoginPage() {
             {showLogin ? (
                 <Fragment>
                     <div
-                        className="my-4 animated slideInLeft fast ml-3 text-container text-center"
+                        className="my-4 ml-3 text-container text-center"
                     >
                         Identifique-se para atualizar seus <br /> pontos de fidelidade
                         <br />

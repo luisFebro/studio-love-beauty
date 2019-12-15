@@ -26,7 +26,7 @@ const dataLoyaltyScores = {
     },
 }
 
-const LoyaltyScoresSchema = new Schema(dataLoyaltyScores);
+const LoyaltyScoresSchema = new Schema(dataLoyaltyScores, { _id: false });
 // END TEMP AUTH USER ID
 
 

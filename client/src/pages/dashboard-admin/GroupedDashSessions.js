@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // Dash Sessions
 import DashUsers from './dash-users';
-import DashProducts from './dash-products';
-import DashPromotions from './dash-promotions';
-import DashAnalytics from './dash-analytics';
-import DashSales from './dash-sales';
-import DashStore from './dash-store';
+import DashBooking from './dash-booking';
+import DashSetting from './dash-setting';
 // End Dash Sessions
 
 // Material UI
@@ -20,11 +17,8 @@ import { green } from '@material-ui/core/colors';
 import Box from '@material-ui/core/Box';
 // Icons from Tabs
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
-import LocalMallIcon from '@material-ui/icons/LocalMall';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import LoyaltyIcon from '@material-ui/icons/Loyalty';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import StorefrontIcon from '@material-ui/icons/Storefront';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import BuildIcon from '@material-ui/icons/Build';
 // End Material UI
 
 function TabPanel(props) {
@@ -123,18 +117,15 @@ export default function GroupedDashSessions() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    variant="scrollable" // prior:fullWidth
+                    variant="fullWidth" // prior: scrollable
                     scrollButtons="on"
                     indicatorColor="primary"
                     textColor="primary"
                     aria-label="scrollable force with icon"
                 >
                     <Tab label="Usuários" icon={<SupervisedUserCircleIcon />} {...a11yProps(0)} />
-                    <Tab label="Produtos" icon={<LocalMallIcon />} {...a11yProps(1)} />
-                    <Tab label="Vendas" icon={<MonetizationOnIcon />} {...a11yProps(2)} />
-                    <Tab label="Promoções" icon={<LoyaltyIcon />} {...a11yProps(3)} />
-                    <Tab label="Análises e Gráficos" icon={<TrendingUpIcon />} {...a11yProps(4)} />
-                    <Tab label="Sobre a Loja" icon={<StorefrontIcon />} {...a11yProps(5)} />
+                    <Tab label="Agendamentos" icon={<LibraryBooksIcon />} {...a11yProps(1)} />
+                    <Tab label="Configurações" icon={<BuildIcon />} {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -146,19 +137,10 @@ export default function GroupedDashSessions() {
                     <DashUsers />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <DashProducts />
+                    <DashBooking />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
-                    <DashSales />
-                </TabPanel>
-                <TabPanel value={value} index={3} dir={theme.direction}>
-                    <DashPromotions />
-                </TabPanel>
-                <TabPanel value={value} index={4} dir={theme.direction}>
-                    <DashAnalytics />
-                </TabPanel>
-                <TabPanel value={value} index={5} dir={theme.direction}>
-                    <DashStore />
+                    <DashSetting />
                 </TabPanel>
             </SwipeableViews>
         </div>

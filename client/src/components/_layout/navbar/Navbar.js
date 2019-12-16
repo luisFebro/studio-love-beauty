@@ -139,13 +139,17 @@ function Navbar({ history, location }) {
                 <Fragment>
                     {isAdmin &&
                     <Fragment>
-                        Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        <Link to="/admin/painel-de-controle">
+                            Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        </Link>
                         {btnLogout()}
                     </Fragment>}
 
                     {isStaff &&
                     <Fragment>
-                        Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        <Link to="/colaborador/quadro-administrativo">
+                            Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        </Link>
                         {btnLogout()}
                     </Fragment>}
 

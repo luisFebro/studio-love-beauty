@@ -1,17 +1,16 @@
-import React from 'react';
-import RegisteredUsersList from './RegisteredUsersList';
+import React, { Fragment } from 'react';
 import DashSectionTitle from '../DashSectionTitle';
 // import ExpansiblePanel from '../../../components/expansion-panels/ExpansiblePanel';
 // import ExpansiblePanelContent from '../ExpansiblePanelContent';
 
 // Expansion Panel Content
-// const done = [
-//     { task: 'Mensagens Instantâneas' },
-//     { task: 'Excluir Usuários' },
-//     { task: 'Informações de Cadastro' },
-//     { task: 'Totais Favoritos, Carrinho' }
+// const done = [];
+// const inProgress = [
+//     { task: 'Confirmação de Vendas' },
+//     { task: 'Históricos' },
+//     { task: 'Totais' },
+//     { task: 'Status de Entrega' }
 // ];
-// const inProgress = [{ task: 'Chat em Tempo Real' }, { task: 'Totais de Vendas por Cliente' }];
 
 // const expansiblePanelActions = [
 //     {
@@ -23,11 +22,12 @@ import DashSectionTitle from '../DashSectionTitle';
 // ];
 // End Expansion Panel Content
 
-export default function DashUsers() {
+export default function DashSetting() {
     return (
-        <div>
-            <DashSectionTitle title="Dados dos Usuários Cadastrados" />
-            <RegisteredUsersList />
-        </div>
+        <Fragment>
+            <div>
+                <DashSectionTitle title="Configurações Gerais do Site" />
+            </div>
+        </Fragment>
     );
 }

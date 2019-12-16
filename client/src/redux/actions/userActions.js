@@ -44,7 +44,7 @@ export const confirmUserAccount = async (userId) => {
 }
 
 // LISTS
-export const readUserList = async dispatch => {
+export const readUserList = async (dispatch) => {
     try {
         const res = await axios.get('/api/user/list/all', configTypeJson);
         console.log('==ALL USERS UPDATED==');

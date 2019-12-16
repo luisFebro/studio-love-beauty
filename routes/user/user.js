@@ -4,25 +4,28 @@ const {
     read,
     update,
     remove,
-    mwUserId,
     getList,
     confirmUserAccount,
     addElementArray,
     removeElementArray,
     removeField,
+    readBackup,
+    mwUserId,
+    mwBackup
 } = require("../../controllers/user");
 
 // @route  api/user
 // RUD
 router.get("/:userId", read); // requireSignin, mwIsAuth
 router.put("/:userId", update); // requireSignin, mwIsAuth
-router.delete('/:userId', remove);
+router.delete('/:userId', mwBackup, remove);
 // END RUD
 
 router.get("/confirm-account/:authUserId", confirmUserAccount);
 
 // LISTS
 router.get("/list/all", getList);
+router.get("/backup/list", readBackup);
 
 // FIELDS
 // Array Fields handled: favoriteList,

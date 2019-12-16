@@ -1,4 +1,5 @@
 const User = require("../../models/user");
+const BackupUser = require('../../models/backup/BackupUser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { msgG } = require('../_msgs/globalMsgs');
@@ -13,6 +14,23 @@ exports.mwUserId = (req, res, next, id) => {
         next();
     });
 };
+
+exports.mwBackup = (req, res, next) => {
+    const { name } = req.profile;
+    const data = {
+        subject: name,
+        backup: req.profile
+    }
+
+    let backup = new BackupUser(data);
+
+    backup.save((err => {
+        if(err) return res.status(500).json(msgG('error.systemError', err));
+        console.log(msgG("ok.backupSuccess", `do usuário ${name.toUpperCase()}`, 'onlyMsg'))
+    }))
+
+    next();
+}
 // END MIDDLEWARE
 
 
@@ -106,6 +124,14 @@ exports.removeField = (req, res) => { // n1
         selectedUser.set(targetField, undefined, {strict: false} );
         selectedUser.save(() => res.json(msgG("ok.removedField", targetField)))
     })
+}
+
+exports.readBackup = (req, res) => {
+    BackupUser.find({})
+    .exec((err, data) => {
+        if(err) return res.status(500).json(msgG('error.systemError', err));
+        res.json(data);
+    });
 }
 
 

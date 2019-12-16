@@ -29,7 +29,7 @@ export const loginEmail = async (dispatch, objToSend) => {
     try {
         const res = await axios.post('/api/auth/login', objToSend, configTypeJson);
         readUser(dispatch, res.data.authUserId);
-        // dispatch({ type: 'LOGIN_EMAIL', payload: res.data.token });
+        dispatch({ type: 'LOGIN_EMAIL', payload: res.data.token });
         setLoadingProgress(dispatch, false);
         return res;
     } catch (err) {

@@ -2,34 +2,12 @@ import React, { useState, Fragment } from 'react';
 import Login from '../components/auth/Login';
 import LoyaltyScoreHandler from './loyalty-client-scores';
 import ImageLogo from '../components/ImageLogo';
-import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 
 export default function LoginPage() {
-    const { showLogin, isUserAuthenticated, isStaff, isAdmin, currUser } = useStoreState(state => ({
-        isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
-        currUser: state.userReducer.cases.currentUser,
-        isAdmin: state.userReducer.cases.currentUser.isAdmin,
+    const { showLogin } = useStoreState(state => ({
         showLogin: state.componentReducer.cases.showLogin,
     }))
-
-    const dispatch = useStoreDispatch();
-
-    const showLoyaltyPageHandler = () => {
-        if(!isAdmin && !isStaff) { //  && isUserAuthenticated needs to includes it after fix userAlthentication
-            return true;
-        }
-        return false;
-    }
-
-    const redirectAdmin = () => {
-        if(isAdmin) return true;
-        return false;
-    }
-
-    const redirectStaff = () => {
-        if(isStaff) return true;
-        return false;
-    }
 
     const showMainContent = () => (
         <div className="mr-md-5 ml-md-4">
@@ -44,12 +22,8 @@ export default function LoginPage() {
                         <br />
                         ter acesso ao gerenciamento
                     </div>
-                    <div className="ml-md-5 center-small">
-                        <Login
-                            okClient={showLoyaltyPageHandler()}
-                            okStaff={redirectStaff()}
-                            okAdmin={redirectAdmin(isAdmin)}
-                        />
+                    <div className="mr-md-5 ml-md-5 center-small">
+                        <Login />
                     </div>
                 </Fragment>
             ) : (

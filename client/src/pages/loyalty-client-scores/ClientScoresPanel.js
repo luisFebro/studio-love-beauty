@@ -53,12 +53,13 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
 
             const objToSend = {
                 "loyaltyScores.cashCurrentScore": cashCurrentScore,
-                "loyaltyScores.currentScore": currentScore.toString()
+                "loyaltyScores.currentScore": currentScore.toString(),
+                "loyaltyScores.lastScore": lastScore,
             }
             updateUser(dispatch, objToSend, userId)
             .then(res => {
                 if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-                showSnackbar(dispatch, "Opa, sua pontuação foi realizada com sucesso!", 'success', 8000);
+                setTimeout(() => showSnackbar(dispatch, "Opa, sua pontuação foi efetuada com sucesso!", 'success', 11000), 5000);
             })
         }
     }, [success, verification])
@@ -72,7 +73,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                    Veja aqui seus Pontos
                 </TitleComponent>
                 <div
-                    className="text-weight-bold text-center text-main-container mt-3 m-1 p-3"
+                    className="text-weight-bold text-center text-main-container px-3 pt-5 pb-1"
                     style={{ color: "var(--mainPink)", backgroundColor: "var(--mainDark)" }}
                 >
                     <p>Pontuação Anterior:<br />{convertDotToComma(lastScore)}</p>
@@ -84,12 +85,13 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     <div
                         className="animated bounce slow"
                         style={{
+                            fontSize: '2.0rem',
                             display: showTotalPoints ? "block" : "none",
                             animationIterationCount: 4
                         }}
                     >
                         <p>Pontuação Atual:<br />{convertDotToComma(currentScore)}</p>
-                        <p className="text-center text-default">Volte sempre!</p>
+                        <p>Volte sempre!</p>
                         <br/>
                         <br/>
                     </div>

@@ -80,7 +80,7 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     const { password, needKeepLoggedIn } = req.body;
-    const { _id, name } = req.profile;
+    const { _id, name, isStaff, isAdmin } = req.profile;
     const expireAuthDays = '1d';
 
     jwt.sign(
@@ -91,6 +91,8 @@ exports.login = (req, res) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));
             res.json({
                 token,
+                isStaff,
+                isAdmin,
                 authUserId: _id,
                 msg: msg('ok.welcomeBack', name, 'onlyMsg')
             });

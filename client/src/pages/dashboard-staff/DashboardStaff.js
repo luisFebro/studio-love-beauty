@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 export default function DashboardStaff() {
     return (
-        <div>
-            I am the DashboardStaff
-        </div>
+        <Fragment>
+            <p style={{color: 'white'}}>CONTEÚDO DO QUADRO ADMINISTRATIVO</p>
+        </Fragment>
     );
 }

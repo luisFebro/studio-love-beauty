@@ -56,23 +56,48 @@ function Navbar({ history, location }) {
             >
                 {locationNow === "/"
                 ? (
-                    <Link to="/">
-                        <span className="animated zoomIn slow">
-                            Seja Bem Vindo(a)!
-                        </span>
-                    </Link>
+                    <span
+                        className="animated zoomIn slow"
+                        style={{ fontSize: '2.3rem' }}
+                    >
+                        Seja Bem Vindo(a)!
+                    </span>
                 ) : (
                     <Fragment>
                         {locationNow === "/acesso/verificacao" &&
                         <Link to="/">
-                            <p className="ml-4 text-container-main font-weight-bold text-pink">
+                            <p
+                                className="ml-4 text-container-main font-weight-bold text-pink"
+                                style={{ fontSize: '2.3rem' }}
+                            >
                                 ACESSO
                             </p>
                         </Link>}
 
                         {locationNow === "/cliente/pontos-fidelidade" &&
-                            <p className="ml-4 text-container-main font-weight-bold text-pink">
+                            <p
+                                className="ml-4 text-container-main font-weight-bold text-pink"
+                                style={{ fontSize: '2.3rem' }}
+                            >
                                 PONTOS DE FIDELIDADE
+                            </p>
+                        }
+
+                        {locationNow === "/admin/painel-de-controle" &&
+                            <p
+                                className="ml-4 text-container-main font-weight-bold text-pink"
+                                style={{ fontSize: '2.3rem' }}
+                            >
+                                PAINEL DE CONTROLE
+                            </p>
+                        }
+
+                        {locationNow === "/colaborador/quadro-administrativo" &&
+                            <p
+                                className="ml-4 text-container-main font-weight-bold text-pink"
+                                style={{ fontSize: '2.3rem' }}
+                            >
+                                QUADRO ADMINISTRATIVO
                             </p>
                         }
                     </Fragment>
@@ -87,7 +112,7 @@ function Navbar({ history, location }) {
         <button
             style={{
                 position: 'absolute',
-                top: '35px',
+                top: '45px',
                 right: '5px',
                 color: "white",
                 padding: '2px 5px',
@@ -104,31 +129,28 @@ function Navbar({ history, location }) {
     const titleByRoleHandler = () => (
         <Fragment>
             {!isUserAuthenticated ? (
-                <Link className="nav-link" to="/acesso/verificacao" className={locationNow === "/cliente/pontos-fidelidade" ? "disabled-link" : ""}>
+                <Link
+                    to="/acesso/verificacao"
+                    className={["/cliente/pontos-fidelidade", "/acesso/verificacao"].includes(locationNow) ? "disabled-link" : "nav-link"}
+                >
                     Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                 </Link>
             ) : (
                 <Fragment>
                     {isAdmin &&
                     <Fragment>
-                        <Link className="nav-link" to="/admin/painel-de-controle">
-                            Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                        </Link>
+                        Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                         {btnLogout()}
                     </Fragment>}
 
                     {isStaff &&
                     <Fragment>
-                        <Link className="nav-link" to="/staff/painel-de-controle">
-                            Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                        </Link>
+                        Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
                         {btnLogout()}
                     </Fragment>}
 
                     {!isStaff && !isAdmin &&
-                    <Link className="nav-link" to="/acesso/verificacao" className={locationNow === "/cliente/pontos-fidelidade" ? "disabled-link" : ""}>
-                        Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
-                    </Link>
+                        <span>Usuário: Cliente <i className="fas fa-user" style={{fontSize: '1.9rem'}}></i></span>
                     }
                 </Fragment>
             )}
@@ -136,7 +158,7 @@ function Navbar({ history, location }) {
     );
 
     const showManagingBtn = () => (
-        <ul className="animated zoomIn slow navbar-nav ml-3 ml-md-auto mr-3 align-items-center">
+        <ul className="animated zoomIn slow navbar-nav ml-3 ml-sm-auto mr-3 align-items-center">
             <li
                 className="nav-item"
                 style={{color: "black"}}
@@ -177,7 +199,7 @@ function Navbar({ history, location }) {
             {showNav()}
             {/*showMenuLogin()*/}
             {/*showCategorySlider()*/}
-            {showKeyAccessDashboard()}
+            {/*showKeyAccessDashboard()*/}
         </Fragment>
     );
 }
@@ -254,7 +276,6 @@ const NavWrapper = styled.nav`
         right: 1.2rem;
         top: 1.9rem;
     }
-    & .navbar-nav span i,
     #searchIcon {
         font-size: 2.1rem;
         filter: drop-shadow(0.001em 0.1em 0.1em var(--mainDark));
@@ -265,8 +286,7 @@ const NavWrapper = styled.nav`
         text-transform: capitalize;
     }
 
-    & .nav-link:hover,
-    & .navbar-nav span i:hover,
+    & .nav-link:hover:hover,
     #searchIcon:hover {
         transform: scale(1.1);
         filter: drop-shadow(0.001em 0.2em 0.1em var(--mainYellow));

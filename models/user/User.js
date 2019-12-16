@@ -20,10 +20,14 @@ const dataLoyaltyScores = {
         type: String,
         default: "0"
     },
-    currentScore: {
+    currentScore: { // last score + cashCurrenScore
         type: String,
         default: "0"
     },
+    lastScore: { // backup purpose.
+        type: String,
+        default: "0"
+    }
 }
 
 const LoyaltyScoresSchema = new Schema(dataLoyaltyScores, { _id: false });

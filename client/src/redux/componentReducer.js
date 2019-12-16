@@ -57,7 +57,9 @@ export const componentReducer = {
             case 'ALL_COMPONENTS_CLEARED':
                 let key;
                 for(key in state) {
-                    state[key] = false;
+                    key === "showLogin"
+                    ? state[key] = true
+                    : state[key] = false
                 }
                 return {
                     ...state,

@@ -332,7 +332,7 @@ footer {
 
 /*MOBILE FIRST RESPONSIVE MEDIA QUERIES*/
 /*media portrait tablets and large phones || for large devices, use min-width: 992px and up*/
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) { /*n1*/
     .image-center {
         max-width: 60%;
     }
@@ -347,3 +347,18 @@ footer {
         justify-content: "";
     }
 }
+
+/* COMMENTS
+n1: Bootstrap Reference
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/

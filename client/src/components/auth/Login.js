@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TitleComponent from '../../components/TitleComponent';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { useStoreDispatch, useStoreState } from 'easy-peasy';
+import { useStoreDispatch } from 'easy-peasy';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MoneyIcon from '@material-ui/icons/Money';
@@ -18,31 +18,16 @@ import detectErrorField from '../../utils/validation/detectErrorField';
 import clearForm from '../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
 
-Login.propTypes = {
-    okClient: PropTypes.bool,
-    okAdmin: PropTypes.bool,
-    okStaff: PropTypes.bool,
-}
-
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 400,
   }
 }));
 
-function Login({ okClient, okStaff, okAdmin, history }) {
+function Login({ history }) {
     const [data, setData] = useState({
         cpf: '',
     })
-
-    const { showLogin, isUserAuthenticated, isStaff, isAdmin, currUser } = useStoreState(state => ({
-        isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
-        currUser: state.userReducer.cases.currentUser,
-        isAdmin: state.userReducer.cases.currentUser.isAdmin,
-        showLogin: state.componentReducer.cases.showLogin,
-    }))
-    console.log("isStaff", currUser && currUser.isStaff);
-    console.log("isAdmin", currUser && currUser.isAdmin);
 
     const { cpf } = data;
     const [fieldError, setFieldError] = useState(null);
@@ -71,15 +56,21 @@ function Login({ okClient, okStaff, okAdmin, history }) {
                 setFieldError(foundObjError);
                 return;
             }
-            showSnackbar(dispatch, res.data.msg, 'success', 9000);
+            const { msg, isAdmin, isStaff } = res.data;
             clearData();
-            if(okAdmin) {
-                history.push("/admin/painel-de-controle");
+            showSnackbar(dispatch, "Analisando Crendenciais...", 'warning', 3000);
+            if(isAdmin) {
+                setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
+                setTimeout(() => history.push("/admin/painel-de-controle"), 5000);
+                setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
-            if(okStaff) {
-                history.push("/colaborador/quadro-administrativo");
+            if(isStaff) {
+                setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
+                setTimeout(() => history.push("/colaborador/quadro-administrativo"), 5000);
+                setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
-            if(okClient) {
+            if(!isAdmin && !isStaff) {
+                setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 3000);
                 hideComponent(dispatch, "login");
                 showComponent(dispatch, "purchaseValue");
                 history.push("/cliente/pontos-fidelidade");

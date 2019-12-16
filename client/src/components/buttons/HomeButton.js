@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ButtonMulti from './material-ui/ButtonMulti';
 import { useStoreDispatch } from 'easy-peasy';
 import { hideComponent, showComponent } from "../../redux/actions/componentActions";
+import { logout } from "../../redux/actions/authActions";
 import PropTypes from 'prop-types';
 
 HomeButton.propTypes = {
@@ -14,16 +15,16 @@ export default function HomeButton({ hideComp }) {
 
     return (
         <div className="my-5">
-            <Link to="/" style={{textDecoration: "none"}}>
+            <Link to="/acesso/verificacao" style={{textDecoration: "none"}}>
                 <ButtonMulti
                     onClick={() => {
                         hideComponent(dispatch, hideComp)
                         showComponent(dispatch, "login")
+                        logout(dispatch);
                     }}
                     color="var(--mainWhite)"
                     backgroundColor="var(--mainPink)"
                     backColorOnHover="var(--mainPink)"
-                    iconFontAwesome="fas fa-home"
                     textTransform='uppercase'
                 >
                     Voltar

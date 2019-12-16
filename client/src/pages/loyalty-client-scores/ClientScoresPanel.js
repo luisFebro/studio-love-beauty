@@ -8,6 +8,8 @@ import TitleComponent from '../../components/TitleComponent';
 import animateNumber from '../../utils/numbers/animateNumber';
 import { convertDotToComma, convertCommaToDot } from '../../utils/numbers/convertDotComma';
 import isInteger from '../../utils/numbers/isInteger';
+import getMonthNowBr from '../../utils/dates/getDayMonthBr';
+import { CLIENT_URL } from '../../config/clientUrl';
 
 
 ClientScoresPanel.propTypes = {
@@ -20,10 +22,11 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
     const [showTotalPoints, setShowTotalPoints] = useState(false);
     const animatedNumber = useRef(null);
 
-    const { name, userId, loyaltyScores } = useStoreState(state => ({
+    const { name, userId, loyaltyScores, birthday } = useStoreState(state => ({
         loyaltyScores: state.userReducer.cases.currentUser.loyaltyScores,
         name: state.userReducer.cases.currentUser.name,
         userId: state.userReducer.cases.currentUser._id,
+        birthday: state.userReducer.cases.currentUser.birthday,
     }))
 
     const dispatch = useStoreDispatch();
@@ -64,6 +67,25 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
         }
     }, [success, verification])
 
+    const isUserBirthdayThisMonth = () => {
+        return birthday.includes(getMonthNowBr())
+        ? true
+        : false
+    }
+
+    const showBirthdayMsg = () => (
+        <div className="container-center text-center flex-column">
+            O cliente faz aniversário este mês
+            <img
+                src={`${CLIENT_URL}/img/icons/birthday-cake.svg`}
+                width="128px"
+                height="120px"
+                alt="aniversariante"
+            />
+            <p className="text-default">em: {birthday}</p>
+        </div>
+    );
+
     return (
         success &&
         <div className="mr-md-5 ml-md-4 mt-5 animated slideInLeft fast">
@@ -92,8 +114,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     >
                         <p>Pontuação Atual:<br />{convertDotToComma(currentScore)}</p>
                         <p>Volte sempre!</p>
-                        <br/>
-                        <br/>
+                        <p>{isUserBirthdayThisMonth() ? showBirthdayMsg() : null}</p>
                     </div>
                 </div>
                 <p style={{fontSize: "18px"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*Valor Decimal Arredondado." : null}</p>

@@ -6,10 +6,6 @@ const data = {
     subject: String,
     backup: {
         type: Object
-    },
-    runningBackup: {
-        type: Boolean,
-        default: true
     }
 }
 

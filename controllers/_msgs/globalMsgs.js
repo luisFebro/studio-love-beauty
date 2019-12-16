@@ -15,6 +15,7 @@ const msgG = (typeAndMsgName, customized = 'NeedCustomWord', options) => {
 
     // MESSAGES
     ok.success = "Esta operação foi executada com sucesso";
+    ok.backupSuccess = `O backup ${customized.cap()} foi realizado com sucesso`;
     ok.added = "Adicionado";
     ok.removed = "Removido";
     ok.removedField = `O campo ${customized} foi removido com sucesso!`;

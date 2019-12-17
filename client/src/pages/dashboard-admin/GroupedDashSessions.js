@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import DashUsers from './dash-users';
 import DashBooking from './dash-booking';
 import DashSetting from './dash-setting';
+import DashFinance from './dash-finance';
 // End Dash Sessions
 
 // Material UI
@@ -19,6 +20,7 @@ import Box from '@material-ui/core/Box';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import BuildIcon from '@material-ui/icons/Build';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 // End Material UI
 
 function TabPanel(props) {
@@ -125,7 +127,8 @@ export default function GroupedDashSessions() {
                 >
                     <Tab label="Usuários" icon={<SupervisedUserCircleIcon />} {...a11yProps(0)} />
                     <Tab label="Agendamentos" icon={<LibraryBooksIcon />} {...a11yProps(1)} />
-                    <Tab label="Configurações" icon={<BuildIcon />} {...a11yProps(2)} />
+                    <Tab label="Finanças" icon={<MonetizationOnIcon />} {...a11yProps(2)} />
+                    <Tab label="Configurações" icon={<BuildIcon />} {...a11yProps(3)} />
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -140,6 +143,9 @@ export default function GroupedDashSessions() {
                     <DashBooking />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
+                    <DashFinance />
+                </TabPanel>
+                <TabPanel value={value} index={3} dir={theme.direction}>
                     <DashSetting />
                 </TabPanel>
             </SwipeableViews>

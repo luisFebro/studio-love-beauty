@@ -146,7 +146,7 @@ export default function ModalLogin() {
                 label="Nome ou Email"
                 placeholder="Insira nome ou email cadastrado"
                 autoFocus
-                autoComplete="email"
+                autoComplete="off"
                 fullWidth
                 InputProps={{
                   startAdornment: (

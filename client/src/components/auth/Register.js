@@ -128,7 +128,7 @@ export default function Register() {
                 value={cpf}
                 type="text"
                 label="Insira seu CPF"
-                autoComplete="cpf"
+                autoComplete="off"
                 helperText="Digite apenas números."
                 fullWidth
                 InputProps={{
@@ -191,7 +191,7 @@ export default function Register() {
                 value={email}
                 type="email"
                 label="Email"
-                autoComplete="email"
+                autoComplete="off"
                 fullWidth
                 InputProps={{
                   startAdornment: (
@@ -212,7 +212,7 @@ export default function Register() {
                 value={phone}
                 type="tel"
                 label="Contato"
-                autoComplete="phone"
+                autoComplete="off"
                 fullWidth
                 InputProps={{
                   startAdornment: (

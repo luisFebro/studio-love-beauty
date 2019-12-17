@@ -67,7 +67,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                 "loyaltyScores.currentScore": currentScore.toString(),
                 "loyaltyScores.lastScore": lastScore,
             }
-            updateUser(dispatch, objToSend, userId)
+            updateUser(dispatch, objToSend, userId, false)
             .then(res => {
                 if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
                 setTimeout(() => showSnackbar(dispatch, "Opa, sua pontuação foi efetuada com sucesso!", 'success', 11000), 5000);

@@ -86,7 +86,7 @@ export default function ModalTextField({ currItemFound }) {
                             fullWidth
                             name={mainKey}
                             rows="5"
-                            autoComplete="Mensagem aqui"
+                            autoComplete="off"
                             className={classes.textField}
                             margin="normal"
                             variant="outlined"

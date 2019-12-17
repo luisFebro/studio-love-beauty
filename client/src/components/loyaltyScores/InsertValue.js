@@ -75,7 +75,7 @@ export default function InsertValue({ success, setValuePaid }) {
                 name="valuePaid"
                 label="Insira seu Valor"
                 type="text"
-                autoComplete="Valor da Nota Fiscal"
+                autoComplete="off"
                 fullWidth
                 InputProps={{
                   startAdornment: (

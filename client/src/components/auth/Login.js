@@ -101,7 +101,7 @@ function Login({ history }) {
                 value={cpf}
                 type="text"
                 label="Insira seu CPF"
-                autoComplete="cpf"
+                autoComplete="off" // n1
                 onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
                 fullWidth
                 InputProps={{
@@ -145,3 +145,9 @@ function Login({ history }) {
 }
 
 export default withRouter(Login);
+
+
+/* COMMENTS
+n1: LESSON: autoComplete is "off" to not allow the browser to autocomplete with suggestions of other searches.other
+Disablign this, can enhances security since it does not read past delicate infos.
+*/

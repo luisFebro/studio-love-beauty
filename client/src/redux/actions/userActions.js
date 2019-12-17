@@ -15,11 +15,11 @@ export const readUser = async (dispatch, _userId) => {
     });
 };
 
-export const updateUser = async (dispatch, objToSend, _idUser) => {
+export const updateUser = async (dispatch, objToSend, _idUser, needDispatch) => {
     const updateObj = Object.assign({}, {_id: _idUser}, objToSend);
     try {
         const res = await axios.put(`/api/user/${_idUser}`, objToSend, configTypeJson);
-        dispatch({ type: 'USER_UPDATED', payload: updateObj });
+        dispatch({ type: 'USER_UPDATED', payload: needDispatch ? updateObj : null });
         return res;
     } catch (err) {
         return err;
@@ -53,7 +53,6 @@ export const readUserList = async (dispatch) => {
         setLoadingProgress(dispatch, false);
         console.log('==ALL USERS UPDATED==');
         dispatch({ type: 'USER_READ_LIST', payload: res.data });
-        return res;
     } catch (err) {
         setLoadingProgress(dispatch, false);
         return err;

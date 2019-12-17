@@ -97,7 +97,7 @@ export default function ChangePassword() {
                 type="email"
                 label="Email"
                 placeholder="Insira o email que você cadastrou"
-                autoComplete="email"
+                autoComplete="off"
                 fullWidth
                 InputProps={{
                   startAdornment: (

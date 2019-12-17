@@ -91,7 +91,7 @@ export default function ModalChangeTitle({ currItemFound }) {
                             name={mainField}
                             type={currItemFound ? currItemFound.typeForm : null}
                             label={`Novo ${mainSubject} aqui:`}
-                            autoComplete="changeInfo"
+                            autoComplete="off"
                             fullWidth
                         />
                     </form>

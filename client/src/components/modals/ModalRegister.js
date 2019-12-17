@@ -194,7 +194,7 @@ export default function ModalRegister() {
                 name="email"
                 type="email"
                 label="Email"
-                autoComplete="email"
+                autoComplete="off"
                 fullWidth
                 InputProps={{
                   startAdornment: (

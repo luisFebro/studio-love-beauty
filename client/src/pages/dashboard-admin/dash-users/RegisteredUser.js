@@ -141,7 +141,10 @@ export default function RegisteredUser({ data, allUsers }) {
     );
 
     return (
-        <DivWrapper className="text-default" style={{ position: 'relative' }}>
+        <DivWrapper
+            className="text-default"
+            style={{ position: 'relative', userSelect: "text" }}
+        >
             {showMainBlock()}
             {showDeleteButton()}
             {showChangeUserTypeButton()}
@@ -153,7 +156,7 @@ const DivWrapper = styled.div`
     width: 90%;
     border-radius: 10px;
     padding: 20px 10px;
-    margin: 15px auto;
+    margin: 25px auto;
     background-color: var(--mainDark);
     color: #ecf0f1;
 `;

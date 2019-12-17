@@ -40,7 +40,7 @@ export const userReducer = {
                     allUsers: state.allUsers.filter(user => user._id !== action.payload)
                 };
             case 'USER_UPDATED':
-                updateKeyWithId(state.allUsers, action.payload);
+                action.payload && updateKeyWithId(state.allUsers, action.payload);
                 return {
                     ...state
                 };

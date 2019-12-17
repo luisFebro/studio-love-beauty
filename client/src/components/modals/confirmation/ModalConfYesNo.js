@@ -99,14 +99,20 @@ export default function ModalConfYesNo({ currItemFound }) {
                             </Button>
                             <Button
                                 onClick={() => {
-                                    showSnackbar(dispatch, `O ${mainSubject} ${name} foi excluído com sucesso!`, 'success');
                                     closeModal(dispatch);
                                     // animateAnotherComponent(dispatch);
                                     if (currItemFound) {
                                         switch (currItemFound.mainSubject) {
                                             case 'Usuário':
                                                 setTimeout(() => {
-                                                    deleteUser(dispatch, _idUser);
+                                                    showSnackbar(dispatch, "Fazendo cópia de segurança e excluindo usuário...", 'warning', 3000)
+                                                    setTimeout(() => {
+                                                        deleteUser(dispatch, _idUser)
+                                                        .then(res => {
+                                                            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+                                                            showSnackbar(dispatch, `O ${mainSubject} ${name.cap()} foi excluído com sucesso!`, 'success');
+                                                        })
+                                                    }, 3000);
                                                     readUserList(dispatch);
                                                 }, 8000);
                                                 break;

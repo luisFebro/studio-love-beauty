@@ -15,7 +15,7 @@ export const readUser = async (dispatch, _userId) => {
     });
 };
 
-export const updateUser = async (dispatch, objToSend, _idUser, needDispatch) => {
+export const updateUser = async (dispatch, objToSend, _idUser, needDispatch = true) => {
     const updateObj = Object.assign({}, {_id: _idUser}, objToSend);
     try {
         const res = await axios.put(`/api/user/${_idUser}`, objToSend, configTypeJson);

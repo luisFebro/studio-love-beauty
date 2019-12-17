@@ -53,6 +53,7 @@ export const readUserList = async (dispatch) => {
         setLoadingProgress(dispatch, false);
         console.log('==ALL USERS UPDATED==');
         dispatch({ type: 'USER_READ_LIST', payload: res.data });
+        return res;
     } catch (err) {
         setLoadingProgress(dispatch, false);
         return err;

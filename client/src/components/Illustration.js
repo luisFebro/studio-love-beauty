@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import truncateWords from '../utils/string/truncateWords';
 import { HashLink } from 'react-router-hash-link';
 import { ButtonContainerPressedEffectDark as Dark } from '../components/buttons/Default';
 
 Illustration.propTypes = {
     img: PropTypes.string.isRequired,
+    imgStyle: PropTypes.object,
     title: PropTypes.node,
     alt: PropTypes.string,
     actionButton: PropTypes.shape({
@@ -18,6 +20,7 @@ Illustration.propTypes = {
         txt: PropTypes.node.isRequired,
         txtStyle: PropTypes.string,
         txtColor: PropTypes.string,
+        txtAlign: PropTypes.string,
         txtBorder: PropTypes.string,
         topPos: PropTypes.string,
         leftPos: PropTypes.string,
@@ -27,11 +30,12 @@ Illustration.propTypes = {
 export default function Illustration({
     title,
     img,
+    imgStyle,
     alt = "conteúdo da página está vazio",
     actionButton = {},
     txtImgConfig = {} }) {
 
-    const { txt, txtColor, txtStyle, txtBorder, topPos, leftPos } = txtImgConfig;
+    const { txt, txtColor, txtStyle, txtAlign, txtBorder, topPos, leftPos } = txtImgConfig;
     const showActionButton = (actionButton) => {
         const { btnName, txt, to } = actionButton;
         return(
@@ -49,6 +53,7 @@ export default function Illustration({
             <h2 className="text-center text-sub-title-upper">{title}</h2>
             <DivWrapper className="container-center">
                 <img
+                    style={imgStyle}
                     className="image-center tranparent-img-shadow"
                     src={img}
                     alt={alt}
@@ -56,12 +61,13 @@ export default function Illustration({
                 <p
                     className={`move-txt-from-center ${txtBorder} ${txtStyle || "text-main-container"}`}
                     style={{
+                        textAlign: txtAlign || "center",
                         color: txtColor || "black",
                         top: topPos || "5%",
                         left: leftPos || "50%",
                     }}
                 >
-                    {txt}
+                    {truncateWords(txt, 55)}
                 </p>
             </DivWrapper>
             {showActionButton(actionButton)}

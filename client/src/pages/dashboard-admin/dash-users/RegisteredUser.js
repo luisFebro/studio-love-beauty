@@ -92,7 +92,7 @@ export default function RegisteredUser({ data, allUsers }) {
     const showMainBlock = () => (
         <Fragment>
             <div>
-                <p>Name: {name}</p>
+                <p className="font-weight-bold text-default">Name: {name}</p>
             </div>
             <div>
                 <p>Tipo Usuário: {whichRole()}</p>

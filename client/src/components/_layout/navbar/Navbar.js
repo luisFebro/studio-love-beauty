@@ -153,7 +153,7 @@ function Navbar({ history, location }) {
                         {btnLogout()}
                     </Fragment>}
 
-                    {!isStaff && !isAdmin &&
+                    {!isStaff && !isAdmin && locationNow !== "/" &&
                         <span>Usuário: Cliente <i className="fas fa-user" style={{fontSize: '1.9rem'}}></i></span>
                     }
                 </Fragment>

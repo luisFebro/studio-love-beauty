@@ -6,7 +6,7 @@ import uuidv1 from 'uuid/v1';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { findAnItem } from '../../../redux/actions/globalActions';
 import { showModalConfYesNo, showModalTextField } from '../../../redux/actions/modalActions';
-import { animateHinge } from '../../../redux/actions/animationActions';
+// import { animateHinge } from '../../../redux/actions/animationActions';
 // End Redux
 import DeleteButton from '../../../components/buttons/DeleteButton';
 import MessageButton from '../../../components/buttons/MessageButton';
@@ -134,22 +134,22 @@ export default function RegisteredUser({ data }) {
                 };
                 findAnItem(dispatch, allUsers, _id, attachedObj);
                 showModalConfYesNo(dispatch);
-                setTimeout(() => {
-                    const cssText = `
-                        width: 90%;
-                        border-radius: 10px;
-                        padding: 20px 10px;
-                        margin: 15px auto;
-                        background-color: #f39c12;
-                        color: #ecf0f1;`;
-                    animateHinge(animateRef, cssText);
-                }, 9000);
+                // setTimeout(() => {
+                //     const cssText = `
+                //         width: 90%;
+                //         border-radius: 10px;
+                //         padding: 20px 10px;
+                //         margin: 15px auto;
+                //         background-color: #f39c12;
+                //         color: #ecf0f1;`;
+                //     animateHinge(animateRef, cssText);
+                // }, 9000);
             }}
         />
     );
 
     return (
-        <DivWrapper ref={animateRef} className="text-default" style={{ position: 'relative' }}>
+        <DivWrapper className="text-default" style={{ position: 'relative' }}>
             {showMainBlock()}
             {showDeleteButton()}
         </DivWrapper>

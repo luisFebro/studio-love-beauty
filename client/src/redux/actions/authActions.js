@@ -47,8 +47,8 @@ export const registerEmail = async (dispatch, objToSend) => {
     setLoadingProgress(dispatch, true);
     try {
         const res = await axios.post('http://localhost:5000/api/auth/register', objToSend, configTypeJson);
-        dispatch({ type: 'REGISTER_EMAIL', payload: res.data.token });
-        readUser(dispatch, res.data.authUserId);
+        // dispatch({ type: 'REGISTER_EMAIL', payload: res.data.token });
+        // readUser(dispatch, res.data.authUserId);
         setLoadingProgress(dispatch, false);
         return res;
     } catch(err) {

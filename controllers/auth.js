@@ -56,26 +56,10 @@ exports.register = (req, res) => {
         maritalStatus
     });
 
-
     newUser.save()
     .then(user => {
-        jwt.sign(
-            { id: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: 1000 },
-            (err, token) => {
-                if(err) return res.status(500).json(msgG('error.systemError', err));
-                const { _id } = user
-                res.json({
-                    token,
-                    authUserId: _id,
-                    msg: msg('ok.successRegister', name, 'onlyMsg')
-                });
-            }
-        )
+        res.json({ msg: msg('ok.successRegister', name, 'onlyMsg')});
     });
-
-
 }
 
 exports.login = (req, res) => {

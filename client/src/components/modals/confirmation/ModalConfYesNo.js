@@ -9,7 +9,6 @@ import { deleteProduct } from '../../../redux/actions/productActions';
 // End Redux
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import { CardMedia } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -75,14 +74,13 @@ export default function ModalConfYesNo({ currItemFound }) {
     return (
         <div>
             <Dialog style={{ zIndex: 1500 }} open={isModalConfYesNoOpen} aria-labelledby="form-dialog-title">
-                <CardMedia className={classes.media} image="img/babadoo-logo_no-slogon.png" title="loja babadoo" />
                 <DialogTitle id="form-dialog-title">
                     <span className="text-main-container">{`Confirmação de ${action.noun} de ${mainSubject}`}</span>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <span className="text-default">
-                            {parse(`${action.verb} o ${mainSubject}: <strong>${name}</strong> ?`)}
+                            {parse(`${action.verb} o ${mainSubject}: <strong>${name && name.cap()}</strong> ?`)}
                             <br />
                         </span>
                     </DialogContentText>
@@ -100,21 +98,20 @@ export default function ModalConfYesNo({ currItemFound }) {
                             <Button
                                 onClick={() => {
                                     closeModal(dispatch);
+                                    showSnackbar(dispatch, "Processando...", 'warning', 3000);
                                     // animateAnotherComponent(dispatch);
                                     if (currItemFound) {
                                         switch (currItemFound.mainSubject) {
                                             case 'Usuário':
+                                                setTimeout(() => showSnackbar(dispatch, "Fazendo cópia de segurança e excluindo usuário...", 'warning', 4000), 3000);
                                                 setTimeout(() => {
-                                                    showSnackbar(dispatch, "Fazendo cópia de segurança e excluindo usuário...", 'warning', 3000)
-                                                    setTimeout(() => {
-                                                        deleteUser(dispatch, _idUser)
-                                                        .then(res => {
-                                                            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-                                                            showSnackbar(dispatch, `O ${mainSubject} ${name.cap()} foi excluído com sucesso!`, 'success');
-                                                        })
-                                                    }, 3000);
+                                                    deleteUser(dispatch, _idUser)
+                                                    .then(res => {
+                                                        if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+                                                        showSnackbar(dispatch, `O ${mainSubject} ${name.cap()} foi excluído com sucesso!`, 'success');
+                                                    })
                                                     readUserList(dispatch);
-                                                }, 8000);
+                                                }, 7000);
                                                 break;
                                             case 'Produto':
                                                 setTimeout(() => {

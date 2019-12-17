@@ -8,7 +8,7 @@ export default function Dashboard() {
 
     return (
         <Fragment>
-            <p style={{color: "white", margin: 0, paddingLeft: 20}}className="text-default">Olá, {name.cap()}!</p>
+            <p style={{color: "white", margin: 0, paddingLeft: 20}}className="text-default">Nome Admin: {name.cap()}</p>
             <br/>
             <GroupedDashSessions />
         </Fragment>

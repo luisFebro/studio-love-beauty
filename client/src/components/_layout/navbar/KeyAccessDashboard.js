@@ -2,15 +2,15 @@ import React from 'react';
 import { useStoreState } from 'easy-peasy';
 
 export default function KeyAccessDashboard() {
-    const { isUserAuthenticated, isAdmin } = useStoreState(state => ({
+    const { isUserAuthenticated, role } = useStoreState(state => ({
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
-        isAdmin: state.userReducer.cases.currentUser.isAdmin
+        role: state.userReducer.cases.currentUser.role
     }));
 
     return (
         <div>
             {isUserAuthenticated ? (
-                isAdmin ? (
+                role === "admin" ? (
                     <span
                         className="p-2 badge badge-primary shadow-elevation"
                         style={{ position: 'absolute', right: '0', top: '0', zIndex: 1500 }}

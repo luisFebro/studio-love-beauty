@@ -5,7 +5,7 @@ const { msg } = require('./_msgs/auth');
 
 // MIDDLEWARES
 exports.mwIsAdmin = (req, res, next) => {
-    if(req.profile.isAdmin === false) {
+    if(req.profile.role !== "admin") {
         return res.status(403).json(msg('error.accessDenied'));
     }
     next();
@@ -64,7 +64,7 @@ exports.register = (req, res) => {
 
 exports.login = (req, res) => {
     const { password, needKeepLoggedIn } = req.body;
-    const { _id, name, isStaff, isAdmin } = req.profile;
+    const { _id, name, role } = req.profile;
     const expireAuthDays = '1d';
 
     jwt.sign(
@@ -75,8 +75,7 @@ exports.login = (req, res) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));
             res.json({
                 token,
-                isStaff,
-                isAdmin,
+                role,
                 authUserId: _id,
                 msg: msg('ok.welcomeBack', name, 'onlyMsg')
             });

@@ -9,7 +9,7 @@ import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThree
 export default function RegisteredUsersList() {
     const { allUsers, isLoading } = useStoreState(state => ({
         allUsers: state.userReducer.cases.allUsers,
-        isLoading: state.globalReducer.cases.isLoading,
+        isLoading: state.globalReducer.cases.isLinearPLoading,
     }));
 
     const dispatch = useStoreDispatch();
@@ -20,7 +20,8 @@ export default function RegisteredUsersList() {
 
     const registeredUserList = allUsers.map(user => <RegisteredUser
                                                             key={user._id}
-                                                            data={user} />
+                                                            data={user}
+                                                            allUsers={allUsers} />
                                             );
 
     return (

@@ -17,10 +17,9 @@ const isStoreOpen = dataWorkingHour[1];
 function Navbar({ history, location }) {
     // const [showSkeleton, setShowSkeleton] = useState(true);
     const [isSearchOpen, setSearchOpen] = useState(false);
-    const { isUserAuthenticated, isStaff, isAdmin } = useStoreState(state => ({
+    const { isUserAuthenticated, role } = useStoreState(state => ({
        isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
-       isStaff: state.userReducer.cases.currentUser.isStaff,
-       isAdmin: state.userReducer.cases.currentUser.isAdmin,
+       role: state.userReducer.cases.currentUser.role,
     }));
 
     const dispatch = useStoreDispatch();
@@ -137,7 +136,7 @@ function Navbar({ history, location }) {
                 </Link>
             ) : (
                 <Fragment>
-                    {isAdmin &&
+                    {role === "admin" &&
                     <Fragment>
                         <Link to="/admin/painel-de-controle">
                             Usuário: Administrador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
@@ -145,7 +144,7 @@ function Navbar({ history, location }) {
                         {btnLogout()}
                     </Fragment>}
 
-                    {isStaff &&
+                    {role === "colaborador" &&
                     <Fragment>
                         <Link to="/colaborador/quadro-administrativo">
                             Usuário: Colaborador <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
@@ -153,7 +152,7 @@ function Navbar({ history, location }) {
                         {btnLogout()}
                     </Fragment>}
 
-                    {!isStaff && !isAdmin && locationNow !== "/" &&
+                    {role === "cliente" && locationNow !== "/" &&
                         <span>Usuário: Cliente <i className="fas fa-user" style={{fontSize: '1.9rem'}}></i></span>
                     }
                 </Fragment>

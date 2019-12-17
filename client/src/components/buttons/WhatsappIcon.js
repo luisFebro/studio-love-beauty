@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useStoreState } from 'easy-peasy';
 
 export default function WhatsappIcon() {
-    let { isAdmin } = useStoreState(state => ({
-        isAdmin: state.userReducer.cases.currentUser.isAdmin
+    let { role } = useStoreState(state => ({
+        role: state.userReducer.cases.currentUser.role
     }));
     return (
         <DivWrapper>
-            {!isAdmin ? (
+            {!role === "admin" ? (
                 <a
                     target="_blank"
                     rel="noopener noreferrer"

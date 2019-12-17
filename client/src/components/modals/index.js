@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useStoreState } from 'easy-peasy';
 // MODALS
 import Modal from './Modal';
@@ -13,6 +13,7 @@ import ModalRegister from './ModalRegister';
 // confirmation
 import ModalChangeTitle from './confirmation/ModalChangeTitle';
 import ModalConfYesNo from './confirmation/ModalConfYesNo';
+import ModalSelect from './confirmation/ModalSelect';
 // end confirmation
 // END MODALS
 
@@ -20,12 +21,16 @@ export default function AllModals() {
     const { currentItemFound } = useStoreState(state => ({
         currentItemFound: state.globalReducer.cases.currentItemFound
     }));
-    // Checkingthe right places to send data to confirmation modals
+
     let itemsYesNo = null,
         itemsField = null,
-        textField = null;
+        textField = null,
+        itemsSelect = null;
+
     if (currentItemFound) {
         switch (currentItemFound.mainSubject) {
+            case "Função Usuário":
+                itemsSelect = currentItemFound;
             case 'Preço':
             case 'Título':
                 itemsField = currentItemFound;
@@ -50,6 +55,7 @@ export default function AllModals() {
             <UnderConstruction />
             <ModalLogin />
             <ModalRegister />
+            <ModalSelect currItemFound={itemsSelect} />
             <ModalChangeTitle currItemFound={itemsField} />
             <ModalConfYesNo currItemFound={itemsYesNo} />
             <ModalTextField currItemFound={textField} />

@@ -1,4 +1,5 @@
 import { reducer } from 'easy-peasy';
+import updateKeyWithId from './helpers/updateKeyWithId';
 // You can use only one isntance of object like 'cases' for each object.
 // Check for mispellings in case of one action not being dispatched properly.
 // Reducer Naming Structure: type: MAIN/SUBJECT + PARTICIPLE VERB eg. USER_CLEARED
@@ -37,6 +38,11 @@ export const userReducer = {
                 return {
                     ...state,
                     allUsers: state.allUsers.filter(user => user._id !== action.payload)
+                };
+            case 'USER_UPDATED':
+                updateKeyWithId(state.allUsers, action.payload);
+                return {
+                    ...state
                 };
             case 'USER_READ_LIST':
                 return {

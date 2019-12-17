@@ -56,20 +56,20 @@ function Login({ history }) {
                 setFieldError(foundObjError);
                 return;
             }
-            const { msg, isAdmin, isStaff } = res.data;
+            const { msg, role } = res.data;
             clearData();
             showSnackbar(dispatch, "Analisando Crendenciais...", 'warning', 3000);
-            if(isAdmin) {
+            if(role === "admin") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
                 setTimeout(() => history.push("/admin/painel-de-controle"), 5000);
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
-            if(isStaff) {
+            if(role === "colaborador") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
                 setTimeout(() => history.push("/colaborador/quadro-administrativo"), 5000);
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
-            if(!isAdmin && !isStaff) {
+            if(role === "cliente") {
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 3000);
                 hideComponent(dispatch, "login");
                 showComponent(dispatch, "purchaseValue");

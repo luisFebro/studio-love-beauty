@@ -33,15 +33,11 @@ const dataLoyaltyScores = {
 const LoyaltyScoresSchema = new Schema(dataLoyaltyScores, { _id: false });
 // END TEMP AUTH USER ID
 
-
 const data = {
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
-    isStaff: {
-        type: Boolean,
-        default: false
+    role: {
+        type: String,
+        default: "cliente",
+        enum: ["admin", "colaborador", "cliente"]
     },
     loyaltyScores: LoyaltyScoresSchema,
     name: {

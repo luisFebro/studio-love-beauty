@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { showSnackbar } from './snackbarActions';
 import { configTypeJson } from '../../utils/server/configTypeJson';
+import { setLoadingProgress } from './globalActions';
 // import { tokenConfig } from './authActions';
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 
@@ -15,9 +16,10 @@ export const readUser = async (dispatch, _userId) => {
 };
 
 export const updateUser = async (dispatch, objToSend, _idUser) => {
+    const updateObj = Object.assign({}, {_id: _idUser}, objToSend);
     try {
         const res = await axios.put(`/api/user/${_idUser}`, objToSend, configTypeJson);
-        dispatch({ type: 'USER_UPDATED', payload: res.data });
+        dispatch({ type: 'USER_UPDATED', payload: updateObj });
         return res;
     } catch (err) {
         return err;
@@ -45,11 +47,14 @@ export const confirmUserAccount = async (userId) => {
 
 // LISTS
 export const readUserList = async (dispatch) => {
+    setLoadingProgress(dispatch, true);
     try {
         const res = await axios.get('/api/user/list/all', configTypeJson);
+        setLoadingProgress(dispatch, false);
         console.log('==ALL USERS UPDATED==');
         dispatch({ type: 'USER_READ_LIST', payload: res.data });
     } catch (err) {
+        setLoadingProgress(dispatch, false);
         return err;
     }
 };

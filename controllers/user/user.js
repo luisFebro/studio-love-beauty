@@ -6,6 +6,9 @@ const { msgG } = require('../_msgs/globalMsgs');
 const { msg } = require('../_msgs/user');
 const validateEmail = require('../../utils/validation/validateEmail');
 
+// fetching enum values exemple:
+// console.log(User.schema.path("role").enumValues); [ 'admin', 'colaborador', 'cliente' ]
+
 // MIDDLEWARES - mw
 exports.mwUserId = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {

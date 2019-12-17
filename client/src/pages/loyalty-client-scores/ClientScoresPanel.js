@@ -8,7 +8,7 @@ import TitleComponent from '../../components/TitleComponent';
 import animateNumber from '../../utils/numbers/animateNumber';
 import { convertDotToComma, convertCommaToDot } from '../../utils/numbers/convertDotComma';
 import isInteger from '../../utils/numbers/isInteger';
-import getMonthNowBr from '../../utils/dates/getDayMonthBr';
+import getMonthNowBr from '../../utils/dates/getMonthNowBr';
 import { CLIENT_URL } from '../../config/clientUrl';
 
 
@@ -20,6 +20,7 @@ ClientScoresPanel.propTypes = {
 
 export default function ClientScoresPanel({ success, valuePaid, verification }) {
     const [showTotalPoints, setShowTotalPoints] = useState(false);
+    const [gotBirthday, setGotBirthday] = useState(false);
     const animatedNumber = useRef(null);
 
     const { name, userId, loyaltyScores, birthday } = useStoreState(state => ({
@@ -32,6 +33,9 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
     const dispatch = useStoreDispatch();
 
     let lastScore = loyaltyScores && loyaltyScores.currentScore;
+    if(typeof lastScore === "undefined") {
+        lastScore = "0";
+    }
     let cashCurrentScore = convertCommaToDot(valuePaid);
     lastScore =
     isInteger(lastScore)
@@ -54,6 +58,10 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                 setShowTotalPoints
             );
 
+            if(birthday.includes(getMonthNowBr())) {
+                setGotBirthday(true);
+            }
+
             const objToSend = {
                 "loyaltyScores.cashCurrentScore": cashCurrentScore,
                 "loyaltyScores.currentScore": currentScore.toString(),
@@ -65,13 +73,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                 setTimeout(() => showSnackbar(dispatch, "Opa, sua pontuação foi efetuada com sucesso!", 'success', 11000), 5000);
             })
         }
-    }, [success, verification])
-
-    const isUserBirthdayThisMonth = () => {
-        return birthday.includes(getMonthNowBr())
-        ? true
-        : false
-    }
+    }, [success, verification, birthday])
 
     const showBirthdayMsg = () => (
         <div className="container-center text-center flex-column">
@@ -114,7 +116,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     >
                         <p>Pontuação Atual:<br />{convertDotToComma(currentScore)}</p>
                         <p>Volte sempre!</p>
-                        <p>{isUserBirthdayThisMonth() ? showBirthdayMsg() : null}</p>
+                        <p>{gotBirthday ? showBirthdayMsg() : null}</p>
                     </div>
                 </div>
                 <p style={{fontSize: "18px"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*Valor Decimal Arredondado." : null}</p>

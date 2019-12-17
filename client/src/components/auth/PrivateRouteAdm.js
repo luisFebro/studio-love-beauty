@@ -4,9 +4,9 @@ import { useStoreState } from 'easy-peasy';
 // import { showSnackbar } from '../../redux/actions/snackbarActions';
 
 export default function PrivateRouteAdm({ component: Component, ...rest }) {
-    const { isUserAuthenticated, isAdmin } = useStoreState(state => ({
+    const { isUserAuthenticated, role } = useStoreState(state => ({
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
-        isAdmin: state.userReducer.cases.currentUser.isAdmin
+        role: state.userReducer.cases.currentUser.role
     }))
 
     // const dispatch = useStoreDispatch();
@@ -27,7 +27,7 @@ export default function PrivateRouteAdm({ component: Component, ...rest }) {
         <Route
             {...rest}
             render={props =>
-                isUserAuthenticated && isAdmin ? (
+                isUserAuthenticated && role === "admin" ? (
                     <Component {...props} />
                 ) :  alertAndRedirect(props)
             }

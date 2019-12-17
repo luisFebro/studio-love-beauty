@@ -3,28 +3,19 @@ import styled from 'styled-components';
 import moment from 'moment';
 import uuidv1 from 'uuid/v1';
 // Redux
-import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import { useStoreDispatch } from 'easy-peasy';
 import { findAnItem } from '../../../redux/actions/globalActions';
-import { showModalConfYesNo, showModalTextField } from '../../../redux/actions/modalActions';
+import { showModalConfYesNo, showModalSelect } from '../../../redux/actions/modalActions';
 // import { animateHinge } from '../../../redux/actions/animationActions';
 // End Redux
 import DeleteButton from '../../../components/buttons/DeleteButton';
-import MessageButton from '../../../components/buttons/MessageButton';
+import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
 import PropTypes from 'prop-types';
 // Material UI
 // import { makeStyles } from '@material-ui/core/styles';
 
 moment.updateLocale('pt-br');
 
-RegisteredUser.propTypes = {
-    data: PropTypes.shape({
-        name: PropTypes.string,
-        email: PropTypes.string,
-        favoriteList: PropTypes.arrayOf(PropTypes.object),
-        inCartList: PropTypes.arrayOf(PropTypes.object),
-        registerDate: PropTypes.string
-    }).isRequired
-};
 
 // const useStyles = makeStyles(theme => ({
 //     button: {
@@ -37,19 +28,17 @@ RegisteredUser.propTypes = {
 //     }
 // }));
 
-export default function RegisteredUser({ data }) {
+export default function RegisteredUser({ data, allUsers }) {
     const animateRef = useRef(null);
-    let { allUsers } = useStoreState(state => ({
-        allUsers: state.userReducer.cases.allUsers,
-    }));
+
     const dispatch = useStoreDispatch();
+
     const {
         _id,
         name,
         cpf,
         loyaltyScores,
-        isAdmin,
-        isStaff,
+        role,
         phone,
         maritalStatus,
         birthday,
@@ -58,13 +47,13 @@ export default function RegisteredUser({ data }) {
         updateAt } = data;
 
     const whichRole = () => {
-        if(isAdmin) return "Administrador";
-        if(isStaff) return "Colaborador";
-        if(!isStaff && !isAdmin) return "Cliente";
+        if(role === "admin") return "Admin";
+        if(role === "colaborador") return "Colaborador";
+        if(role === "cliente") return "Cliente";
     }
 
     const displayLoyaltyScores = () => (
-        <div style={{backgroundColor: "grey"}}>
+        <div style={{backgroundColor: "var(--mainPink)"}}>
             <p>Pontos Fidelidade:</p>
             {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
             ? <p className="text-center">Pontuação não registrada.</p>
@@ -111,19 +100,15 @@ export default function RegisteredUser({ data }) {
             <div>
                 <p>CPF: {cpf}</p>
             </div>
-            <div>
-                <p>Dia do Cadastro: {moment(createAt).format('Do MMMM [às] h:mm a, YYYY[.]')}</p>
-                <p>Última Atualização: {moment(updateAt).format('Do MMMM [às] h:mm a, YYYY[.]')}</p>
-            </div>
-            {displayLoyaltyScores()}
             {displayMoreInfo()}
+            {displayLoyaltyScores()}
         </Fragment>
     );
 
     const showDeleteButton = () => (
         <DeleteButton
             top={-20}
-            left={245}
+            left={195}
             onClick={() => {
                 const attachedObj = {
                     action: {
@@ -134,16 +119,23 @@ export default function RegisteredUser({ data }) {
                 };
                 findAnItem(dispatch, allUsers, _id, attachedObj);
                 showModalConfYesNo(dispatch);
-                // setTimeout(() => {
-                //     const cssText = `
-                //         width: 90%;
-                //         border-radius: 10px;
-                //         padding: 20px 10px;
-                //         margin: 15px auto;
-                //         background-color: #f39c12;
-                //         color: #ecf0f1;`;
-                //     animateHinge(animateRef, cssText);
-                // }, 9000);
+            }}
+        />
+    );
+
+    const showChangeUserTypeButton = () => (
+        <ButtonFab
+            title="Trocar Tipo Usuário"
+            variant="extended"
+            top={-15}
+            left={250}
+            backgroundColor="grey"
+            onClick={() => {
+                const attachedObj = {
+                    mainSubject: 'Função Usuário'
+                };
+                findAnItem(dispatch, allUsers, _id, attachedObj);
+                showModalSelect(dispatch);
             }}
         />
     );
@@ -152,6 +144,7 @@ export default function RegisteredUser({ data }) {
         <DivWrapper className="text-default" style={{ position: 'relative' }}>
             {showMainBlock()}
             {showDeleteButton()}
+            {showChangeUserTypeButton()}
         </DivWrapper>
     );
 }
@@ -165,6 +158,13 @@ const DivWrapper = styled.div`
     color: #ecf0f1;
 `;
 
+/*
+NOT WORKING
+<div>
+    <p>Dia do Cadastro: {moment(createAt).format('Do MMMM [às] h:mm a, YYYY[.]')}</p>
+    <p>Última Atualização: {moment(updateAt).format('Do MMMM [às] h:mm a, YYYY[.]')}</p>
+</div>
+ */
 
 /*
 <section>
@@ -208,7 +208,7 @@ MSG BUTTON
                     }
                 };
                 findAnItem(dispatch, allUsers, _id, attachedObj);
-                showModalTextField(dispatch);
+                showModalSelect(dispatch);
             }}
         />
  */

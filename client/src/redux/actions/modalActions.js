@@ -4,6 +4,11 @@
 export const showModalUnderConstruction = dispatch => {
     return dispatch({ type: 'SHOW_MODAL_UNDER_CONSTRUCTION', payload: true });
 };
+
+export const showModalSelect = dispatch => {
+    return dispatch({ type: 'MODAL_SELECT_DISPLAYED' });
+};
+
 // default
 export const showModalDefault = dispatch => {
     return dispatch({ type: 'SHOW_MODAL_DEFAULT', payload: true });

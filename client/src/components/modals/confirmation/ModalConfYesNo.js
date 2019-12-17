@@ -109,8 +109,8 @@ export default function ModalConfYesNo({ currItemFound }) {
                                                     .then(res => {
                                                         if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
                                                         showSnackbar(dispatch, `O ${mainSubject} ${name.cap()} foi excluído com sucesso!`, 'success');
+                                                        readUserList(dispatch);
                                                     })
-                                                    readUserList(dispatch);
                                                 }, 7000);
                                                 break;
                                             case 'Produto':

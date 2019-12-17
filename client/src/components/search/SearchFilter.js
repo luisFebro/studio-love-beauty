@@ -38,6 +38,7 @@ export default function SearchFilter({ placeholder, searchChange }) {
       </IconButton>
       <InputBase
         name="searchTerm"
+        autoComplete="off"
         onChange={searchChange}
         className={classes.input}
         placeholder={placeholder}

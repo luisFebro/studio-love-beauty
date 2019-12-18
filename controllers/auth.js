@@ -58,7 +58,10 @@ exports.register = (req, res) => {
 
     newUser.save()
     .then(user => {
-        res.json({ msg: msg('ok.successRegister', name, 'onlyMsg')});
+        res.json({
+            msg: msg('ok.successRegister', name, 'onlyMsg'),
+            authUserId: user._id,
+        });
     });
 }
 
@@ -70,7 +73,7 @@ exports.login = (req, res) => {
 
     jwt.sign(
         { id: _id },
-        process.env.JWT_SECRET,
+
         { expiresIn: expireAuthDays },
         (err, token) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));

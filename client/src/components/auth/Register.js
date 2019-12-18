@@ -10,9 +10,10 @@ import getDayMonthBr from '../../utils/dates/getDayMonthBr';
 import SafeEnvironmentMsg from '../SafeEnvironmentMsg';
 // import ReCaptchaCheckbox from "../ReCaptcha";
 // Redux
-import { useStoreDispatch } from 'easy-peasy';
+import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { registerEmail } from '../../redux/actions/authActions';
+import { sendWelcomeConfirmEmail } from '../../redux/actions/emailActions';
 // Helpers
 import detectErrorField from '../../utils/validation/detectErrorField';
 import handleChange from '../../utils/form/use-state/handleChange';
@@ -47,6 +48,13 @@ export default function Register() {
         maritalStatus: 'selecione estado civil',
     });
     const { name, email, maritalStatus, birthday, cpf, phone } = data;
+
+    const { bizInfo } = useStoreState(state => ({
+        bizInfo: state.adminReducer.cases.businessInfo,
+    }));
+
+    const { bizName, bizWebsite, bizInstagram } = bizInfo;
+
     // detecting field errors
     const [fieldError, setFieldError] = useState(null);
     const errorName = fieldError && fieldError.name;
@@ -77,6 +85,21 @@ export default function Register() {
         setFieldError(null);
     }
 
+    const sendEmail = userId => {
+        const dataEmail = {
+            name,
+            email,
+            bizName,
+            bizWebsite,
+            bizInstagram
+        };
+        sendWelcomeConfirmEmail(dataEmail, userId)
+        .then(res => {
+            if (res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error');
+            // Dont show email toast =>> setTimeout(() => showSnackbar(dispatch, res.data.msg, 'warning', 3000), 4000);
+        });
+    };
+
     const registerThisUser = e => {
         const newUser = {
             name,
@@ -97,9 +120,9 @@ export default function Register() {
                     setFieldError(foundObjError);
                     return;
                 }
+                sendEmail(res.data.authUserId);
                 clearData();
                 showSnackbar(dispatch, res.data.msg, 'success', 9000);
-                //sendEmail(res.data.authUserId);
 
             })
 

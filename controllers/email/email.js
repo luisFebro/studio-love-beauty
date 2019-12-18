@@ -68,8 +68,8 @@ const sendEmail = async (toEmail, mainTitle, content) => {
 
 exports.sendWelcomeConfirmEmail = (req, res) => {
     const { email, bizName } = req.body;
-    const mainTitle = `Seja Bem Vindo(a) a ${bizName}`;
-    sendEmail(email, mainTitle, showConfirmTemplate(req.email, req.body))
+    const mainTitle = `${bizName} - Plano de Fidelidade`;
+    sendEmail(email, mainTitle, showConfirmTemplate(req.body))
     .then(() => res.json(msg('ok.confirm')))
     .catch(err => res.json(msgG('error.systemError', err)))
 }

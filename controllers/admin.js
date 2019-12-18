@@ -40,7 +40,7 @@ exports.createOrUpdate = (req, res) => {
 
 exports.read = (req, res) => {
     Admin.findById(adminId)
-    .populate('businessInfo', '-bizWorkingHours')
+    .populate('businessInfo')
     .select("-trademark -verificationPass")
     .then(bizInfo => res.json(bizInfo))
     .catch(err => res.json(msgG("error.systemError", err)))

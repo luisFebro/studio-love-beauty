@@ -1,9 +1,8 @@
-exports.showConfirmTemplate = (reqEmail, reqBody) => {
-    const { authLink } = reqEmail;
-    const { name, bizName, bizWebsite, bizWhatsapp, bizSlogon } = reqBody;
+exports.showConfirmTemplate = reqBody => {
+    const { name, bizName, bizWebsite, bizInstagram } = reqBody;
     const client = name.cap();
     return({
-        subject: `${client}, confirme a sua conta da ${bizName}`,
+        subject: `${client}, acumule pontos e ganhe produtos e serviços`,
         html: `
             <center>
                 <header">
@@ -12,13 +11,12 @@ exports.showConfirmTemplate = (reqEmail, reqBody) => {
                         src="https://i.imgur.com/XdDK2cy.png" width="500px" height="200px"/>
                 </header>
             </center>
-            <h1><center>${bizSlogon}</center></h1>
-            <h3>Seja bem-vindo(a) aqui na ${bizName}</h3>
-            <h3>Você está recebendo este email porque você foi cadastrado(a) com sucesso!</h3>
-            <h3>Visite nosso Instagram: <a href=${authLink}></a>${authLink}</h3>
-            <h4>Ou acesse pelo link: <a href=${authLink}>${authLink}</a></h4>
+            <br />
+            <h3 style="text-align: justify">Você está recebendo este email porque você foi cadastrado(a) com sucesso
+            <br /> em nosso plano de fidelidade em <a href=${bizWebsite}></a>${bizWebsite}</h3>
+            <h3>Siga nosso Instagram: <a href=${bizInstagram}></a>${bizInstagram}</h3>
             <footer>
-                <h5>Se você tiver qualquer dúvida, entre em contato com nosso <strong>Whatsapp ${bizWhatsapp}</strong> ou responda a esse email que ficaremos contentes em ajudar.</h5>
+                <h4 style="color: #e84393; font-weight: bold"><center>${bizName} ${new Date().getFullYear()}</center></h4>
             </footer>
         `
     })

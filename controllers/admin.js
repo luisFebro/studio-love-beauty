@@ -35,12 +35,12 @@ exports.createOrUpdate = (req, res) => {
             if (err) return res.status(400).json(msgG("error.systemError", err));
             res.json(bizInfo);
         }
-    ).populate;
+    );
 };
 
 exports.read = (req, res) => {
     Admin.findById(adminId)
-    .populate('businessInfo')
+    .populate('businessInfo', "bizInstagram bizName bizWebsite")
     .select("-trademark -verificationPass")
     .then(bizInfo => res.json(bizInfo))
     .catch(err => res.json(msgG("error.systemError", err)))
@@ -61,23 +61,50 @@ exports.updateBusinessInfo = (req, res) => {
     );
 };
 
-exports.createPhoto = (req, res) => {
+// exports.createConfig = (req, res) => {
+//     let form = new formidable.IncomingForm();
+
+//     form.keepExtensions = true;
+//     form.parse(req, (err, fields, files) => { // fields from doc
+//         if (err) return res.status(400).json(msgG('error.systemErr', err));
+
+//         Admin.findById(adminId)
+//         .exec((err, admin) => {
+//             if(err) return res.status(500).json(msgG('error.systemError', err))
+
+//             if (files.trademark) {
+//                 const ONE_MEGABYTE = 1000000; // 1kb = 1000
+//                 if (files.trademark > ONE_MEGABYTE) return res.status(400).json({ msg: "Tamanho de imagem excedido"})
+//                 admin.trademark.data = fs.readFileSync(files.trademark.path); // provide media info
+//                 admin.trademark.contentType = files.trademark.type;
+//             } else {
+//                 return res.status(400).json(msg('error.noPhoto'))
+//             }
+
+//             admin.save((err, result) => {
+//                 if (err) return res.status(500).json(msgG('error.systemError', err));
+//                 res.json(result);
+//             });
+//         })
+//     });
+// }
+
+exports.updateConfig = (req, res) => {
     let form = new formidable.IncomingForm();
 
     form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => { // fields from doc
+    form.parse(req, (err, fields, files) => {
         if (err) return res.status(400).json(msgG('error.systemErr', err));
 
         Admin.findById(adminId)
         .exec((err, admin) => {
             if(err) return res.status(500).json(msgG('error.systemError', err))
 
-            // Photo File Size Reference
-            // 1kb = 1000
-            // 1mb = 1.000.000
+            admin = Object.assign(admin, fields);
 
             if (files.trademark) {
-                if (files.trademark > 1000000) return res.status(400).json({ msg: "Tamanho de imagem excedido"})
+                const ONE_MEGABYTE = 1000000; // 1kb = 1000
+                if (files.trademark > ONE_MEGABYTE) return res.status(400).json({ msg: "Tamanho de imagem excedido"})
                 admin.trademark.data = fs.readFileSync(files.trademark.path); // provide media info
                 admin.trademark.contentType = files.trademark.type;
             } else {
@@ -90,7 +117,6 @@ exports.createPhoto = (req, res) => {
             });
         })
     });
-
 }
 
 exports.checkVerificationPass = (req, res) => {

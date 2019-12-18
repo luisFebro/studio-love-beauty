@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 const collectionName = "admin";
 
 const data = {
-    adminPreferences: {
-        siteBackgroundColor: String,
+    siteBackgroundColor: {
+        type: String,
+        default: "black"
     },
     trademark: {
         data: Buffer,

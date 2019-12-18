@@ -73,7 +73,7 @@ exports.login = (req, res) => {
 
     jwt.sign(
         { id: _id },
-
+        process.env.JWT_SECRET,
         { expiresIn: expireAuthDays },
         (err, token) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));

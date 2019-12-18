@@ -8,7 +8,7 @@ const {
     updateCoupon,
     mwPhoto,
     mwAdminId,
-    createPhoto,
+    updateConfig,
     checkVerificationPass,
     updateVerificationPass,
 } = require('../controllers/admin');
@@ -19,8 +19,8 @@ router.get("/", read);
 router.put("/", createOrUpdate);
 
 router.get("/photo/:adminId", mwPhoto);
-router.put("/media", createPhoto);
 router.put("/business-info/update", updateBusinessInfo);
+router.put("/config", updateConfig);
 
 router.post("/verification-pass", checkVerificationPass);
 router.put("/verification-pass", updateVerificationPass);

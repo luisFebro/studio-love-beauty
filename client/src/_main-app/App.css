@@ -333,13 +333,14 @@ footer {
 /*COLOR PICKER
 ref: https://stackoverflow.com/questions/11167281/webkit-css-to-control-the-box-around-the-color-in-an-inputtype-color;
 */
-
+.border-dashed-grey {
+    border: dashed 3px grey;
+}
 .input-color-container {
   position: relative;
   overflow: hidden;
   width: 60px;
   height: 60px;
-  border: dashed 3px grey;
   border-radius: 60px;
 }
 
@@ -361,8 +362,8 @@ ref: https://stackoverflow.com/questions/11167281/webkit-css-to-control-the-box-
     }
 
     .image-apresentation {
-        width: "400px";
-        height: "300px";
+        width: "200px";
+        height: "100px";
     }
 
     .center-small {

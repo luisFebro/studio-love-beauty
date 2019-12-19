@@ -9,8 +9,8 @@ export default function ImageLogo() {
                 url="admin"
                 id="5db4301ed39a4e12546277a8" //admin id
                 alt='logomarca studio love beauty'
-                width="400px"
-                height="300px"
+                width={400}
+                height={300}
                 setStatus={setShowSpinner}
                 status={showSpinner}
                 imgOpt= {{

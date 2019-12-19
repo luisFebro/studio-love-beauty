@@ -3,14 +3,14 @@ import Spinner from './loadingIndicators/Spinner';
 import { CLIENT_URL } from "../config/clientUrl";
 import PropTypes from 'prop-types';
 
-ShowImgOrSkeleton.propTypes = {
+ShowImgOrSpinner.propTypes = {
     id: PropTypes.string,
     url: PropTypes.string.isRequired,
     alt: PropTypes.string,
     setStatus: PropTypes.func.isRequired,
     status: PropTypes.bool,
-    width: PropTypes.string,
-    height: PropTypes.string,
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     // spinnerOpt: PropTypes.shape({
     //     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     //     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -22,7 +22,16 @@ ShowImgOrSkeleton.propTypes = {
     })
 }
 
-export default function ShowImgOrSkeleton({ id, url, alt, width, height, setStatus, status, spinnerOpt, imgOpt }) {
+export default function ShowImgOrSpinner({
+    id,
+    url,
+    alt,
+    width,
+    height,
+    setStatus,
+    status,
+    spinnerOpt,
+    imgOpt }) {
     const imageUrl = `${CLIENT_URL}/api/${url}/photo/${id}`;
 
     return(

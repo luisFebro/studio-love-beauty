@@ -1,4 +1,5 @@
 import isRealObj from './isRealObj';
+import isSmallScreen from './isSmallScreen';
 
 // GLOBAL PROTOTYPE METHODS n1
 // Typography
@@ -23,6 +24,7 @@ String.prototype.cap = function() {  // n2
 // These functions will be available in any part of the app because they can be useful for any component
 window.Helper = {};
 window.Helper.isRealObj = isRealObj;
+window.Helper.isSmallScreen = isSmallScreen;
 
 
 /* COMMENTS

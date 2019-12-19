@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// Dash Sessions
+import isSmallScreen from '../../utils/isSmallScreen';
 import DashUsers from './dash-users';
 import DashBooking from './dash-booking';
 import DashSetting from './dash-setting';
@@ -88,9 +88,7 @@ export default function GroupedDashSessions() {
     };
 
     // const transitionDuration = {
-    //     enter: theme.transitions.duration.enteringScreen,
-    //     exit: theme.transitions.duration.leavingScreen
-    // };
+    //     enter: theme.transitions.duration.isSmallScreen(): theme.transitions.duration.leavingScreenisSmallScreen()};
 
     // const fabs = [
     //     {
@@ -119,7 +117,7 @@ export default function GroupedDashSessions() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    variant="scrollable" // prior: fullWidth
+                    variant={isSmallScreen() ? "scrollable" : "fullWidth"}
                     scrollButtons="on"
                     indicatorColor="primary"
                     textColor="primary"

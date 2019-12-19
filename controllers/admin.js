@@ -94,8 +94,6 @@ exports.updateConfig = (req, res) => {
 
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
-        console.log("fields", fields);
-        console.log("files", files);
         if (err) return res.status(400).json(msgG('error.systemErr', err));
 
         Admin.findById(adminId)
@@ -103,7 +101,6 @@ exports.updateConfig = (req, res) => {
             if(err) return res.status(500).json(msgG('error.systemError', err))
 
             admin = Object.assign(admin, fields);
-            console.log(admin)
 
             if (files.trademark) {
                 const ONE_MEGABYTE = 1000000; // 1kb = 1000

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Card from '@material-ui/core/Card';
+import ShowImgOrSpinner from '../../../components/ShowImgOrSpinner';
 import handleChangeForm from '../../../utils/form/use-state/handleChangeForm';
+import isSmallScreen from '../../../utils/isSmallScreen';
 import ToggleVisibilityPassword from '../../../components/forms/fields/ToggleVisibilityPassword';
 import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 // Redux
@@ -9,14 +11,15 @@ import { showSnackbar } from '../../../redux/actions/snackbarActions';
 import { readAdmin, updateConfig, readVerificationPass } from '../../../redux/actions/adminActions';
 
 export default function UpdateConfigForm() {
+    const [showSpinner, setShowSpinner] = useState(true);
+    const [imgMsg, setImgMsg] = useState(false);
     const [data, setData] = useState({
         trademark: '',
         siteBackgroundColor: '',
         verificationPass: '',
-        formData: new FormData(),
+        formData: '',
     })
     const { trademark, siteBackgroundColor, verificationPass, formData } = data;
-    console.log(siteBackgroundColor)
     const dispatch = useStoreDispatch();
 
     const getBackgroundColor = () => {
@@ -24,8 +27,8 @@ export default function UpdateConfigForm() {
         .then(res => {
             // if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setData({
-                ...data,
-                siteBackgroundColor: res.data.siteBackgroundColor
+                siteBackgroundColor: res.data.siteBackgroundColor,
+                formData: new FormData() //formData isdeclared here, otherwise will be undefined.
             })
         })
     }
@@ -36,7 +39,7 @@ export default function UpdateConfigForm() {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setData({
                 ...data,
-                verificationPass: res.data.verificationPass
+                verificationPass: res.data.verificationPass,
             })
             getBackgroundColor()
         })
@@ -50,49 +53,102 @@ export default function UpdateConfigForm() {
         updateConfig(dispatch, formData)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            window.location.reload();
             showSnackbar(dispatch, "A sua configuração foi efutuada", 'success');
         })
     }
 
-    const showImageUploader = () => (
-        <div className="mt-4">
-            <p className="text-default font-weight-bold">Trocar Imagem da Logomarca:</p>
-            <input
-                accept="image/*"
-                onChange={handleChangeForm(setData, data, formData, "trademark")}
-                name="trademark"
-                style={{ display: 'none'}}
-                id="contained-button-file"
-                type="file"
-            />
-            <label htmlFor="contained-button-file">
-                <ButtonMulti
-                    onClick={null}
-                    color="var(--mainWhite)"
-                    component="span"
-                    backgroundColor="var(--mainDark)"
-                    backColorOnHover="var(--mainDark)"
-                    iconFontAwesome="fas fa-upload"
-                    textTransform='uppercase'
+    const showImageUploader = () => {
+        const displayImg = idImg => (
+            <div className="d-flex flex-column mr-5">
+                <span>
+                    <p
+                        style={{backgroundColor: "grey"}}
+                        className="text-white py-2 text-center font-weight-bold"
+                    >
+                        Imagem Atual:
+                    </p>
+                </span>
+                <div className="border-dashed-grey">
+                    <ShowImgOrSpinner
+                        url="admin"
+                        id={"5db4301ed39a4e12546277a8"} //admin id
+                        alt='logomarca studio love beauty'
+                        width="200px"
+                        height="100px"
+                        setStatus={setShowSpinner}
+                        status={showSpinner}
+                        imgOpt= {{
+                            className: "image-apresentation"
+                        }}
+                    />
+                </div>
+            </div>
+        );
+
+        const displayPicker = () => (
+            <div className="d-flex justify-content-center align-items-center mr-5">
+                <input
+                    accept="image/*"
+                    onChange={handleChangeForm(setData, data, formData, "trademark")}
+                    name="trademark"
+                    style={{ display: 'none'}}
+                    id="contained-button-file"
+                    type="file"
+                />
+                <label htmlFor="contained-button-file">
+                    <ButtonMulti
+                        onClick={null}
+                        color="var(--mainWhite)"
+                        component="span"
+                        backgroundColor="var(--mainDark)"
+                        backColorOnHover="var(--mainDark)"
+                        iconFontAwesome="fas fa-upload"
+                        textTransform='uppercase'
+                    >
+                      Nova Imagem
+                    </ButtonMulti>
+                </label>
+                <div
+                    style={{display: typeof trademark === "object" ? "block" : "none"}}
                 >
-                  Nova Imagem
-                </ButtonMulti>
-            </label>
-        </div>
-    );
+                    <p
+                        style={{backgroundColor: "var(--mainDark)"}}
+                        className="text-center text-white"
+                    >Nova imagem inserida. Salve para alterar</p>
+                </div>
+            </div>
+        );
+
+        return(
+            <div className="mt-4">
+                <p
+                    className="text-default font-weight-bold"
+                >
+                    Trocar Imagem da Logomarca:
+                </p>
+                <div className="d-flex flex-row">
+                    {displayImg()}
+                    {displayPicker()}
+                </div>
+            </div>
+        );
+    };
 
     const showVerificationPassField = () => (
         <div className="mt-4">
             <p className="text-default font-weight-bold">Mudar senha de verificação:</p>
-            <ToggleVisibilityPassword
-                showForgotPass={false}
-                onChange={handleChangeForm(setData, data, formData)}
-                data={data}
-                label=" "
-                name="verificationPass"
-                value={verificationPass}
-                setData={setData}
-            />
+            <div style={{margin: 'auto', width: '60%'}}>
+                <ToggleVisibilityPassword
+                    showForgotPass={false}
+                    onChange={handleChangeForm(setData, data, formData)}
+                    data={data}
+                    label=" "
+                    name="verificationPass"
+                    value={verificationPass}
+                    setData={setData}
+                />
+            </div>
         </div>
     );
 
@@ -101,9 +157,9 @@ export default function UpdateConfigForm() {
             <p className="text-default my-2 font-weight-bold">Escolha outra cor de fundo do site:</p>
             <div className="d-flex flex-row">
                 <div className="mr-3 font-weight-bold">
-                    Clique e Selecione:
+                    {`${isSmallScreen() ? "Toque" : "Clique"} e Selecione:`}
                 </div>
-                <div className="input-color-container mr-3">
+                <div className="input-color-container mr-3 border-dashed-grey">
                     <input
                         onChange={handleChangeForm(setData, data, formData)}
                         name="siteBackgroundColor"
@@ -117,7 +173,7 @@ export default function UpdateConfigForm() {
     );
 
     const showActionButton = () => (
-        <div className="my-2">
+        <div className="my-2 d-flex justify-content-center">
             <ButtonMulti
                 onClick={() => {
                     updateData();

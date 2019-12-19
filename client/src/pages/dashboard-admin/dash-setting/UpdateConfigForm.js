@@ -16,21 +16,10 @@ export default function UpdateConfigForm() {
         formData: new FormData(),
     })
     const { trademark, siteBackgroundColor, verificationPass, formData } = data;
-
+    console.log(siteBackgroundColor)
     const dispatch = useStoreDispatch();
 
-    const getPass = () => {
-        readVerificationPass()
-        .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            setData({
-                ...data,
-                verificationPass: res.data.verificationPass
-            })
-        })
-    }
-
-    const init = () => {
+    const getBackgroundColor = () => {
         readAdmin(dispatch)
         .then(res => {
             // if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
@@ -38,9 +27,19 @@ export default function UpdateConfigForm() {
                 ...data,
                 siteBackgroundColor: res.data.siteBackgroundColor
             })
-            getPass()
         })
+    }
 
+    const init = () => {
+        readVerificationPass()
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setData({
+                ...data,
+                verificationPass: res.data.verificationPass
+            })
+            getBackgroundColor()
+        })
     }
 
     useEffect(() => {
@@ -108,9 +107,9 @@ export default function UpdateConfigForm() {
                     <input
                         onChange={handleChangeForm(setData, data, formData)}
                         name="siteBackgroundColor"
-                        class="input-color"
+                        className="input-color"
                         type="color"
-                        value={siteBackgroundColor}
+                        value={data && siteBackgroundColor}
                     />
                 </div>
             </div>

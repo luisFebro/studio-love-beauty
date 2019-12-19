@@ -46,7 +46,7 @@ export const loginEmail = async (dispatch, objToSend) => {
 export const registerEmail = async (dispatch, objToSend) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post('http://localhost:5000/api/auth/register', objToSend, configTypeJson);
+        const res = await axios.post('/api/auth/register', objToSend, configTypeJson);
         // dispatch({ type: 'REGISTER_EMAIL', payload: res.data.token });
         // readUser(dispatch, res.data.authUserId);
         setLoadingProgress(dispatch, false);

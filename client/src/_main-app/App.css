@@ -35,7 +35,7 @@ body {
 /*End Preventing the scrollbar to disappear in mobile apps*/
 
 body {
-    background: #000;
+    background: #000 !important;
     color: var(--mainDark) !important;
     user-select: none;
 }
@@ -350,12 +350,6 @@ ref: https://stackoverflow.com/questions/11167281/webkit-css-to-control-the-box-
   width: 72px;
   height: 72px;
   border: none;
-}
-
-.input-color-label {
-  cursor: pointer;
-  text-decoration: underline;
-  color: #3498db;
 }
 /*END COLOR PICKER*/
 

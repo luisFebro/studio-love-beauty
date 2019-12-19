@@ -123,7 +123,6 @@ export default function Register() {
                 sendEmail(res.data.authUserId);
                 clearData();
                 showSnackbar(dispatch, res.data.msg, 'success', 9000);
-
             })
 
     };

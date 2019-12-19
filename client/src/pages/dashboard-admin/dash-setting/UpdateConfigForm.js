@@ -177,7 +177,7 @@ export default function UpdateConfigForm() {
             <ButtonMulti
                 onClick={() => {
                     updateData();
-                    showSnackbar(dispatch, 'Salvando suas preferências...');
+                    showSnackbar(dispatch, 'Salvando suas preferências...', 'warning', 5000);
                 }}
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainPink)"

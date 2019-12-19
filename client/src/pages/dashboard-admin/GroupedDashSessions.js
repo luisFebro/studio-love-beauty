@@ -119,7 +119,7 @@ export default function GroupedDashSessions() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    variant="fullWidth" // prior: scrollable
+                    variant="scrollable" // prior: fullWidth
                     scrollButtons="on"
                     indicatorColor="primary"
                     textColor="primary"

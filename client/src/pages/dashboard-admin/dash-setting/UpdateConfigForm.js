@@ -136,8 +136,8 @@ export default function UpdateConfigForm() {
     return (
         <Card
             className="container-center"
-            style={{margin: '0 auto 600px', width: '80%'}}>
-            <form>
+            style={{margin: '0 auto 600px', width: '90%'}}>
+            <form className="py-5 px-2">
                 {showImageUploader()}
                 {showVerificationPassField()}
                 {showColorPicker()}

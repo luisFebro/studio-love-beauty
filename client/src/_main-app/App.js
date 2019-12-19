@@ -3,9 +3,9 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
-import { useStoreDispatch } from 'easy-peasy'; // useStoreState
+import { useStoreDispatch, useStoreState } from 'easy-peasy'; // useStoreState
 import { readAdmin } from '../redux/actions/adminActions';
-import { loadReCaptcha } from 'react-recaptcha-google';
+// import { loadReCaptcha } from 'react-recaptcha-google';
 //
 import PrivateRouteAdm from '../components/auth/PrivateRouteAdm';
 import PrivateRouteStaff from '../components/auth/PrivateRouteStaff';
@@ -41,10 +41,13 @@ import SnackbarMulti from '../components/Snackbar';
 
 function App() {
     const dispatch = useStoreDispatch();
-    readAdmin(dispatch);
 
     useEffect(() => {
-        loadReCaptcha();
+        readAdmin(dispatch)
+        .then(res => {
+            document.body.style.setProperty('background', res.data.siteBackgroundColor, 'important')
+        })
+        // loadReCaptcha();
         dispatch(loadUser(dispatch));
     }, [dispatch]);
 

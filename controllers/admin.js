@@ -94,6 +94,8 @@ exports.updateConfig = (req, res) => {
 
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
+        console.log("fields", fields);
+        console.log("files", files);
         if (err) return res.status(400).json(msgG('error.systemErr', err));
 
         Admin.findById(adminId)
@@ -101,6 +103,7 @@ exports.updateConfig = (req, res) => {
             if(err) return res.status(500).json(msgG('error.systemError', err))
 
             admin = Object.assign(admin, fields);
+            console.log(admin)
 
             if (files.trademark) {
                 const ONE_MEGABYTE = 1000000; // 1kb = 1000
@@ -108,7 +111,7 @@ exports.updateConfig = (req, res) => {
                 admin.trademark.data = fs.readFileSync(files.trademark.path); // provide media info
                 admin.trademark.contentType = files.trademark.type;
             } else {
-                return res.status(400).json(msg('error.noPhoto'))
+                // return res.status(400).json({ msg: "Não foi inserido foto"})
             }
 
             admin.save((err, result) => {
@@ -131,15 +134,11 @@ exports.checkVerificationPass = (req, res) => {
     })
 };
 
-exports.updateVerificationPass = (req, res) => {
-    const query = req.body;
-    Admin.findOneAndUpdate(
-    { _id: adminId },
-    { $set: query },
-    { new: true })
-    .exec(err => {
+exports.readVerificationPass = (req, res) => {
+    Admin.findById(adminId)
+    .exec((err, admin) => {
         if (err) return res.status(400).json(msgG("error.systemError", err));
-        res.json({ msg: "A senha foi alterada com sucesso!"})
+        res.json({ verificationPass: admin.verificationPass })
     })
 };
 

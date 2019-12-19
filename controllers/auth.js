@@ -68,8 +68,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     const { password, needKeepLoggedIn } = req.body;
     const { _id, name, role } = req.profile;
-    const THIRTY_MINUTES = 1800000;
-    const expireAuthDays = THIRTY_MINUTES;
+    const expireAuthDays = `30m`;
 
     jwt.sign(
         { id: _id },

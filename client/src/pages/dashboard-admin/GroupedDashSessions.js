@@ -55,7 +55,7 @@ function a11yProps(index) {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#f7f1e3',
         width: '100%',
         position: 'relative',
         minHeight: 600

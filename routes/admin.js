@@ -10,7 +10,7 @@ const {
     mwAdminId,
     updateConfig,
     checkVerificationPass,
-    updateVerificationPass,
+    readVerificationPass,
 } = require('../controllers/admin');
 
 // @ routes api/admin
@@ -20,10 +20,11 @@ router.put("/", createOrUpdate);
 
 router.get("/photo/:adminId", mwPhoto);
 router.put("/business-info/update", updateBusinessInfo);
+
 router.put("/config", updateConfig);
 
+router.get("/verification-pass", readVerificationPass);
 router.post("/verification-pass", checkVerificationPass);
-router.put("/verification-pass", updateVerificationPass);
 
 router.param('adminId', mwAdminId);
 

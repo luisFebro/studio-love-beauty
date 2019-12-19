@@ -35,7 +35,7 @@ body {
 /*End Preventing the scrollbar to disappear in mobile apps*/
 
 body {
-    background: #000 !important;
+    background: #000;
     color: var(--mainDark) !important;
     user-select: none;
 }
@@ -329,6 +329,35 @@ footer {
     display: flex;
     justify-content: center;
 }
+
+/*COLOR PICKER
+ref: https://stackoverflow.com/questions/11167281/webkit-css-to-control-the-box-around-the-color-in-an-inputtype-color;
+*/
+
+.input-color-container {
+  position: relative;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  border: dashed 3px grey;
+  border-radius: 60px;
+}
+
+.input-color {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 72px;
+  height: 72px;
+  border: none;
+}
+
+.input-color-label {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #3498db;
+}
+/*END COLOR PICKER*/
 
 /*MOBILE FIRST RESPONSIVE MEDIA QUERIES*/
 /*media portrait tablets and large phones || for large devices, use min-width: 992px and up*/

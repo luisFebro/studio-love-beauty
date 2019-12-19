@@ -205,8 +205,8 @@ export default function ModalRegister() {
                 }}
             />
             <ToggleVisibilityPassword
-                data={data}
                 onChange={handleChange(setData, data)}
+                data={data}
                 setData={setData}
                 error={errorPass}
                 showForgotPass={false}

@@ -3,7 +3,7 @@ import updateKey from './helpers/updateKey';
 
 // REDUCERS
 const initialState = {
-    adminPreferences: {},
+    siteBackgroundColor: {},
     businessInfo: {},
 };
 
@@ -14,7 +14,7 @@ export const adminReducer = {
                 return {
                     ...state,
                     businessInfo: action.payload.businessInfo,
-                    adminPreferences: action.payload.adminPreferences
+                    siteBackgroundColor: action.payload.siteBackgroundColor
                 }
             case 'UPDATE_BIZ_INFO':
                 const obj = state.businessInfo;

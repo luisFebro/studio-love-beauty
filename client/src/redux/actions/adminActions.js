@@ -14,16 +14,36 @@ export const readAdmin = async dispatch => {
             type: 'LOAD_ADMIN',
             payload: res.data
         });
+        return res;
         // setLoadingOff(dispatch);
     } catch (err) {
         return err.response;
     }
 }
 
+export const updateConfig = async (dispatch, objToUpdate) => {
+    try {
+        const res = await axios.put(`/api/admin/config`, objToUpdate, configTypeJson);
+        // dispatch({ type: 'UPDATE_BIZ_INFO', payload: objToUpdate });
+        return res;
+    } catch (err) {
+        return err.response;
+    }
+};
+
 export const updateBusinessInfo = async (dispatch, objToUpdate) => {
     try {
         const res = await axios.put(`/api/admin/business-info/update`, objToUpdate, configTypeJson);
         dispatch({ type: 'UPDATE_BIZ_INFO', payload: objToUpdate });
+        return res;
+    } catch (err) {
+        return err.response;
+    }
+};
+
+export const readVerificationPass = async () => { // L
+    try {
+        const res = await axios.get(`/api/admin/verification-pass`, configTypeJson);
         return res;
     } catch (err) {
         return err.response;

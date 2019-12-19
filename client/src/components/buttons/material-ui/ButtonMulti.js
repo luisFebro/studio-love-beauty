@@ -7,6 +7,7 @@ import clsx from 'clsx';
 ButtonMulti.propTypes = {
     children: PropTypes.string.isRequired,
     onClick: PropTypes.func,
+    component: PropTypes.string,
     iconFontAwesome: PropTypes.string,
     variant: PropTypes.oneOf(['link', 'contained', 'outlined']),
     props: PropTypes.shape({
@@ -48,7 +49,12 @@ const CustomizedButton = withStyles(theme => ({
     }
 }))(Button);
 
-export default function ButtonMulti({ children, onClick, iconFontAwesome, variant="contained", ...props }) {
+export default function ButtonMulti({
+    children,
+    onClick,
+    iconFontAwesome,
+    component="button",
+    variant="contained", ...props }) {
     const { sText, sBtnColors, sBtnDefaultColors, sIcon } = useStyles(props);
 
     const showIcon = iconFontAwesome => (
@@ -62,6 +68,7 @@ export default function ButtonMulti({ children, onClick, iconFontAwesome, varian
             onClick={onClick}
             variant={(variant === 'link') ? null : variant}
             color="primary"
+            component={component}
         >
             <span className={(variant !== 'contained') ? null : sText}>{children}</span>
             {showIcon(iconFontAwesome)}

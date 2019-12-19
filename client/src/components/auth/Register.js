@@ -276,7 +276,6 @@ export default function Register() {
             <ButtonMulti
                 onClick={() => {
                     registerThisUser();
-                    setTimeout(() => null, 3000); // readUserList(dispatch)
                     showSnackbar(dispatch, 'Registrando...');
                 }}
                 color="var(--mainWhite)"

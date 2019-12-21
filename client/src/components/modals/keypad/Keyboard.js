@@ -53,37 +53,49 @@ export default function Keyboard({
         : setDisplay(display.slice(0, -1));
     }
 
+    const playBeep = () => {
+        const elem = document.querySelector("#keypadBeep");
+        elem.play();
+    }
+
+    const playBeepConfirm = () => {
+        const elem = document.querySelector("#keypadBeepConfirm");
+        elem.play();
+    }
+
     return (
         <GridContainer>
-            <div onClick={() => getValue("1")} className="item1">1</div>
-            <div onClick={() => getValue("2")} className="item2">2</div>
-            <div onClick={() => getValue("3")} className="item3">3</div>
-            <div onClick={() => eraseLastChar()} className="d-flex align-items-center  flex-row justify-content-center erase-last side-btn">
+            <div onClick={() => {getValue("1"); playBeep()} } className="item1">1</div>
+            <div onClick={() => {getValue("2"); playBeep()} } className="item2">2</div>
+            <div onClick={() => {getValue("3"); playBeep()} } className="item3">3</div>
+            <div onClick={() => {eraseLastChar(); playBeep()} } className="d-flex align-items-center  flex-row justify-content-center erase-last side-btn">
                 <i style={{fontSize: '1.3em'}} className="fas fa-arrow-left mr-3"></i>
                 Corrigir
             </div>
-            <div onClick={() => getValue("4")} className="item4">4</div>
-            <div onClick={() => getValue("5")} className="item5">5</div>
-            <div onClick={() => getValue("6")} className="item6">6</div>
-            <div onClick={handleClose} className="d-flex align-items-center justify-content-center cancel side-btn">
+            <div onClick={() => {getValue("4"); playBeep()} } className="item4">4</div>
+            <div onClick={() => {getValue("5"); playBeep()} } className="item5">5</div>
+            <div onClick={() => {getValue("6"); playBeep()} } className="item6">6</div>
+            <div onClick={() => {handleClose(); playBeep()} } className="d-flex align-items-center justify-content-center cancel side-btn">
                 <i style={{fontSize: '1.3em'}} className="fas fa-times mr-3"></i>
                 Cancelar
             </div>
-            <div onClick={() => getValue("7")} className="item7">7</div>
-            <div onClick={() => getValue("8")} className="item8">8</div>
-            <div onClick={() => getValue("9")} className="item9">9</div>
-            <div onClick={handleConfirm} className="d-flex flex-column justify-content-center confirm side-btn">
+            <div onClick={() => {getValue("7"); playBeep()}} className="item7">7</div>
+            <div onClick={() => {getValue("8"); playBeep()}} className="item8">8</div>
+            <div onClick={() => {getValue("9"); playBeep()}} className="item9">9</div>
+            <div onClick={() => {handleConfirm(); playBeepConfirm()} } className="d-flex flex-column justify-content-center confirm side-btn">
                 <i style={{fontSize: '1.9em'}} className="fas fa-check"></i>
                 Confirmar
             </div>
             <div className="empty"></div>
-            <div onClick={() => getValue("0")} className="item0">0</div>
+            <div onClick={() => {getValue("0"); playBeep()}} className="item0">0</div>
             <div
-                onClick={() => getValue(",")}
+                onClick={() => {getValue(","); playBeep()}}
                 className="comma"
             >
                 {keyboardType === 'numeric' ? "," : ""}
             </div>
+            <audio id="keypadBeep" src="https://archive.org/download/tock_20191221/Tock.mp3"></audio>
+            <audio id="keypadBeepConfirm" src="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav"></audio>
         </GridContainer>
     );
 }

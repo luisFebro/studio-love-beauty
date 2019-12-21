@@ -44,11 +44,10 @@ export default function NumericKeypad({
 
     const handleConfirm = () => {
       if(display === "Digite 11 dígitos...") return showSnackbar(dispatch, "Por favor, insira seu CPF para acesso", 'error', 6000)
-      if(keyboardType === 'cpf' && checkDataBeforeClose(display) && confirmFunction(display)) {
+      if(checkDataBeforeClose(display) && confirmFunction(display)) {
           onClose(display);
       }
 
-      keyboardType === 'numeric' && onClose(display);
     };
 
     return (

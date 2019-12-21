@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import TitleComponent from '../../components/TitleComponent';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStoreDispatch } from 'easy-peasy';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
 import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
-import ButtonMulti from '../buttons/material-ui/ButtonMulti';
-import handleChange from '../../utils/form/use-state/handleChange';
-import detectErrorField from '../../utils/validation/detectErrorField';
-import clearForm from '../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
+import KeypadButton from '../modals/keypad';
 
 InsertValue.propTypes = {
     success: PropTypes.bool,
@@ -26,26 +20,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function InsertValue({ success, setValuePaid }) {
-    const [data, setData] = useState({
-        valuePaid: '',
-    })
-
-    const { valuePaid } = data;
-    const [fieldError, setFieldError] = useState(null);
-    const errorCpf = fieldError && fieldError.cpf;
+    const [valuePaid, setData] = useState("0,0");
 
     const classes = useStyles();
     const dispatch = useStoreDispatch();
 
-    const clearData = () => {
-        clearForm(setData, data);
-        setFieldError(null);
-    }
-
-    const handleSwitch = () => {
-        if(valuePaid === "") return showSnackbar(dispatch, "Você precisa digitar um valor.", "error")
-        if(valuePaid.includes("-")) return showSnackbar(dispatch, "O valor não pode ser negativo", "error")
-        if(valuePaid === "0") return showSnackbar(dispatch, "O valor não pode ser zero", "error")
+    const handleSwitch = valuePaid => {
+        console.log(valuePaid)
+        const endValue = valuePaid.slice(-1);
+        const commaQuantity = valuePaid.match(new RegExp(",",'g'))
+        const commaLength = commaQuantity && commaQuantity.length;
+        if(commaLength > 1) return showSnackbar(dispatch, "Insira apenas uma vírgula por valor", 'error')
+        if(endValue === ",") return showSnackbar(dispatch, "Você digitou um número com vírgula sem decimal. Retire a vírgula ou acrescente valor decimal", "error", 8000)
+        if(valuePaid === "0") return showSnackbar(dispatch, "Você precisa digitar um valor.", "error")
+        if(valuePaid === "0,0") return showSnackbar(dispatch, "O valor não pode ser zero", "error")
+        // if(valuePaid.includes("-")) return showSnackbar(dispatch, "O valor não pode ser negativo", "error")
         if(success) {
             setValuePaid(valuePaid);
             hideComponent(dispatch, 'purchaseValue')
@@ -54,52 +43,19 @@ export default function InsertValue({ success, setValuePaid }) {
     };
 
     const showTitle = () => (
-        <TitleComponent
-            subtitle="Digite apenas números e vírgula"
-        >
+        <TitleComponent>
             INSIRA O VALOR GASTO
         </TitleComponent>
     );
 
-    const showForm = () => (
-        <form
-            style={{margin: 'auto', width: '80%'}}
-            onBlur={() => setFieldError(null)}
-        >
-            <TextField
-                required
-                variant="outlined"
-                margin="dense"
-                onChange={handleChange(setData, data)}
-                error={null}
-                name="valuePaid"
-                label="Insira seu Valor"
-                type="text"
-                autoComplete="off"
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <MoneyIcon />
-                    </InputAdornment>
-                  ),
-                }}
+    const showKeypadButton = () => (
+        <div className="animated jackInTheBox slow delay-2s d-flex justify-content-center my-4">
+            <KeypadButton
+                title="Insira o valor gasto"
+                titleIcon="far fa-money-bill-alt"
+                setSelectedValue={setData}
+                confirmFunction={handleSwitch}
             />
-        </form>
-    );
-
-    const showButtonActions = () => (
-        <div className="container-center">
-            <ButtonMulti
-                onClick={handleSwitch}
-                color="var(--mainWhite)"
-                backgroundColor="var(--mainPink)"
-                backColorOnHover="var(--mainPink)"
-                iconFontAwesome="fas fa-check"
-                textTransform='uppercase'
-            >
-                Confirmar
-            </ButtonMulti>
         </div>
     );
 
@@ -109,8 +65,7 @@ export default function InsertValue({ success, setValuePaid }) {
         >
             <Card className={classes.card}>
                 {showTitle()}
-                {showForm()}
-                {showButtonActions()}
+                {showKeypadButton()}
             </Card>
         </div>
     );

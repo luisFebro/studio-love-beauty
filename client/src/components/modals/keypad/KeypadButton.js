@@ -15,7 +15,7 @@ KeypadButton.propTypes = {
 export default function KeypadButton({
     title,
     titleIcon,
-    keyboardType,
+    keyboardType = "numeric",
     setSelectedValue,
     confirmFunction }) {
   const [open, setOpen] = useState(false);

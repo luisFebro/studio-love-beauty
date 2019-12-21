@@ -12,7 +12,7 @@ Keyboard.propTypes = {
 }
 
 export default function Keyboard({
-    keyboardType = 'numeric',
+    keyboardType,
     setDisplay,
     display,
     handleClose,
@@ -26,13 +26,12 @@ export default function Keyboard({
                 return setDisplay(value);
             }
 
-            if(display.length < 11 && display.length >= 1) {
+            if(display.includes(".") || display.length < 11 && display.length >= 1) {
                 setDisplay(display += value)
             }
 
             if(display.length === 11) {
                 const maskCpf = cpfMaskBr(display)
-                console.log(maskCpf)
                 setDisplay(maskCpf);
             }
         }

@@ -83,7 +83,6 @@ function Login({ history }) {
                 <div className="mx-2 mb-4 text-center">
                     <SafeEnvironmentMsg />
                 </div>
-                {/*showForm()*/}
             </Card>
         </div>
     );

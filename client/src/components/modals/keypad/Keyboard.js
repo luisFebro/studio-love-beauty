@@ -68,7 +68,10 @@ export default function Keyboard({
             <div onClick={() => {getValue("1"); playBeep()} } className="item1">1</div>
             <div onClick={() => {getValue("2"); playBeep()} } className="item2">2</div>
             <div onClick={() => {getValue("3"); playBeep()} } className="item3">3</div>
-            <div onClick={() => {eraseLastChar(); playBeep()} } className="d-flex align-items-center  flex-row justify-content-center erase-last side-btn">
+            <div
+                onClick={() => {eraseLastChar(); playBeep()} }
+                className="d-flex align-items-center  flex-row justify-content-center erase-last side-btn"
+            >
                 <i style={{fontSize: '1.3em'}} className="fas fa-arrow-left mr-3"></i>
                 Corrigir
             </div>

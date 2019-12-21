@@ -5,10 +5,10 @@ import SearchResult from "../../../components/search/SearchResult";
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { readUserList } from '../../../redux/actions/userActions';
 // End Redux
-import RegisteredUser from './RegisteredUser';
+import RegisteredClient from './RegisteredClient';
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
 
-export default function RegisteredUsersList() {
+export default function RegisteredClientsList() {
     const [data, setData] = useState({
         searchTerm: ""
     });
@@ -26,15 +26,15 @@ export default function RegisteredUsersList() {
         readUserList(dispatch)
     }, [])
 
-    const onlyManagingUsers = allUsers.filter(user => user.role !== "cliente");
+    const onlyClients = allUsers.filter(user => user.role === "cliente");
 
-    const filteredUsers = onlyManagingUsers.filter(user => {
+    const filteredUsers = onlyClients.filter(user => {
         return user.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
     const registeredUserList =
     filteredUsers.map(user => (
-        <RegisteredUser
+        <RegisteredClient
             key={user._id}
             data={user}
             allUsers={allUsers}
@@ -48,7 +48,7 @@ export default function RegisteredUsersList() {
     const showSearchBar = () => (
         <div className="container-center my-4">
             <SearchFilter
-                placeholder="Admin, procure pelo nome do usuário interno"
+                placeholder="Admin, procure pelo nome do cliente"
                 searchChange={onSearchChange}
             />
         </div>
@@ -60,7 +60,7 @@ export default function RegisteredUsersList() {
             <SearchResult
                 isLoading={isLoading}
                 filteredUsersLength={filteredUsers.length}
-                allUsersLength={onlyManagingUsers.length}
+                allUsersLength={onlyClients.length}
                 searchTerm={searchTerm}
             />
             {isLoading

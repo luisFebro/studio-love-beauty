@@ -64,6 +64,7 @@ exports.remove = (req, res) => { //needs to put auth as middleware
 exports.getList = (req, res) => {
     User.find({})
         .select("-password")
+        .sort({ name: 1 })
         .exec((err, data) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));
             res.json(data);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isSmallScreen from '../../utils/isSmallScreen';
+import DashClients from './dash-clients';
 import DashUsers from './dash-users';
 import DashBooking from './dash-booking';
 import DashSetting from './dash-setting';
@@ -21,6 +22,7 @@ import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import BuildIcon from '@material-ui/icons/Build';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 // End Material UI
 
 function TabPanel(props) {
@@ -123,7 +125,8 @@ export default function GroupedDashSessions() {
                     textColor="primary"
                     aria-label="scrollable force with icon"
                 >
-                    <Tab label="Usuários" icon={<SupervisedUserCircleIcon />} {...a11yProps(0)} />
+                    <Tab label="Clientes" icon={<PermContactCalendarIcon />} {...a11yProps(0)} />
+                    <Tab label="Usuários Gerenciamento" icon={<SupervisedUserCircleIcon />} {...a11yProps(0)} />
                     <Tab label="Agendamentos" icon={<LibraryBooksIcon />} {...a11yProps(1)} />
                     <Tab label="Finanças" icon={<MonetizationOnIcon />} {...a11yProps(2)} />
                     <Tab label="Configurações" icon={<BuildIcon />} {...a11yProps(3)} />
@@ -135,15 +138,18 @@ export default function GroupedDashSessions() {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
-                    <DashUsers />
+                    <DashClients />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <DashBooking />
+                    <DashUsers />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
-                    <DashFinance />
+                    <DashBooking />
                 </TabPanel>
                 <TabPanel value={value} index={3} dir={theme.direction}>
+                    <DashFinance />
+                </TabPanel>
+                <TabPanel value={value} index={4} dir={theme.direction}>
                     <DashSetting />
                 </TabPanel>
             </SwipeableViews>

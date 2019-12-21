@@ -25,6 +25,7 @@ export default function SearchResult({
                                 maxWidth: 400
                             }}
                             txtImgConfig = {{
+                                topPos: "15%",
                                 txt: `Nenhum usuário foi encontrado para ${searchTerm.toUpperCase()}`,
                                 txtStyle: "text-title",
                                 txtBorder: "border-white",

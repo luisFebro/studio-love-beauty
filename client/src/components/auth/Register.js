@@ -258,7 +258,7 @@ export default function Register() {
               <MenuItem value={"Solteiro(a)"}>Solteiro(a)</MenuItem>
               <MenuItem value={"Casado(a)"}>Casado(a)</MenuItem>
               <MenuItem value={"Divorciado(a)"}>Divorciado(a)</MenuItem>
-              <MenuItem value={"Viúva(a)"}>Viúva(a)</MenuItem>
+              <MenuItem value={"Viúvo(a)"}>Viúvo(a)</MenuItem>
             </Select>
             <SafeEnvironmentMsg />
         </form>

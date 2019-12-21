@@ -37,6 +37,7 @@ export default function RegisteredUser({ data, allUsers }) {
         _id,
         name,
         cpf,
+        loyaltyScores,
         role,
         phone,
         maritalStatus,
@@ -50,6 +51,23 @@ export default function RegisteredUser({ data, allUsers }) {
         if(role === "colaborador") return "Colaborador";
         if(role === "cliente") return "Cliente";
     }
+
+    const displayLoyaltyScores = () => (
+        <div style={{backgroundColor: "var(--mainPink)"}}>
+            <p>Pontos Fidelidade:</p>
+            {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
+            ? <p className="text-center">Pontuação não registrada.</p>
+            : (
+                <Fragment>
+                    <div className="text-center font-weight-bold">Acumulado: {loyaltyScores && loyaltyScores.currentScore}</div>
+                    <div className="d-flex justify-content-center">
+                        <div className="mr-4">Valor Anterior: {loyaltyScores && loyaltyScores.lastScore}</div>
+                        <div>Última Pontuação: {loyaltyScores && loyaltyScores.cashCurrentScore}</div>
+                    </div>
+                </Fragment>
+            )}
+        </div>
+    );
 
     const displayMoreInfo = () => (
         <Fragment>
@@ -83,6 +101,7 @@ export default function RegisteredUser({ data, allUsers }) {
                 <p>CPF: {cpf}</p>
             </div>
             {displayMoreInfo()}
+            {displayLoyaltyScores()}
         </Fragment>
     );
 

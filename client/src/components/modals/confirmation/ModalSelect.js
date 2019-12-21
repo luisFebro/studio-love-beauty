@@ -81,7 +81,7 @@ export default function ModalSelect({ currItemFound }) {
             if(data && data.role === "") return showSnackbar(dispatch, "Selecione uma opção", 'error');
             updateUser(dispatch, data, _idTarget)
             .then(res => {
-                showSnackbar(dispatch, "O Tipo de Usuário foi alterado.", 'success');
+                showSnackbar(dispatch, "O Tipo de Usuário foi alterado e movido.", 'success');
             })
         }
     }

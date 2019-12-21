@@ -3,20 +3,13 @@ import TitleComponent from '../../components/TitleComponent';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStoreDispatch } from 'easy-peasy';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import MoneyIcon from '@material-ui/icons/Money';
 import Card from '@material-ui/core/Card';
 import SafeEnvironmentMsg from '../SafeEnvironmentMsg';
 import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { loginEmail } from '../../redux/actions/authActions';
-import ButtonMulti from '../buttons/material-ui/ButtonMulti';
-import handleChange from '../../utils/form/use-state/handleChange';
-import cpfMaskBr from '../../utils/validation/masks/cpfMaskBr';
-import detectErrorField from '../../utils/validation/detectErrorField';
-import clearForm from '../../utils/form/use-state/clearForm';
 import PropTypes from 'prop-types';
+import KeypadButton from '../modals/keypad';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -25,39 +18,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Login({ history }) {
-    const [data, setData] = useState({
-        cpf: '',
-    })
-
-    const { cpf } = data;
-    const [fieldError, setFieldError] = useState(null);
-    const errorCpf = fieldError && fieldError.cpf;
+    const [cpf, setData] = useState("0");
 
     const classes = useStyles();
     const dispatch = useStoreDispatch();
 
-    const clearData = () => {
-        clearForm(setData, data);
-        setFieldError(null);
-    }
-
-    const signInThisUser = e => {
+    const signInThisUser = value => {
         const userData = {
-            cpf
+            cpf: value,
         };
 
         loginEmail(dispatch, userData)
         .then(res => {
             if(res.status !== 200) {
                 showSnackbar(dispatch, res.data.msg, 'error');
-                // detect field errors
-                const objFields = Object.keys(data);
-                const foundObjError = detectErrorField(res.data.msg, objFields);
-                setFieldError(foundObjError);
-                return;
+                return null;
             }
             const { msg, role } = res.data;
-            clearData();
             showSnackbar(dispatch, "Analisando Crendenciais...", 'warning', 3000);
             if(role === "admin") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
@@ -79,55 +56,20 @@ function Login({ history }) {
     };
 
     const showTitle = () => (
-        <TitleComponent
-            subtitle="Digite apenas números"
-        >
+        <TitleComponent>
             ACESSAR CONTA
         </TitleComponent>
     );
 
-    const showForm = () => (
-        <form
-            style={{margin: 'auto', width: '80%'}}
-            onBlur={() => setFieldError(null)}
-        >
-            <TextField
-                required
-                variant="outlined"
-                margin="dense"
-                onChange={handleChange(setData, data)}
-                error={errorCpf ? true : false}
-                name="cpf"
-                value={cpf}
-                type="text"
-                label="Insira seu CPF"
-                autoComplete="off" // n1
-                onBlur={() => setData({ ...data, cpf: cpfMaskBr(cpf)})}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <MoneyIcon />
-                    </InputAdornment>
-                  ),
-                }}
+    const showKeypadButton = () => (
+        <div className="animated jackInTheBox slow delay-2s d-flex justify-content-center my-4">
+            <KeypadButton
+                title="Informe o seu CPF"
+                titleIcon="fas fa-list-ol"
+                keyboardType="cpf"
+                setSelectedValue={setData}
+                confirmFunction={signInThisUser}
             />
-            <SafeEnvironmentMsg />
-        </form>
-    );
-
-    const showButtonActions = () => (
-        <div className="container-center">
-            <ButtonMulti
-                onClick={signInThisUser}
-                color="var(--mainWhite)"
-                backgroundColor="var(--mainPink)"
-                backColorOnHover="var(--mainPink)"
-                iconFontAwesome="fas fa-paper-plane"
-                textTransform='uppercase'
-            >
-                Entrar
-            </ButtonMulti>
         </div>
     );
 
@@ -137,8 +79,11 @@ function Login({ history }) {
         >
             <Card className={classes.card}>
                 {showTitle()}
-                {showForm()}
-                {showButtonActions()}
+                {showKeypadButton()}
+                <div className="mx-2 mb-4 text-center">
+                    <SafeEnvironmentMsg />
+                </div>
+                {/*showForm()*/}
             </Card>
         </div>
     );

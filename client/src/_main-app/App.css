@@ -126,12 +126,18 @@ footer {
 }
 
 /*Letters border*/
-.text-border-white {
+.text-shadow-white,
+.text-border-white, {
     text-shadow: -2px 0 #fff, 0 2px #fff, 2px 0 #fff, 0 -2px #fff;
 }
 
-.text-border-black {
+.text-shadow-black,
+.text-border-white, {
     text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 3px black;
 }
 /*END TEXTS*/
 

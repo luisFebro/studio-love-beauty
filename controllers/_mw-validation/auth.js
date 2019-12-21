@@ -11,7 +11,7 @@ exports.mwValidateRegister = (req, res, next) => {
 
     User.findOne({ cpf })
     .then(user => {
-        if(!name && !email && !cpf && !birthday && !phone) return res.status(400).json(msg('error.anyFieldFilled'));
+        if(!name && !email && !cpf && !phone) return res.status(400).json(msg('error.anyFieldFilled'));
         if(user && user.cpf === cpf) return res.status(400).json(msg('error.cpfAlreadyRegistered'));
         if(!cpf) return res.status(400).json(msg('error.noCpf'));
         if(!name) return res.status(400).json(msg('error.noName'));

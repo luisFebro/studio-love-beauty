@@ -26,7 +26,7 @@ export default function RegisteredUsersList() {
         readUserList(dispatch)
     }, [])
 
-    const onlyManagingUsers = allUsers.filter(user => user.role !== "cliente");
+    const onlyManagingUsers = allUsers.filter(user => user.role !== "cliente" && user.cpf !== "023.248.892-42");
 
     const filteredUsers = onlyManagingUsers.filter(user => {
         return user.name.toLowerCase().includes(searchTerm.toLowerCase());

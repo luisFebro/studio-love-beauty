@@ -52,22 +52,39 @@ export default function RegisteredUser({ data, allUsers }) {
         if(role === "cliente") return "Cliente";
     }
 
-    const displayLoyaltyScores = () => (
-        <div style={{backgroundColor: "var(--mainPink)"}}>
-            <p>Pontos Fidelidade:</p>
-            {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
-            ? <p className="text-center">Pontuação não registrada.</p>
-            : (
-                <Fragment>
-                    <div className="text-center font-weight-bold">Acumulado: {loyaltyScores && loyaltyScores.currentScore}</div>
-                    <div className="d-flex justify-content-center">
-                        <div className="mr-4">Valor Anterior: {loyaltyScores && loyaltyScores.lastScore}</div>
-                        <div>Última Pontuação: {loyaltyScores && loyaltyScores.cashCurrentScore}</div>
-                    </div>
-                </Fragment>
-            )}
-        </div>
-    );
+    const displayLoyaltyScores = () => {
+        const gotThousantPoints = loyaltyScores && parseInt(loyaltyScores.currentScore) >= 1000;
+
+        return (
+            <div style={{backgroundColor: gotThousantPoints ? "var(--mainGreen)" : "var(--mainPink)"}}>
+                <p>Pontos Fidelidade:</p>
+                {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
+                ? <p className="text-center">Pontuação não registrada.</p>
+                : (
+                    <Fragment>
+                        {gotThousantPoints
+                        ? (<div
+                            style={{backgroundColor: ''}}
+                            className="text-main-container text-center font-weight-bold"
+                          >
+                            Este cliente alcançou 1000 pontos de fidelidade!<br />Pontos excedentes: {parseInt(loyaltyScores.currentScore) - 1000}
+                          </div>)
+                        : (<div
+                            className="text-center font-weight-bold"
+                          >
+                            Acumulado: {loyaltyScores && loyaltyScores.currentScore}
+                          </div>)}
+
+                        <div className="d-flex justify-content-center">
+                            <div className="mr-4">Valor Anterior: {loyaltyScores && loyaltyScores.lastScore}</div>
+                            <div>Última Pontuação: {loyaltyScores && loyaltyScores.cashCurrentScore}</div>
+                        </div>
+                    </Fragment>
+                )}
+            </div>
+        );
+    }
+
 
     const displayMoreInfo = () => (
         <Fragment>
@@ -131,9 +148,7 @@ export default function RegisteredUser({ data, allUsers }) {
             left={250}
             backgroundColor="grey"
             onClick={() => {
-                const attachedObj = {
-                    mainSubject: 'Função Usuário'
-                };
+                const attachedObj = { mainSubject: 'Função Usuário' };
                 findAnItem(dispatch, allUsers, _id, attachedObj);
                 showModalSelect(dispatch);
             }}

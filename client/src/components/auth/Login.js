@@ -35,7 +35,7 @@ function Login({ history }) {
                 return null;
             }
             const { msg, role } = res.data;
-            showSnackbar(dispatch, "Analisando Crendenciais...", 'warning', 3000);
+            showSnackbar(dispatch, "Analisando Credenciais...", 'warning', 3000);
             if(role === "admin") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
                 setTimeout(() => history.push("/admin/painel-de-controle"), 5000);

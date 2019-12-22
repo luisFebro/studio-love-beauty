@@ -59,6 +59,14 @@ export const readUserList = async (dispatch) => {
     }
 };
 
+export const readHighestScores = async () => {
+    try {
+        return await axios.get('/api/user/list/highest-scores', configTypeJson);
+    } catch (err) {
+        return err;
+    }
+};
+
 // FIELDS
 export const addElemArrayUser = async (dispatch, objToSend) => {
     try {

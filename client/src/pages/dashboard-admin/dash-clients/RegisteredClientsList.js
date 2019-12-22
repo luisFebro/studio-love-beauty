@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import SearchFilter from "../../../components/search/SearchFilter";
 import SearchResult from "../../../components/search/SearchResult";
+import RankingPondium from './RankingPondium';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { readUserList } from '../../../redux/actions/userActions';
@@ -65,7 +66,12 @@ export default function RegisteredClientsList() {
             />
             {isLoading
             ? <LoadingThreeDots />
-            : <div className="text-default">{registeredUserList}</div>}
+            : (
+                <Fragment>
+                    <RankingPondium />
+                    <div className="text-default">{registeredUserList}</div>
+                </Fragment>
+            )}
         </Fragment>
     );
 }

@@ -71,6 +71,17 @@ exports.getList = (req, res) => {
         });
 }
 
+exports.getHighestScores = (req, res) => {
+    User.find({})
+    .select("name loyaltyScores")
+    .sort({ 'loyaltyScores.currentScore': -1 })
+    .limit(3)
+    .exec((err, data) => {
+        if(err) return res.status(500).json(msgG('error.systemError', err));
+        res.json(data);
+    });
+}
+
 exports.confirmUserAccount = (req, res) => {
     const { authUserId } = req.params
     User.findById(authUserId)

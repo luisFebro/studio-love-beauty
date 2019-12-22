@@ -10,6 +10,7 @@ const {
     removeElementArray,
     removeField,
     readBackup,
+    getHighestScores,
     mwUserId,
     mwBackup
 } = require("../../controllers/user");
@@ -25,6 +26,7 @@ router.get("/confirm-account/:authUserId", confirmUserAccount);
 
 // LISTS
 router.get("/list/all", getList);
+router.get("/list/highest-scores", getHighestScores);
 router.get("/backup/list", readBackup);
 
 // FIELDS

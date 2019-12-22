@@ -5,12 +5,12 @@ import DoneIcon from '@material-ui/icons/Done';
 import Chip from '@material-ui/core/Chip';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
-ExpansiblePanelContent.propTypes = {
+PanelHiddenContent.propTypes = {
     doneTasks: PropTypes.arrayOf(PropTypes.object).isRequired,
     inProgressTasks: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export default function ExpansiblePanelContent({ doneTasks, inProgressTasks }) {
+export default function PanelHiddenContent({ doneTasks, inProgressTasks }) {
     const gotTasksDone = doneTasks.length !== 0 ? true : false;
     const gotTasksInProgress = inProgressTasks.length !== 0 ? true : false;
 

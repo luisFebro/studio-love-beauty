@@ -1,5 +1,6 @@
 import React, { useRef, Fragment } from 'react';
 import styled from 'styled-components';
+import CreatedAtBr from '../CreatedAtBr';
 import moment from 'moment';
 import uuidv1 from 'uuid/v1';
 // Redux
@@ -11,22 +12,8 @@ import { showModalConfYesNo, showModalSelect } from '../../../redux/actions/moda
 import DeleteButton from '../../../components/buttons/DeleteButton';
 import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
 import PropTypes from 'prop-types';
-// Material UI
-// import { makeStyles } from '@material-ui/core/styles';
 
 moment.updateLocale('pt-br');
-
-
-// const useStyles = makeStyles(theme => ({
-//     button: {
-//         margin: theme.spacing(1),
-//         color: 'var(--mainWhite)',
-//         fontSize: '1.9rem'
-//     },
-//     input: {
-//         display: 'none'
-//     }
-// }));
 
 export default function RegisteredUser({ data, allUsers }) {
     const animateRef = useRef(null);
@@ -43,14 +30,8 @@ export default function RegisteredUser({ data, allUsers }) {
         maritalStatus,
         birthday,
         email,
-        createAt,
-        updateAt } = data;
-
-    const whichRole = () => {
-        if(role === "admin") return "Admin";
-        if(role === "colaborador") return "Colaborador";
-        if(role === "cliente") return "Cliente";
-    }
+        createdAt,
+        updatedAt } = data;
 
     const displayLoyaltyScores = () => {
         const gotThousantPoints = loyaltyScores && parseInt(loyaltyScores.currentScore) >= 1000;
@@ -81,6 +62,7 @@ export default function RegisteredUser({ data, allUsers }) {
                         </div>
                     </Fragment>
                 )}
+                <CreatedAtBr createdAt={createdAt} />
             </div>
         );
     }
@@ -112,7 +94,7 @@ export default function RegisteredUser({ data, allUsers }) {
                 <p className="font-weight-bold text-default">Name: {name.cap()}</p>
             </div>
             <div>
-                <p>Tipo Usuário: {whichRole()}</p>
+                <p>Última Atualização: {moment(updatedAt).fromNow()}</p>
             </div>
             <div>
                 <p>CPF: {cpf}</p>
@@ -175,14 +157,6 @@ const DivWrapper = styled.div`
     background-color: var(--mainDark);
     color: #ecf0f1;
 `;
-
-/*
-NOT WORKING
-<div>
-    <p>Dia do Cadastro: {moment(createAt).format('Do MMMM [às] h:mm a, YYYY[.]')}</p>
-    <p>Última Atualização: {moment(updateAt).format('Do MMMM [às] h:mm a, YYYY[.]')}</p>
-</div>
- */
 
 /*
 <section>

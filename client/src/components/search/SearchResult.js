@@ -8,10 +8,11 @@ SearchResult.propTypes = {
     allUsersLength: PropTypes.number,
     isLoading: PropTypes.bool,
     searchTerm: PropTypes.string,
+    mainSubject: PropTypes.string,
 }
 
 export default function SearchResult({
-    isLoading, filteredUsersLength, allUsersLength, searchTerm }) {
+    isLoading, filteredUsersLength, allUsersLength, searchTerm, mainSubject = "usuário" }) {
     return (
         <div className="text-main-container my-5">
             {!filteredUsersLength
@@ -26,7 +27,7 @@ export default function SearchResult({
                             }}
                             txtImgConfig = {{
                                 topPos: "15%",
-                                txt: `Nenhum usuário foi encontrado para ${searchTerm.toUpperCase()}`,
+                                txt: `Nenhum ${mainSubject} foi encontrado para ${searchTerm.toUpperCase()}`,
                                 txtStyle: "text-title",
                                 txtBorder: "border-white",
                             }}
@@ -39,13 +40,13 @@ export default function SearchResult({
                     ? (
                         <div>
                             <h2 className="text-sub-title text-left pl-5">
-                                Usuários Encontrados: <strong>{filteredUsersLength}</strong>
+                                {`${mainSubject.cap()}s Encontrados:`} <strong>{filteredUsersLength}</strong>
                             </h2>
                         </div>
                     ) : (
                         <div>
                             <h2 className="text-sub-title text-left pl-5">
-                                Total de Usuários: <strong>{allUsersLength}</strong>
+                                {`Total de ${mainSubject.cap()}s:`} <strong>{allUsersLength}</strong>
                             </h2>
                         </div>
                     )}

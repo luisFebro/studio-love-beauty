@@ -38,13 +38,21 @@ export default function RankingPondium() {
                             key={id}
                             className={`${css[id]} text-main-container text-shadow-white`}
                         >
-                            <p className={id === 0 && `bounce-repeat animated bounce delay-3s`}>{truncateWords(name, 13)}
-                                <br />
-                                <span>
-                                    {loyaltyScores && convertDotToComma(loyaltyScores.currentScore)}
-                                </span>
-                            </p>
-
+                            {typeof loyaltyScores === "undefined"
+                            ? (
+                              <p>
+                                <i className="fas fa-question"></i>
+                              </p>
+                            ) : (
+                                <p className={id === 0 && `bounce-repeat animated bounce delay-3s`}>
+                                    {truncateWords(name, 13)}
+                                    <br />
+                                    <span>
+                                        {loyaltyScores && convertDotToComma(loyaltyScores.currentScore)}
+                                    </span>
+                                </p>
+                            )
+                            }
                         </div>
                     );
                 })}
@@ -57,6 +65,10 @@ const DivPodium = styled.div`
     & {
         display: flex;
         justify-content: center;
+    }
+
+    & i {
+        font-size: 1.9em;
     }
 
     & .bounce-repeat {

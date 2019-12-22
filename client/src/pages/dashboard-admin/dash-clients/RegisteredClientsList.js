@@ -63,6 +63,7 @@ export default function RegisteredClientsList() {
                 filteredUsersLength={filteredUsers.length}
                 allUsersLength={onlyClients.length}
                 searchTerm={searchTerm}
+                mainSubject="cliente"
             />
             {isLoading
             ? <LoadingThreeDots />

@@ -64,7 +64,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
 
             const objToSend = {
                 "loyaltyScores.cashCurrentScore": cashCurrentScore,
-                "loyaltyScores.currentScore": currentScore.toString(),
+                "loyaltyScores.currentScore": currentScore, // need to be Number to ranking in DB properly
                 "loyaltyScores.lastScore": lastScore,
             }
             updateUser(dispatch, objToSend, userId, false)

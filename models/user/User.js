@@ -21,8 +21,8 @@ const dataLoyaltyScores = {
         default: "0"
     },
     currentScore: { // last score + cashCurrenScore
-        type: String,
-        default: "0"
+        type: Number, // need to be number to ranking the values property.
+        default: 0
     },
     lastScore: { // backup purpose.
         type: String,

@@ -292,7 +292,7 @@ const NavWrapper = styled.nav`
     & .nav-link:hover:hover,
     #searchIcon:hover {
         transform: scale(1.1);
-        filter: drop-shadow(0.001em 0.2em 0.1em var(--mainYellow));
+        filter: drop-shadow(0.001em 0.2em 0.1em var(--mainPink));
     }
 `;
 

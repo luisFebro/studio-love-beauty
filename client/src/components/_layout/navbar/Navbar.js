@@ -49,6 +49,16 @@ function Navbar({ history, location }) {
     const locationNow = location.pathname;
     const showGreeting = () => (
         <ul className="navbar-nav align-items-center">
+            {
+                locationNow === "/acesso/verificacao" &&
+                <li>
+                    <Link to="/">
+                        <i
+                            style={{fontSize: '1.9em'}}
+                            className="fas fa-home text-pink mr-2"></i>
+                    </Link>
+                </li>
+            }
             <li
                 className="nav-item"
                 style={{color: "black"}}
@@ -64,14 +74,12 @@ function Navbar({ history, location }) {
                 ) : (
                     <Fragment>
                         {locationNow === "/acesso/verificacao" &&
-                        <Link to="/">
-                            <p
-                                className="ml-4 text-container-main font-weight-bold text-pink"
-                                style={{ fontSize: '2.3rem' }}
-                            >
-                                ACESSO
-                            </p>
-                        </Link>}
+                        <p
+                            className="ml-4 text-container-main font-weight-bold text-pink"
+                            style={{ fontSize: '2.3rem' }}
+                        >
+                            ACESSO
+                        </p>}
 
                         {locationNow === "/cliente/pontos-fidelidade" &&
                             <p
@@ -132,7 +140,12 @@ function Navbar({ history, location }) {
                     to="/acesso/verificacao"
                     className={["/cliente/pontos-fidelidade", "/acesso/verificacao"].includes(locationNow) ? "disabled-link" : "nav-link"}
                 >
-                    Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                    {locationNow === "/"
+                    ? (
+                        <span>
+                            Gerenciamento <i className="fas fa-lock" style={{fontSize: '1.9rem'}}></i>
+                        </span>
+                    ) : null}
                 </Link>
             ) : (
                 <Fragment>

@@ -1,11 +1,15 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import SearchFilter from "../../../components/search/SearchFilter";
 import SearchResult from "../../../components/search/SearchResult";
+import ExpansiblePanel from '../ExpansiblePanel';
+import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { readUserList } from '../../../redux/actions/userActions';
+import moment from 'moment';
+import parse from 'html-react-parser';
+import PanelHiddenContent from './PanelHiddenContent';
 // End Redux
-import RegisteredUser from './RegisteredUser';
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
 
 export default function RegisteredUsersList() {
@@ -32,15 +36,6 @@ export default function RegisteredUsersList() {
         return user.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    const registeredUserList =
-    filteredUsers.map(user => (
-        <RegisteredUser
-            key={user._id}
-            data={user}
-            allUsers={allUsers}
-        />
-    ));
-
     const onSearchChange = e => {
         setData({ searchTerm: e.target.value });
     }
@@ -54,6 +49,41 @@ export default function RegisteredUsersList() {
         </div>
     );
 
+    const whichRole = role => {
+        if(role === "admin") return "Admin";
+        if(role === "colaborador") return "Colaborador";
+        if(role === "cliente") return "Cliente";
+    }
+
+    // ExpansionPanel Content
+    const actions = filteredUsers.map(user => {
+        return({
+           _id: user._id,
+           mainHeading: user.name,
+           secondaryHeading: parse(`> Atualizado ${moment(user.updatedAt).fromNow()}  atrás <br /> > Função Gerenciamento: ${whichRole(user.role)}`),
+           hiddenContent: <PanelHiddenContent data={user} />
+        });
+    })
+
+    const showExpansionPanel = () => (
+        <ExpansiblePanel
+            actions={actions}
+            backgroundColor="var(--mainDark)"
+            color="var(--mainWhite)"
+            ToggleButton={
+                <ButtonFab
+                    backgroundColor="var(--mainPink)"
+                    size="small"
+                    iconFontAwesome="fas fa-plus"
+                    iconMarginLeft="0"
+                    iconAfterClick="fas fa-minus"
+                />
+            }
+            allUsers={allUsers}
+        />
+    );
+    //End ExpansionPanel Content
+
     return (
         <Fragment>
             {showSearchBar()}
@@ -65,7 +95,7 @@ export default function RegisteredUsersList() {
             />
             {isLoading
             ? <LoadingThreeDots />
-            : <div className="text-default">{registeredUserList}</div>}
+            : <div className="text-default">{showExpansionPanel()}</div>}
         </Fragment>
     );
 }

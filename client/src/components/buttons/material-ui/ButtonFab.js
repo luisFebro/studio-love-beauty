@@ -1,5 +1,4 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
 import Fab from '@material-ui/core/Fab';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -10,23 +9,16 @@ ButtonFab.propTypes = {
     size: PropTypes.oneOf(["small", "medium", "large"]),
     top: PropTypes.number,
     left: PropTypes.number,
-    bottom: PropTypes.number,
-    right: PropTypes.number,
     backgroundColor: PropTypes.string,
+    iconFontAwesome: PropTypes.string,
+    iconMarginLeft: PropTypes.string,
+    iconFontSize: PropTypes.string,
+    iconAfterClick: PropTypes.string,
     onClick: PropTypes.func,
     title: PropTypes.string,
     icon: PropTypes.element,
 }
 
-
-const useStyles = makeStyles(theme => ({
-    fab: {
-        margin: theme.spacing(1)
-    },
-    extendedIcon: {
-        marginLeft: theme.spacing(1),
-    },
-}));
 // NEED CHANGE ICON TO FONT AWESOME TOBE MORE FLEXIBLE
 export default function ButtonFab({
     variant,
@@ -36,30 +28,47 @@ export default function ButtonFab({
     left,
     bottom,
     backgroundColor,
+    iconFontAwesome,
+    iconAfterClick,
+    iconMarginLeft,
     onClick,
     title }) {
-    const classes = useStyles();
+    const [toggle, setToggle] = useState(false);
+
+    const styles = {
+        icon: {
+            marginLeft: iconMarginLeft || '5px',
+        }
+    }
+
+    const showIcon = iconFontAwesome => (
+        iconFontAwesome &&
+        <i style={styles.icon} className={toggle ? iconAfterClick : iconFontAwesome}></i>
+    );
+
+    const handleToggle = () => {
+        setToggle(!toggle);
+    }
+
 
     return (
         <Fab
             variant={variant || "round"}
-            onClick={onClick}
+            onClick={iconAfterClick ? handleToggle : onClick}
             size={ size || "small" }
             aria-label={title}
-            className={classes.fab}
+            className={styles.fab}
             style={{
                 position: 'absolute',
                 top: `${top || 0}px`,
-                right: `${right || 0}px`,
                 left: `${left || 0}px`,
-                bottom: `${bottom || 0}px`,
                 outline: 'none',
                 color: 'var(--mainWhite)',
                 backgroundColor:  backgroundColor || "#4834d4"
             }}
         >
             {title}
-            <HowToRegIcon className={classes.extendedIcon} />
+            {showIcon(iconFontAwesome)}
         </Fab>
     );
 }

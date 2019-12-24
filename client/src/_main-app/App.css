@@ -7,7 +7,7 @@
     /*End Primary Colors*/
     --mainRed: #232528; /*#ed213a */
     --lightRed: #ed213a;
-    --mainWhite: #f3f3f3;
+    --mainWhite: #ecf0f1;
     --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
     --mainYellow: #fff200;
     --mainGreen: #4cd137;
@@ -321,10 +321,6 @@ footer {
     padding-right: 20%;
 }
 
-.disabled {
-    pointer-events: none;
-}
-
 .app-icon-container {
     width: 1em;
     height: 1em;
@@ -340,6 +336,18 @@ footer {
     display: flex;
     justify-content: center;
 }
+
+/*END POSITION*/
+
+/*LINKS*/
+.disabledLink {
+    pointer-events: none;
+}
+
+.enabledLink {
+    pointer-events: auto;
+}
+/*END LINKS*/
 
 /*COLOR PICKER
 ref: https://stackoverflow.com/questions/11167281/webkit-css-to-control-the-box-around-the-color-in-an-inputtype-color;

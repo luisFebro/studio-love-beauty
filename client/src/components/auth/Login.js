@@ -62,7 +62,7 @@ function Login({ history }) {
     );
 
     const showKeypadButton = () => (
-        <div className="animated jackInTheBox slow delay-2s d-flex justify-content-center my-4">
+        <div className="animated jackInTheBox slow delay-1s d-flex justify-content-center my-4">
             <KeypadButton
                 title="Informe o seu CPF"
                 titleIcon="fas fa-list-ol"

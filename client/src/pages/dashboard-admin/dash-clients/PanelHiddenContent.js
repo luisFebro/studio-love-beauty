@@ -1,62 +1,81 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Divider from '@material-ui/core/Divider';
-import DoneIcon from '@material-ui/icons/Done';
-import Chip from '@material-ui/core/Chip';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import CreatedAtBr from '../CreatedAtBr';
 
 PanelHiddenContent.propTypes = {
-    doneTasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    inProgressTasks: PropTypes.arrayOf(PropTypes.object).isRequired
+    data: PropTypes.object.isRequired,
 };
 
-export default function PanelHiddenContent({ doneTasks, inProgressTasks }) {
-    const gotTasksDone = doneTasks.length !== 0 ? true : false;
-    const gotTasksInProgress = inProgressTasks.length !== 0 ? true : false;
+export default function PanelHiddenContent({ data }) {
+    const {
+        _id,
+        cpf,
+        loyaltyScores,
+        phone,
+        maritalStatus,
+        birthday,
+        email,
+        createdAt,
+    } = data;
+
+    const displayLoyaltyScores = () => {
+        const gotThousantPoints = loyaltyScores && parseInt(loyaltyScores.currentScore) >= 1000;
+
+        return (
+            <div style={{backgroundColor: gotThousantPoints ? "var(--mainGreen)" : "var(--mainPink)"}}>
+                <p>Pontos Fidelidade:</p>
+                {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
+                ? <p className="text-center">Pontuação não registrada.</p>
+                : (
+                    <Fragment>
+                        {gotThousantPoints
+                        ? (<div
+                            style={{backgroundColor: ''}}
+                            className="text-main-container text-center font-weight-bold"
+                          >
+                            Este cliente alcançou 1000 pontos de fidelidade!<br />Pontos excedentes: {parseInt(loyaltyScores.currentScore) - 1000}
+                          </div>)
+                        : (<div
+                            className="text-center font-weight-bold"
+                          >
+                            Acumulado: {loyaltyScores && loyaltyScores.currentScore}
+                          </div>)}
+
+                        <div className="d-flex justify-content-center">
+                            <div className="mr-4">Valor Anterior: {loyaltyScores && loyaltyScores.lastScore}</div>
+                            <div>Última Pontuação: {loyaltyScores && loyaltyScores.cashCurrentScore}</div>
+                        </div>
+                    </Fragment>
+                )}
+                <CreatedAtBr createdAt={createdAt} />
+            </div>
+        );
+    }
 
     return (
-        <div className="text-center">
-            <section>
-                <div className="text-default text-center mb-3">
-                    Funcionalidades Já Implementadas
-                    <DoneIcon />
-                </div>
-                <div>
-                    {gotTasksDone ? (
-                        <div>
-                            {doneTasks.map(elem => (
-                                <Chip key={elem.task} icon={<DoneIcon />} label={elem.task} color="primary" />
-                            ))}
-                        </div>
-                    ) : (
-                        <div>
-                            <span className="text-default">Em Andamento</span>
-                        </div>
-                    )}
-                </div>
-            </section>
-            <br />
-            <Divider />
-            <br />
-            <section>
-                <div className="text-default text-center mb-3">
-                    Funcionalidades em Andamento
-                    <AccessTimeIcon />
-                </div>
-                <div>
-                    {gotTasksInProgress ? (
-                        <div>
-                            {inProgressTasks.map(elem => (
-                                <Chip key={elem.task} icon={<AccessTimeIcon />} label={elem.task} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div>
-                            <span className="text-default">Sem Atualizações</span>
-                        </div>
-                    )}
-                </div>
-            </section>
+        <div
+            className="text-default enabledLink"
+            style={{userSelect: 'text', margin: 'auto', width: '90%'}}
+        >
+            <div>
+                <p>CPF: {cpf}</p>
+            </div>
+            <div>
+                <p>Email: {email}</p>
+            </div>
+            <div>
+                <p>Contato: {phone}</p>
+            </div>
+            <div>
+                <p>Aniversário: {birthday}</p>
+            </div>
+            <div>
+                <p>Estado Civil: {maritalStatus}</p>
+            </div>
+            <div>
+                <p>ID Sistema: {_id}</p>
+            </div>
+            {displayLoyaltyScores()}
         </div>
     );
 }

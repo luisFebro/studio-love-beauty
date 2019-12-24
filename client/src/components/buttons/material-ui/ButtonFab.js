@@ -26,7 +26,6 @@ export default function ButtonFab({
     top,
     right,
     left,
-    bottom,
     backgroundColor,
     iconFontAwesome,
     iconAfterClick,
@@ -38,6 +37,14 @@ export default function ButtonFab({
     const styles = {
         icon: {
             marginLeft: iconMarginLeft || '5px',
+        },
+        fab: {
+            position: 'absolute',
+            top: `${top || 0}px`,
+            left: `${left || 0}px`,
+            outline: 'none',
+            color: 'var(--mainWhite)',
+            backgroundColor:  backgroundColor || "#4834d4"
         }
     }
 
@@ -57,15 +64,7 @@ export default function ButtonFab({
             onClick={iconAfterClick ? handleToggle : onClick}
             size={ size || "small" }
             aria-label={title}
-            className={styles.fab}
-            style={{
-                position: 'absolute',
-                top: `${top || 0}px`,
-                left: `${left || 0}px`,
-                outline: 'none',
-                color: 'var(--mainWhite)',
-                backgroundColor:  backgroundColor || "#4834d4"
-            }}
+            style={styles.fab}
         >
             {title}
             {showIcon(iconFontAwesome)}

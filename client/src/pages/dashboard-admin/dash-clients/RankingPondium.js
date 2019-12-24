@@ -44,8 +44,8 @@ export default function RankingPondium() {
                                 <i className="fas fa-question"></i>
                               </p>
                             ) : (
-                                <p className={id === 0 && `bounce-repeat animated bounce delay-3s`}>
-                                    {truncateWords(name, 13)}
+                                <p className={id === 0 ? `bounce-repeat animated bounce delay-3s` : ""}>
+                                    {truncateWords(name, 14)}
                                     <br />
                                     <span>
                                         {loyaltyScores && convertDotToComma(loyaltyScores.currentScore)}

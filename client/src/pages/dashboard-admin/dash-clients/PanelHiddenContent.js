@@ -1,12 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CreatedAtBr from '../CreatedAtBr';
+import ModalBtn from "./modal/ModalBtn";
 
 PanelHiddenContent.propTypes = {
     data: PropTypes.object.isRequired,
 };
 
 export default function PanelHiddenContent({ data }) {
+    const [selectedValue, setSelectedValue] = useState(0);
     const {
         _id,
         cpf,
@@ -18,17 +20,45 @@ export default function PanelHiddenContent({ data }) {
         createdAt,
     } = data;
 
+    const styles = {
+        pointsContainer: {
+            position: 'relative'
+        }
+    }
+
+    const showDiscountPointsBtn = () => (
+        <ModalBtn
+            setSelectedValue={setSelectedValue}
+            modal={{
+                mainSubject: "Desconto",
+                title: "Descontar Pontos Fidelidades",
+                subTitle: "digite apenas números e vírgulas",
+                labelTxtField: "Insira aqui <br /> qtde. pontos a retirar",
+                txtBtn: "Descontar",
+                iconBtn: "fas fa-minus-circle"
+            }}
+            button={{
+                title: "Descontar",
+                iconFontAwesome: "fas fa-minus-circle",
+                variant: "extended",
+                top: 240,
+                left: 215,
+                backgroundColor: 'grey',
+            }}
+        />
+    )
+
     const displayLoyaltyScores = () => {
-        const gotThousantPoints = loyaltyScores && parseInt(loyaltyScores.currentScore) >= 1000;
+        const gotThousandPoints = loyaltyScores && parseInt(loyaltyScores.currentScore) >= 1000;
 
         return (
-            <div style={{backgroundColor: gotThousantPoints ? "var(--mainGreen)" : "var(--mainPink)"}}>
+            <div style={{backgroundColor: gotThousandPoints ? "var(--mainGreen)" : "var(--mainPink)"}}>
                 <p>Pontos Fidelidade:</p>
                 {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
                 ? <p className="text-center">Pontuação não registrada.</p>
                 : (
-                    <Fragment>
-                        {gotThousantPoints
+                    <div className={styles.pointsContainer}>
+                        {gotThousandPoints
                         ? (<div
                             style={{backgroundColor: ''}}
                             className="text-main-container text-center font-weight-bold"
@@ -45,7 +75,8 @@ export default function PanelHiddenContent({ data }) {
                             <div className="mr-4">Valor Anterior: {loyaltyScores && loyaltyScores.lastScore}</div>
                             <div>Última Pontuação: {loyaltyScores && loyaltyScores.cashCurrentScore}</div>
                         </div>
-                    </Fragment>
+                        {showDiscountPointsBtn()}
+                    </div>
                 )}
                 <CreatedAtBr createdAt={createdAt} />
             </div>

@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 KeypadButton.propTypes = {
     title: PropTypes.string.isRequired,
     titleIcon: PropTypes.string.isRequired,
+    setSelectedValue: PropTypes.func.isRequired,
     keyboardType: PropTypes.string,
-    setSelectedValue: PropTypes.func,
     confirmFunction: PropTypes.func,
 }
 

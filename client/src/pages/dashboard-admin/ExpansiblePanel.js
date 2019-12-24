@@ -18,12 +18,12 @@ import { showModalConfYesNo, showModalSelect } from '../../redux/actions/modalAc
 ExpansiblePanel.propTypes = {
     actions: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            mainHeading: PropTypes.string.isRequired,
-            secondaryHeading: PropTypes.string.isRequired,
+            id: PropTypes.string,
+            mainHeading: PropTypes.string,
+            secondaryHeading: PropTypes.string,
             hiddenContent: PropTypes.any
         })
-    ),
+    ).isRequired,
     ToggleButton: PropTypes.element,
     backgroundColor: PropTypes.string,
     color: PropTypes.string,

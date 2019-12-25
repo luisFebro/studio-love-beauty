@@ -22,10 +22,11 @@ import {
     shape,
 } from 'prop-types';
 
-export const modalTextFieldType = shape({
+export const modalTextFieldDashboardType = shape({
     mainSubject: string,
     title: string,
     subTitle: string,
+    userCurrentScore: number,
     txtBtn: string,
     iconBtn: string,
     labelTxtField: string,

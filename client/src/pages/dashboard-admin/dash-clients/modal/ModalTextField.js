@@ -8,23 +8,31 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import parse from 'html-react-parser';
 import PropTypes from 'prop-types';
-import { modalTextFieldType } from '../../../../type';
+
+// CUSTOMIZED DATA
+import { modalTextFieldDashboardType } from '../../../../types';
+import { convertCommaToDot } from '../../../../utils/numbers/convertDotComma';
+// END CUSTOMIZED DATA
 
 ModalTextField.propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
-    modal: modalTextFieldType,
+    modal: modalTextFieldDashboardType,
 };
 
 export default function ModalTextField({
     open, onClose, modal }) {
+    const [newValue, setNewValue] = useState("");
+
     const {
         mainSubject,
         title,
         subTitle,
         txtBtn,
         iconBtn,
-        labelTxtField } = modal;
+        labelTxtField,
+        userName,
+        userCurrentScore } = modal;
 
     const styles = {
         dialog: {
@@ -51,10 +59,19 @@ export default function ModalTextField({
     const showTitle = () => (
         <div className="text-center">
             <DialogTitle id="form-dialog-title">
-                {title}
+                {parse(title)}
             </DialogTitle>
             <DialogContentText>
                 <span>{subTitle}</span>
+                <span className="animated zoomIn slow">
+                    {newValue.length >= 1
+                    ? parse(
+                        `Saldo restante:
+                            <strong>
+                                ${convertCommaToDot(newValue) - userCurrentScore}
+                            </strong>`)
+                    : null}
+                </span>
             </DialogContentText>
         </div>
     );
@@ -93,7 +110,11 @@ export default function ModalTextField({
 
     return (
         <div>
-            <Dialog style={styles.dialog} open={open} aria-labelledby="form-dialog-title">
+            <Dialog
+                style={styles.dialog}
+                open={open}
+                maxWidth="md"
+                aria-labelledby="form-dialog-title">
                 {showTitle()}
                 {showForm()}
                 {showActionButtons()}

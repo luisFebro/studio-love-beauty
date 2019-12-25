@@ -3,6 +3,7 @@ import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
 import PropTypes from 'prop-types';
 import ModalTextField from './ModalTextField';
 import { buttonFabType } from '../../../../types';
+import handleChange from '../../../../utils/form/use-state/handleChange';
 
 ModalBtn.propTypes = {
     modal: PropTypes.object.isRequired,
@@ -12,6 +13,7 @@ ModalBtn.propTypes = {
 
 export default function ModalBtn({ modal, button, setSelectedValue }) {
     const [open, setOpen] = useState(false);
+
     const {
         title,
         iconFontAwesome,

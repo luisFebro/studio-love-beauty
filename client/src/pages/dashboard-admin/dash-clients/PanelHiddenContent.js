@@ -11,6 +11,7 @@ export default function PanelHiddenContent({ data }) {
     const [selectedValue, setSelectedValue] = useState(0);
     const {
         _id,
+        name,
         cpf,
         loyaltyScores,
         phone,
@@ -31,7 +32,8 @@ export default function PanelHiddenContent({ data }) {
             setSelectedValue={setSelectedValue}
             modal={{
                 mainSubject: "Desconto",
-                title: "Descontar Pontos Fidelidades",
+                title: `Descontar Pontos Fidelidades<br />cliente: ${name}`,
+                userCurrentScores: loyaltyScores.currentScore,
                 subTitle: "digite apenas números e vírgulas",
                 labelTxtField: "Insira aqui <br /> qtde. pontos a retirar",
                 txtBtn: "Descontar",

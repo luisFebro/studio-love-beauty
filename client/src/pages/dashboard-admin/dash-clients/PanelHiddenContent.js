@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CreatedAtBr from '../CreatedAtBr';
 import ModalBtn from "./modal/ModalBtn";
@@ -8,7 +8,6 @@ PanelHiddenContent.propTypes = {
 };
 
 export default function PanelHiddenContent({ data }) {
-    const [selectedValue, setSelectedValue] = useState(0);
     const {
         _id,
         name,
@@ -29,22 +28,22 @@ export default function PanelHiddenContent({ data }) {
 
     const showDiscountPointsBtn = () => (
         <ModalBtn
-            setSelectedValue={setSelectedValue}
             modal={{
                 mainSubject: "Desconto",
                 title: `Descontar Pontos Fidelidades<br />cliente: ${name}`,
-                userCurrentScores: loyaltyScores.currentScore,
                 subTitle: "digite apenas números e vírgulas",
                 labelTxtField: "Insira aqui <br /> qtde. pontos a retirar",
                 txtBtn: "Descontar",
-                iconBtn: "fas fa-minus-circle"
+                iconBtn: "fas fa-minus-circle",
+                userCurrentScore: loyaltyScores && loyaltyScores.currentScore,
+                userId: _id,
             }}
             button={{
                 title: "Descontar",
                 iconFontAwesome: "fas fa-minus-circle",
                 variant: "extended",
-                top: 240,
-                left: 215,
+                top: -35,
+                left: 170,
                 backgroundColor: 'grey',
             }}
         />
@@ -59,7 +58,7 @@ export default function PanelHiddenContent({ data }) {
                 {["0", undefined].includes(loyaltyScores && loyaltyScores.currentScore)
                 ? <p className="text-center">Pontuação não registrada.</p>
                 : (
-                    <div className={styles.pointsContainer}>
+                    <div style={styles.pointsContainer}>
                         {gotThousandPoints
                         ? (<div
                             style={{backgroundColor: ''}}

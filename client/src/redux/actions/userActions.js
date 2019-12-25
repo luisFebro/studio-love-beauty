@@ -59,9 +59,10 @@ export const readUserList = async (dispatch) => {
     }
 };
 
-export const readHighestScores = async () => {
+export const readHighestScores = async (dispatch) => {
     try {
-        return await axios.get('/api/user/list/highest-scores', configTypeJson);
+        const res = await axios.get('/api/user/list/highest-scores', configTypeJson);
+        dispatch({ type: "HIGHEST_SCORES_READ", payload: res.data})
     } catch (err) {
         return err;
     }

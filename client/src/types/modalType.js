@@ -26,10 +26,11 @@ export const modalTextFieldDashboardType = shape({
     mainSubject: string,
     title: string,
     subTitle: string,
-    userCurrentScore: number,
     txtBtn: string,
     iconBtn: string,
     labelTxtField: string,
+    userCurrentScore: number,
+    userId: string,
 })
 
 

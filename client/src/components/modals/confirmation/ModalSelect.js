@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { closeModal } from '../../../redux/actions/modalActions';
-import { updateUser } from '../../../redux/actions/userActions';
+import { updateUser, readUserList } from '../../../redux/actions/userActions';
 import { showSnackbar } from '../../../redux/actions/snackbarActions';
 import handleChange from '../../../utils/form/use-state/handleChange';
 // Material UI
@@ -82,6 +82,7 @@ export default function ModalSelect({ currItemFound }) {
             updateUser(dispatch, data, _idTarget)
             .then(res => {
                 showSnackbar(dispatch, "O Tipo de Usuário foi alterado e movido.", 'success');
+                readUserList(dispatch);
             })
         }
     }

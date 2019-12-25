@@ -123,8 +123,8 @@ footer {
     color: var(--mainWhite);
 }
 
-.text-light {
-    color: var(--lightBlue);
+.text-blue {
+    color: var(--mainBlue);
 }
 
 /*Letters border*/

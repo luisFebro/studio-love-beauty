@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, Fragment } from 'react';
+import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { CLIENT_URL } from '../../../config/clientUrl';
 import truncateWords from '../../../utils/string/truncateWords';
 import styled from 'styled-components';
@@ -6,14 +7,43 @@ import { readHighestScores } from '../../../redux/actions/userActions';
 import { convertDotToComma } from '../../../utils/numbers/convertDotComma';
 
 export default function RankingPondium() {
-    const [highestScores, setHighestScores] = useState([]);
+    const highestScores = useStoreState(state => state.userReducer.cases.highestScores);
+    const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        readHighestScores()
-        .then(res => {
-            setHighestScores(res.data);
-        })
+        readHighestScores(dispatch);
     }, [])
+
+    const showScores = () => (
+        <Fragment>
+            {highestScores.length !== 0 && highestScores.map((user, id) => {
+                const { name, loyaltyScores } = user;
+                const css = ["first-place", "second-place", "third-place"];
+                return(
+                    <div
+                        key={id}
+                        className={`${css[id]} text-main-container text-shadow-white`}
+                    >
+                        {typeof loyaltyScores === "undefined"
+                        ? (
+                          <p>
+                            <i className="fas fa-question"></i>
+                          </p>
+                        ) : (
+                            <p className={id === 0 ? `bounce-repeat animated bounce delay-3s` : ""}>
+                                {truncateWords(name, 14)}
+                                <br />
+                                <span>
+                                    {loyaltyScores && convertDotToComma(loyaltyScores.currentScore)}
+                                </span>
+                            </p>
+                        )
+                        }
+                    </div>
+                );
+            })}
+        </Fragment>
+    );
 
     return (
         <DivPodium
@@ -30,32 +60,7 @@ export default function RankingPondium() {
                     alt="podium"
                     width="300"
                 />
-                {highestScores.length !== 0 && highestScores.map((user, id) => {
-                    const { name, loyaltyScores } = user;
-                    const css = ["first-place", "second-place", "third-place"];
-                    return(
-                        <div
-                            key={id}
-                            className={`${css[id]} text-main-container text-shadow-white`}
-                        >
-                            {typeof loyaltyScores === "undefined"
-                            ? (
-                              <p>
-                                <i className="fas fa-question"></i>
-                              </p>
-                            ) : (
-                                <p className={id === 0 ? `bounce-repeat animated bounce delay-3s` : ""}>
-                                    {truncateWords(name, 14)}
-                                    <br />
-                                    <span>
-                                        {loyaltyScores && convertDotToComma(loyaltyScores.currentScore)}
-                                    </span>
-                                </p>
-                            )
-                            }
-                        </div>
-                    );
-                })}
+                {showScores()}
             </div>
         </DivPodium>
     );

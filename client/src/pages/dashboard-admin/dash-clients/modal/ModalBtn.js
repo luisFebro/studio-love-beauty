@@ -26,9 +26,9 @@ export default function ModalBtn({ modal, button, setSelectedValue }) {
       setOpen(true);
     };
 
-    const onClose = value => {
+    const onClose = () => {
       setOpen(false);
-      setSelectedValue(value);
+      // setSelectedValue(value); using redux update instead
     };
 
     const styles = {

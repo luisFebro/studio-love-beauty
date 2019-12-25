@@ -26,7 +26,6 @@ export default function InsertValue({ success, setValuePaid }) {
     const dispatch = useStoreDispatch();
 
     const handleSwitch = valuePaid => {
-        console.log(valuePaid)
         const endValue = valuePaid.slice(-1);
         const commaQuantity = valuePaid.match(new RegExp(",",'g'))
         const commaLength = commaQuantity && commaQuantity.length;

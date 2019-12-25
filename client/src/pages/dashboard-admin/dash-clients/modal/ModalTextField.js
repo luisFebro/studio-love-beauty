@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStoreDispatch } from 'easy-peasy';
+import { readHighestScores } from '../../../../redux/actions/userActions';
 import Button from '@material-ui/core/Button';
 import ButtonMulti from '../../../../components/buttons/material-ui/ButtonMulti';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,7 +12,10 @@ import PropTypes from 'prop-types';
 
 // CUSTOMIZED DATA
 import { modalTextFieldDashboardType } from '../../../../types';
-import { convertCommaToDot } from '../../../../utils/numbers/convertDotComma';
+import { convertCommaToDot, convertDotToComma } from '../../../../utils/numbers/convertDotComma';
+import { updateUser } from '../../../../redux/actions/userActions';
+import { readUserList } from '../../../../redux/actions/userActions';
+import { showSnackbar } from '../../../../redux/actions/snackbarActions';
 // END CUSTOMIZED DATA
 
 ModalTextField.propTypes = {
@@ -22,7 +26,14 @@ ModalTextField.propTypes = {
 
 export default function ModalTextField({
     open, onClose, modal }) {
-    const [newValue, setNewValue] = useState("");
+    const [data, setData] = useState({
+        newValue: null
+    });
+    const [gotError, setGotError] = useState(false);
+
+    const { newValue } = data;
+
+    const dispatch = useStoreDispatch();
 
     const {
         mainSubject,
@@ -31,7 +42,7 @@ export default function ModalTextField({
         txtBtn,
         iconBtn,
         labelTxtField,
-        userName,
+        userId,
         userCurrentScore } = modal;
 
     const styles = {
@@ -51,10 +62,35 @@ export default function ModalTextField({
         }
     }
 
-    const setObjToSend = () => {
-        let data = 'objToSend';
+    const handleSubmit = () => {
+        if([null, undefined].includes(newValue)){
+            showSnackbar(dispatch, "Digite apenas valor e vírgula", "error");
+            setGotError(true); return;
+        }
+        if(newValue < 0){
+            showSnackbar(dispatch, "O valor da retirada é maior que o acumulado. Digite valor menor", "error", 7000);
+            setGotError(true); return;
+        }
+
+        const bodyToSend = {
+            "loyaltyScores.currentScore": newValue,
+        }
+
+        updateUser(dispatch, bodyToSend, userId, false)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            onClose();
+            readUserList(dispatch)
+            showSnackbar(dispatch, `Os pontos de fidelidade do cliente foram descontados com sucesso`, 'success', 8000)
+            setTimeout(() => readHighestScores(dispatch), 3000);
+        })
     };
 
+    const handleChange = (setObj, obj) => e => {
+        const { name, value } = e.target;
+        let remainingValue = parseFloat(userCurrentScore - convertCommaToDot(value))
+        setObj({ ...obj, [name]: remainingValue });
+    }
 
     const showTitle = () => (
         <div className="text-center">
@@ -63,13 +99,16 @@ export default function ModalTextField({
             </DialogTitle>
             <DialogContentText>
                 <span>{subTitle}</span>
-                <span className="animated zoomIn slow">
-                    {newValue.length >= 1
+                <br />
+                <br />
+                <span>Acumulado Atual: {userCurrentScore}</span>
+                <br />
+                <span className="text-blue">
+                    {!Number.isNaN(newValue) && newValue !== null
                     ? parse(
-                        `Saldo restante:
-                            <strong>
-                                ${convertCommaToDot(newValue) - userCurrentScore}
-                            </strong>`)
+                        `<strong>
+                            Saldo restante agora: ${convertDotToComma(newValue)}
+                         </strong>`)
                     : null}
                 </span>
             </DialogContentText>
@@ -77,13 +116,16 @@ export default function ModalTextField({
     );
 
     const showForm = () => (
-        <form style={styles.form}>
+        <form style={styles.form} onBlur={() => setGotError(false)}>
             <TextField
                 label={parse(labelTxtField)}
                 type="text"
                 fullWidth
-                name={mainSubject}
+                name="newValue"
+                error={gotError ? true : false}
                 variant="outlined"
+                autoComplete="off"
+                onChange={handleChange(setData, data)}
             />
         </form>
     );
@@ -97,10 +139,7 @@ export default function ModalTextField({
                 Voltar
             </ButtonMulti>
             <ButtonMulti
-                onClick={() => {
-                    setObjToSend();
-                    onClose();
-                }}
+                onClick={handleSubmit}
                 iconFontAwesome={iconBtn}
             >
                 {txtBtn}

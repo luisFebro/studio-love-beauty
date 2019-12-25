@@ -4,23 +4,11 @@ import updateKeyWithId from './helpers/updateKeyWithId';
 // Check for mispellings in case of one action not being dispatched properly.
 // Reducer Naming Structure: type: MAIN/SUBJECT + PARTICIPLE VERB eg. USER_CLEARED
 
-// HELPERS
-function checkCoupons(payload) {
-    let gotAtLeastOneCupon = false;
-    if (typeof payload !== 'undefined') {
-        if (payload.length >= 1) {
-            gotAtLeastOneCupon = true;
-        }
-    }
-    return gotAtLeastOneCupon;
-}
-
 // REDUCERS
 const initialState = {
     currentUser: {},
     allUsers: [],
-    allMessagesList: [], // this will be deleted, all data will be fromm currentUser.
-    gotCoupons: false // // this will be deleted
+    highestScores: [],
 };
 
 export const userReducer = {
@@ -31,8 +19,6 @@ export const userReducer = {
                 return {
                     ...state,
                     currentUser: action.payload,
-                    allMessagesList: action.payload.messageList,
-                    gotCoupons: checkCoupons(action.payload.couponsList)
                 };
             case 'USER_DELETED':
                 return {
@@ -48,6 +34,11 @@ export const userReducer = {
                 return {
                     ...state,
                     allUsers: action.payload,
+                };
+            case 'HIGHEST_SCORES_READ':
+                return {
+                    ...state,
+                    highestScores: action.payload,
                 };
             // CUSTOMIZED DATA HANDLING from social network
             case 'USER_GOOGLE_DATA':

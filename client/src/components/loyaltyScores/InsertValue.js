@@ -7,6 +7,7 @@ import { showComponent, hideComponent } from '../../redux/actions/componentActio
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import PropTypes from 'prop-types';
 import KeypadButton from '../modals/keypad';
+import isMoneyBrValidAndAlert from '../../utils/numbers/isMoneyBrValidAndAlert';
 
 InsertValue.propTypes = {
     success: PropTypes.bool,
@@ -26,14 +27,9 @@ export default function InsertValue({ success, setValuePaid }) {
     const dispatch = useStoreDispatch();
 
     const handleSwitch = valuePaid => {
-        const endValue = valuePaid.slice(-1);
-        const commaQuantity = valuePaid.match(new RegExp(",",'g'))
-        const commaLength = commaQuantity && commaQuantity.length;
-        if(commaLength > 1) return showSnackbar(dispatch, "Insira apenas uma vírgula por valor", 'error')
-        if(endValue === ",") return showSnackbar(dispatch, "Você digitou um número com vírgula sem decimal. Retire a vírgula ou acrescente valor decimal", "error", 8000)
-        if(valuePaid === "0") return showSnackbar(dispatch, "Você precisa digitar um valor.", "error")
-        if(valuePaid === "0,0") return showSnackbar(dispatch, "O valor não pode ser zero", "error")
-        // if(valuePaid.includes("-")) return showSnackbar(dispatch, "O valor não pode ser negativo", "error")
+        if(!isMoneyBrValidAndAlert(valuePaid, showSnackbar, dispatch)) {
+            return;
+        }
         if(success) {
             setValuePaid(valuePaid);
             hideComponent(dispatch, 'purchaseValue')

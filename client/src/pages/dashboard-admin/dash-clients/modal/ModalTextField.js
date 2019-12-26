@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStoreDispatch } from 'easy-peasy';
 import { readHighestScores } from '../../../../redux/actions/userActions';
+import isMoneyBrValidAndAlert from '../../../../utils/numbers/isMoneyBrValidAndAlert';
 import Button from '@material-ui/core/Button';
 import ButtonMulti from '../../../../components/buttons/material-ui/ButtonMulti';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,7 +28,7 @@ ModalTextField.propTypes = {
 export default function ModalTextField({
     open, onClose, modal }) {
     const [data, setData] = useState({
-        newValue: null
+        newValue: "0,0"
     });
     const [gotError, setGotError] = useState(false);
 
@@ -63,8 +64,7 @@ export default function ModalTextField({
     }
 
     const handleSubmit = () => {
-        if([null, undefined].includes(newValue)){
-            showSnackbar(dispatch, "Digite apenas valor e vírgula", "error");
+        if(!isMoneyBrValidAndAlert(newValue, showSnackbar, dispatch)) {
             setGotError(true); return;
         }
         if(newValue < 0){
@@ -73,7 +73,7 @@ export default function ModalTextField({
         }
 
         const bodyToSend = {
-            "loyaltyScores.currentScore": newValue,
+            "loyaltyScores.currentScore": parseFloat(newValue),
         }
 
         updateUser(dispatch, bodyToSend, userId, false)
@@ -89,7 +89,7 @@ export default function ModalTextField({
     const handleChange = (setObj, obj) => e => {
         const { name, value } = e.target;
         let remainingValue = parseFloat(userCurrentScore - convertCommaToDot(value))
-        setObj({ ...obj, [name]: remainingValue });
+        setObj({ ...obj, [name]: convertCommaToDot(remainingValue).toString() });
     }
 
     const showTitle = () => (
@@ -104,7 +104,7 @@ export default function ModalTextField({
                 <span>Acumulado Atual: {userCurrentScore}</span>
                 <br />
                 <span className="text-blue">
-                    {!Number.isNaN(newValue) && newValue !== null
+                    {!Number.isNaN(parseFloat(newValue)) && newValue !== "0,0"
                     ? parse(
                         `<strong>
                             Saldo restante agora: ${convertDotToComma(newValue)}
@@ -157,6 +157,7 @@ export default function ModalTextField({
                 {showTitle()}
                 {showForm()}
                 {showActionButtons()}
+                {JSON.stringify(convertDotToComma(newValue))}
             </Dialog>
         </div>
     );

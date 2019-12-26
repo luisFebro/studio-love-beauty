@@ -8,7 +8,7 @@ import handleChange from '../../../../utils/form/use-state/handleChange';
 ModalBtn.propTypes = {
     modal: PropTypes.object.isRequired,
     button: buttonFabType,
-    setSelectedValue: PropTypes.func.isRequired,
+    setSelectedValue: PropTypes.func,
 }
 
 export default function ModalBtn({ modal, button, setSelectedValue }) {

@@ -27,6 +27,7 @@ ExpansiblePanel.propTypes = {
     ToggleButton: PropTypes.element,
     backgroundColor: PropTypes.string,
     color: PropTypes.string,
+    statusAfterClick: PropTypes.bool,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -49,12 +50,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ExpansiblePanel({
-    actions, backgroundColor, ToggleButton, color, allUsers }) {
+    actions,
+    backgroundColor,
+    ToggleButton,
+    color,
+    allUsers,
+    statusAfterClick }) {
     const classes = useStyles();
 
     const dispatch = useStoreDispatch();
     // const [expanded, setExpanded] = React.useState(false);
-
     // const handleChange = panel => (event, isExpanded) => {
     //     setExpanded(isExpanded ? panel : false);
     // };
@@ -83,7 +88,8 @@ export default function ExpansiblePanel({
     }
 
     const showUpperConfigBtns = panel => (
-        <div>
+        statusAfterClick &&
+        <div className="animated zoomIn delay-1s">
             <ButtonFab
                 iconFontAwesome="fas fa-plus"
                 top={-30}
@@ -128,7 +134,7 @@ export default function ExpansiblePanel({
                     style={styles.iconContainer}
                     className="enabledLink"
                 >
-                    {true
+                    {ToggleButton
                     ? ToggleButton
                     : <ExpandMoreIcon />
                     }

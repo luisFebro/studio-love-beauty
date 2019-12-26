@@ -14,6 +14,10 @@ ButtonFab.propTypes = {
     iconMarginLeft: PropTypes.string,
     iconFontSize: PropTypes.string,
     iconAfterClick: PropTypes.string,
+    actionAfterClick: PropTypes.shape({
+        setStatus: PropTypes.func,
+        status: PropTypes.bool,
+    }),
     onClick: PropTypes.func,
     title: PropTypes.string,
     icon: PropTypes.element,
@@ -29,6 +33,7 @@ export default function ButtonFab({
     backgroundColor,
     iconFontAwesome,
     iconAfterClick,
+    actionAfterClick,
     iconMarginLeft,
     onClick,
     title }) {
@@ -55,6 +60,7 @@ export default function ButtonFab({
 
     const handleToggle = () => {
         setToggle(!toggle);
+        actionAfterClick && actionAfterClick.setStatus(!actionAfterClick.status);
     }
 
 

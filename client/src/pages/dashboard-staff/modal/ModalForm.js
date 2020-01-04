@@ -127,7 +127,6 @@ export default function ModalForm({
             <TextField
                 label="NOME CLIENTE:"
                 name="clientName"
-                value={data && data.name}
                 variant="standard"
                 type="text"
                 fullWidth
@@ -153,7 +152,6 @@ export default function ModalForm({
             <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>
                 <DateTimePicker
                     required
-                    autoOk
                     disablePast
                     variant="outlined"
                     margin="dense"

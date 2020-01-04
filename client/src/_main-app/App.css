@@ -46,6 +46,12 @@ a {
     color: var(--mainRed) !important;
 }
 
+hr {
+    border-color: white;
+    border-width: 3px;
+    max-width: 150px;
+}
+
 footer {
     background: var(--mainRed);
     color: var(--mainWhite);

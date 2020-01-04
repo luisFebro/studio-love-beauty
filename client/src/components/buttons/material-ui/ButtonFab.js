@@ -5,8 +5,11 @@ import PropTypes from 'prop-types';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 ButtonFab.propTypes = {
+    title: PropTypes.string,
+    icon: PropTypes.element,
     variant: PropTypes.oneOf(["extended", "round"]),
     size: PropTypes.oneOf(["small", "medium", "large"]),
+    position: PropTypes.oneOf(["fixed", "absolute", "relative"]),
     top: PropTypes.number,
     left: PropTypes.number,
     backgroundColor: PropTypes.string,
@@ -19,13 +22,12 @@ ButtonFab.propTypes = {
         status: PropTypes.bool,
     }),
     onClick: PropTypes.func,
-    title: PropTypes.string,
-    icon: PropTypes.element,
 }
 
 // NEED CHANGE ICON TO FONT AWESOME TOBE MORE FLEXIBLE
 export default function ButtonFab({
     variant,
+    position,
     size,
     top,
     right,
@@ -44,7 +46,7 @@ export default function ButtonFab({
             marginLeft: iconMarginLeft || '5px',
         },
         fab: {
-            position: 'absolute',
+            position: position || 'absolute',
             top: `${top || 0}px`,
             left: `${left || 0}px`,
             outline: 'none',

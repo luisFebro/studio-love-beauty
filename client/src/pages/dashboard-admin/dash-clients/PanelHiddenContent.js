@@ -29,7 +29,6 @@ export default function PanelHiddenContent({ data }) {
     const showDiscountPointsBtn = () => (
         <ModalBtn
             modal={{
-                mainSubject: "Desconto",
                 title: `Descontar Pontos Fidelidades<br />cliente: ${name}`,
                 subTitle: "digite apenas números e vírgulas",
                 labelTxtField: "Insira aqui <br /> qtde. pontos a retirar",

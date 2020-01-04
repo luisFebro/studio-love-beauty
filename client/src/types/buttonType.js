@@ -20,7 +20,25 @@ import {
     number,
     string,
     shape,
+    func,
+    bool,
+    oneOf,
 } from 'prop-types';
+
+export const buttonMultiType = {
+    title: string,
+    size: oneOf(["small", "medium", "large"]),
+    children: string,
+    onClick: func,
+    component: string,
+    iconFontAwesome: string,
+    variant: oneOf(['link', 'contained', 'outlined']),
+    color: string,
+    backgroundColor: string,
+    backColorOnHover: string,
+    textTransform: oneOf(['uppercase', 'lowercase', 'capitalize']),
+}
+
 
 export const buttonFabType = shape({
     title: string,
@@ -29,6 +47,7 @@ export const buttonFabType = shape({
     top: number,
     left: number,
     backgroundColor: string,
+    onClick: func,
 }).isRequired
 
 

@@ -2,21 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { buttonMultiType } from '../../../types';
 import clsx from 'clsx';
 
-ButtonMulti.propTypes = {
-    children: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    component: PropTypes.string,
-    iconFontAwesome: PropTypes.string,
-    variant: PropTypes.oneOf(['link', 'contained', 'outlined']),
-    props: PropTypes.shape({
-        color: PropTypes.string,
-        backgroundColor: PropTypes.string,
-        backColorOnHover: PropTypes.string,
-        textTransform: PropTypes.oneOf(['uppercase', 'lowercase', 'capitalize']),
-    }),
-};
+ButtonMulti.propTypes = buttonMultiType;
 
 const useStyles = makeStyles(theme => ({ // n1
     sText: {
@@ -51,6 +40,9 @@ const CustomizedButton = withStyles(theme => ({
 
 export default function ButtonMulti({
     children,
+    title,
+    size,
+    fullWidth,
     onClick,
     iconFontAwesome,
     component="button",
@@ -66,11 +58,12 @@ export default function ButtonMulti({
         <CustomizedButton
             className={(variant !== 'contained') ? sBtnDefaultColors : sBtnColors }
             onClick={onClick}
+            size={size}
             variant={(variant === 'link') ? null : variant}
             color="primary"
             component={component}
         >
-            <span className={(variant !== 'contained') ? null : sText}>{children}</span>
+            <span className={variant === 'contained' ? sText : null}>{title || children}</span>
             {showIcon(iconFontAwesome)}
         </CustomizedButton>
     );

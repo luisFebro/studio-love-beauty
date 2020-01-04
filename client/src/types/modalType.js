@@ -20,6 +20,7 @@ import {
     number,
     string,
     shape,
+    object,
 } from 'prop-types';
 
 export const modalTextFieldDashboardType = shape({
@@ -29,6 +30,7 @@ export const modalTextFieldDashboardType = shape({
     txtBtn: string,
     iconBtn: string,
     labelTxtField: string,
+    data: object,
     userCurrentScore: number,
     userId: string,
 })

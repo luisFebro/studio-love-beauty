@@ -37,7 +37,6 @@ export default function ModalTextField({
     const dispatch = useStoreDispatch();
 
     const {
-        mainSubject,
         title,
         subTitle,
         txtBtn,
@@ -157,7 +156,6 @@ export default function ModalTextField({
                 {showTitle()}
                 {showForm()}
                 {showActionButtons()}
-                {JSON.stringify(convertDotToComma(newValue))}
             </Dialog>
         </div>
     );

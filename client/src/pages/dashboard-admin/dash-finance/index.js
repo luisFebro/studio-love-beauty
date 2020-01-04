@@ -1,5 +1,5 @@
 import React from 'react';
-import DashSectionTitle from '../DashSectionTitle';
+import DashSectionTitle from '../../DashSectionTitle';
 
 export default function DashFinance() {
     return (

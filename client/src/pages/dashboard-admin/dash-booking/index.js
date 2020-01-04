@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import DashSectionTitle from '../DashSectionTitle';
+import DashSectionTitle from '../../DashSectionTitle';
 // import EditableProductList from './EditableProductsList';
 // import ExpansiblePanel from '../../../components/expansion-panels/ExpansiblePanel';
 // import ExpansiblePanelContent from '../ExpansiblePanelContent';

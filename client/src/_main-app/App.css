@@ -5,7 +5,7 @@
     --mainDark: #232528;
     --mainBlack: "black";
     /*End Primary Colors*/
-    --mainRed: #232528; /*#ed213a */
+    --mainRed: #ed213a; /*#ed213a */
     --lightRed: #ed213a;
     --mainWhite: #ecf0f1;
     --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
@@ -43,18 +43,13 @@ body {
 }
 
 a {
-    color: var(--mainRed) !important;
+    color: var(--mainDark) !important;
 }
 
 hr {
     border-color: white;
     border-width: 3px;
     max-width: 150px;
-}
-
-footer {
-    background: var(--mainRed);
-    color: var(--mainWhite);
 }
 
 .fixedNav {
@@ -230,10 +225,6 @@ footer {
 /*Z-INDEX*/
 .z-index-top {
     z-index: 999;
-}
-
-.disabled-link {
-  pointer-events: none;
 }
 
 .z-index-top2 {

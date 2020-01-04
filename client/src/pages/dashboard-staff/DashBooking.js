@@ -1,6 +1,7 @@
 import React from 'react';
 import DashSectionTitle from '../DashSectionTitle';
 import ModalBtn from './modal';
+import BookedClients from './BookedClients';
 import { useStoreState } from 'easy-peasy';
 
 export default function DashBooking() {
@@ -16,27 +17,32 @@ export default function DashBooking() {
         }
     }
 
+    const showNewBookingBtn = () => (
+        <div
+            style={styles.modalBtn}
+            className="container-center">
+            <ModalBtn
+                modal={{
+                    title: `Agendamento<br />de<br />cliente`,
+                    txtBtn: "Agendar",
+                    iconBtn: "fas fa-address-book",
+                    data,
+                }}
+                button={{
+                    title: "Marcar Novo Agendamento",
+                    iconFontAwesome: "fas fa-user-plus",
+                    backgroundColor: "var(--mainPink)",
+                    backColorOnHover: "var(--mainPink)",
+                }}
+            />
+        </div>
+    );
+
     return (
         <div>
             <DashSectionTitle title="Seus Agendamentos" />
-            <div
-                style={styles.modalBtn}
-                className="container-center">
-                <ModalBtn
-                    modal={{
-                        title: `Agendamento<br />de<br />cliente`,
-                        txtBtn: "Agendar",
-                        iconBtn: "fas fa-address-book",
-                        data,
-                    }}
-                    button={{
-                        title: "Marcar Novo Agendamento",
-                        iconFontAwesome: "fas fa-user-plus",
-                        backgroundColor: "var(--mainPink)",
-                        backColorOnHover: "var(--mainPink)",
-                    }}
-                />
-            </div>
+            {showNewBookingBtn()}
+            <BookedClients />
         </div>
     );
 }

@@ -296,7 +296,7 @@ const NavWrapper = styled.nav`
         font-size: 2.1rem;
         filter: drop-shadow(0.001em 0.1em 0.1em var(--mainDark));
     }
-    background: var(--mainRed);
+    background: var(--mainDark);
     .nav-link,
     #searchIcon {
         text-transform: capitalize;

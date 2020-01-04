@@ -12,6 +12,7 @@ ButtonFab.propTypes = {
     position: PropTypes.oneOf(["fixed", "absolute", "relative"]),
     top: PropTypes.number,
     left: PropTypes.number,
+    color: PropTypes.string,
     backgroundColor: PropTypes.string,
     iconFontAwesome: PropTypes.string,
     iconMarginLeft: PropTypes.string,
@@ -32,6 +33,7 @@ export default function ButtonFab({
     top,
     right,
     left,
+    color,
     backgroundColor,
     iconFontAwesome,
     iconAfterClick,
@@ -50,7 +52,7 @@ export default function ButtonFab({
             top: `${top || 0}px`,
             left: `${left || 0}px`,
             outline: 'none',
-            color: 'var(--mainWhite)',
+            color: color || 'var(--mainWhite)',
             backgroundColor:  backgroundColor || "#4834d4"
         }
     }

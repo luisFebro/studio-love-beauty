@@ -188,7 +188,7 @@ const DivWrapper = styled.div`
     & .nav-link:hover,
     & .navbar-nav span i:hover {
         transform: scale(1.1);
-        filter: drop-shadow(0.001em 0.1em 0.1em var(--mainRed));
+        filter: drop-shadow(0.001em 0.1em 0.1em var(--mainDark));
     }
 
     /*MOBILE FIRST RESPONSIVE MEDIA QUERIES*/

@@ -17,7 +17,7 @@ import Select from '@material-ui/core/Select';
 //datePicker
 import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-import AlarmIcon from '@material-ui/icons/LibraryBooks';
+import AlarmIcon from '@material-ui/icons/Alarm';
 import InputAdornment from '@material-ui/core/InputAdornment';
 // END OPTIONALS
 
@@ -37,11 +37,16 @@ ModalForm.propTypes = {
 export default function ModalForm({
     open, onClose, modal }) {
     const [formData, setFormData] = useState({
+        clientName: '',
         serviceType: "selecione tipo de serviço",
         serviceDate: '',
         serviceNotes: '',
     });
-    const { serviceType, serviceDate, serviceNotes } = formData;
+    const {
+        clientName,
+        serviceType,
+        serviceDate,
+        serviceNotes } = formData;
 
     const [gotError, setGotError] = useState(false);
 
@@ -112,15 +117,24 @@ export default function ModalForm({
     const showForm = () => (
         <form style={styles.form} onBlur={() => setGotError(false)}>
             <TextField
-                label="COLABORADOR:"
+                label="NOME COLABORADOR:"
                 value={data && data.name}
                 variant="standard"
                 fullWidth
                 margin="dense"
                 disabled
             />
+            <TextField
+                label="NOME CLIENTE:"
+                name="clientName"
+                value={data && data.name}
+                variant="standard"
+                type="text"
+                fullWidth
+                margin="dense"
+            />
             <Select
-              style={styles.fieldForm}
+              style={styles.fieldForm} // ADD HOUR CAN NOT EQUAL IN THE SAME DAY
               labelId="serviceType"
               onChange={handleChange(setFormData, formData)}
               name="serviceType"

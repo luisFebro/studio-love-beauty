@@ -63,7 +63,7 @@ function App() {
                     <Route path="/cliente/trocar-senha" exact component={ChangePassword} />
                     <Route path="/cliente/trocar-senha/:token" exact component={InsertNewPassword} />
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
-                    <Route path="/colaborador/quadro-administrativo" exact component={DashboardStaff} />
+                    <PrivateRouteStaff path="/colaborador/quadro-administrativo" exact component={DashboardStaff} />
                     <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
                     <Route component={Default} />
                 </Switch>

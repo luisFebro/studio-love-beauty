@@ -20,6 +20,7 @@ import {
     number,
     string,
     shape,
+    element,
     func,
     bool,
     oneOf,
@@ -40,15 +41,26 @@ export const buttonMultiType = {
 }
 
 
-export const buttonFabType = shape({
+export const buttonFabType = {
     title: string,
-    iconFontAwesome: string,
-    variant: string,
+    icon: element,
+    variant: oneOf(["extended", "round"]),
+    size: oneOf(["small", "medium", "large"]),
+    position: oneOf(["fixed", "absolute", "relative"]),
     top: number,
     left: number,
+    color: string,
     backgroundColor: string,
+    iconFontAwesome: string,
+    iconMarginLeft: string,
+    iconFontSize: string,
+    iconAfterClick: string,
+    actionAfterClick: shape({
+        setStatus: func,
+        status: bool,
+    }),
     onClick: func,
-}).isRequired
+}
 
 
 

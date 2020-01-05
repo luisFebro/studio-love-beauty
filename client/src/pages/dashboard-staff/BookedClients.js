@@ -14,7 +14,7 @@ import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDot
 
 moment.updateLocale('pt-br');
 
-export default function RegisteredClientsList() {
+export default function BookedClients() {
     const [data, setData] = useState({
         searchTerm: ""
     });
@@ -31,24 +31,9 @@ export default function RegisteredClientsList() {
         {
             _id: "fsdfdsfdsf21klk3232j",
             role: "cliente",
-            name: "Fernando Teste",
             staffBooking: {
                 status: {
                     name: "atrasado",
-                    get color() {
-                        switch(this.name) {
-                            case "cancelado":
-                                return "var(--mainRed)";
-                            case "pendente":
-                                return "var(--mainYellow)";
-                            case "atrasado":
-                                return "purple";
-                            case "feito":
-                                return "var(--mainGreen)";
-                            default:
-                                return "grey";
-                        }
-                    }
                 },
                 client: {
                     name: "Letícia Lins"
@@ -60,98 +45,21 @@ export default function RegisteredClientsList() {
             updatedAt: new Date(),
         },
         {
-            _id: "fsdgfdsfdsf21323fd2",
+            _id: "fsdfdsfdsf21klk32s32j",
             role: "cliente",
-            name: "Roberto Teste",
             staffBooking: {
                 status: {
                     name: "pendente",
-                    get color() {
-                        switch(this.name) {
-                            case "cancelado":
-                                return "var(--mainRed)";
-                            case "pendente":
-                                return "var(--mainYellow)";
-                            case "atrasado":
-                                return "purple";
-                            case "feito":
-                                return "var(--mainGreen)";
-                            default:
-                                return "grey";
-                        }
-                    }
                 },
-                notes: "",
                 client: {
-                    name: "Augusto Rodrigues"
+                    name: "Roberto Lins"
                 },
-                date: "15° de Janeiro às 15:30"
+                notes: "O cliente pode chegar 20 minutos atrasado",
+                date: "10 de Janeiro às 16:30"
             },
             createdAt: new Date(),
             updatedAt: new Date(),
-        },
-        {
-            _id: "f123232dwsfdf2k13232",
-            role: "cliente",
-            name: "Anna Teste",
-            staffBooking: {
-                status: {
-                    name: "cancelado",
-                    get color() {
-                        switch(this.name) {
-                            case "cancelado":
-                                return "var(--mainRed)";
-                            case "pendente":
-                                return "var(--mainYellow)";
-                            case "atrasado":
-                                return "purple";
-                            case "feito":
-                                return "var(--mainGreen)";
-                            default:
-                                return "grey";
-                        }
-                    }
-                },
-                client: {
-                    name: "Patrícia Oliveira"
-                },
-                notes: "",
-                date: "17 de Janeiro às 10:10"
-            },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-        {
-            _id: "fsdgfdsfdsf213232",
-            role: "cliente",
-            name: "Angela Teste",
-            staffBooking: {
-                status: {
-                    name: "feito",
-                    get color() {
-                        switch(this.name) {
-                            case "cancelado":
-                                return "var(--mainRed)";
-                            case "pendente":
-                                return "var(--mainYellow)";
-                            case "atrasado":
-                                return "purple";
-                            case "feito":
-                                return "var(--mainGreen)";
-                            default:
-                                return "grey";
-                        }
-                    }
-                },
-                notes: "",
-                client: {
-                    name: "Augusto Rodrigues"
-                },
-                date: "1° de Janeiro às 9:30"
-            },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
+        }
     ]
     // END TEMP
     const dispatch = useStoreDispatch();
@@ -163,7 +71,7 @@ export default function RegisteredClientsList() {
     const onlyClients = allUsers.filter(user => user.role === "cliente");
 
     const filteredUsers = onlyClients.filter(user => {
-        return user.name.toLowerCase().includes(searchTerm.toLowerCase());
+        return user.staffBooking.status.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
     const onSearchChange = e => {
@@ -183,10 +91,8 @@ export default function RegisteredClientsList() {
     const actions = filteredUsers.map(user => {
         return({
            _id: user._id,
-           mainHeading: user.name,
+           mainHeading: user.staffBooking.client.name,
            secondaryHeading: parse(`
-                > Cliente Agendado: ${user.staffBooking.client.name}
-                <br />
                 > Data e Horário:
                 <br />
                 ${typeof user.staffBooking === "undefined" ? "Sem Agendamento" : user.staffBooking.date}

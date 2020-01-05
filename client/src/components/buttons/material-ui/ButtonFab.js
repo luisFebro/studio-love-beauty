@@ -3,27 +3,9 @@ import Fab from '@material-ui/core/Fab';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
+import { buttonFabType } from '../../../types';
 
-ButtonFab.propTypes = {
-    title: PropTypes.string,
-    icon: PropTypes.element,
-    variant: PropTypes.oneOf(["extended", "round"]),
-    size: PropTypes.oneOf(["small", "medium", "large"]),
-    position: PropTypes.oneOf(["fixed", "absolute", "relative"]),
-    top: PropTypes.number,
-    left: PropTypes.number,
-    color: PropTypes.string,
-    backgroundColor: PropTypes.string,
-    iconFontAwesome: PropTypes.string,
-    iconMarginLeft: PropTypes.string,
-    iconFontSize: PropTypes.string,
-    iconAfterClick: PropTypes.string,
-    actionAfterClick: PropTypes.shape({
-        setStatus: PropTypes.func,
-        status: PropTypes.bool,
-    }),
-    onClick: PropTypes.func,
-}
+ButtonFab.propTypes = buttonFabType;
 
 // NEED CHANGE ICON TO FONT AWESOME TOBE MORE FLEXIBLE
 export default function ButtonFab({

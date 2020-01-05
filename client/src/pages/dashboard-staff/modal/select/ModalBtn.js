@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
 import PropTypes from 'prop-types';
-import ModalTextField from './ModalTextField';
+import ModalSelect_staffEdit from './ModalSelect_staffEdit';
 import { buttonFabType } from '../../../../types';
 import handleChange from '../../../../utils/form/use-state/handleChange';
 
@@ -17,9 +17,10 @@ export default function ModalBtn({ modal, button, setSelectedValue }) {
     const {
         title,
         iconFontAwesome,
-        variant,
         top,
         left,
+        style,
+        iconMarginLeft,
         backgroundColor } = button;
 
     const onOpen = () => {
@@ -31,26 +32,18 @@ export default function ModalBtn({ modal, button, setSelectedValue }) {
       // setSelectedValue(value); using redux update instead
     };
 
-    const styles = {
-        fab: {
-            transform: 'translate(-50%, -50%)'
-        },
-    }
-
-
     return (
         <div>
             <ButtonFab
                 title={title}
                 iconFontAwesome={iconFontAwesome}
-                variant={variant}
                 top={top}
                 left={left}
-                style={styles.fab}
+                iconMarginLeft={iconMarginLeft}
                 backgroundColor={backgroundColor}
                 onClick={onOpen}
             />
-            <ModalTextField
+            <ModalSelect_staffEdit
                 open={open}
                 onClose={onClose}
                 modal={modal}

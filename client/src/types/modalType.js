@@ -23,6 +23,14 @@ import {
     object,
 } from 'prop-types';
 
+export const modalDefaultType = {
+    title: string,
+    subTitle: string,
+    txtBtn: string,
+    iconBtn: string,
+    userId: string,
+}
+
 export const modalTextFieldDashboardType = shape({
     mainSubject: string,
     title: string,

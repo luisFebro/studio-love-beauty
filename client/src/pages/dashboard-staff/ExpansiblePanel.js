@@ -10,6 +10,7 @@ import clsx from 'clsx';
 
 // Customized Data
 import { useStoreDispatch } from 'easy-peasy';
+import ModalBtn from './modal/select/ModalBtn';
 import ButtonFab from '../../components/buttons/material-ui/ButtonFab';
 import { findAnItem } from '../../redux/actions/globalActions';
 import { showModalConfYesNo } from '../../redux/actions/modalActions';
@@ -49,13 +50,28 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const getStatusColor = status => {
+    switch(status) {
+        case "cancelado":
+            return "var(--mainRed)";
+        case "pendente":
+            return "var(--mainYellow)";
+        case "atrasado":
+            return "purple";
+        case "feito":
+            return "var(--mainGreen)";
+        default:
+            return "grey";
+    }
+}
+
 export default function ExpansiblePanel({
     actions,
     backgroundColor,
     ToggleButton,
     color,
     allUsers }) {
-    console.log(allUsers);
+
     const classes = useStyles();
 
     const dispatch = useStoreDispatch();
@@ -65,7 +81,7 @@ export default function ExpansiblePanel({
     // };
 
     const styles = {
-        expansionPanelContainer: {
+        container: {
             position: 'relative',
         },
         expansionPanel: {
@@ -94,16 +110,23 @@ export default function ExpansiblePanel({
                     variant="extended"
                     style={styles.button}
                     color={panel.staffBooking.status.name === "pendente" ? "black" : "white"}
-                    backgroundColor={panel.staffBooking.status.color}
+                    backgroundColor={getStatusColor(panel.staffBooking.status.name)}
                 />
             </div>
             <div className="enabledLink">
-                <ButtonFab
-                    top={-27}
-                    left={52}
-                    style={styles.button}
-                    iconFontAwesome="fas fa-pencil-alt"
-                    backgroundColor="var(--mainPink)"
+                <ModalBtn
+                    modal={{
+                        title: `Troca de Status<br />Agendamento`,
+                        txtBtn: "Trocar",
+                        iconBtn: "fas fa-exchange-alt",
+                    }}
+                    button={{
+                        iconFontAwesome: "fas fa-pencil-alt",
+                        backgroundColor: "var(--mainPink)",
+                        iconMarginLeft: '0px',
+                        top: -30,
+                        left: 55
+                    }}
                 />
             </div>
         </div>
@@ -149,7 +172,7 @@ export default function ExpansiblePanel({
             {actions.map(panel => (
                 <div
                     key={panel._id}
-                    style={styles.expansionPanelContainer}
+                    style={styles.container}
                 >
                     <ExpansionPanel
                         style={styles.expansionPanel}

@@ -1,16 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const {
-    mwCreateBooking,
+    mwCreate,
+    update,
+    mwRemove,
     getList,
-    addBookingIdToStaff
+    addBookingIdToStaff,
+    removeBookingIdFromStaff,
 } = require("../controllers/staffBooking");
 const {
     mwUserId
 } = require("../controllers/user");
+const {
+    mwIsAdmin
+} = require("../controllers/auth");
 
 // @route  api/staff-booking
-router.post("/:userId", mwCreateBooking, addBookingIdToStaff);
+router.post("/:userId", mwCreate, addBookingIdToStaff);
+router.put("/:bookingId", update);
+// router.put("/:userId", mwRemove, removeBookingIdFromStaff); // need mwIsAdmin
 
 // LISTS
 router.get("/list/all", getList);

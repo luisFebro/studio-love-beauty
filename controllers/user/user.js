@@ -47,8 +47,6 @@ exports.update = (req, res) => { // n2
     User.findOneAndUpdate({ _id: req.profile._id }, { $set: req.body }, { new: true }) // real time updated! this send the most recently updated response/doc from database to app
     .exec((err, user) => {
         if(err) return res.status(500).json(msgG('error.systemError', err));
-        user.hashed_password = undefined;
-        user.salt = undefined;
         res.json(user);
     });
 };
@@ -59,7 +57,6 @@ exports.remove = (req, res) => { //needs to put auth as middleware
         if(err) return res.status(500).json(msgG('error.systemError', err));
         res.json(msg('ok.userDeleted', data.name.toUpperCase()));
     });
-
 }
 
 exports.confirmUserAccount = (req, res) => {
@@ -151,9 +148,9 @@ exports.readBackup = (req, res) => {
     });
 }
 
-exports.readStaffBookingList = (req, res) => {
+exports.getStaffBookingList = (req, res) => {
     const bookingArrayIds = req.profile.staffBookingList;
-    User.find({'_id': {$in: bookingArrayIds }})
+    StaffBooking.find({'_id': {$in: bookingArrayIds }})
     .exec((err, records) => {
         if(err) return res.status(500).json(msgG('error.systemError', err));
         res.json(records);

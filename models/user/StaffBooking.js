@@ -20,7 +20,7 @@ const data = {
         trim: true,
         lowercase: true,
     },
-    bookingDate: String
+    bookingDate: Date
 }
 
 const StaffBookingSchema = new Schema(data, { timestamps: true });

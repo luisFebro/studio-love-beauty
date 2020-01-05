@@ -6,72 +6,35 @@ import moment from 'moment';
 import parse from 'html-react-parser';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import { readUserList } from '../../redux/actions/userActions';
+import { getStaffBookingList } from '../../redux/actions/staffBookingActions';
 import ExpansiblePanel from './ExpansiblePanel';
 import PanelHiddenContent from './PanelHiddenContent';
+import { withRouter } from 'react-router-dom'
 // End Redux
 import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDots';
 
 moment.updateLocale('pt-br');
 
-export default function BookedClients() {
+function BookedClients({ match }) {
     const [data, setData] = useState({
         searchTerm: ""
     });
 
     const { searchTerm } = data;
 
-    const { isLoading } = useStoreState(state => ({
-        // allUsers: state.userReducer.cases.allUsers,
+    const { allStaffBookings, isLoading } = useStoreState(state => ({
+        allStaffBookings: state.staffBookingReducer.cases.allStaffBookings,
         isLoading: state.globalReducer.cases.isLinearPLoading,
     }));
 
-    // TEMP
-    const allUsers = [
-        {
-            _id: "fsdfdsfdsf21klk3232j",
-            role: "cliente",
-            staffBooking: {
-                status: {
-                    name: "atrasado",
-                },
-                client: {
-                    name: "Letícia Lins"
-                },
-                notes: "O cliente pode chegar 20 minutos atrasado",
-                date: "10 de Janeiro às 16:30"
-            },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        },
-        {
-            _id: "fsdfdsfdsf21klk32s32j",
-            role: "cliente",
-            staffBooking: {
-                status: {
-                    name: "pendente",
-                },
-                client: {
-                    name: "Roberto Lins"
-                },
-                notes: "O cliente pode chegar 20 minutos atrasado",
-                date: "10 de Janeiro às 16:30"
-            },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        }
-    ]
-    // END TEMP
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        readUserList(dispatch)
+        getStaffBookingList(dispatch, match.params.staffId);
     }, [])
 
-    const onlyClients = allUsers.filter(user => user.role === "cliente");
-
-    const filteredUsers = onlyClients.filter(user => {
-        return user.staffBooking.status.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredUsers = allStaffBookings.filter(booking => {
+        return booking.clientName.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
     const onSearchChange = e => {
@@ -88,18 +51,18 @@ export default function BookedClients() {
     );
 
     // ExpansionPanel Content
-    const actions = filteredUsers.map(user => {
+    const actions = filteredUsers.map(booking => {
         return({
-           _id: user._id,
-           mainHeading: user.staffBooking.client.name,
+           _id: booking._id,
+           mainHeading: booking.clientName.cap(),
            secondaryHeading: parse(`
                 > Data e Horário:
                 <br />
-                ${typeof user.staffBooking === "undefined" ? "Sem Agendamento" : user.staffBooking.date}
+                ${typeof booking.bookingDate === "undefined" ? "Sem Agendamento" : booking.bookingDate}
                 <br />
-                > Atualizado ${moment(user.updatedAt).fromNow()}  atrás.`),
-           staffBooking: user.staffBooking,
-           hiddenContent: <PanelHiddenContent data={user} />
+                > Atualizado ${moment(booking.updatedAt).fromNow()}  atrás.`),
+           staffBooking: booking,
+           hiddenContent: <PanelHiddenContent data={booking} />
         });
     })
 
@@ -117,7 +80,7 @@ export default function BookedClients() {
                     iconAfterClick="fas fa-minus"
                 />
             }
-            allUsers={allUsers}
+            allUsers={allStaffBookings}
         />
     );
     //End ExpansionPanel Content
@@ -132,7 +95,7 @@ export default function BookedClients() {
                     <SearchResult
                         isLoading={isLoading}
                         filteredUsersLength={filteredUsers.length}
-                        allUsersLength={onlyClients.length}
+                        allUsersLength={allStaffBookings.length}
                         searchTerm={searchTerm}
                         mainSubject="cliente"
                     />
@@ -142,3 +105,5 @@ export default function BookedClients() {
         </Fragment>
     );
 }
+
+export default withRouter(BookedClients);

@@ -9,8 +9,7 @@ PanelHiddenContent.propTypes = {
 
 export default function PanelHiddenContent({ data }) {
     const {
-        name,
-        staffBooking,
+        notes,
         createdAt,
     } = data;
 
@@ -27,9 +26,9 @@ export default function PanelHiddenContent({ data }) {
         >
             <div>
                 <p>Observações: {
-                    staffBooking && staffBooking.notes.length === 0
+                    notes.length === 0
                     ? "Nenhuma"
-                    : staffBooking.notes
+                    : notes
                 }</p>
             </div>
             <CreatedAtBr createdAt={createdAt} />

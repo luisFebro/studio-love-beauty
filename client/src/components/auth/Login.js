@@ -34,7 +34,7 @@ function Login({ history }) {
                 showSnackbar(dispatch, res.data.msg, 'error');
                 return null;
             }
-            const { msg, role } = res.data;
+            const { msg, role, authUserId } = res.data;
             showSnackbar(dispatch, "Analisando Credenciais...", 'warning', 3000);
             if(role === "admin") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
@@ -43,7 +43,7 @@ function Login({ history }) {
             }
             if(role === "colaborador") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
-                setTimeout(() => history.push("/colaborador/quadro-administrativo"), 5000);
+                setTimeout(() => history.push(`/colaborador/quadro-administrativo/${authUserId}`), 5000);
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
             if(role === "cliente") {

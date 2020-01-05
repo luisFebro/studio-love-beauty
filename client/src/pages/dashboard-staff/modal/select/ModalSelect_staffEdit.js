@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 // Redux
-import { useStoreDispatch } from 'easy-peasy';
+import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { closeModal } from '../../../../redux/actions/modalActions';
-import { updateUser, readUserList } from '../../../../redux/actions/userActions';
+import { updateBooking, getStaffBookingList } from '../../../../redux/actions/staffBookingActions';
 import { showSnackbar } from '../../../../redux/actions/snackbarActions';
 import handleChange from '../../../../utils/form/use-state/handleChange';
 import parse from 'html-react-parser';
@@ -39,16 +39,29 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const arrayUserFunctions = ["feito", "cancelado"];
-
 export default function ModalSelect_staffEdit({ open, onClose, modal }) {
     const [data, setData] = useState({
         selected: "selecione novo status:",
     });
     const { selected } = data;
 
-    const { title, txtBtn, iconBtn } = modal;
+    const { title, txtBtn, iconBtn, modalData } = modal;
 
+    let itemsSelection;
+    switch(modalData.status) {
+        case "feito":
+            itemsSelection = ["cancelado"];
+            break;
+        case "cancelado":
+            itemsSelection = ["feito"];
+            break;
+        default:
+            itemsSelection = ["feito", "cancelado"];
+    }
+
+    const { _idStaff } = useStoreState(state => ({
+        _idStaff: state.userReducer.cases.currentUser._id,
+    }))
     const dispatch = useStoreDispatch();
 
     const styles = {
@@ -61,15 +74,15 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
 
 
     const handleSubmit = () => {
-        onClose();
-        // if(isUserFunction) {
-        //     if(data && data.role === "") return showSnackbar(dispatch, "Selecione uma opção", 'error');
-        //     updateUser(dispatch, data, _idTarget)
-        //     .then(res => {
-        //         showSnackbar(dispatch, "O Tipo de Usuário foi alterado e movido.", 'success');
-        //         readUserList(dispatch);
-        //     })
-        // }
+        const objToSend = {
+            status: selected,
+        }
+        updateBooking(dispatch, objToSend, modalData._id)
+        .then(res => {
+            showSnackbar(dispatch, `${modalData.staffName}, o status de ${modalData.clientName.cap()} foi alterado para ${selected.toUpperCase()}!`, 'success');
+            onClose();
+            getStaffBookingList(dispatch, _idStaff);
+        })
     }
 
     const classes = useStyles();
@@ -102,7 +115,7 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
               <MenuItem value={selected}>
                 Selecione novo status:
               </MenuItem>
-              {arrayUserFunctions.map((item, ind) => (
+              {itemsSelection.map((item, ind) => (
                   <MenuItem key={ind} value={item}>{item}</MenuItem>
                ))}
             </Select>
@@ -118,9 +131,9 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
                     {parse(title)}
                 </DialogTitle>
                 <p className="text-left">
-                    Cliente: <strong>Letícia</strong>
+                    Cliente: <strong>{modalData.clientName.cap()}</strong>
                     <br />
-                    Status atual: <strong>Pendente</strong>
+                    Status atual: <strong>{modalData.status}</strong>
                 </p>
             </div>
             {showSelect()}

@@ -7,6 +7,7 @@ import { userReducer } from './userReducer';
 import { globalReducer } from './globalReducer';
 import { animationReducer } from './animationReducer';
 import { adminReducer } from './adminReducer';
+import { staffBookingReducer } from './staffBookingReducer';
 import { componentReducer } from './componentReducer';
 
 //Main store
@@ -19,5 +20,6 @@ export const easyStore = {
     globalReducer,
     animationReducer,
     adminReducer,
-    componentReducer
+    componentReducer,
+    staffBookingReducer
 };

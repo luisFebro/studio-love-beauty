@@ -29,6 +29,7 @@ export const modalDefaultType = {
     txtBtn: string,
     iconBtn: string,
     userId: string,
+    modalData: object,
 }
 
 export const modalTextFieldDashboardType = shape({

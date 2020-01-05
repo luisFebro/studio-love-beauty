@@ -33,6 +33,7 @@ app.use(cors()); //n2
 // routes
 app.use('/api/email', require('./routes/email'));
 app.use('/api/user', require('./routes/user'));
+app.use('/api/staff-booking', require('./routes/staffBooking'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/database', require('./routes/database'));

@@ -40,6 +40,7 @@ const data = {
         enum: ["admin", "colaborador", "cliente"]
     },
     loyaltyScores: LoyaltyScoresSchema,
+    staffBookingList: Array,
     name: {
         type: String,
         trim: true,

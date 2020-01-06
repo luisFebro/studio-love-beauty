@@ -6,8 +6,8 @@ const collectionName = "staff-booking";
 const data = {
     status: {
         type: String,
-        default: "pendente",
-        enum: ["atrasado", "pendente", "cancelado", "feito"],
+        default: "3pendente",
+        enum: ["atrasado", "3pendente", "2cancelado", "1feito"],
     },
     staffName: String,
     clientName: {
@@ -15,6 +15,7 @@ const data = {
         trim: true,
         lowercase: true,
     },
+    service: String,
     notes: {
         type: String,
         trim: true,

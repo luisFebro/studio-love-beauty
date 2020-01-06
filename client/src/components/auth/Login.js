@@ -8,6 +8,7 @@ import SafeEnvironmentMsg from '../SafeEnvironmentMsg';
 import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { loginEmail } from '../../redux/actions/authActions';
+import getDayGreetingBr from '../../utils/getDayGreetingBr';
 import PropTypes from 'prop-types';
 import KeypadButton from '../modals/keypad';
 
@@ -34,7 +35,7 @@ function Login({ history }) {
                 showSnackbar(dispatch, res.data.msg, 'error');
                 return null;
             }
-            const { msg, role, authUserId } = res.data;
+            const { msg, role, name, authUserId } = res.data;
             showSnackbar(dispatch, "Analisando Credenciais...", 'warning', 3000);
             if(role === "admin") {
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
@@ -47,7 +48,7 @@ function Login({ history }) {
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
             if(role === "cliente") {
-                setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 3000);
+                setTimeout(() => showSnackbar(dispatch, `${getDayGreetingBr()}, ${name}, e bem-vindo(a) de novo!`, 'success', 9000), 3000);
                 hideComponent(dispatch, "login");
                 showComponent(dispatch, "purchaseValue");
                 history.push("/cliente/pontos-fidelidade");

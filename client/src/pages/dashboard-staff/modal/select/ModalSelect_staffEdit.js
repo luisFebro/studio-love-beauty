@@ -74,8 +74,19 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
 
 
     const handleSubmit = () => {
+        let classifiedSelected;
+        switch(selected) {
+            case 'feito':
+                classifiedSelected = "1feito";
+                break;
+            case 'cancelado':
+                classifiedSelected = "2cancelado";
+                break;
+            default:
+                classifiedSelected = selected;
+        }
         const objToSend = {
-            status: selected,
+            status: classifiedSelected,
         }
         updateBooking(dispatch, objToSend, modalData._id)
         .then(res => {

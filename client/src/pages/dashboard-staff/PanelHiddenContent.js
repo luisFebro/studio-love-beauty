@@ -9,6 +9,7 @@ PanelHiddenContent.propTypes = {
 
 export default function PanelHiddenContent({ data }) {
     const {
+        service,
         notes,
         createdAt,
     } = data;
@@ -24,6 +25,9 @@ export default function PanelHiddenContent({ data }) {
             className="text-default enabledLink"
             style={{userSelect: 'text', margin: 'auto', width: '90%'}}
         >
+            <div>
+                <p>Serviço: {service}</p>
+            </div>
             <div>
                 <p>Observações: {
                     notes.length === 0

@@ -79,6 +79,7 @@ exports.login = (req, res) => {
             res.json({
                 token,
                 role,
+                name,
                 authUserId: _id,
                 msg: msg('ok.welcomeBack', name, 'onlyMsg')
             });

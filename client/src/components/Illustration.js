@@ -18,6 +18,7 @@ Illustration.propTypes = {
     }),
     txtImgConfig: PropTypes.shape({
         txt: PropTypes.node.isRequired,
+        fontSize: PropTypes.string,
         txtStyle: PropTypes.string,
         txtColor: PropTypes.string,
         txtAlign: PropTypes.string,
@@ -35,7 +36,16 @@ export default function Illustration({
     actionButton = {},
     txtImgConfig = {} }) {
 
-    const { txt, txtColor, txtStyle, txtAlign, txtBorder, topPos, leftPos } = txtImgConfig;
+    const { txt,
+            txtColor,
+            txtStyle,
+            fontSize,
+            txtAlign,
+            txtBorder,
+            topPos,
+            leftPos
+        } = txtImgConfig;
+
     const showActionButton = (actionButton) => {
         const { btnName, txt, to } = actionButton;
         return(
@@ -61,6 +71,7 @@ export default function Illustration({
                 <p
                     className={`move-txt-from-center ${txtBorder} ${txtStyle || "text-main-container"}`}
                     style={{
+                        fontSize: fontSize || '2rem',
                         textAlign: txtAlign || "center",
                         color: txtColor || "black",
                         top: topPos || "5%",

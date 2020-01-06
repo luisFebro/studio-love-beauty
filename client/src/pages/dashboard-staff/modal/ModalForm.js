@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useStoreDispatch } from 'easy-peasy';
-import { readHighestScores } from '../../../redux/actions/userActions';
 import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -24,7 +23,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 // CUSTOMIZED DATA
 import { modalTextFieldDashboardType } from '../../../types';
 import { updateUser } from '../../../redux/actions/userActions';
-import { readUserList } from '../../../redux/actions/userActions';
+import { createBooking, getStaffBookingList } from '../../../redux/actions/staffBookingActions';
 import { showSnackbar } from '../../../redux/actions/snackbarActions';
 // END CUSTOMIZED DATA
 
@@ -36,32 +35,40 @@ ModalForm.propTypes = {
 
 export default function ModalForm({
     open, onClose, modal }) {
-    const [formData, setFormData] = useState({
+    const [data, setData] = useState({
+        status: "3pendente",
+        staffName: '',
         clientName: '',
-        serviceType: "selecione tipo de serviço",
-        serviceDate: '',
-        serviceNotes: '',
+        service: "selecione tipo de serviço",
+        notes: '',
+        bookingDate: '',
     });
     const {
         clientName,
-        serviceType,
-        serviceDate,
-        serviceNotes } = formData;
-
-    const [gotError, setGotError] = useState(false);
-
-    const [selectedDate, handleDateChange] = useState(new Date());
-    useEffect(() => {
-        setFormData({ ...formData, serviceDate: selectedDate })
-    }, [selectedDate])
-
-    const dispatch = useStoreDispatch();
+        service,
+        notes,
+        bookingDate,
+    } = data;
 
     const {
         title,
         txtBtn,
         iconBtn,
-        data } = modal;
+        modalData } = modal;
+
+    const [gotError, setGotError] = useState(false);
+
+    const [selectedDate, handleDateChange] = useState(new Date());
+
+    const dispatch = useStoreDispatch();
+
+    useEffect(() => {
+        setData({ ...data, staffName: modalData.name })
+    }, [modalData])
+
+    useEffect(() => {
+        setData({ ...data, bookingDate: selectedDate })
+    }, [selectedDate])
 
     const styles = {
         dialog: {
@@ -84,19 +91,15 @@ export default function ModalForm({
     }
 
     const handleSubmit = () => {
-        onClose();
-        // const bodyToSend = {
-        //     "loyaltyScores.currentScore": 'parseFloat(newValue)',
-        // }
+        if(service === "selecione tipo de serviço") return showSnackbar(dispatch, "Selecione um serviço.", 'error')
 
-        // updateUser(dispatch, bodyToSend, 'userId', false)
-        // .then(res => {
-        //     if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-        //     onClose();
-        //     readUserList(dispatch)
-        //     showSnackbar(dispatch, `Os pontos de fidelidade do cliente foram descontados com sucesso`, 'success', 8000)
-        //     setTimeout(() => readHighestScores(dispatch), 3000);
-        // })
+        createBooking(dispatch, data, modalData._id)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            onClose();
+            getStaffBookingList(dispatch, modalData._id)
+            showSnackbar(dispatch, `O agendamento do seu cliente foi realizado!`, 'success', 8000)
+        })
     };
 
     const showTitle = () => (
@@ -118,7 +121,7 @@ export default function ModalForm({
         <form style={styles.form} onBlur={() => setGotError(false)}>
             <TextField
                 label="NOME COLABORADOR:"
-                value={data && data.name}
+                value={modalData && modalData.name}
                 variant="standard"
                 fullWidth
                 margin="dense"
@@ -127,6 +130,7 @@ export default function ModalForm({
             <TextField
                 label="NOME CLIENTE:"
                 name="clientName"
+                onChange={handleChange(setData, data)}
                 variant="standard"
                 type="text"
                 fullWidth
@@ -134,13 +138,13 @@ export default function ModalForm({
             />
             <Select
               style={styles.fieldForm} // ADD HOUR CAN NOT EQUAL IN THE SAME DAY
-              labelId="serviceType"
-              onChange={handleChange(setFormData, formData)}
-              name="serviceType"
-              value={serviceType}
+              labelId="service"
+              onChange={handleChange(setData, data)}
+              name="service"
+              value={service}
               error={false}
             >
-                <MenuItem value={serviceType}>
+                <MenuItem value={service}>
                   selecione tipo de serviço:
                 </MenuItem>
                 <MenuItem value={"Corte de Cabelo Teste"}>Corte de Cabelo Teste</MenuItem>
@@ -175,9 +179,9 @@ export default function ModalForm({
                 label="OBSERVAÇÕES:"
                 multiline
                 rows={4}
-                name="serviceNotes"
-                value={serviceNotes}
-                onChange={handleChange(setFormData, formData)}
+                name="notes"
+                value={notes}
+                onChange={handleChange(setData, data)}
                 variant="outlined"
                 placeholder="Escreva detalhes adicionais do agendamento"
                 fullWidth

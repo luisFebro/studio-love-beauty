@@ -239,6 +239,7 @@ hr {
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.20), 0 10px 8px rgba(0, 0, 0, 0.12);
 }
 
+.shadow-elevation-img,
 .tranparent-img-shadow,
 .main-letters-shadow {
     font-size: 1.9rem;

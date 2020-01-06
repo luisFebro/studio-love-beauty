@@ -47,8 +47,8 @@ const useStyles = makeStyles(theme => ({
     root: {
         backgroundColor: '#f7f1e3',
         width: '100%',
-        position: 'relative',
-        minHeight: 600
+        margin: 'auto',
+        overflow: 'hidden',
     },
     fab: {
         position: 'absolute',
@@ -98,7 +98,6 @@ export default function TabSessions({ data, needTabFullWidth = false }) {
                         ? "fullWidth"
                         : (isSmallScreen() ? "scrollable" : "fullWidth")
                     }
-                    scrollButtons="on"
                     indicatorColor="primary"
                     textColor="primary"
                     aria-label="scrollable force with icon"
@@ -120,6 +119,7 @@ export default function TabSessions({ data, needTabFullWidth = false }) {
                 {data && data.map((tab, ind) => {
                     return(
                         <TabPanel
+                            style={{overflow: 'hidden'}}
                             key={ind}
                             value={value}
                             index={ind}

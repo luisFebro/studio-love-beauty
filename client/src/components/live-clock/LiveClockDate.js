@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { default as DigitalClock } from 'react-live-clock';
 import Clock from 'react-clock';
+import styled from 'styled-components';
+import { transitionLeftToRight } from '../../keyframes/transitionLeftToRightScreen';
 import './Clock.css';
 import getDayMonthBr from '../../utils/dates/getDayMonthBr';
 import { CLIENT_URL } from '../../config/clientUrl';
@@ -25,7 +27,8 @@ export default function LiveClockDate() {
             color: 'var(--mainPink)',
             fontSize: '5em',
             filter: 'drop-shadow(.001em .001em .01em var(--mainDark))',
-            fontFamily: 'cursive'
+            fontFamily: 'cursive',
+            zIndex: 1000,
         }
     }
 
@@ -36,7 +39,7 @@ export default function LiveClockDate() {
 
     return (
         <div style={styles.root} className="container-center py-4">
-            <div className="animated slideInLeft slow delay-4 mr-md-5">
+            <div style={{zIndex: 1000}} className="animated slideInLeft slow delay-4 mr-md-5">
                 <Clock
                     className="react-clock shadow-elevation"
                     hourHandLength={60}
@@ -66,15 +69,63 @@ export default function LiveClockDate() {
                     {getDayMonthBr(date)}
                 </div>
             </div>
-            <div>
+            <DivWrapper>
                 <img
-                    className="shadow-elevation"
+                    className="shadow-elevation-img cloud1"
                     src={`${CLIENT_URL}/img/icons/cloud.svg`}
                     alt="nuvem"
-                    width={200}
-                    height={200}
+                    width={100}
+                    height={100}
                 />
-            </div>
+                <img
+                    className="shadow-elevation-img cloud2"
+                    src={`${CLIENT_URL}/img/icons/cloud.svg`}
+                    alt="nuvem"
+                    width={90}
+                    height={90}
+                />
+                <img
+                    className="shadow-elevation-img cloud3"
+                    src={`${CLIENT_URL}/img/icons/cloud.svg`}
+                    alt="nuvem"
+                    width={110}
+                    height={110}
+                />
+                <img
+                    className="shadow-elevation-img cloud4"
+                    src={`${CLIENT_URL}/img/icons/cloud.svg`}
+                    alt="nuvem"
+                    width={100}
+                    height={100}
+                />
+            </DivWrapper>
         </div>
     );
 }
+
+const DivWrapper = styled.div`
+    .cloud1 {
+        position: absolute;
+        top: 10px;
+        left: 150px;
+        animation: ${transitionLeftToRight} 35s linear infinite;
+    },
+    .cloud2 {
+        position: absolute;
+        top: -40px;
+        left: 400px;
+        animation: ${transitionLeftToRight} 33s linear infinite;
+    },
+    .cloud3 {
+        position: absolute;
+        top: -50px;
+        left: 300px;
+        animation: ${transitionLeftToRight} 50s linear infinite;
+    },
+    .cloud4 {
+        position: absolute;
+        top: 60px;
+        left: 150px;
+        animation: ${transitionLeftToRight} 40s linear infinite;
+    }
+`;

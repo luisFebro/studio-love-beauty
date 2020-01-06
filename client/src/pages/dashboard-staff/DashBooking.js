@@ -14,6 +14,7 @@ export default function DashBooking() {
             height: '7rem',
             width: '100%',
             background: 'linear-gradient(to bottom, #42275a, #734b6d)',
+            zIndex: 1000,
         }
     }
 

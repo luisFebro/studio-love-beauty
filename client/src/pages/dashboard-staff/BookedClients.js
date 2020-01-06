@@ -4,6 +4,7 @@ import SearchResult from "../../components/search/SearchResult";
 import ButtonFab from '../../components/buttons/material-ui/ButtonFab';
 import moment from 'moment';
 import parse from 'html-react-parser';
+import LiveClockDate from '../../components/live-clock/LiveClockDate';
 import Illustration from '../../components/Illustration';
 import { CLIENT_URL } from '../../config/clientUrl';
 // Redux
@@ -112,6 +113,7 @@ function BookedClients({ match }) {
                         </div>
                     ) : (
                         <Fragment>
+                            <LiveClockDate />
                             {showSearchBar()}
                             <SearchResult
                                 isLoading={isLoading}

@@ -151,6 +151,7 @@ exports.readBackup = (req, res) => {
 exports.getStaffBookingList = (req, res) => {
     const bookingArrayIds = req.profile.staffBookingList;
     StaffBooking.find({'_id': {$in: bookingArrayIds }})
+    .sort({ 'status': -1, 'bookingDate': 1 })
     .exec((err, records) => {
         if(err) return res.status(500).json(msgG('error.systemError', err));
         res.json(records);

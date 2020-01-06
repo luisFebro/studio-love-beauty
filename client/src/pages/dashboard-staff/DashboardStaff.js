@@ -3,7 +3,7 @@ import DashBooking from './DashBooking';
 import { useStoreState } from 'easy-peasy';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import TabSessions from '../../components/TabSessions';
-
+import getDayGreetingBr from '../../utils/getDayGreetingBr';
 
 export default function DashboardStaff() {
     const name = useStoreState(state => state.userReducer.cases.currentUser.name);
@@ -18,7 +18,12 @@ export default function DashboardStaff() {
 
     return (
         <div>
-            <p style={{color: "white", margin: 0, paddingLeft: 20}} className="text-default">Nome Colaborador: {name && name.cap()}</p>
+            <p
+                style={{color: "white", margin: 0, paddingLeft: 20}}
+                className="text-default"
+            >
+                {`${getDayGreetingBr()}${name ? `, ${name.cap()}!` : " ..."}`}
+            </p>
             <br/>
             <TabSessions
                 data={data}

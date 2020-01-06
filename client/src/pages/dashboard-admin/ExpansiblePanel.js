@@ -46,6 +46,10 @@ const useStyles = makeStyles(theme => ({
         paddingLeft: '10px',
         fontSize: theme.typography.pxToRem(15),
         textShadow: '1px 1px 3px black'
+    },
+    mainHeading: {
+        display: 'flex',
+        alignItems: 'center',
     }
 }));
 
@@ -145,6 +149,7 @@ export default function ExpansiblePanel({
         >
             <Typography
                 className={clsx(classes.heading, "text-title")}
+                style={styles.mainHeading}
             >
                 {panel.mainHeading}
             </Typography>

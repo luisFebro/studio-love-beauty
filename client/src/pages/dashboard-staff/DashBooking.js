@@ -26,7 +26,7 @@ export default function DashBooking() {
                     title: `Agendamento<br />de<br />cliente`,
                     txtBtn: "Agendar",
                     iconBtn: "fas fa-address-book",
-                    data,
+                    modalData: data,
                 }}
                 button={{
                     title: "Marcar Novo Agendamento",

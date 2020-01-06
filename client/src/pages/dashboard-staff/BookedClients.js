@@ -4,6 +4,8 @@ import SearchResult from "../../components/search/SearchResult";
 import ButtonFab from '../../components/buttons/material-ui/ButtonFab';
 import moment from 'moment';
 import parse from 'html-react-parser';
+import Illustration from '../../components/Illustration';
+import { CLIENT_URL } from '../../config/clientUrl';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { getStaffBookingList } from '../../redux/actions/staffBookingActions';
@@ -58,7 +60,7 @@ function BookedClients({ match }) {
            secondaryHeading: parse(`
                 > Data e Horário:
                 <br />
-                ${typeof booking.bookingDate === "undefined" ? "Sem Agendamento" : booking.bookingDate}
+                ${typeof booking.bookingDate === "undefined" ? "Sem Agendamento" : moment(booking.bookingDate).calendar(null, { sameElse: 'LLL'})}
                 <br />
                 > Atualizado ${moment(booking.updatedAt).fromNow()}  atrás.`),
            staffBooking: booking,
@@ -91,15 +93,36 @@ function BookedClients({ match }) {
             ? <LoadingThreeDots />
             : (
                 <Fragment>
-                    {showSearchBar()}
-                    <SearchResult
-                        isLoading={isLoading}
-                        filteredUsersLength={filteredUsers.length}
-                        allUsersLength={allStaffBookings.length}
-                        searchTerm={searchTerm}
-                        mainSubject="cliente"
-                    />
-                    <div className="text-default">{showExpansionPanel()}</div>
+                    {allStaffBookings.length === 0
+                    ? (
+                        <div className="py-5">
+                            <Illustration
+                                img={`${CLIENT_URL}/img/illustrations/empty-booking.svg`}
+                                alt="Nenhum Agendamento"
+                                imgStyle={{
+                                    maxWidth: 400
+                                }}
+                                txtImgConfig = {{
+                                    fontSize: '2.2rem',
+                                    topPos: "100%",
+                                    txt: `Você ainda não fez nenhum agendamento`,
+                                    txtBorder: "border-white",
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <Fragment>
+                            {showSearchBar()}
+                            <SearchResult
+                                isLoading={isLoading}
+                                filteredUsersLength={filteredUsers.length}
+                                allUsersLength={allStaffBookings.length}
+                                searchTerm={searchTerm}
+                                mainSubject="cliente"
+                            />
+                            <div className="text-default">{showExpansionPanel()}</div>
+                        </Fragment>
+                    )}
                 </Fragment>
             )}
         </Fragment>

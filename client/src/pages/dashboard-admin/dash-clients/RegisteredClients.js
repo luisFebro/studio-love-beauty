@@ -58,7 +58,7 @@ export default function RegisteredClientsList() {
         return({
            _id: user._id,
            mainHeading: user.name,
-           secondaryHeading: parse(`> Atualizado ${moment(user.updatedAt).fromNow()}  atrás <br /> > Pontos Acumulados: <br />${typeof user.loyaltyScores === "undefined" ? "Sem pontuação" : user.loyaltyScores.currentScore}`),
+           secondaryHeading: parse(`> Pontos Acumulados: <br />${typeof user.loyaltyScores === "undefined" ? "Sem pontuação" : user.loyaltyScores.currentScore} <br />> Atualizado ${moment(user.updatedAt).fromNow()}  atrás.`),
            hiddenContent: <PanelHiddenContent data={user} />
         });
     })

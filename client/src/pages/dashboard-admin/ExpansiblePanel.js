@@ -88,6 +88,10 @@ export default function ExpansiblePanel({
             top: -10,
             left: 10
         },
+        mainHeading: {
+            display: 'flex',
+            alignItems: 'center',
+        }
 
     }
 

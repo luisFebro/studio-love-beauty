@@ -6,6 +6,7 @@ const {
     mwRemove,
     getList,
     addBookingIdToStaff,
+    checkStatusAndUpdateMany,
     removeBookingIdFromStaff,
 } = require("../controllers/staffBooking");
 const {
@@ -18,6 +19,8 @@ const {
 // @route  api/staff-booking
 router.post("/:userId", mwCreate, addBookingIdToStaff);
 router.put("/:bookingId", update);
+
+router.put("/status/:userId", checkStatusAndUpdateMany);
 // router.put("/:userId", mwRemove, removeBookingIdFromStaff); // need mwIsAdmin
 
 // LISTS

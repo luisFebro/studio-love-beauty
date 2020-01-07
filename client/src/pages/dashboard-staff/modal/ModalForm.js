@@ -13,11 +13,13 @@ import handleChange from '../../../utils/form/use-state/handleChange';
 // OPTIONALS
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import detectErrorField from '../../../utils/validation/detectErrorField';
 //datePicker
 import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import AlarmIcon from '@material-ui/icons/Alarm';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import moment from 'moment';
 // END OPTIONALS
 
 // CUSTOMIZED DATA
@@ -42,6 +44,7 @@ export default function ModalForm({
         service: "selecione tipo de serviço",
         notes: '',
         bookingDate: '',
+        formattedDate: '',
     });
     const {
         clientName,
@@ -57,14 +60,13 @@ export default function ModalForm({
         modalData } = modal;
 
     const [gotError, setGotError] = useState(false);
+    const [fieldError, setFieldError] = useState(null);
+    const errorBookingDate = fieldError && fieldError.bookingDate;
+    const errorClientName = fieldError && fieldError.clientName;
 
     const [selectedDate, handleDateChange] = useState(new Date());
 
     const dispatch = useStoreDispatch();
-
-    useEffect(() => {
-        setData({ ...data, staffName: modalData.name })
-    }, [modalData])
 
     useEffect(() => {
         setData({ ...data, bookingDate: selectedDate })
@@ -90,12 +92,42 @@ export default function ModalForm({
         }
     }
 
-    const handleSubmit = () => {
-        if(service === "selecione tipo de serviço") return showSnackbar(dispatch, "Selecione um serviço.", 'error')
+    const clearForm = () => {
+        setData({
+            status: "3pendente",
+            staffName: '',
+            clientName: '',
+            service: "selecione tipo de serviço",
+            notes: '',
+            bookingDate: '',
+        })
+        handleDateChange(new Date());
+        setGotError(false);
+        setFieldError(null);
+    }
 
-        createBooking(dispatch, data, modalData._id)
+    const handleSubmit = () => {
+        if(service === "selecione tipo de serviço") {
+            showSnackbar(dispatch, "Selecione um serviço.", 'error')
+            setGotError(true);
+            return;
+        }
+        const objToSend = {
+            ...data,
+            staffName: modalData.name,
+            formattedDate: moment(bookingDate).format("LLL")
+        }
+        showSnackbar(dispatch, "Processando...", 'warning', 5000)
+        createBooking(dispatch, objToSend, modalData._id)
         .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            if(res.status !== 200) {
+                showSnackbar(dispatch, res.data.msg, 'error')
+                const thisModalFields = Object.keys(data);
+                const foundObjError = detectErrorField(res.data.msg, thisModalFields);
+                setFieldError(foundObjError);
+                return;
+            }
+            clearForm();
             onClose();
             getStaffBookingList(dispatch, modalData._id)
             showSnackbar(dispatch, `O agendamento do seu cliente foi realizado!`, 'success', 8000)
@@ -118,7 +150,7 @@ export default function ModalForm({
     );
 
     const showForm = () => (
-        <form style={styles.form} onBlur={() => setGotError(false)}>
+        <form style={styles.form} onBlur={() => {setGotError(false); setFieldError(null)}}>
             <TextField
                 label="NOME COLABORADOR:"
                 value={modalData && modalData.name}
@@ -128,9 +160,11 @@ export default function ModalForm({
                 disabled
             />
             <TextField
+                required
                 label="NOME CLIENTE:"
                 name="clientName"
                 onChange={handleChange(setData, data)}
+                error={errorClientName ? true : false}
                 variant="standard"
                 type="text"
                 fullWidth
@@ -142,7 +176,7 @@ export default function ModalForm({
               onChange={handleChange(setData, data)}
               name="service"
               value={service}
-              error={false}
+              error={gotError ? true : false}
             >
                 <MenuItem value={service}>
                   selecione tipo de serviço:
@@ -159,7 +193,7 @@ export default function ModalForm({
                     disablePast
                     variant="outlined"
                     margin="dense"
-                    error={false}
+                    error={errorBookingDate ? true : false}
                     ampm={false}
                     placeholder="Data Agendamento"
                     label={`Qual DIA e HORÁRIO?`}
@@ -194,7 +228,10 @@ export default function ModalForm({
         <section style={styles.actionButtons}>
             <ButtonMulti
                 title="Voltar"
-                onClick={onClose}
+                onClick={() => {
+                    onClose();
+                    clearForm();
+                }}
                 variant="link"
             />
             <ButtonMulti

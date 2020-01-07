@@ -4,11 +4,20 @@ const { msgG } = require('./_msgs/globalMsgs');
 
 // MIDLEWARES
 exports.mwCreate = (req, res, next) => {
-    const staffBooking = new StaffBooking(req.body);
-    staffBooking.save((err, result) => {
+    const formattedDate = req.body.formattedDate; // L
+
+    StaffBooking.findOne({ formattedDate: formattedDate })
+    .exec((err, result) => {
         if (err) return res.status(500).json(msgG('error.systemError', err));
-        req.bookingId = result._id
-        next();
+        if(req.body.clientName === "") return res.status(400).json({ msg: "Você precisa digitar o nome do cliente"})
+        if(result) return res.status(400).json({ msg: "Oops! Esta data e hora já foi marcada."})
+
+        const staffBooking = new StaffBooking(req.body);
+        staffBooking.save((err, result) => {
+            if (err) return res.status(500).json(msgG('error.systemError', err));
+            req.bookingId = result._id
+            next();
+        })
     })
 }
 
@@ -43,6 +52,15 @@ exports.update = (req, res) => {
     });
 };
 
+exports.checkStatusAndUpdateMany = (req, res) => {
+    const query = {staffName: req.profile.name, bookingDate: { $lt: new Date() }, status: { $eq: "3pendente"}}
+    StaffBooking.updateMany(query, { $set: {status: "4atrasado"}})
+    .exec((err, result) => {
+        if(err) return res.status(500).json(msgG('error.systemError', err));
+        res.json(result);
+    })
+}
+
 // NOT FUCKING WORKING!!! try use splice and save then
 exports.removeBookingIdFromStaff = (req, res) => {
     const _id = req.profile._id;
@@ -64,3 +82,7 @@ exports.getList = (req, res) => {
         res.json(list);
     });
 }
+
+/* COMMENTS
+n1: LESSON: If you need to compare two dates, never use new Date() because teh seconds change contanstluy. Instead use moment to more concise dates patterns in string.
+*/

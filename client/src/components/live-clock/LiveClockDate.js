@@ -15,7 +15,7 @@ export default function LiveClockDate() {
         },
         digitalClock: {
             color: 'var(--mainPink)',
-            fontSize: '4.5em',
+            fontSize: '7.5em',
             filter: 'drop-shadow(.001em .001em .01em var(--mainDark))'
         },
         date: {

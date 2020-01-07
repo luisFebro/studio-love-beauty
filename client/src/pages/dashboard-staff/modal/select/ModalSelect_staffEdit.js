@@ -40,12 +40,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ModalSelect_staffEdit({ open, onClose, modal }) {
+    const [error, setError] = useState(false);
     const [data, setData] = useState({
         selected: "selecione novo status:",
     });
     const { selected } = data;
 
     const { title, txtBtn, iconBtn, modalData } = modal;
+
+    const clearForm = () => {
+        setData({
+            selected: "selecione novo status:",
+        })
+    }
 
     let itemsSelection;
     switch(modalData.status) {
@@ -74,6 +81,12 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
 
 
     const handleSubmit = () => {
+        if(selected.includes("selecione")) {
+            showSnackbar(dispatch, "Selecione um novo status", "error");
+            setError(true);
+            return;
+        }
+
         let classifiedSelected;
         switch(selected) {
             case 'feito':
@@ -88,10 +101,12 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
         const objToSend = {
             status: classifiedSelected,
         }
+        onClose();
+        showSnackbar(dispatch, "Alterando...", "warning", 3000);
         updateBooking(dispatch, objToSend, modalData._id)
         .then(res => {
+            clearForm();
             showSnackbar(dispatch, `${modalData.staffName}, o status de ${modalData.clientName.cap()} foi alterado para ${selected.toUpperCase()}!`, 'success');
-            onClose();
             getStaffBookingList(dispatch, _idStaff);
         })
     }
@@ -102,7 +117,10 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
         <section style={styles.actionButtons}>
             <ButtonMulti
                 title="Voltar"
-                onClick={onClose}
+                onClick={() => {
+                    onClose();
+                    clearForm();
+                }}
                 variant="link"
             />
             <ButtonMulti
@@ -114,17 +132,21 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
     );
 
     const showSelect = () => (
-        <form style={{ margin: 'auto', width: '90%' }}>
+        <form
+            style={{ margin: 'auto', width: '90%' }}
+            onBlur={() => setError(false)}
+        >
             <Select
               style={{ margin: '9px 0' }}
               labelId="selected"
               onChange={handleChange(setData, data)}
               name="selected"
+              error={error ? true : false}
               value={selected}
               fullWidth
             >
               <MenuItem value={selected}>
-                Selecione novo status:
+                selecione novo status:
               </MenuItem>
               {itemsSelection.map((item, ind) => (
                   <MenuItem key={ind} value={item}>{item}</MenuItem>
@@ -144,7 +166,7 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
                 <p className="text-left">
                     Cliente: <strong>{modalData.clientName.cap()}</strong>
                     <br />
-                    Status atual: <strong>{modalData.status}</strong>
+                    Status atual: <strong>{modalData.status.substring(1)}</strong>
                 </p>
             </div>
             {showSelect()}

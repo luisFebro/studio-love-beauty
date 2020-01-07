@@ -110,11 +110,11 @@ export default function ExpansiblePanel({
                 <ButtonFab
                     top={-27}
                     left={90}
-                    title={panel.staffBooking.status}
+                    title={panel.staffBooking.status.substring(1)}
                     variant="extended"
                     style={styles.button}
-                    color={panel.staffBooking.status === "pendente" ? "black" : "white"}
-                    backgroundColor={getStatusColor(panel.staffBooking.status)}
+                    color={panel.staffBooking.status === "3pendente" ? "black" : "white"}
+                    backgroundColor={getStatusColor(panel.staffBooking.status.substring(1))}
                 />
             </div>
             <div className="enabledLink">
@@ -183,7 +183,7 @@ export default function ExpansiblePanel({
                     <ExpansionPanel
                         style={styles.expansionPanel}
                         className="disabledLink"
-                        disabled={["cancelado", "feito"].includes(panel.staffBooking.status) ? true : false}
+                        disabled={["2cancelado", "1feito"].includes(panel.staffBooking.status) ? true : false}
                     >
                         {showPanel(panel)}
                         {showHiddenPanel(panel)}

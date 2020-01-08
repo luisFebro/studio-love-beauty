@@ -22,7 +22,11 @@ export const setLoadingOff = dispatch => {
 // END SET LOADING
 
 export const setLoadingProgress = (dispatch, status) => {
-    return dispatch({ type: 'TOGGLE_LOADING_PROGRESS', payload: status });
+    return dispatch({ type: 'LOADING_PROGRESS_TOGGLED', payload: status });
+};
+
+export const setCustomLoading = (dispatch, status) => {
+    return dispatch({ type: 'CUSTOM_LOADING_TOGGLED', payload: status });
 };
 
 // Important: do not forget to clear error methods off

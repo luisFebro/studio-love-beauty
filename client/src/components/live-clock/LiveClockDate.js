@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { default as DigitalClock } from 'react-live-clock';
+import Tilt from 'react-tilt'
 import Clock from 'react-clock';
 import styled from 'styled-components';
 import { transitionLeftToRight } from '../../keyframes/transitionLeftToRightScreen';
 import './Clock.css';
 import getDayMonthBr from '../../utils/dates/getDayMonthBr';
+import getWeekDayBr from '../../utils/dates/getWeekDayBr';
 import { CLIENT_URL } from '../../config/clientUrl';
 
 export default function LiveClockDate() {
@@ -29,6 +31,11 @@ export default function LiveClockDate() {
             filter: 'drop-shadow(.001em .001em .01em var(--mainDark))',
             fontFamily: 'cursive',
             zIndex: 1000,
+        },
+        analogicClock: {
+            height: 250,
+            width: 250,
+            zIndex: 1000,
         }
     }
 
@@ -39,25 +46,31 @@ export default function LiveClockDate() {
 
     return (
         <div style={styles.root} className="container-center py-4">
-            <div style={{zIndex: 1000}} className="animated slideInLeft slow delay-4 mr-md-5">
-                <Clock
-                    className="react-clock shadow-elevation"
-                    hourHandLength={60}
-                    hourHandOppositeLength={20}
-                    hourHandWidth={8}
-                    hourMarksLength={20}
-                    hourMarksWidth={8}
-                    minuteHandLength={90}
-                    minuteHandOppositeLength={20}
-                    minuteHandWidth={6}
-                    minuteMarksWidth={3}
-                    secondHandLength={80}
-                    secondHandOppositeLength={25}
-                    secondHandWidth={7}
-                    size={250}
-                    value={date}
-                />
-            </div>
+            <Tilt
+                className="Tilt"
+                options={{ max : 50, reverse: true }}
+                style={styles.analogicClock}
+            >
+                <div style={styles.analogicClock} className="Tilt-inner animated slideInLeft slow delay-4 mr-md-5">
+                    <Clock
+                        className="react-clock shadow-elevation"
+                        hourHandLength={60}
+                        hourHandOppositeLength={20}
+                        hourHandWidth={8}
+                        hourMarksLength={20}
+                        hourMarksWidth={8}
+                        minuteHandLength={90}
+                        minuteHandOppositeLength={20}
+                        minuteHandWidth={6}
+                        minuteMarksWidth={3}
+                        secondHandLength={80}
+                        secondHandOppositeLength={25}
+                        secondHandWidth={7}
+                        size={250}
+                        value={date}
+                    />
+                </div>
+            </Tilt>
             <div className="container-center display-flex flex-column">
                 <div className="animated zoomIn delay-2 slow" style={styles.now}>
                     AGORA
@@ -66,7 +79,7 @@ export default function LiveClockDate() {
                     <DigitalClock style={styles.digitalClock} format={'HH:mm'} ticking={true} />
                 </div>
                 <div className="animated slideInRight delay-2 slow" style={styles.date}>
-                    {getDayMonthBr(date)}
+                    {`${getWeekDayBr()} - ${getDayMonthBr(date)}`}
                 </div>
             </div>
             <DivWrapper>

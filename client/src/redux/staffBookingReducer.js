@@ -14,7 +14,12 @@ export const staffBookingReducer = {
             case 'STAFF_BOOKING_READ':
                 return {
                     ...state,
-                   allStaffBookings: action.payload,
+                   allStaffBookings: action.payload.docs,
+                };
+            case 'STAFF_BOOKING_READ_MORE':
+                return {
+                   ...state,
+                   allStaffBookings: [...state.allStaffBookings, ...action.payload.docs]
                 };
             default:
                 return state;

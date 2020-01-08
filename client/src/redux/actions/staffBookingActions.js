@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { configTypeJson } from '../../utils/server/configTypeJson';
-import { setLoadingProgress } from './globalActions';
+import { setLoadingProgress, setCustomLoading } from './globalActions';
 
 export const createBooking = async (dispatch, objToSend, staffId) => { // L
     try {
@@ -28,15 +28,28 @@ export const checkStatusAndUpdateMany = async (dispatch, _staffId) => { // L
 };
 
 // LISTS
-export const getStaffBookingList = async (dispatch, userId) => {
-    setLoadingProgress(dispatch, true);
+export const getStaffBookingList = async (dispatch, userId, docsToSkip, needReadMore = false) => {
+    needReadMore === true
+    ? setCustomLoading(dispatch, true)
+    : setLoadingProgress(dispatch, true)
+
     try {
-        const res = await axios.get(`/api/user/staff-booking/list/${userId}`, configTypeJson);
+        const res = await axios.get(`/api/user/staff-booking/list/${userId}?skip=${docsToSkip}`, configTypeJson);
         checkStatusAndUpdateMany(dispatch, userId);
-        setLoadingProgress(dispatch, false);
-        dispatch({ type: "STAFF_BOOKING_READ", payload: res.data })
+
+        needReadMore === true
+        ? setCustomLoading(dispatch, false)
+        : setLoadingProgress(dispatch, false)
+
+        needReadMore === true
+        ? dispatch({ type: "STAFF_BOOKING_READ_MORE", payload: res.data })
+        : dispatch({ type: "STAFF_BOOKING_READ", payload: res.data })
+
+        return res;
     } catch (err) {
-        setLoadingProgress(dispatch, false);
+        needReadMore === true
+        ? setCustomLoading(dispatch, false)
+        : setLoadingProgress(dispatch, false)
         return err.response;
     }
 };

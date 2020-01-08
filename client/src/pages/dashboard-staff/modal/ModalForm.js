@@ -33,10 +33,12 @@ ModalForm.propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     modal: modalTextFieldDashboardType,
+    setRun: PropTypes.func,
+    run: PropTypes.bool,
 };
 
 export default function ModalForm({
-    open, onClose, modal }) {
+    open, onClose, modal, setRun, run }) {
     const [data, setData] = useState({
         status: "3pendente",
         staffName: '',
@@ -129,7 +131,8 @@ export default function ModalForm({
             }
             clearForm();
             onClose();
-            getStaffBookingList(dispatch, modalData._id)
+            setRun(!run);
+            //getStaffBookingList(dispatch, modalData._id, 0)
             showSnackbar(dispatch, `O agendamento do seu cliente foi realizado!`, 'success', 8000)
         })
     };

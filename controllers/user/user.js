@@ -2,6 +2,7 @@ const User = require("../../models/user");
 const StaffBooking = require("../../models/user/StaffBooking");
 const BackupUser = require('../../models/backup/BackupUser');
 const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 const { msgG } = require('../_msgs/globalMsgs');
 const { msg } = require('../_msgs/user');
@@ -150,13 +151,28 @@ exports.readBackup = (req, res) => {
 
 exports.getStaffBookingList = (req, res) => {
     const bookingArrayIds = req.profile.staffBookingList;
-    StaffBooking.find({'_id': {$in: bookingArrayIds }})
-    .sort({ 'status': -1, 'bookingDate': 1 })
-    .exec((err, records) => {
-        if(err) return res.status(500).json(msgG('error.systemError', err));
-        res.json(records);
-    });
+    const docsToSkip = parseInt(req.query.skip);
+    const query = {'_id': {$in: bookingArrayIds }}
+
+    StaffBooking.find(query)
+    .exec((err, docs) => {
+        const totalOfDocs = docs.length;
+
+        StaffBooking.find(query)
+        .sort({ 'status': -1, 'bookingDate': 1 })
+        .skip(docsToSkip)
+        .limit(5)
+        .exec((err, docs) => {
+            if(err) return res.status(500).json(msgG('error.systemError', err));
+            res.json({
+                size: docs.length,
+                totalSize: totalOfDocs,
+                docs
+            });
+        });
+    })
 }
+
 // END LISTS
 
 

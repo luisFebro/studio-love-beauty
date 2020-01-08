@@ -62,7 +62,7 @@ function App() {
                     <Route path="/cliente/pontos-fidelidade" exact component={LoyaltyScoreHandler} />
                     <Route path="/cliente/trocar-senha" exact component={ChangePassword} />
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
-                    <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
+                    <Route path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
                     <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
                     <Route component={Default} />
                 </Switch>

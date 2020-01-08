@@ -32,7 +32,7 @@ ExpansiblePanel.propTypes = {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        width: '80%',
+        width: window.Helper.isSmallScreen() ? '100%' : '80%',
         margin: 'auto',
     },
     heading: {

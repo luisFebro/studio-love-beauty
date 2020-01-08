@@ -8,6 +8,9 @@ import './Clock.css';
 import getDayMonthBr from '../../utils/dates/getDayMonthBr';
 import getWeekDayBr from '../../utils/dates/getWeekDayBr';
 import { CLIENT_URL } from '../../config/clientUrl';
+import parse from 'html-react-parser';
+
+const isSmall = window.Helper.isSmallScreen();
 
 export default function LiveClockDate() {
     const [date, setDate] = useState(new Date());
@@ -78,8 +81,8 @@ export default function LiveClockDate() {
                 <div className="animated zoomIn delay-2 slow">
                     <DigitalClock style={styles.digitalClock} format={'HH:mm'} ticking={true} />
                 </div>
-                <div className="animated slideInRight delay-2 slow" style={styles.date}>
-                    {`${getWeekDayBr()} - ${getDayMonthBr(date)}`}
+                <div className="text-center animated slideInRight delay-2 slow" style={styles.date}>
+                    {parse(`${getWeekDayBr()} ${ isSmall ? "<br />" : "-"} ${getDayMonthBr(date)}`)}
                 </div>
             </div>
             <DivWrapper>

@@ -16,12 +16,15 @@ const msgG = (typeAndMsgName, customized = 'NeedCustomWord', options) => {
     // MESSAGES
     ok.success = "Esta operação foi executada com sucesso";
     ok.backupSuccess = `O backup ${customized.cap()} foi realizado com sucesso`;
-    ok.added = "Adicionado";
-    ok.removed = "Removido";
+    ok.added = "Adicionado(a)";
+    ok.removed = "Removido(a)";
     ok.removedField = `O campo ${customized} foi removido com sucesso!`;
-    error.notRemovedField = `Erro! O campo ${customized} já foi removido.`;
+    ok.removedDoc = `${customized} foi removido(a) com sucesso!`;
+    error.notRemovedField = `Erro! O campo ${customized} já foi removido(a).`;
+    error.alreadyAdded = `${customized} já foi adicionado(a).`;
     error.noFields = "Preencha todos os campos";
     error.notFound = `${customized} não foi encontrado`;
+    error.accessDenied = `Você não tem permissão admin para executar essa tarefa`;
     error.systemError = `Ocorreu o seguinte erro: ${customized}`;
     // END MESSAGES
 

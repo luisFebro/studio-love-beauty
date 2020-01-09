@@ -1,17 +1,18 @@
 const Admin = require('../models/admin');
 const User = require("../models/user");
+const BusinessInfo = require("../models/admin/BusinessInfo");
+const Service = require("../models/admin/Service");
 const formidable = require('formidable');
 const fs = require('fs');
-const BusinessInfo = require("../models/admin/BusinessInfo");
 const adminId = '5db4301ed39a4e12546277a8';
 const businessInfoId = "5dcc77a0db168f112884b27f"; //n1a
 const { msgG } = require('./_msgs/globalMsgs');
 
 // MIDDLEWARES
 exports.mwAdminId = (req, res, next, id) => {
-    Admin.findOne({ _id: id })
+    User.findOne({ _id: id })
     .exec((err, admin) => {
-        if (!admin) return res.status(400).json(msgG('error.notFound', "O admin"));
+        if (!admin) return res.status(400).json(msgG('error.accessDenied'));
 
         req.admin = admin;
         next();
@@ -139,6 +140,58 @@ exports.readVerificationPass = (req, res) => {
         res.json({ verificationPass: admin.verificationPass })
     })
 };
+
+// SERVICES CRUD
+exports.createService = (req, res) => {
+    const newServiceName = req.body.name;
+    const query = { name: newServiceName };
+
+    Service.findOne(query)
+    .exec((err, service) => {
+        if(service) return res.status(400).json(msgG("error.alreadyAdded", "serviço"))
+        const newService = new Service(query);
+
+        newService.save((err, serviceCreated) => {
+            if (err) return res.status(500).json(msgG("error.systemError", err));
+            res.json(serviceCreated);
+        })
+    })
+}
+
+exports.readServicesList = (req, res) => {
+    Service.find({})
+    .sort({ name: 1 })
+    .select("_id name")
+    .exec((err, services) => {
+        if (err) return res.status(500).json(msgG("error.systemError", err));
+        res.json(services);
+    })
+}
+
+exports.updateService = (req, res) => {
+    const serviceId = req.query.serviceId;
+
+    Service.findOneAndUpdate(
+        { _id: serviceId },
+        { $set: req.body },
+        { new: true, upsert: true },
+        (err, service) => {
+            if (err) return res.status(400).json(msgG("error.systemError", err));
+            res.json(service);
+        }
+    );
+}
+
+exports.deleteService = (req, res) => {
+    const serviceId = req.query.serviceId;
+
+    Service.findOneAndRemove(serviceId)
+    .exec((err, service) => {
+        if (err) return res.status(400).json(msgG("error.systemError", err));
+        res.json(msgG("ok.removedDoc", service.name));
+    });
+}
+// END SERVICES CRUD
 
 // LISTS
 exports.getStaffWithBookings = (req, res) => {

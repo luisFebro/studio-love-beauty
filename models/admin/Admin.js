@@ -18,7 +18,6 @@ const data = {
     businessInfo: {
         type: Schema.ObjectId,
         ref: 'BusinessInfo',
-        //required: true
     }
 }
 

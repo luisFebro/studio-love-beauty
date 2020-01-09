@@ -9,12 +9,19 @@ const {
     mwPhoto,
     mwAdminId,
     updateConfig,
+    // Services
+    createService,
+    readServicesList,
+    updateService,
+    deleteService,
+    // End
     getStaffWithBookings,
     checkVerificationPass,
     readVerificationPass,
 } = require('../controllers/admin');
 
 const { mwUniqueStaffIds } = require("../controllers/staffBooking");
+const { mwIsAdmin } = require("../controllers/auth");
 
 // @ routes api/admin
 
@@ -28,6 +35,13 @@ router.put("/config", updateConfig);
 
 router.get("/verification-pass", readVerificationPass);
 router.post("/verification-pass", checkVerificationPass);
+
+// Services CRUD
+router.post("/service/:adminId", mwIsAdmin, createService);
+router.get("/service/list/all", readServicesList);
+router.put("/service/:adminId", mwIsAdmin, updateService);
+router.delete("/service/:adminId", mwIsAdmin, deleteService);
+// End Services CRUD
 
 router.get("/list/staff-with-bookings", mwUniqueStaffIds, getStaffWithBookings);
 

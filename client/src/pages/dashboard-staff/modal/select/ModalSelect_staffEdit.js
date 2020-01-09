@@ -56,10 +56,10 @@ export default function ModalSelect_staffEdit({ open, onClose, modal }) {
 
     let itemsSelection;
     switch(modalData.status) {
-        case "feito":
+        case "1feito":
             itemsSelection = ["cancelado"];
             break;
-        case "cancelado":
+        case "2cancelado":
             itemsSelection = ["feito"];
             break;
         default:

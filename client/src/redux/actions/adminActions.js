@@ -62,6 +62,19 @@ export const checkVerificationPass = async (dispatch, objToSend) => { // L
     }
 };
 
+export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
+    setLoadingProgress(dispatch, true);
+    try {
+        const res = await axios.get(`/api/admin/list/staff-with-bookings?skip=${docsToSkip}`, configTypeJson);
+        setLoadingProgress(dispatch, false);
+        dispatch({type: 'STAFF_WITH_BOOKINGS_READ', payload: res.data })
+        return res;
+    } catch (err) {
+        setLoadingProgress(dispatch, false);
+        return err.response;
+    }
+};
+
 /* COMMENTS
 n1: LESSON: never use GET METHOD if you want to send an object to backend, even in the case if it is working on Postman.
 */

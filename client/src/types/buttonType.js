@@ -50,6 +50,8 @@ export const buttonFabType = {
     top: number,
     left: number,
     color: string,
+    fontSize: string,
+    fontWeight: string,
     backgroundColor: string,
     iconFontAwesome: string,
     iconMarginLeft: string,

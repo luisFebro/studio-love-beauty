@@ -41,6 +41,12 @@ const data = {
     },
     loyaltyScores: LoyaltyScoresSchema,
     staffBookingList: Array,
+    staffBookingsSize: {
+        type: Number,
+        default: function() {
+            return this.staffBookingList.length;
+        }
+    },
     name: {
         type: String,
         trim: true,
@@ -68,8 +74,8 @@ const data = {
     },
 }
 
-const userSchema = new Schema(data, { timestamps: true });
-module.exports = mongoose.model('User', userSchema, collectionName);
+const UserSchema = new Schema(data, { timestamps: true });
+module.exports = mongoose.model('User', UserSchema, collectionName);
 
 
 /* COMMENTS

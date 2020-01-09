@@ -5,6 +5,7 @@ const {
     update,
     mwRemove,
     getList,
+    getUniqueStaffIds,
     addBookingIdToStaff,
     checkStatusAndUpdateMany,
     removeBookingIdFromStaff,
@@ -25,7 +26,6 @@ router.put("/status/:userId", checkStatusAndUpdateMany);
 
 // LISTS
 router.get("/list/all", getList);
-
 router.param("userId", mwUserId);
 
 module.exports = router;

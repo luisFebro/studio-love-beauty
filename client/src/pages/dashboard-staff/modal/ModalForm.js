@@ -42,6 +42,7 @@ export default function ModalForm({
     const [data, setData] = useState({
         status: "3pendente",
         staffName: '',
+        staffId: '',
         clientName: '',
         service: "selecione tipo de serviço",
         notes: '',
@@ -117,6 +118,7 @@ export default function ModalForm({
         const objToSend = {
             ...data,
             staffName: modalData.name,
+            staffId: modalData._id,
             formattedDate: moment(bookingDate).format("LLL")
         }
         showSnackbar(dispatch, "Processando...", 'warning', 5000)

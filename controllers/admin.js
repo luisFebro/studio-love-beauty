@@ -1,4 +1,5 @@
 const Admin = require('../models/admin');
+const User = require("../models/user");
 const formidable = require('formidable');
 const fs = require('fs');
 const BusinessInfo = require("../models/admin/BusinessInfo");
@@ -138,6 +139,27 @@ exports.readVerificationPass = (req, res) => {
         res.json({ verificationPass: admin.verificationPass })
     })
 };
+
+// LISTS
+exports.getStaffWithBookings = (req, res) => {
+    const staffIdsArray = req.staffBooking;
+    const skip = parseInt(req.query.skip)
+
+    User.find({'_id': {$in: staffIdsArray }})
+    .sort({ staffBookingsSize: -1 })
+    .select("-birthday -cpf -phone -maritalStatus -email")
+    .skip(skip)
+    .limit(5)
+    .exec((err, docs) => {
+        if (err) return res.status(400).json(msgG("error.systemError", err));
+        res.json(
+            //sizeLoaded: docs.length,
+            //totalSize: staffIdsArray.length,
+            docs
+        );
+    })
+}
+// END LIST
 
 /* COMMENTS
 n1: You can add or remove any field from businessInfo according to the client needs.

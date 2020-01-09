@@ -9,9 +9,12 @@ const {
     mwPhoto,
     mwAdminId,
     updateConfig,
+    getStaffWithBookings,
     checkVerificationPass,
     readVerificationPass,
 } = require('../controllers/admin');
+
+const { mwUniqueStaffIds } = require("../controllers/staffBooking");
 
 // @ routes api/admin
 
@@ -25,6 +28,8 @@ router.put("/config", updateConfig);
 
 router.get("/verification-pass", readVerificationPass);
 router.post("/verification-pass", checkVerificationPass);
+
+router.get("/list/staff-with-bookings/", mwUniqueStaffIds, getStaffWithBookings);
 
 router.param('adminId', mwAdminId);
 

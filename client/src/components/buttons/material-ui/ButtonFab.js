@@ -16,6 +16,8 @@ export default function ButtonFab({
     right,
     left,
     color,
+    fontSize,
+    fontWeight,
     backgroundColor,
     iconFontAwesome,
     iconAfterClick,
@@ -30,6 +32,8 @@ export default function ButtonFab({
             marginLeft: iconMarginLeft || '5px',
         },
         fab: {
+            fontWeight: fontWeight,
+            fontSize: fontSize,
             position: position || 'absolute',
             top: `${top || 0}px`,
             left: `${left || 0}px`,

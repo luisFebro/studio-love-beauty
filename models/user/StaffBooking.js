@@ -10,6 +10,7 @@ const data = {
         enum: ["4atrasado", "3pendente", "2cancelado", "1feito"],
     },
     staffName: String,
+    staffId: String,
     clientName: {
         type: String,
         trim: true,
@@ -26,5 +27,4 @@ const data = {
 }
 
 const StaffBookingSchema = new Schema(data, { timestamps: true });
-
 module.exports = mongoose.model('StaffBooking', StaffBookingSchema, collectionName);

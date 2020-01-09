@@ -32,6 +32,15 @@ exports.mwRemove = (req, res, next) => {
         })
     })
 }
+
+exports.mwUniqueStaffIds = (req, res, next) => {
+    StaffBooking.distinct("staffId")
+    .exec((err, ids) => {
+        if(err) return res.status(400).json({ msg: "Nenhuma categoria foi encontrada."})
+        req.staffBooking = ids;
+        next();
+    })
+}
 // END MIDLEWARES
 
 exports.addBookingIdToStaff = (req, res) => {

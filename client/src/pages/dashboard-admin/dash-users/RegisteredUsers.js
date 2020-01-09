@@ -60,7 +60,7 @@ export default function RegisteredUsersList() {
         return({
            _id: user._id,
            mainHeading: user.name,
-           secondaryHeading: parse(`> Atualizado ${moment(user.updatedAt).fromNow()}  atrás <br /> > Função Gerenciamento: ${whichRole(user.role)}`),
+           secondaryHeading: parse(`> Função Gerenciamento: ${whichRole(user.role)} <br />> Atualizado ${moment(user.updatedAt).fromNow()}  atrás.`),
            hiddenContent: <PanelHiddenContent data={user} />
         });
     })

@@ -1,26 +1,25 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import SearchFilter from "../../components/search/SearchFilter";
-import SearchResult from "../../components/search/SearchResult";
-import ButtonFab from '../../components/buttons/material-ui/ButtonFab';
-import ButtonMulti from '../../components/buttons/material-ui/ButtonMulti';
+import SearchFilter from "../../../components/search/SearchFilter";
+import SearchResult from "../../../components/search/SearchResult";
+import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
+import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 import moment from 'moment';
 import parse from 'html-react-parser';
-import LiveClockDate from '../../components/live-clock/LiveClockDate';
-import Illustration from '../../components/Illustration';
-import { CLIENT_URL } from '../../config/clientUrl';
+import LiveClockDate from '../../../components/live-clock/LiveClockDate';
+import Illustration from '../../../components/Illustration';
+import { CLIENT_URL } from '../../../config/clientUrl';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import { getStaffBookingList } from '../../redux/actions/staffBookingActions';
-import { showSnackbar } from '../../redux/actions/snackbarActions';
+import { getStaffWithBookingsList } from '../../../redux/actions/adminActions';
+import { showSnackbar } from '../../../redux/actions/snackbarActions';
 import ExpansiblePanel from './ExpansiblePanel';
 import PanelHiddenContent from './PanelHiddenContent';
-import { withRouter } from 'react-router-dom'
 // End Redux
-import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDots';
+import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
 
 moment.updateLocale('pt-br');
 
-function BookedClients({ match, run }) {
+export default function StaffWithBookingsList() {
     const [docsLoading, setDocsLoading] = useState({
         skip: 0,
         limit: 5,
@@ -41,31 +40,32 @@ function BookedClients({ match, run }) {
     });
     const { searchTerm } = data;
 
-    const { allStaffBookings, isLoading, isCustomLoading, staffName } = useStoreState(state => ({
-        allStaffBookings: state.staffBookingReducer.cases.allStaffBookings,
+    const { staffWithBookings, isLoading, isCustomLoading, adminName } = useStoreState(state => ({
+        staffWithBookings: state.adminReducer.cases.staffWithBookings,
         isLoading: state.globalReducer.cases.isLinearPLoading,
         isCustomLoading: state.globalReducer.cases.isCustomLoading,
-        staffName: state.userReducer.cases.currentUser.name
+        adminName: state.userReducer.cases.currentUser.name,
     }));
 
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
         const initialSkip = 0;
-        getStaffBookingList(dispatch, match.params.staffId, initialSkip)
+        getStaffWithBookingsList(dispatch, initialSkip)
         .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            setDocsLoading({
-                ...docsLoading,
-                skip: 0,
-                sizeLoaded: res.data.size,
-                totalDocsSize: res.data.totalSize,
-            })
+            alert(JSON.stringify(res));
+            // if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            // setDocsLoading({
+            //     ...docsLoading,
+            //     skip: 0,
+            //     sizeLoaded: res.data.sizeLoaded,
+            //     totalDocsSize: res.data.totalSize,
+            // })
         })
-    }, [run])
+    }, [])
 
-    const filteredUsers = allStaffBookings.filter(booking => {
-        return booking.clientName.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredUsers = staffWithBookings.filter(staff => {
+        return staff.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
     const onSearchChange = e => {
@@ -75,27 +75,28 @@ function BookedClients({ match, run }) {
     const showSearchBar = () => (
         <div className="container-center my-4">
             <SearchFilter
-                placeholder="Procure pelo nome do seu cliente"
+                placeholder="Admin, procure pelo nome do colaborador"
                 searchChange={onSearchChange}
             />
         </div>
     );
 
     // ExpansionPanel Content
-    const actions = filteredUsers.map(booking => {
+    const actions = filteredUsers.map(staff => {
         return({
-           _id: booking._id,
-           mainHeading: booking.clientName.cap(),
+           _id: staff._id,
+           mainHeading: staff.name.cap(),
            secondaryHeading: parse(`
                 > Data e Horário:
                 <br />
-                ${typeof booking.bookingDate === "undefined" ? "Sem Agendamento" : moment(booking.bookingDate).calendar(null, { sameElse: 'LLL'})}
+                ${null}
                 <br />
-                > Atualizado ${moment(booking.updatedAt).fromNow()}  atrás.`),
-           staffBooking: booking,
-           hiddenContent: <PanelHiddenContent data={booking} />
+                > Atualizado ${moment(staff.updatedAt).fromNow()}  atrás.`),
+           staffBooking: staff,
+           hiddenContent: <PanelHiddenContent data={staff} />
         });
     })
+    // ${null} = typeof staff.staffDate === "undefined" ? "Sem Agendamento" : moment(staff.staffDate).calendar(null, { sameElse: 'LLL'}
 
     const showExpansionPanel = () => (
         <ExpansiblePanel
@@ -111,35 +112,35 @@ function BookedClients({ match, run }) {
                     iconAfterClick="fas fa-minus"
                 />
             }
-            allUsers={allStaffBookings}
+            allUsers={staffWithBookings}
         />
     );
     //End ExpansionPanel Content
 
     const loadMoreDocs = () => {
         const moreDocsToSkip = skip + limit;
-        getStaffBookingList(dispatch, match.params.staffId, moreDocsToSkip, true)
-        .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            setDocsLoading({
-                ...docsLoading,
-                sizeLoaded: sizeLoaded + res.data.size,
-                skip: moreDocsToSkip,
-                totalDocsSize: res.data.totalSize,
-            })
-        })
+        // getStaffBookingList(dispatch, match.params.staffId, moreDocsToSkip, true)
+        // .then(res => {
+        //     if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+        //     setDocsLoading({
+        //         ...docsLoading,
+        //         sizeLoaded: sizeLoaded + res.data.size,
+        //         skip: moreDocsToSkip,
+        //         totalDocsSize: res.data.totalSize,
+        //     })
+        // })
     };
 
     const showMoreButton = () => {
         return(
             sizeLoaded === totalDocsSize && sizeLoaded >= limit
             ? <p className="text-main-container text-center my-3">
-                {`${staffName.cap()}, isso é tudo. Não há mais clientes para mostrar.`}
+                {`${adminName.cap()}, isso é tudo. Não há mais colaboradores para mostrar.`}
               </p>
             : searchTerm.length === 0 && sizeLoaded >= limit && (
                 <div className="container-center my-3">
                     <ButtonMulti
-                        title={isCustomLoading ? loadingIndicator : "Carregar Mais Clientes"}
+                        title={isCustomLoading ? loadingIndicator : "Carregar Mais Colaboradores"}
                         onClick={loadMoreDocs}
                         backgroundColor="var(--mainPink)"
                         backColorOnHover="var(--mainPink)"
@@ -152,7 +153,7 @@ function BookedClients({ match, run }) {
 
     return (
         <Fragment>
-            {allStaffBookings.length === 0
+            {staffWithBookings.length === 0
             ? (
                 <Fragment>
                     {isLoading
@@ -184,7 +185,7 @@ function BookedClients({ match, run }) {
                         filteredUsersLength={filteredUsers.length}
                         allUsersLength={totalDocsSize}
                         searchTerm={searchTerm}
-                        mainSubject="cliente"
+                        mainSubject="colaborador"
                     />
                     {isLoading
                     ? <LoadingThreeDots />
@@ -199,5 +200,3 @@ function BookedClients({ match, run }) {
         </Fragment>
     );
 }
-
-export default withRouter(BookedClients);

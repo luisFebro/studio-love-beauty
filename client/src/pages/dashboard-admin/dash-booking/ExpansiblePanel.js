@@ -50,21 +50,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const getStatusColor = status => {
-    switch(status) {
-        case "cancelado":
-            return "var(--mainRed)";
-        case "pendente":
-            return "var(--mainYellow)";
-        case "atrasado":
-            return "purple";
-        case "feito":
-            return "var(--mainGreen)";
-        default:
-            return "grey";
-    }
-}
-
 export default function ExpansiblePanel({
     actions,
     backgroundColor,
@@ -110,7 +95,7 @@ export default function ExpansiblePanel({
                 <ButtonFab
                     top={-27}
                     left={90}
-                    title={`Total: ${panel.staffBookingsSize} agendamentos`}
+                    title={`Total: ${panel.staffBooking.staffBookingList.length} agendamentos`}
                     variant="extended"
                     fontWeight="bolder"
                     fontSize=".7em"
@@ -118,23 +103,6 @@ export default function ExpansiblePanel({
                     color="var(--mainWhite)"
                     backgroundColor="var(--mainBlue)"
                 />
-            </div>
-            <div className="enabledLink">
-                {/*<ModalBtn
-                    modal={{
-                        title: `Troca de Status<br />Agendamento`,
-                        txtBtn: "Trocar",
-                        iconBtn: "fas fa-exchange-alt",
-                        modalData: panel.staffBooking,
-                    }}
-                    button={{
-                        iconFontAwesome: "fas fa-pencil-alt",
-                        backgroundColor: "var(--mainPink)",
-                        iconMarginLeft: '0px',
-                        top: -30,
-                        left: 55
-                    }}
-                />*/}
             </div>
         </div>
     );
@@ -185,13 +153,11 @@ export default function ExpansiblePanel({
                     <ExpansionPanel
                         style={styles.expansionPanel}
                         className="disabledLink"
-                        disabled={["2cancelado", "1feito"].includes(panel.staffBooking.status) ? true : false}
                     >
                         {showPanel(panel)}
                         {showHiddenPanel(panel)}
                     </ExpansionPanel>
                     {showUpperConfigBtns(panel)}
-                    {JSON.stringify(panel)}
                 </div>
             ))}
         </div>

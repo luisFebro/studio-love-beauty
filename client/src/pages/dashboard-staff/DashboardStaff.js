@@ -1,5 +1,5 @@
 import React from 'react';
-import DashBooking from './DashBooking';
+import DashStaffBooking from './DashStaffBooking';
 import { useStoreState } from 'easy-peasy';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import TabSessions from '../../components/TabSessions';
@@ -12,7 +12,7 @@ export default function DashboardStaff() {
         {
             tabLabel: "Agendamentos",
             tabIcon: <LibraryBooksIcon />,
-            tabContentPanel: <DashBooking />
+            tabContentPanel: <DashStaffBooking />
         },
     ];
 

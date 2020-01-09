@@ -4,7 +4,7 @@ import ModalBtn from './modal';
 import BookedClients from './BookedClients';
 import { useStoreState } from 'easy-peasy';
 
-export default function DashBooking() {
+export default function DashStaffBooking() {
     const [run, setRun] = useState(false);
     const { data } = useStoreState(state => ({
         data: state.userReducer.cases.currentUser,

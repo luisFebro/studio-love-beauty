@@ -29,7 +29,7 @@ router.put("/config", updateConfig);
 router.get("/verification-pass", readVerificationPass);
 router.post("/verification-pass", checkVerificationPass);
 
-router.get("/list/staff-with-bookings/", mwUniqueStaffIds, getStaffWithBookings);
+router.get("/list/staff-with-bookings", mwUniqueStaffIds, getStaffWithBookings);
 
 router.param('adminId', mwAdminId);
 

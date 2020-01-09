@@ -5,7 +5,6 @@ import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
 import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 import moment from 'moment';
 import parse from 'html-react-parser';
-import LiveClockDate from '../../../components/live-clock/LiveClockDate';
 import Illustration from '../../../components/Illustration';
 import { CLIENT_URL } from '../../../config/clientUrl';
 // Redux
@@ -53,14 +52,13 @@ export default function StaffWithBookingsList() {
         const initialSkip = 0;
         getStaffWithBookingsList(dispatch, initialSkip)
         .then(res => {
-            alert(JSON.stringify(res));
-            // if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            // setDocsLoading({
-            //     ...docsLoading,
-            //     skip: 0,
-            //     sizeLoaded: res.data.sizeLoaded,
-            //     totalDocsSize: res.data.totalSize,
-            // })
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setDocsLoading({
+                ...docsLoading,
+                skip: 0,
+                sizeLoaded: res.data.sizeLoaded,
+                totalDocsSize: res.data.totalSize,
+            })
         })
     }, [])
 
@@ -86,12 +84,7 @@ export default function StaffWithBookingsList() {
         return({
            _id: staff._id,
            mainHeading: staff.name.cap(),
-           secondaryHeading: parse(`
-                > Data e Horário:
-                <br />
-                ${null}
-                <br />
-                > Atualizado ${moment(staff.updatedAt).fromNow()}  atrás.`),
+           secondaryHeading: parse(`> Atualizado ${moment(staff.updatedAt).fromNow()}  atrás.`),
            staffBooking: staff,
            hiddenContent: <PanelHiddenContent data={staff} />
         });
@@ -169,7 +162,7 @@ export default function StaffWithBookingsList() {
                                 txtImgConfig = {{
                                     fontSize: '2.2rem',
                                     topPos: "100%",
-                                    txt: `Você ainda não fez nenhum agendamento`,
+                                    txt: `Não há colaboradores com agendamentos`,
                                     txtBorder: "border-white",
                                 }}
                             />
@@ -178,7 +171,6 @@ export default function StaffWithBookingsList() {
                 </Fragment>
             ) : (
                 <Fragment>
-                    <LiveClockDate />
                     {showSearchBar()}
                     <SearchResult
                         isLoading={isLoading}

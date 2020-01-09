@@ -146,17 +146,17 @@ exports.getStaffWithBookings = (req, res) => {
     const skip = parseInt(req.query.skip)
 
     User.find({'_id': {$in: staffIdsArray }})
-    .sort({ staffBookingsSize: -1 })
+    .sort({ staffBookingList: 1, name: 1 })
     .select("-birthday -cpf -phone -maritalStatus -email")
     .skip(skip)
     .limit(5)
     .exec((err, docs) => {
         if (err) return res.status(400).json(msgG("error.systemError", err));
-        res.json(
-            //sizeLoaded: docs.length,
-            //totalSize: staffIdsArray.length,
+        res.json({
+            sizeLoaded: docs.length,
+            totalSize: staffIdsArray.length,
             docs
-        );
+        });
     })
 }
 // END LIST

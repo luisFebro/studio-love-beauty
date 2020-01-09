@@ -22,6 +22,7 @@ const {
 
 const { mwUniqueStaffIds } = require("../controllers/staffBooking");
 const { mwIsAdmin } = require("../controllers/auth");
+const { mwUserId } = require("../controllers/user");
 
 // @ routes api/admin
 
@@ -37,14 +38,15 @@ router.get("/verification-pass", readVerificationPass);
 router.post("/verification-pass", checkVerificationPass);
 
 // Services CRUD
-router.post("/service/:adminId", mwIsAdmin, createService);
+router.post("/service/:userId", mwIsAdmin, createService);
 router.get("/service/list/all", readServicesList);
-router.put("/service/:adminId", mwIsAdmin, updateService);
-router.delete("/service/:adminId", mwIsAdmin, deleteService);
+router.put("/service/:userId", mwIsAdmin, updateService);
+router.delete("/service/:userId", mwIsAdmin, deleteService);
 // End Services CRUD
 
 router.get("/list/staff-with-bookings", mwUniqueStaffIds, getStaffWithBookings);
 
 router.param('adminId', mwAdminId);
+router.param('userId', mwUserId);
 
 module.exports = router;

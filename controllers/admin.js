@@ -10,7 +10,7 @@ const { msgG } = require('./_msgs/globalMsgs');
 
 // MIDDLEWARES
 exports.mwAdminId = (req, res, next, id) => {
-    User.findOne({ _id: id })
+    Admin.findOne({ _id: id })
     .exec((err, admin) => {
         if (!admin) return res.status(400).json(msgG('error.accessDenied'));
 

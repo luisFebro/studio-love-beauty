@@ -160,7 +160,7 @@ export default function SideBar({ drawer, onClose, open }) {
 
     const showHiddenUpdateField = item => (
         <div>
-            <h4 className="text-default text-break">
+            <h4 style={{userSelect: 'text'}} className="text-default text-break">
                 Novo Valor para:<br /><strong>{truncate(item.name, 60)}</strong>
             </h4>
             <div className="container-center input-group">

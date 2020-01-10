@@ -5,7 +5,7 @@ import truncateWords from './string/truncateWords';
 // GLOBAL PROTOTYPE METHODS n1
 // Typography
 // Need to be function syntax, otherwise this will return undefined.
-let brPreps = ["seu", "sua", "pela", "via", "por", "com", "no", "na", "da", "do", "das", "dos", "à", "de", "de"];
+let brPreps = ["a", "e", "seu", "sua", "pela", "via", "por", "com", "no", "na", "da", "do", "das", "dos", "à", "de", "de"];
 // eslint-disable-next-line
 String.prototype.cap = function() {  // n2
     let capitalized = this.replace(/(?:^|\s)\S/g, a => a.toUpperCase());

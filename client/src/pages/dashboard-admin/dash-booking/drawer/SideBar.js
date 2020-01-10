@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, Fragment } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
 import CloseButton from '../../../../components/buttons/CloseButton';
@@ -28,7 +28,6 @@ SideBar.propTypes = {
 }
 
 export default function SideBar({ drawer, onClose, open }) {
-    const currItemRef = useRef(null);
     const [data, setData] = useState({
         name: "",
         newName: "",
@@ -64,23 +63,20 @@ export default function SideBar({ drawer, onClose, open }) {
             fontWeight: "bold",
             fontSize: "1.5em"
         },
-        newServiceForm: {
-            minWidth: '240px',
-        }
     }
 
     const handleItemRemoval = itemId => {
-        showSnackbar(dispatch, "Excluindo...");
+        showSnackbar(dispatch, "Excluindo...", "warning", 6000);
         deleteService(dispatch, adminId, itemId)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             readServicesList(dispatch);
-            showSnackbar(dispatch, res.data.msg, 'success');
+            setTimeout(() => showSnackbar(dispatch, res.data.msg, 'success'), 3000)
         })
     }
 
     const handleItemUpdate = itemId => {
-        showSnackbar(dispatch, "Atualizando...");
+        showSnackbar(dispatch, "Atualizando...", "warning", 6000);
         const objToSend = {
             name: newName,
         }
@@ -89,14 +85,14 @@ export default function SideBar({ drawer, onClose, open }) {
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             readServicesList(dispatch);
-            showSnackbar(dispatch, res.data.msg, 'success');
             clearForm()
+            setTimeout(() => showSnackbar(dispatch, res.data.msg, 'success'), 3000)
         })
     }
 
     const handleNewService = () => {
-        showSnackbar(dispatch, "Adicionando...");
-        if(name === "") return showSnackbar(dispatch, "Insira o nome do serviço...")
+        showSnackbar(dispatch, "Adicionando...", "warning", 6000);
+        if(name === "") return showSnackbar(dispatch, "Insira o nome do serviço...", "error")
         const objToSend = {
             name,
         }
@@ -104,8 +100,8 @@ export default function SideBar({ drawer, onClose, open }) {
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             readServicesList(dispatch);
-            showSnackbar(dispatch, res.data.msg, 'success');
             clearForm();
+            setTimeout(() => showSnackbar(dispatch, res.data.msg, 'success'), 3000)
         })
     }
 
@@ -123,6 +119,114 @@ export default function SideBar({ drawer, onClose, open }) {
         });
     }
 
+    // RENDER
+    const showAddNewBtn = () => (
+        <div className="container-center flex-column my-3">
+            <ButtonFab
+                backgroundColor="var(--mainPink)"
+                position="relative"
+                size="large"
+                iconFontAwesome={`${needShowNewField ? "fas fa-times" : "fas fa-plus"}`}
+                iconFontSize="1.8em"
+                iconMarginLeft="0"
+                onClick={() => toggleOrChangeStatusBtn("needShowNewField")}
+            />
+            <section className={`${needShowNewField ? "mt-4 container-center" : "d-none mt-4"}`}>
+                <TextField
+                    placeholder="NOVO SERVIÇO AQUI"
+                    name="name"
+                    value={name}
+                    onChange={handleChange(setData, data)}
+                    variant="outlined"
+                    autoComplete="off"
+                    multiline
+                    rows={2}
+                    fullWidth
+                />
+                <div className="mt-2">
+                    <ButtonFab
+                        backgroundColor="var(--mainDark)"
+                        position="relative"
+                        size="medium"
+                        iconFontAwesome="fas fa-save"
+                        iconFontSize="1.8em"
+                        iconMarginLeft="0"
+                        onClick={handleNewService}
+                    />
+                </div>
+            </section>
+        </div>
+    );
+
+    const showHiddenUpdateField = item => (
+        <div>
+            <h4 className="text-default text-break">
+                Novo Valor para:<br /><strong>{truncate(item.name, 60)}</strong>
+            </h4>
+            <div className="container-center input-group">
+                <input
+                    className="form-control"
+                    type="textarea"
+                    rows="2"
+                    autoComplete="off"
+                    name="newName"
+                    value={newName}
+                    onChange={handleChange(setData, data)}
+                />
+                <button
+                    className="input-group-btn"
+                    style={{ width: '50px', border: 'none', outline: 'none', color: "white", backgroundColor: 'var(--mainPink)'}}
+                    onClick={() => handleItemUpdate(item._id)}
+                >
+                    <i style={{fontSize: '1.3em'}} className="fas fa-save">
+                    </i>
+                </button>
+            </div>
+        </div>
+    );
+
+    const showConfigBtns = item => (
+        <Fragment>
+            <ButtonFab
+                iconFontAwesome="fas fa-trash-alt"
+                backgroundColor="purple"
+                iconMarginLeft= '0px'
+                size="small"
+                top={-25}
+                left={215}
+                onClick={() => handleItemRemoval(item._id)}
+            />
+            <ButtonFab
+                iconFontAwesome="fas fa-pencil-alt"
+                backgroundColor="var(--mainPink)"
+                iconMarginLeft= '0px'
+                size="small"
+                top={-25}
+                left={260}
+                onClick={() => toggleOrChangeStatusBtn("needShowUpdateField", item._id)}
+            />
+        </Fragment>
+    );
+
+    const showList = () => (
+        <section style={styles.servicesContainer}>
+            {drawerData.length === 0
+            ? (
+                <h2 className="text-center my-5 text-default font-weight-bold">
+                    Adicione um novo serviço
+                </h2>
+            ) : drawerData.map(item => (
+                <div key={item._id} className="position-relative text-break">
+                    <div className="text-default" style={styles.servicesItem}>
+                        {needShowUpdateField === item._id
+                        ? showHiddenUpdateField(item) : truncate(item.name.cap(), 80)}
+                    </div>
+                    {showConfigBtns(item)}
+                </div>
+            ))}
+        </section>
+    );
+
     return (
         <Drawer
             style={styles.sidebar}
@@ -134,103 +238,11 @@ export default function SideBar({ drawer, onClose, open }) {
                 <p className="mx-5 my-4 text-main-container font-weight-bold">
                     {title}
                 </p>
-                <div className="container-center flex-column my-3">
-                    <ButtonFab
-                        backgroundColor="var(--mainPink)"
-                        position="relative"
-                        size="large"
-                        iconFontAwesome={`${needShowNewField ? "fas fa-times" : "fas fa-plus"}`}
-                        iconFontSize="1.8em"
-                        iconMarginLeft="0"
-                        onClick={() => toggleOrChangeStatusBtn("needShowNewField")}
-                    />
-                    <div style={styles.newServiceForm} className={`${needShowNewField ? "mt-4 container-center" : "d-none mt-4"}`}>
-                        <TextField
-                            label="INSIRA NOVO SERVIÇO AQUI"
-                            name="name"
-                            value={name}
-                            onChange={handleChange(setData, data)}
-                            variant="outlined"
-                            autoComplete="off"
-                            multiline
-                            rows={2}
-                            type="text"
-                            fullWidth
-                        />
-                        <div className="mt-2">
-                            <ButtonFab
-                                backgroundColor="var(--mainDark)"
-                                position="relative"
-                                size="medium"
-                                iconFontAwesome="fas fa-save"
-                                iconFontSize="1.8em"
-                                iconMarginLeft="0"
-                                onClick={handleNewService}
-                            />
-                        </div>
-                    </div>
-                </div>
+                {showAddNewBtn()}
                 <div className="my-2 text-default">
                     {`Total: ${drawer.drawerData.length} Serviços.`}
                 </div>
-                <section style={styles.servicesContainer}>
-                    {drawer.drawerData.length === 0
-                    ? (
-                        <h2 className="text-center my-5 text-default font-weight-bold">
-                            Adicione um novo serviço
-                        </h2>
-                    ) : drawer && drawer.drawerData.map(item => (
-                        <div key={item._id} className="position-relative">
-                            <div className="text-default" style={styles.servicesItem}>
-                                {needShowUpdateField === item._id
-                                ? (
-                                    <div>
-                                        <h4 className="text-default">
-                                            Novo Valor para:<br /><strong>{truncate(item.name, 60)}</strong>
-                                        </h4>
-                                        <div className="container-center input-group">
-                                            <input
-                                                className="form-control"
-                                                type="text-area"
-                                                rows="2"
-                                                autocomplete="off"
-                                                name="newName"
-                                                value={newName}
-                                                onChange={handleChange(setData, data)}
-                                            />
-                                            <button
-                                                className="input-group-btn"
-                                                style={{ width: '50px', border: 'none', outline: 'none', color: "white", backgroundColor: 'var(--mainPink)'}}
-                                                onClick={() => handleItemUpdate(item._id)}
-                                            >
-                                                <i style={{fontSize: '1.3em'}} className="fas fa-save">
-                                                </i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : item.name.cap()}
-                            </div>
-                            <ButtonFab
-                                iconFontAwesome="fas fa-trash-alt"
-                                backgroundColor="purple"
-                                iconMarginLeft= '0px'
-                                size="small"
-                                top={-25}
-                                left={215}
-                                onClick={() => handleItemRemoval(item._id)}
-                            />
-                            <ButtonFab
-                                iconFontAwesome="fas fa-pencil-alt"
-                                backgroundColor="var(--mainPink)"
-                                iconMarginLeft= '0px'
-                                size="small"
-                                top={-25}
-                                left={260}
-                                onClick={() => toggleOrChangeStatusBtn("needShowUpdateField", item._id)}
-                            />
-                        </div>
-                    ))}
-                </section>
+                {showList()}
                 <CloseButton
                     onClick={onClose}
                     size="2.5em"

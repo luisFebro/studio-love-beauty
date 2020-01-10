@@ -124,7 +124,7 @@ exports.updateConfig = (req, res) => {
 exports.checkVerificationPass = (req, res) => {
     const { pass } = req.body;
 
-    Admin.findById({ _id: adminId })
+    Admin.findById(adminId)
     .exec((err, admin) => {
         if (err) return res.status(400).json(msgG("error.systemError", err));
         const { verificationPass } = admin;
@@ -185,7 +185,7 @@ exports.updateService = (req, res) => {
 exports.deleteService = (req, res) => {
     const serviceId = req.query.serviceId;
 
-    Service.findOneAndRemove(serviceId)
+    Service.findByIdAndRemove(serviceId) // L
     .exec((err, service) => {
         if (err) return res.status(400).json(msgG("error.systemError", err));
         res.json(msgG("ok.removedDoc", service.name));
@@ -250,4 +250,7 @@ After Update:
     "email": "febro.projetosweb@gmail.com",
 }
 slogon and email is erased...
+LESSON: Do not confuse findOneAndRemove with findByIdAndRemove
+findOneAndRemove you need to specify the field {_id: req.params.propertyId}
+whereas findByIdAndRemove is very straightforward without field identification
  */

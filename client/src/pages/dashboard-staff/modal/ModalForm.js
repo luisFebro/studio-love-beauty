@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStoreDispatch } from 'easy-peasy';
+import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -26,6 +26,7 @@ import moment from 'moment';
 import { modalTextFieldDashboardType } from '../../../types';
 import { updateUser } from '../../../redux/actions/userActions';
 import { createBooking, getStaffBookingList } from '../../../redux/actions/staffBookingActions';
+import { readServicesList } from '../../../redux/actions/adminActions';
 import { showSnackbar } from '../../../redux/actions/snackbarActions';
 // END CUSTOMIZED DATA
 
@@ -49,6 +50,12 @@ export default function ModalForm({
         bookingDate: '',
         formattedDate: '',
     });
+
+    const { services } = useStoreState(state => ({
+        services: state.adminReducer.cases.services,
+    }));
+    const dispatch = useStoreDispatch();
+
     const {
         clientName,
         service,
@@ -69,7 +76,10 @@ export default function ModalForm({
 
     const [selectedDate, handleDateChange] = useState(new Date());
 
-    const dispatch = useStoreDispatch();
+
+    useEffect(() => {
+        readServicesList(dispatch);
+    }, [])
 
     useEffect(() => {
         setData({ ...data, bookingDate: selectedDate })
@@ -149,7 +159,8 @@ export default function ModalForm({
                     width={135}
                     height={135}
                     src={`${CLIENT_URL}/img/illustrations/client-booking.svg`}
-                    alt="agendamento cliente"/>
+                    alt="agendamento cliente"
+                />
             </div>
         </div>
     );
@@ -186,10 +197,11 @@ export default function ModalForm({
                 <MenuItem value={service}>
                   selecione tipo de serviço:
                 </MenuItem>
-                <MenuItem value={"Corte de Cabelo Teste"}>Corte de Cabelo Teste</MenuItem>
-                <MenuItem value={"Manicure Teste"}>Manicure Teste</MenuItem>
-                <MenuItem value={"Pedicure Teste"}>Pedicure Teste</MenuItem>
-                <MenuItem value={"Outros Teste"}>Outros Teste</MenuItem>
+                {services && services.map(service => (
+                    <MenuItem key={service._id} value={service.name}>
+                        {service.name.cap()}
+                    </MenuItem>
+                ))}
             </Select>
             <br />
             <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>

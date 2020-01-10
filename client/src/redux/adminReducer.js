@@ -5,6 +5,7 @@ import updateKey from './helpers/updateKey';
 const initialState = {
     businessInfo: {},
     staffWithBookings: [],
+    services: [],
 };
 
 export const adminReducer = {
@@ -26,6 +27,11 @@ export const adminReducer = {
                 return {
                     ...state,
                     staffWithBookings: action.payload.docs,
+                }
+            case 'SERVICES_READ':
+                return {
+                    ...state,
+                    services: action.payload,
                 }
             default:
                 return state;

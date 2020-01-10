@@ -21,14 +21,16 @@ export default function ButtonFab({
     backgroundColor,
     iconFontAwesome,
     iconAfterClick,
-    actionAfterClick,
     iconMarginLeft,
+    iconFontSize,
+    actionAfterClick,
     onClick,
     title }) {
     const [toggle, setToggle] = useState(false);
 
     const styles = {
         icon: {
+            fontSize: iconFontSize,
             marginLeft: iconMarginLeft || '5px',
         },
         fab: {

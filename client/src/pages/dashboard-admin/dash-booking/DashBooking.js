@@ -1,9 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import DashSectionTitle from '../../DashSectionTitle';
 import StaffWithBookingsList from './StaffWithBookingsList';
 import DrawerBtn from './drawer/DrawerBtn';
+import { useStoreDispatch , useStoreState } from 'easy-peasy';
+import { readServicesList } from '../../../redux/actions/adminActions';
 
 export default function DashBooking() {
+    const { services } = useStoreState(state => ({
+        services: state.adminReducer.cases.services,
+    }));
+    const dispatch = useStoreDispatch();
+
+    useEffect(() => {
+        readServicesList(dispatch);
+    }, [])
+
     const styles = {
         drawerBtn: {
             height: '7rem',
@@ -25,9 +36,7 @@ export default function DashBooking() {
             <DrawerBtn
                 drawer={{
                     title: `Ajustar Serviços Oferecidos`,
-                    txtBtn: "Aplicar",
-                    iconBtn: "fas fa-address-book",
-                    drawerData: 'data',
+                    drawerData: services,
                 }}
                 button={{
                     title: "Ajustar Serviços",

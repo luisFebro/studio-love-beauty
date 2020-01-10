@@ -160,6 +160,14 @@ hr {
     align-items: center;
     flex-flow: column wrap;
 }
+.margin-auto-90 {
+    margin: auto;
+    width: 90%;
+}
+.margin-auto-80 {
+    margin: auto;
+    width: 80%;
+}
 /*END CONTAINERS*/
 
 /*IMAGES*/
@@ -273,7 +281,7 @@ hr {
 /*END ICON DEFAULT*/
 
 
-/*MENU DROPDOWN*/
+/*BUTTONS*/
 .btn {
     text-decoration: none;
 }

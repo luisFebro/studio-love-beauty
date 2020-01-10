@@ -5,7 +5,7 @@ const { msg } = require('./_msgs/auth');
 
 // MIDDLEWARES
 exports.mwIsAdmin = (req, res, next) => {
-    if(req.admin.role !== "admin") {
+    if(req.profile.role !== "admin") {
         return res.status(403).json(msg('error.accessDenied'));
     }
     next();

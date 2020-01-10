@@ -1,5 +1,6 @@
 import isRealObj from './isRealObj';
 import isSmallScreen from './isSmallScreen';
+import truncateWords from './string/truncateWords';
 
 // GLOBAL PROTOTYPE METHODS n1
 // Typography
@@ -25,6 +26,7 @@ String.prototype.cap = function() {  // n2
 window.Helper = {};
 window.Helper.isRealObj = isRealObj;
 window.Helper.isSmallScreen = isSmallScreen;
+window.Helper.truncate = truncateWords;
 
 
 /* COMMENTS

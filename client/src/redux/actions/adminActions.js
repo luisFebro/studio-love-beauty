@@ -75,6 +75,45 @@ export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
     }
 };
 
+// SERVICES CRUD
+export const createService = async (dispatch, adminId, bodyToSend) => {
+    try {
+        return await axios.post(`/api/admin/service/${adminId}`, bodyToSend, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+};
+
+export const readServicesList = async (dispatch) => {
+    setLoadingProgress(dispatch, true);
+    try {
+        const res = await axios.get(`/api/admin/service/list/all`, configTypeJson);
+        dispatch({type: 'SERVICES_READ', payload: res.data })
+        setLoadingProgress(dispatch, false);
+        return res;
+    } catch (err) {
+        setLoadingProgress(dispatch, false);
+        return err.response;
+    }
+};
+
+export const updateService = async (dispatch, adminId, itemId, bodyToSend) => {
+    try {
+        return await axios.put(`/api/admin/service/${adminId}?serviceId=${itemId}`, bodyToSend, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+};
+
+export const deleteService = async (dispatch, adminId, serviceId) => {
+    try {
+        return await axios.delete(`/api/admin/service/${adminId}?serviceId=${serviceId}`, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+};
+// END SERVICES CRUD
+
 /* COMMENTS
 n1: LESSON: never use GET METHOD if you want to send an object to backend, even in the case if it is working on Postman.
 */

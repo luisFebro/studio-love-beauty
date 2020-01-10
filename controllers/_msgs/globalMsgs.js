@@ -17,6 +17,8 @@ const msgG = (typeAndMsgName, customized = 'NeedCustomWord', options) => {
     ok.success = "Esta operação foi executada com sucesso";
     ok.backupSuccess = `O backup ${customized.cap()} foi realizado com sucesso`;
     ok.added = "Adicionado(a)";
+    ok.created = `${customized} foi criado com sucesso!`;
+    ok.updated = `${customized} acabou de ser atualizado!`;
     ok.removed = "Removido(a)";
     ok.removedField = `O campo ${customized} foi removido com sucesso!`;
     ok.removedDoc = `${customized} foi removido(a) com sucesso!`;

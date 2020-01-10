@@ -153,7 +153,7 @@ exports.createService = (req, res) => {
 
         newService.save((err, serviceCreated) => {
             if (err) return res.status(500).json(msgG("error.systemError", err));
-            res.json(serviceCreated);
+            res.json(msgG("ok.created", "Serviço"));
         })
     })
 }
@@ -177,7 +177,7 @@ exports.updateService = (req, res) => {
         { new: true, upsert: true },
         (err, service) => {
             if (err) return res.status(400).json(msgG("error.systemError", err));
-            res.json(service);
+            res.json(msgG("ok.updated", "Serviço"));
         }
     );
 }

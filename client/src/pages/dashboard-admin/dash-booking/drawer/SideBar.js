@@ -235,7 +235,7 @@ export default function SideBar({ drawer, onClose, open }) {
             anchor="right"
         >
             <div className="position-relative container-center flex-column">
-                <p className="mx-5 my-4 text-main-container font-weight-bold">
+                <p className="mx-5 my-4 text-center text-main-container font-weight-bold">
                     {title}
                 </p>
                 {showAddNewBtn()}
@@ -247,8 +247,8 @@ export default function SideBar({ drawer, onClose, open }) {
                     onClick={onClose}
                     size="2.5em"
                     color="var(--mainWhite)"
-                    top="15px"
-                    right="345px"
+                    top="10px"
+                    right="330px"
                 />
             </div>
         </Drawer>

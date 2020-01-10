@@ -12,7 +12,11 @@ SearchResult.propTypes = {
 }
 
 export default function SearchResult({
-    isLoading, filteredUsersLength, allUsersLength, searchTerm, mainSubject = "usuário" }) {
+    isLoading,
+    filteredUsersLength,
+    allUsersLength,
+    searchTerm,
+    mainSubject = "usuário" }) {
     return (
         <div className="text-main-container my-5">
             {!filteredUsersLength
@@ -40,13 +44,25 @@ export default function SearchResult({
                     ? (
                         <div>
                             <h2 className="text-sub-title text-left pl-5">
-                                {`${mainSubject.cap()}s Encontrados:`} <strong>{filteredUsersLength}</strong>
+                                {isLoading
+                                ? ""
+                                : (
+                                    <span>
+                                        {`${mainSubject.cap()}s Encontrados:`} <strong>{filteredUsersLength}</strong>
+                                    </span>
+                                )}
                             </h2>
                         </div>
                     ) : (
                         <div>
                             <h2 className="text-sub-title text-left pl-5">
-                                {`Total de ${mainSubject.cap()}s:`} <strong>{allUsersLength}</strong>
+                                {isLoading
+                                ? ""
+                                : (
+                                    <span>
+                                        {`Total de ${mainSubject.cap()}s:`} <strong>{allUsersLength}</strong>
+                                    </span>
+                                )}
                             </h2>
                         </div>
                     )}

@@ -28,13 +28,14 @@ export const checkStatusAndUpdateMany = async (dispatch, _staffId) => { // L
 };
 
 // LISTS
-export const getStaffBookingList = async (dispatch, userId, docsToSkip, needReadMore = false) => {
+export const getStaffBookingList = async (dispatch, userId, docsToSkip, needReadMore = false, filter) => {
     needReadMore === true
     ? setCustomLoading(dispatch, true)
     : setLoadingProgress(dispatch, true)
 
     try {
-        const res = await axios.get(`/api/user/staff-booking/list/${userId}?skip=${docsToSkip}`, configTypeJson);
+        const url =`/api/user/staff-booking/list/${userId}?skip=${docsToSkip}${filter ? `&search=${filter}` : ""}`;
+        const res = await axios.get(url, configTypeJson);
         checkStatusAndUpdateMany(dispatch, userId);
 
         needReadMore === true

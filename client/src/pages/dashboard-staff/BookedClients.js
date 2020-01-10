@@ -64,12 +64,20 @@ function BookedClients({ match, run }) {
         })
     }, [run])
 
-    const filteredUsers = allStaffBookings.filter(booking => {
-        return booking.clientName.toLowerCase().includes(searchTerm.toLowerCase());
-    });
-
     const onSearchChange = e => {
-        setData({ searchTerm: e.target.value });
+        const querySearched = e.target.value;
+        const initialSkip = 0;
+        setData({ searchTerm: querySearched });
+        getStaffBookingList(dispatch, match.params.staffId, initialSkip, false, querySearched)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setDocsLoading({
+                ...docsLoading,
+                skip: 0,
+                sizeLoaded: res.data.size,
+                totalDocsSize: res.data.totalSize,
+            })
+        })
     }
 
     const showSearchBar = () => (
@@ -82,7 +90,7 @@ function BookedClients({ match, run }) {
     );
 
     // ExpansionPanel Content
-    const actions = filteredUsers.map(booking => {
+    const actions = allStaffBookings.map(booking => {
         return({
            _id: booking._id,
            mainHeading: booking.clientName.cap(),
@@ -152,7 +160,7 @@ function BookedClients({ match, run }) {
 
     return (
         <Fragment>
-            {allStaffBookings.length === 0
+            {sizeLoaded === 0
             ? (
                 <Fragment>
                     {isLoading
@@ -181,7 +189,7 @@ function BookedClients({ match, run }) {
                     {showSearchBar()}
                     <SearchResult
                         isLoading={isLoading}
-                        filteredUsersLength={filteredUsers.length}
+                        filteredUsersLength={allStaffBookings.length}
                         allUsersLength={totalDocsSize}
                         searchTerm={searchTerm}
                         mainSubject="cliente"

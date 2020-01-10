@@ -152,7 +152,13 @@ exports.readBackup = (req, res) => {
 exports.getStaffBookingList = (req, res) => {
     const bookingArrayIds = req.profile.staffBookingList;
     const docsToSkip = parseInt(req.query.skip);
-    const query = {'_id': {$in: bookingArrayIds }}
+
+    let query;
+    if(req.query.search) {
+        query = {'clientName': { $regex: req.query.search, $options: "i" }}
+    } else {
+        query = {'_id': {$in: bookingArrayIds }}
+    }
 
     StaffBooking.find(query)
     .exec((err, docs) => {

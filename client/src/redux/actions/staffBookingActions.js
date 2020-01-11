@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { configTypeJson } from '../../utils/server/configTypeJson';
-import { setLoadingProgress, setCustomLoading } from './globalActions';
+import {
+    setLoadingProgress,
+    setCustomLoading,
+    setCustomLoading2 } from './globalActions';
 
 export const createBooking = async (dispatch, objToSend, staffId) => { // L
     try {
@@ -28,15 +31,15 @@ export const checkStatusAndUpdateMany = async (dispatch, _staffId) => { // L
 };
 
 // LISTS
-export const getStaffBookingList = async (dispatch, userId, docsToSkip, needReadMore = false, filter) => {
+export const getStaffBookingList = async (dispatch, staffId, docsToSkip, needReadMore = false) => {
     needReadMore === true
     ? setCustomLoading(dispatch, true)
     : setLoadingProgress(dispatch, true)
 
     try {
-        const url =`/api/user/staff-booking/list/${userId}?skip=${docsToSkip}${filter ? `&search=${filter}` : ""}`;
+        const url =`/api/user/staff-booking/list/${staffId}?skip=${docsToSkip}`;
         const res = await axios.get(url, configTypeJson);
-        checkStatusAndUpdateMany(dispatch, userId);
+        checkStatusAndUpdateMany(dispatch, staffId);
 
         needReadMore === true
         ? setCustomLoading(dispatch, false)
@@ -51,6 +54,31 @@ export const getStaffBookingList = async (dispatch, userId, docsToSkip, needRead
         needReadMore === true
         ? setCustomLoading(dispatch, false)
         : setLoadingProgress(dispatch, false)
+        return err.response;
+    }
+};
+
+export const getStaffBookingListForAdmin = async (dispatch, staffId, docsToSkip, needReadMore = false) => {
+    needReadMore !== true
+    ? setCustomLoading(dispatch, true)
+    : setCustomLoading2(dispatch, true)
+
+    try {
+        const url =`/api/user/staff-booking/list/${staffId}?skip=${docsToSkip}`;
+        const res = await axios.get(url, configTypeJson);
+        checkStatusAndUpdateMany(dispatch, staffId);
+
+        needReadMore !== true
+        ? setCustomLoading(dispatch, false)
+        : setCustomLoading2(dispatch, false)
+
+        // State managed in the component
+
+        return res;
+    } catch (err) {
+        needReadMore !== true
+        ? setCustomLoading(dispatch, false)
+        : setCustomLoading2(dispatch, false)
         return err.response;
     }
 };

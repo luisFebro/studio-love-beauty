@@ -247,8 +247,8 @@ export default function SideBar({ drawer, onClose, open }) {
                     onClick={onClose}
                     size="2.5em"
                     color="var(--mainWhite)"
-                    top="10px"
-                    right="330px"
+                    top="3px"
+                    right="325px"
                 />
             </div>
         </Drawer>

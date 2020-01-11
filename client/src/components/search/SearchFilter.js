@@ -39,7 +39,7 @@ export default function SearchFilter({ placeholder, searchChange }) {
       <InputBase
         name="searchTerm"
         autoComplete="off"
-        onChange={searchChange}
+        onBlur={searchChange}
         className={classes.input}
         placeholder={placeholder}
         inputProps={{ 'aria-label': placeholder }}

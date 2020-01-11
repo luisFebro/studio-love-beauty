@@ -149,15 +149,18 @@ exports.readBackup = (req, res) => {
     });
 }
 
-exports.getStaffBookingList = (req, res) => {
+exports.getStaffClientList = (req, res) => {
     const bookingArrayIds = req.profile.staffBookingList;
     const docsToSkip = parseInt(req.query.skip);
 
     let query;
+    let limit;
     if(req.query.search) {
-        query = {'clientName': { $regex: req.query.search, $options: "i" }}
+        query = {'clientName': { $regex: `^${req.query.search}`, $options: "i" }}
+        limit = 10;
     } else {
         query = {'_id': {$in: bookingArrayIds }}
+        limit = 5;
     }
 
     StaffBooking.find(query)
@@ -167,7 +170,7 @@ exports.getStaffBookingList = (req, res) => {
         StaffBooking.find(query)
         .sort({ 'status': -1, 'bookingDate': 1 })
         .skip(docsToSkip)
-        .limit(5)
+        .limit(limit)
         .exec((err, docs) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));
             res.json({

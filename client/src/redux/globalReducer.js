@@ -7,6 +7,7 @@ const initialState = {
     isLoading: false,
     isLinearPLoading: false,
     isCustomLoading: false,
+    isCustom2Loading: false,
     errorMsg: null,
     currentItemFound: null
 };
@@ -40,6 +41,11 @@ export const globalReducer = {
                 return {
                     ...state,
                     isCustomLoading: action.payload
+                }
+            case 'CUSTOM_LOADING_2_TOGGLED':
+                return {
+                    ...state,
+                    isCustom2Loading: action.payload
                 }
             //Clear
             case 'CLEAR_LOADING':

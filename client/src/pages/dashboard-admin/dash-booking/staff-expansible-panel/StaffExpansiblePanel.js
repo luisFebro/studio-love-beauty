@@ -10,10 +10,10 @@ import clsx from 'clsx';
 
 // Customized Data
 import { useStoreDispatch } from 'easy-peasy';
-// import ModalBtn from './modal/select/ModalBtn';
-import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
-import { findAnItem } from '../../../redux/actions/globalActions';
-import { showModalConfYesNo } from '../../../redux/actions/modalActions';
+import ModalBtn from '../../../dashboard-staff/modal/select/ModalBtn';
+import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
+import { findAnItem } from '../../../../redux/actions/globalActions';
+import { showModalConfYesNo } from '../../../../redux/actions/modalActions';
 // End Customized Data
 
 ExpansiblePanel.propTypes = {
@@ -33,7 +33,7 @@ ExpansiblePanel.propTypes = {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        width: window.Helper.isSmallScreen() ? '100%' : '80%',
+        width: window.Helper.isSmallScreen() ? '100%' : '95%',
         margin: 'auto',
     },
     heading: {
@@ -49,6 +49,21 @@ const useStyles = makeStyles(theme => ({
         textShadow: '1px 1px 3px black'
     }
 }));
+
+const getStatusColor = status => {
+    switch(status) {
+        case "cancelado":
+            return "var(--mainRed)";
+        case "pendente":
+            return "var(--mainYellow)";
+        case "atrasado":
+            return "purple";
+        case "feito":
+            return "var(--mainGreen)";
+        default:
+            return "grey";
+    }
+}
 
 export default function ExpansiblePanel({
     actions,
@@ -95,13 +110,11 @@ export default function ExpansiblePanel({
                 <ButtonFab
                     top={-27}
                     left={90}
-                    title={`Total: ${panel.staffBooking.staffBookingList.length} agendamentos`}
+                    title={panel.staffBooking.status.substring(1)}
                     variant="extended"
-                    fontWeight="bolder"
-                    fontSize=".7em"
                     style={styles.button}
-                    color="var(--mainWhite)"
-                    backgroundColor="var(--mainBlue)"
+                    color={panel.staffBooking.status === "3pendente" ? "black" : "white"}
+                    backgroundColor={getStatusColor(panel.staffBooking.status.substring(1))}
                 />
             </div>
         </div>
@@ -151,9 +164,9 @@ export default function ExpansiblePanel({
                     style={styles.container}
                 >
                     <ExpansionPanel
-                        TransitionProps={{ unmountOnExit: true }} // only render when the panel is opened
                         style={styles.expansionPanel}
                         className="disabledLink"
+                        disabled={["2cancelado", "1feito"].includes(panel.staffBooking.status) ? true : false}
                     >
                         {showPanel(panel)}
                         {showHiddenPanel(panel)}

@@ -29,6 +29,10 @@ export const setCustomLoading = (dispatch, status) => {
     return dispatch({ type: 'CUSTOM_LOADING_TOGGLED', payload: status });
 };
 
+export const setCustomLoading2 = (dispatch, status) => {
+    return dispatch({ type: 'CUSTOM_LOADING_2_TOGGLED', payload: status });
+};
+
 // Important: do not forget to clear error methods off
 // ERROR
 export const setErrorOn = (dispatch, errorMsg) => {

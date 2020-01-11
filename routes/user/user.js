@@ -11,7 +11,7 @@ const {
     removeField,
     readBackup,
     createBooking,
-    getStaffBookingList,
+    getStaffClientList,
     getHighestScores,
     mwUserId,
     mwBackup
@@ -30,7 +30,7 @@ router.get("/confirm-account/:authUserId", confirmUserAccount);
 router.get("/list/all", getList);
 router.get("/list/highest-scores", getHighestScores);
 router.get("/backup/list", readBackup);
-router.get("/staff-booking/list/:userId", getStaffBookingList);
+router.get("/staff-booking/list/:userId", getStaffClientList);
 
 
 // FIELDS

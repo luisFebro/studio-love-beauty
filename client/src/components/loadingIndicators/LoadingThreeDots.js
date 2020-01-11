@@ -1,16 +1,30 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
-export default function Preloader() {
+LoadingThreeDots.propTypes = {
+    color: PropTypes.string,
+}
+
+export default function LoadingThreeDots({ color }) {
+    const styles={
+        text: {
+            color: color || "var(--mainDark)",
+        },
+        spinner:{
+            backgroundColor: color || '#333'
+        }
+    }
+
     return (
         <div className="col-10 mx-auto">
             <DivWrapper>
-                <section className="loading-container">
+                <section className="loading-container" style={styles.text}>
                     <h2 className="">Carregando</h2>
                     <div className="spinner">
-                        <div className="bounce1"></div>
-                        <div className="bounce2"></div>
-                        <div className="bounce3"></div>
+                        <div style={styles.spinner} className="bounce1"></div>
+                        <div style={styles.spinner} className="bounce2"></div>
+                        <div style={styles.spinner} className="bounce3"></div>
                     </div>
                 </section>
             </DivWrapper>
@@ -31,7 +45,6 @@ const DivWrapper = styled.div`
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    color: var(--mainDark);
     z-index: 999;
 
     //Three-dot bouncing loading effect
@@ -54,7 +67,6 @@ const DivWrapper = styled.div`
         margin: 5px;
         width: 6px;
         height: 6px;
-        background-color: #333;
 
         border-radius: 100%;
         display: inline-block;

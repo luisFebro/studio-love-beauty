@@ -21,6 +21,7 @@ import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDot
 moment.updateLocale('pt-br');
 
 function BookedClients({ match, run }) {
+    const [isSearching, setIsSearching] = useState(false); // n1
     const [docsLoading, setDocsLoading] = useState({
         skip: 0,
         limit: 5,
@@ -69,15 +70,7 @@ function BookedClients({ match, run }) {
         const initialSkip = 0;
         setData({ searchTerm: querySearched });
         getStaffBookingList(dispatch, match.params.staffId, initialSkip, false, querySearched)
-        .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            setDocsLoading({
-                ...docsLoading,
-                skip: 0,
-                sizeLoaded: res.data.size,
-                totalDocsSize: res.data.totalSize,
-            })
-        })
+        setIsSearching(true);
     }
 
     const showSearchBar = () => (
@@ -160,7 +153,7 @@ function BookedClients({ match, run }) {
 
     return (
         <Fragment>
-            {sizeLoaded === 0
+            {sizeLoaded === 0 && isSearching !== true
             ? (
                 <Fragment>
                     {isLoading
@@ -209,3 +202,7 @@ function BookedClients({ match, run }) {
 }
 
 export default withRouter(BookedClients);
+
+/* COMMENTS
+n1: check if the searching bar has been used so that when we can get zero results it does not change to the no-scheduling illustration.
+*/

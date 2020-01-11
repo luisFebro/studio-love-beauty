@@ -62,6 +62,7 @@ export const checkVerificationPass = async (dispatch, objToSend) => { // L
     }
 };
 
+// STAFF BOOKING
 export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
     setLoadingProgress(dispatch, true);
     try {
@@ -74,6 +75,8 @@ export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
         return err.response;
     }
 };
+
+// END STAFF BOOKING
 
 // SERVICES CRUD
 export const createService = async (dispatch, adminId, bodyToSend) => {

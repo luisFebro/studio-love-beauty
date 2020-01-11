@@ -1,5 +1,6 @@
 const Admin = require('../models/admin');
 const User = require("../models/user");
+const StaffBooking = require("../models/user/StaffBooking");
 const BusinessInfo = require("../models/admin/BusinessInfo");
 const Service = require("../models/admin/Service");
 const formidable = require('formidable');
@@ -193,9 +194,9 @@ exports.deleteService = (req, res) => {
 }
 // END SERVICES CRUD
 
-// LISTS
+// STAFF BOOKINGS
 exports.getStaffWithBookings = (req, res) => {
-    const staffIdsArray = req.staffBooking;
+    const staffIdsArray = req.uniqueStaffIds;
     const skip = parseInt(req.query.skip)
 
     User.find({'_id': {$in: staffIdsArray }})
@@ -212,7 +213,7 @@ exports.getStaffWithBookings = (req, res) => {
         });
     })
 }
-// END LIST
+// END STAFF BOOKINGS
 
 /* COMMENTS
 n1: You can add or remove any field from businessInfo according to the client needs.

@@ -66,9 +66,6 @@ export default function ExpansiblePanel({
     // };
 
     const styles = {
-        container: {
-            position: 'relative',
-        },
         expansionPanel: {
             color: color,
             backgroundColor: backgroundColor, // default is paper color
@@ -101,7 +98,7 @@ export default function ExpansiblePanel({
                     fontSize=".7em"
                     style={styles.button}
                     color="var(--mainWhite)"
-                    backgroundColor="var(--mainBlue)"
+                    backgroundColor="#7f8c8d"
                 />
             </div>
         </div>
@@ -148,7 +145,7 @@ export default function ExpansiblePanel({
             {actions.map(panel => (
                 <div
                     key={panel._id}
-                    style={styles.container}
+                    className="position-relative"
                 >
                     <ExpansionPanel
                         TransitionProps={{ unmountOnExit: true }} // only render when the panel is opened

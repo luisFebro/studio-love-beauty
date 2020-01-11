@@ -39,7 +39,10 @@ export default function PanelHiddenContent({ data }) {
         loadingIndicator
     } = docsLoading;
 
-    const searchTerm = 0;
+    const [search, setSearch] = useState({
+        searchTerm: ""
+    });
+    const { searchTerm } = search;
 
     const {
         _id,
@@ -58,6 +61,12 @@ export default function PanelHiddenContent({ data }) {
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setBookings(res.data.docs);
+            setDocsLoading({
+                ...docsLoading,
+                skip: 0,
+                sizeLoaded: res.data.size,
+                totalDocsSize: res.data.totalSize,
+            })
         })
     }, [])
 
@@ -92,7 +101,7 @@ export default function PanelHiddenContent({ data }) {
     const showExpansionPanel = () => (
         <StaffExpansiblePanel
             actions={actions}
-            backgroundColor="#7f8c8d"
+            backgroundColor="#7f8c8d" // grey color
             color="white"
             ToggleButton={
                 <ButtonFab
@@ -113,6 +122,7 @@ export default function PanelHiddenContent({ data }) {
         getStaffBookingListForAdmin(dispatch, _id, moreDocsToSkip, true)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setBookings([...bookings, ...res.data.docs])
             setDocsLoading({
                 ...docsLoading,
                 sizeLoaded: sizeLoaded + res.data.size,
@@ -131,11 +141,11 @@ export default function PanelHiddenContent({ data }) {
             : searchTerm.length === 0 && sizeLoaded >= limit && (
                 <div className="container-center my-3">
                     <ButtonMulti
-                        title={isCustomLoading ? loadingIndicator : "Carregar Mais Clientes"}
+                        title={isCustom2Loading ? loadingIndicator : "Carregar Mais Clientes"}
                         onClick={loadMoreDocs}
                         backgroundColor="var(--mainPink)"
                         backColorOnHover="var(--mainPink)"
-                        iconFontAwesome={isCustomLoading ? "" : "fas fa-chevron-circle-down"}
+                        iconFontAwesome={isCustom2Loading ? "" : "fas fa-chevron-circle-down"}
                     />
                 </div>
             )
@@ -154,7 +164,6 @@ export default function PanelHiddenContent({ data }) {
             )}
         </div>
     );
-
 
     return (
         <div

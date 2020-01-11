@@ -34,7 +34,11 @@ export default function PanelHiddenContent({ data }) {
                     : notes
                 }</p>
             </div>
-            <CreatedAtBr createdAt={createdAt} />
+            <CreatedAtBr
+                backgroundColor="7f8c8d"
+                title="Criado pelo colaborador em:"
+                createdAt={createdAt}
+            />
         </div>
     );
 }

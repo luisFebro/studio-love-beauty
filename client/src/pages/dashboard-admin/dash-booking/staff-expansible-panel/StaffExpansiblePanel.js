@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -81,9 +81,6 @@ export default function ExpansiblePanel({
     // };
 
     const styles = {
-        container: {
-            position: 'relative',
-        },
         expansionPanel: {
             color: color,
             backgroundColor: backgroundColor, // default is paper color
@@ -109,7 +106,7 @@ export default function ExpansiblePanel({
             <div className="disabledLink">
                 <ButtonFab
                     top={-27}
-                    left={90}
+                    left={70}
                     title={panel.staffBooking.status.substring(1)}
                     variant="extended"
                     style={styles.button}
@@ -156,12 +153,36 @@ export default function ExpansiblePanel({
         </ExpansionPanelDetails>
     );
 
+    const showConfigBtns = item => (
+        <Fragment>
+            <ButtonFab
+                iconFontAwesome="fas fa-trash-alt"
+                backgroundColor="purple"
+                iconMarginLeft= '0px'
+                size="small"
+                top={-25}
+                left={200}
+                onClick={null}
+            />
+            <ButtonFab
+                iconFontAwesome="fas fa-pencil-alt"
+                backgroundColor="var(--mainPink)"
+                iconMarginLeft= '0px'
+                fontSize=".8em"
+                size="small"
+                top={-25}
+                left={245}
+                onClick={null}
+            />
+        </Fragment>
+    );
+
     return (
         <div className={classes.root}>
             {actions.map(panel => (
                 <div
                     key={panel._id}
-                    style={styles.container}
+                    className="position-relative"
                 >
                     <ExpansionPanel
                         style={styles.expansionPanel}
@@ -172,6 +193,7 @@ export default function ExpansiblePanel({
                         {showHiddenPanel(panel)}
                     </ExpansionPanel>
                     {showStatus(panel)}
+                    {showConfigBtns()}
                 </div>
             ))}
         </div>

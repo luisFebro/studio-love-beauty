@@ -64,8 +64,10 @@ export default function ButtonFab({
             aria-label={title}
             style={styles.fab}
         >
-            {title}
-            {showIcon(iconFontAwesome)}
+            <span className="text-shadow">
+                {title}
+                {showIcon(iconFontAwesome)}
+            </span>
         </Fab>
     );
 }

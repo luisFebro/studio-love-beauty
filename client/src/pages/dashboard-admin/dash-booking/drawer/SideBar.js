@@ -131,7 +131,7 @@ export default function SideBar({ drawer, onClose, open }) {
                 iconMarginLeft="0"
                 onClick={() => toggleOrChangeStatusBtn("needShowNewField")}
             />
-            <section className={`${needShowNewField ? "mt-4 container-center" : "d-none mt-4"}`}>
+            <section className={`${needShowNewField ? "animated zoomIn slow mt-4 container-center" : "d-none mt-4"}`}>
                 <TextField
                     placeholder="NOVO SERVIÇO AQUI"
                     name="name"
@@ -193,7 +193,7 @@ export default function SideBar({ drawer, onClose, open }) {
                 iconMarginLeft= '0px'
                 size="small"
                 top={-25}
-                left={215}
+                left={235}
                 onClick={() => handleItemRemoval(item._id)}
             />
             <ButtonFab
@@ -202,7 +202,7 @@ export default function SideBar({ drawer, onClose, open }) {
                 iconMarginLeft= '0px'
                 size="small"
                 top={-25}
-                left={260}
+                left={290}
                 onClick={() => toggleOrChangeStatusBtn("needShowUpdateField", item._id)}
             />
         </Fragment>

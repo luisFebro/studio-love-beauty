@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const collectionName = "staff-booking";
+const collectionName = "staff-bookings";
 
 
 const data = {

@@ -49,13 +49,14 @@ export const getStaffBookingList = async (dispatch, staffId, docsToSkip, needRea
         const res = await axios.get(url, configTypeJson);
         checkStatusAndUpdateMany(dispatch, staffId);
 
-        needReadMore === true
-        ? setCustomLoading(dispatch, false)
-        : setLoadingProgress(dispatch, false)
 
         needReadMore === true
         ? dispatch({ type: "STAFF_BOOKING_READ_MORE", payload: res.data })
         : dispatch({ type: "STAFF_BOOKING_READ", payload: res.data })
+
+        needReadMore === true
+        ? setCustomLoading(dispatch, false)
+        : setLoadingProgress(dispatch, false)
 
         return res;
     } catch (err) {

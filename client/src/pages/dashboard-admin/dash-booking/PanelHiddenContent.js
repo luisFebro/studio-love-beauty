@@ -74,7 +74,6 @@ export default function PanelHiddenContent({ data, setRun, run }) {
 
     const onSearchChange = e => {
         const querySearched = e.target.value;
-        console.log("querySearched", querySearched);
         const initialSkip = 0;
         getStaffBookingListForAdmin(dispatch, _id, initialSkip, false, querySearched)
         .then(res => {

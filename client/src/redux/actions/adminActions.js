@@ -88,14 +88,11 @@ export const createService = async (dispatch, adminId, bodyToSend) => {
 };
 
 export const readServicesList = async (dispatch) => {
-    setLoadingProgress(dispatch, true);
     try {
         const res = await axios.get(`/api/admin/service/list/all`, configTypeJson);
         dispatch({type: 'SERVICES_READ', payload: res.data })
-        setLoadingProgress(dispatch, false);
         return res;
     } catch (err) {
-        setLoadingProgress(dispatch, false);
         return err.response;
     }
 };

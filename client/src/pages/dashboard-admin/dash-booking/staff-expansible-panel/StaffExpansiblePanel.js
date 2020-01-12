@@ -10,11 +10,11 @@ import clsx from 'clsx';
 
 // Customized Data
 import { useStoreDispatch } from 'easy-peasy';
-import ModalBtn from '../../../dashboard-staff/modal/select/ModalBtn';
 import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
 import { showModalConfYesNo } from '../../../../redux/actions/modalActions';
 import { showSnackbar } from '../../../../redux/actions/snackbarActions';
 import { removeBooking } from '../../../../redux/actions/staffBookingActions';
+import ModalBtn from '../staff-modal-form/ModalBtn';
 // End Customized Data
 
 ExpansiblePanel.propTypes = {
@@ -178,15 +178,24 @@ export default function ExpansiblePanel({
                 left={185}
                 onClick={() => handleRemoval(panel.staffBooking.staffId, panel.staffBooking._id)}
             />
-            <ButtonFab
-                iconFontAwesome="fas fa-pencil-alt"
-                backgroundColor="var(--mainPink)"
-                iconMarginLeft= '0px'
-                fontSize=".8em"
-                size="small"
-                top={-33}
-                left={230}
-                onClick={null}
+            <ModalBtn
+                button={{
+                    iconFontAwesome: "fas fa-pencil-alt",
+                    backgroundColor: "var(--mainPink)",
+                    iconMarginLeft:  '0px',
+                    fontSize: ".8em",
+                    size: "small",
+                    top: -33,
+                    left: 230,
+                }}
+                modal={{
+                    title: `Agendamento de Clientes<br />(ATUALIZAÇÃO ADMIN)`,
+                    txtBtn: "Atualizar",
+                    iconBtn: "fas fa-exchange-alt",
+                    modalData: panel,
+                }}
+                setRun={setRun}
+                run={run}
             />
         </Fragment>
     );

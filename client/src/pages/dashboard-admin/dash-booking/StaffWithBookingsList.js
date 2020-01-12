@@ -126,23 +126,23 @@ export default function StaffWithBookingsList() {
     };
 
     const showMoreButton = () => {
-        return(
-            sizeLoaded === totalDocsSize && sizeLoaded >= limit
-            ? <p className="text-main-container text-center my-3">
-                {`${adminName.cap()}, isso é tudo. Não há mais colaboradores para mostrar.`}
-              </p>
-            : searchTerm.length === 0 && sizeLoaded >= limit && (
-                <div className="container-center my-3">
-                    <ButtonMulti
-                        title={isCustomLoading ? loadingIndicator : "Carregar Mais Colaboradores"}
-                        onClick={loadMoreDocs}
-                        backgroundColor="var(--mainPink)"
-                        backColorOnHover="var(--mainPink)"
-                        iconFontAwesome={isCustomLoading ? "" : "fas fa-chevron-circle-down"}
-                    />
-                </div>
-            )
-        );
+        // return(
+            // sizeLoaded === totalDocsSize && sizeLoaded >= limit
+            // ? <p className="text-main-container text-center my-3">
+            //     {`${adminName.cap()}, isso é tudo. Não há mais colaboradores para mostrar.`}
+            //   </p>
+            // : searchTerm.length === 0 && sizeLoaded >= limit && (
+            //     <div className="container-center my-3">
+            //         <ButtonMulti
+            //             title={isCustomLoading ? loadingIndicator : "Carregar Mais Colaboradores"}
+            //             onClick={loadMoreDocs}
+            //             backgroundColor="var(--mainPink)"
+            //             backColorOnHover="var(--mainPink)"
+            //             iconFontAwesome={isCustomLoading ? "" : "fas fa-chevron-circle-down"}
+            //         />
+            //     </div>
+            // )
+        // );
     };
 
     return (

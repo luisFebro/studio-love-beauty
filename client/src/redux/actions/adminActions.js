@@ -21,6 +21,14 @@ export const readAdmin = async dispatch => {
     }
 }
 
+export const updateAdmin = async (dispatch, bodyToSend) => {
+    try {
+        return await axios.put('/api/admin', bodyToSend, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+}
+
 export const updateConfig = async (dispatch, objToUpdate) => {
     try {
         const res = await axios.put(`/api/admin/config`, objToUpdate, configTypeJson);

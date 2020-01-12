@@ -18,6 +18,9 @@ const data = {
     businessInfo: {
         type: Schema.ObjectId,
         ref: 'BusinessInfo',
+    },
+    regulationText: {
+        type: String,
     }
 }
 

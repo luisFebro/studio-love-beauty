@@ -27,6 +27,7 @@ import ConfirmAccount from '../pages/client/ConfirmAccount';
 import Default from '../pages/Default';
 import Dashboard from '../pages/dashboard-admin';
 import DashboardStaff from '../pages/dashboard-staff';
+import RegulationPage from '../pages/RegulationPage';
 //END PAGES
 
 //LAYOUT
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/cliente/pontos-fidelidade" exact component={LoyaltyScoreHandler} />
                     <Route path="/cliente/trocar-senha" exact component={ChangePassword} />
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
+                    <Route path="/regulamento/" exact component={RegulationPage} />
                     <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
                     <Route path="/admin/painel-de-controle" exact component={Dashboard} />
                     <Route component={Default} />

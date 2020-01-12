@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Register from '../components/auth/Register';
 import ImageLogo from "../components/ImageLogo";
+import { Link } from 'react-router-dom';
 // import ButtonCart from '../components/buttons/ButtonCart';
 // import Title from '../components/Title';
 // <Title title="Nossa Vitrine" />
@@ -24,10 +25,14 @@ export default function Home() {
                 <Register />
             </div>
             <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>
-            <div
-                className="my-5 text-container font-weight-italic text-center"
-                style={{color: "var(--mainPink)"}}
-            >Consulte<br />as Regras</div>
+            <Link to="/regulamento">
+                <div
+                    className="my-5 text-container font-weight-italic text-center"
+                    style={{color: "var(--mainPink)", cursor: "pointer"}}
+                >
+                    Consulte<br />as Regras Aqui
+                </div>
+            </Link>
         </div>
     );
     return(

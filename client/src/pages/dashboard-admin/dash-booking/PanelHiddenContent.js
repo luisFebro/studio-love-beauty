@@ -72,10 +72,9 @@ export default function PanelHiddenContent({ data, setRun, run }) {
         })
     }, [run])
 
-    const onSearchChange = e => {
-        const querySearched = e.target.value;
+    const onAutoSelectChange = selectedValue => {
         const initialSkip = 0;
-        getStaffBookingListForAdmin(dispatch, _id, initialSkip, false, querySearched)
+        getStaffBookingListForAdmin(dispatch, _id, initialSkip, false, selectedValue)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setBookings(res.data.docs);
@@ -89,7 +88,7 @@ export default function PanelHiddenContent({ data, setRun, run }) {
             <AsyncAutoCompleteSearch
                 url={autoCompleteUrl}
                 circularProgressColor="secondary"
-                onSearchChange={onSearchChange}
+                onAutoSelectChange={onAutoSelectChange}
             />
         </div>
     );

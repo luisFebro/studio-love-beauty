@@ -5,21 +5,26 @@ import handleChangeForm from '../../../utils/form/use-state/handleChangeForm';
 import isSmallScreen from '../../../utils/isSmallScreen';
 import ToggleVisibilityPassword from '../../../components/forms/fields/ToggleVisibilityPassword';
 import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
+import TextField from '@material-ui/core/TextField';
+import handleChange from '../../../utils/form/use-state/handleChange';
+import { Link } from 'react-router-dom';
 // Redux
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../../redux/actions/snackbarActions';
-import { readAdmin, updateConfig, readVerificationPass } from '../../../redux/actions/adminActions';
+import { readAdmin, updateAdmin, updateConfig, readVerificationPass } from '../../../redux/actions/adminActions';
 
 export default function UpdateConfigForm() {
     const [showSpinner, setShowSpinner] = useState(true);
     const [imgMsg, setImgMsg] = useState(false);
+
     const [data, setData] = useState({
         trademark: '',
         siteBackgroundColor: '',
         verificationPass: '',
         formData: '',
+        regulationText: '',
     })
-    const { trademark, siteBackgroundColor, verificationPass, formData } = data;
+    const { trademark, siteBackgroundColor, verificationPass, formData, regulationText } = data;
     const dispatch = useStoreDispatch();
 
     const getBackgroundColor = () => {
@@ -28,6 +33,7 @@ export default function UpdateConfigForm() {
             // if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setData({
                 siteBackgroundColor: res.data.siteBackgroundColor,
+                regulationText: res.data.regulationText,
                 formData: new FormData() //formData isdeclared here, otherwise will be undefined.
             })
         })
@@ -58,9 +64,65 @@ export default function UpdateConfigForm() {
         })
     }
 
+    const updateRegText = () => {
+        showSnackbar(dispatch, "Atualizando Texto...", 'warning', 6000);
+        const objToSend = {
+            regulationText,
+        }
+        updateAdmin(dispatch, objToSend)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            showSnackbar(dispatch, "Texto acabou de ser atualizado!", 'success');
+        })
+    }
+
+    const showRegulationText = () => (
+        <div className="margin-auto-90">
+            <p className="text-center text-main-container font-weight-bold">Regras Pontos Fidelidade</p>
+            <div className="container-center text-break text-default">
+                <TextField
+                    style={{fontSize: '1.3em'}}
+                    multiline
+                    rows={10}
+                    name="regulationText"
+                    value={regulationText === "" ? "Carregando..." : regulationText}
+                    onChange={handleChange(setData, data)}
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Regras para ponto fidelidade"
+                    margin="dense"
+                />
+            </div>
+            <div className="d-flex justify-content-end mr-2">
+                <Link to="/regulamento">
+                    <ButtonMulti
+                        onClick={updateRegText}
+                        color="var(--mainWhite)"
+                        backgroundColor="var(--mainPink)"
+                        backColorOnHover="var(--mainPink)"
+                        iconFontAwesome="fas fa-file-alt"
+                        textTransform='uppercase'
+                    >
+                        Ver Página
+                    </ButtonMulti>
+                </Link>
+                <ButtonMulti
+                    onClick={updateRegText}
+                    color="var(--mainWhite)"
+                    backgroundColor="var(--mainPink)"
+                    backColorOnHover="var(--mainPink)"
+                    iconFontAwesome="fas fa-exchange-alt"
+                    textTransform='uppercase'
+                >
+                    Atualizar
+                </ButtonMulti>
+            </div>
+        </div>
+    )
+
     const showImageUploader = () => {
         const displayImg = idImg => (
-            <div className="d-flex flex-column mr-5">
+            <div className="mr-md-5">
                 <span>
                     <p
                         style={{backgroundColor: "grey"}}
@@ -87,7 +149,7 @@ export default function UpdateConfigForm() {
         );
 
         const displayPicker = () => (
-            <div className="d-flex justify-content-center align-items-center mr-5">
+            <div>
                 <input
                     accept="image/*"
                     onChange={handleChangeForm(setData, data, formData, "trademark")}
@@ -127,7 +189,7 @@ export default function UpdateConfigForm() {
                 >
                     Trocar Imagem da Logomarca:
                 </p>
-                <div className="d-flex flex-row">
+                <div className="d-flex flex-column flex-md-row justify-content-md-center align-items-md-center">
                     {displayImg()}
                     {displayPicker()}
                 </div>
@@ -194,6 +256,7 @@ export default function UpdateConfigForm() {
             className="container-center"
             style={{margin: '0 auto 600px', width: '90%'}}>
             <form className="py-5 px-2">
+                {showRegulationText()}
                 {showImageUploader()}
                 {showVerificationPassField()}
                 {showColorPicker()}

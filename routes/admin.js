@@ -18,6 +18,7 @@ const {
     getStaffWithBookings,
     checkVerificationPass,
     readVerificationPass,
+    createOrUpdateRegText,
 } = require('../controllers/admin');
 
 const { mwUniqueStaffIds } = require("../controllers/staffBooking");

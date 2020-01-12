@@ -21,7 +21,7 @@ function sleep(delay = 0) {
 }
 
 export default function AsyncAutoCompleteSearch({
-    url, circularProgressColor, onSearchChange }) {
+    url, circularProgressColor, onAutoSelectChange }) {
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
@@ -79,6 +79,7 @@ export default function AsyncAutoCompleteSearch({
           onClose={() => {
             setOpen(false);
           }}
+          onChange={(event, value) => onAutoSelectChange(value)}
           getOptionSelected={(option, value) => option === value}
           getOptionLabel={option => option}
           options={options}
@@ -88,7 +89,8 @@ export default function AsyncAutoCompleteSearch({
           closeText="Fechar"
           noOptionsText="Nada encontrado, admin."
           autoHighlight
-          blurOnSelect
+          includeInputInList
+          blurOnSelect={true}
           clearOnEscape
           autoComplete
           renderInput={params => (
@@ -96,7 +98,6 @@ export default function AsyncAutoCompleteSearch({
               {...params}
               style={styles.asyncAutoSearch}
               placeholder="Procure pelo nome do cliente"
-              onBlur={onSearchChange}
               fullWidth
               variant="outlined"
               InputProps={{

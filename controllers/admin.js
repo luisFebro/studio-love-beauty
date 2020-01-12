@@ -33,12 +33,12 @@ exports.createOrUpdate = (req, res) => {
     Admin.findOneAndUpdate(
         { _id: adminId },
         { $set: req.body }, // n3
-        { new: true, upsert: true }, // n2
-        (err, bizInfo) => {
-            if (err) return res.status(400).json(msgG("error.systemError", err));
-            res.json(bizInfo);
-        }
-    );
+        { new: true, upsert: true })
+    .select("-trademark")
+    .exec((err, bizInfo) => {
+        if (err) return res.status(400).json(msgG("error.systemError", err));
+        res.json(bizInfo);
+    }) // n2;
 };
 
 exports.read = (req, res) => {

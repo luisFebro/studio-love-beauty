@@ -85,7 +85,7 @@ export default function StaffWithBookingsList() {
         return({
            _id: staff._id,
            mainHeading: staff.name.cap(),
-           secondaryHeading: parse(`> A última atualização foi ${moment(staff.updatedAt).fromNow()}  atrás.`),
+           secondaryHeading: parse(`> Último agendamento foi ${moment(staff.updatedAt).fromNow()}  atrás.`),
            staffBooking: staff,
            hiddenContent: <PanelHiddenContent data={staff} setRun={setRun} run={run} />
         });

@@ -74,6 +74,13 @@ function Navbar({ history, location }) {
                     </span>
                 ) : (
                     <Fragment>
+                        {locationNow === "/regulamento" &&
+                        <p
+                            className="ml-4 text-container-main font-weight-bold text-pink"
+                            style={{ fontSize: '2.3rem' }}
+                        >
+                            REGRAS DO PLANO FIDELIDADE - <span>{new Date().getFullYear()}</span>
+                        </p>}
                         {locationNow === "/acesso/verificacao" &&
                         <p
                             className="ml-4 text-container-main font-weight-bold text-pink"

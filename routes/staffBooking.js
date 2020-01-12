@@ -9,6 +9,7 @@ const {
     addBookingIdToStaff,
     checkStatusAndUpdateMany,
     removeBookingIdFromStaff,
+    getAllClientsNameFromStaff,
 } = require("../controllers/staffBooking");
 const {
     mwUserId
@@ -20,12 +21,14 @@ const {
 // @route  api/staff-booking
 router.post("/:userId", mwCreate, addBookingIdToStaff);
 router.put("/:bookingId", update);
+router.put("/remove/:userId", mwRemove, removeBookingIdFromStaff); // need mwIsAdmin //
 
 router.put("/status/:userId", checkStatusAndUpdateMany);
-// router.put("/:userId", mwRemove, removeBookingIdFromStaff); // need mwIsAdmin
 
 // LISTS
 router.get("/list/all", getList);
+router.get("/list/clients-name-from-staff", getAllClientsNameFromStaff);
+
 router.param("userId", mwUserId);
 
 module.exports = router;

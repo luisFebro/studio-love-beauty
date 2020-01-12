@@ -1,6 +1,7 @@
 const StaffBooking = require("../models/user/StaffBooking");
 const User = require("../models/user");
 const { msgG } = require('./_msgs/globalMsgs');
+const removeItemArray = require('../utils/array/removeItemArray');
 
 // MIDLEWARES
 exports.mwCreate = (req, res, next) => {
@@ -22,10 +23,11 @@ exports.mwCreate = (req, res, next) => {
 }
 
 exports.mwRemove = (req, res, next) => {
-    const id = req.body.staffBookingList;
+    const id = req.query.removedId;
     StaffBooking.findById({_id: id})
     .exec((err, booking) => {
         if(err) return res.status(500).json(msgG('error.systemError', err));
+        req.fromMwRemove = booking;
         booking.remove(err => {
             if(err) return res.status(500).json(msgG('error.systemError', err));
             next();
@@ -53,6 +55,30 @@ exports.addBookingIdToStaff = (req, res) => {
     });
 }
 
+exports.removeBookingIdFromStaff = (req, res) => {
+    const _id = req.profile._id;
+    const clientName = req.fromMwRemove.clientName;
+    const idToBeRemoved = req.query.removedId;
+
+    User.findById(_id)
+    .exec((err, user) => {
+        if (err) return res.status(500).json(msgG('error.systemError', err))
+        if (!user) return res.status(400).json(msgG('error.systemError', err))
+
+        const currBookings = user.staffBookingList;
+        const updatedArray = removeItemArray(currBookings, idToBeRemoved);
+        user.staffBookingList = updatedArray;
+
+        user.save((err, newUpdate) => {
+            if (err) return res.status(500).json(msgG('error.systemError', err))
+            res.json({
+                newUpdate,
+                msg: `O Agendamento de ${clientName.toUpperCase()} foi removido com sucesso!`
+            });
+        })
+    });
+}
+
 exports.update = (req, res) => {
     StaffBooking.findOneAndUpdate({ _id: req.params.bookingId }, { $set: req.body }, { new: true }) // real time updated! this send the most recently updated response/doc from database to app
     .exec((err, booking) => {
@@ -70,26 +96,26 @@ exports.checkStatusAndUpdateMany = (req, res) => {
     })
 }
 
-// NOT FUCKING WORKING!!! try use splice and save then
-exports.removeBookingIdFromStaff = (req, res) => {
-    const _id = req.profile._id;
-    const removed = req.body;
-    User.findByIdAndUpdate(_id, { $pull: removed }, { new: true })
-    .exec((err, user) => {
-        if (err) return res.status(500).json(msgG('error.systemError', err))
-        res.json({
-            user,
-            msg: `O Agendamento do cliente do colaborador ${user.name.toUpperCase()} foi removido com sucesso!`
-        });
-    });
-}
-
 exports.getList = (req, res) => {
     StaffBooking.find({})
     .exec((err, list) => {
         if (err) return res.status(500).json(msgG('error.systemError', err))
         res.json(list);
     });
+}
+
+exports.getAllClientsNameFromStaff = (req, res) => {
+    const staffId = req.query.staffId;
+
+    StaffBooking.find({staffId: staffId})
+    .select("clientName -_id")
+    .sort({clientName: 1 })
+    .exec((err, names) => {
+        if (err) return res.status(500).json(msgG('error.systemError', err))
+
+        const arrayRes = names.map(name => name.clientName.cap());
+        res.json(arrayRes);
+    })
 }
 
 /* COMMENTS

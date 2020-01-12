@@ -79,7 +79,7 @@ export default function ExpansiblePanel({
             top: -10,
             left: 10
         },
-        mainHeading: {
+        heading: {
             display: 'flex',
             alignItems: 'center',
         }
@@ -122,12 +122,13 @@ export default function ExpansiblePanel({
         >
             <Typography
                 className={clsx(classes.heading, "text-title")}
-                style={styles.mainHeading}
+                style={styles.heading}
             >
                 {panel.mainHeading}
             </Typography>
             <Typography
                 className={classes.secondaryHeading}
+                style={styles.heading}
             >
                 {panel.secondaryHeading}
             </Typography>

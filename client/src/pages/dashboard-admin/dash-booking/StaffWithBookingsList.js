@@ -19,6 +19,7 @@ import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThree
 moment.updateLocale('pt-br');
 
 export default function StaffWithBookingsList() {
+    const [run, setRun] = useState(false);
     const [docsLoading, setDocsLoading] = useState({
         skip: 0,
         limit: 5,
@@ -60,7 +61,7 @@ export default function StaffWithBookingsList() {
                 totalDocsSize: res.data.totalSize,
             })
         })
-    }, [])
+    }, [run])
 
     const filteredUsers = staffWithBookings.filter(staff => {
         return staff.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -84,9 +85,9 @@ export default function StaffWithBookingsList() {
         return({
            _id: staff._id,
            mainHeading: staff.name.cap(),
-           secondaryHeading: parse(`> Atualizado ${moment(staff.updatedAt).fromNow()}  atrás.`),
+           secondaryHeading: parse(`> A última atualização foi ${moment(staff.updatedAt).fromNow()}  atrás.`),
            staffBooking: staff,
-           hiddenContent: <PanelHiddenContent data={staff} />
+           hiddenContent: <PanelHiddenContent data={staff} setRun={setRun} run={run} />
         });
     })
     // ${null} = typeof staff.staffDate === "undefined" ? "Sem Agendamento" : moment(staff.staffDate).calendar(null, { sameElse: 'LLL'}
@@ -146,12 +147,12 @@ export default function StaffWithBookingsList() {
 
     return (
         <Fragment>
-            {staffWithBookings.length === 0
-            ? (
+            {isLoading
+            ? <LoadingThreeDots />
+            : (
                 <Fragment>
-                    {isLoading
-                    ? <LoadingThreeDots />
-                    : (
+                    {staffWithBookings.length === 0
+                    ? (
                         <div className="py-5">
                             <Illustration
                                 img={`${CLIENT_URL}/img/illustrations/empty-booking.svg`}
@@ -167,28 +168,28 @@ export default function StaffWithBookingsList() {
                                 }}
                             />
                         </div>
-                    )}
-                </Fragment>
-            ) : (
-                <Fragment>
-                    {showSearchBar()}
-                    <SearchResult
-                        isLoading={isLoading}
-                        filteredUsersLength={filteredUsers.length}
-                        allUsersLength={totalDocsSize}
-                        searchTerm={searchTerm}
-                        mainSubject="colaborador"
-                    />
-                    {isLoading
-                    ? <LoadingThreeDots />
-                    : (
-                        <div>
-                            <div className="text-default">{showExpansionPanel()}</div>
-                            {showMoreButton()}
-                        </div>
+                    ) : (
+                        <Fragment>
+                            {showSearchBar()}
+                            <SearchResult
+                                isLoading={isLoading}
+                                filteredUsersLength={filteredUsers.length}
+                                allUsersLength={totalDocsSize}
+                                searchTerm={searchTerm}
+                                mainSubject="colaborador"
+                            />
+                            {isLoading
+                            ? <LoadingThreeDots />
+                            : (
+                                <div>
+                                    <div className="text-default">{showExpansionPanel()}</div>
+                                    {showMoreButton()}
+                                </div>
+                            )}
+                        </Fragment>
                     )}
                 </Fragment>
             )}
         </Fragment>
-    );
+    )
 }

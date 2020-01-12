@@ -12,8 +12,9 @@ import clsx from 'clsx';
 import { useStoreDispatch } from 'easy-peasy';
 import ModalBtn from '../../../dashboard-staff/modal/select/ModalBtn';
 import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
-import { findAnItem } from '../../../../redux/actions/globalActions';
 import { showModalConfYesNo } from '../../../../redux/actions/modalActions';
+import { showSnackbar } from '../../../../redux/actions/snackbarActions';
+import { removeBooking } from '../../../../redux/actions/staffBookingActions';
 // End Customized Data
 
 ExpansiblePanel.propTypes = {
@@ -70,7 +71,9 @@ export default function ExpansiblePanel({
     backgroundColor,
     ToggleButton,
     color,
-    allUsers }) {
+    allUsers,
+    setRun,
+    run }) {
 
     const classes = useStyles();
 
@@ -84,7 +87,7 @@ export default function ExpansiblePanel({
         expansionPanel: {
             color: color,
             backgroundColor: backgroundColor, // default is paper color
-            margin: '35px 0',
+            margin: '40px 0',
         },
         button: {
             transform: 'translate(-50%, -50%)'
@@ -94,11 +97,21 @@ export default function ExpansiblePanel({
             top: -10,
             left: 10
         },
-        mainHeading: {
+        heading: {
             display: 'flex',
             alignItems: 'center',
         }
 
+    }
+
+    const handleRemoval = (staffId, itemId) => {
+        showSnackbar(dispatch, "Excluindo...", "warning", 6000);
+        removeBooking(dispatch, staffId, itemId)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setRun(!run);
+            showSnackbar(dispatch, res.data.msg, 'success');
+        })
     }
 
     const showStatus = panel => (
@@ -135,11 +148,12 @@ export default function ExpansiblePanel({
         >
             <Typography
                 className={clsx(classes.heading, "text-title")}
-                style={styles.mainHeading}
+                style={styles.heading}
             >
                 {panel.mainHeading}
             </Typography>
             <Typography
+                style={styles.heading}
                 className={classes.secondaryHeading}
             >
                 {panel.secondaryHeading}
@@ -153,16 +167,16 @@ export default function ExpansiblePanel({
         </ExpansionPanelDetails>
     );
 
-    const showConfigBtns = item => (
+    const showConfigBtns = panel => (
         <Fragment>
             <ButtonFab
                 iconFontAwesome="fas fa-trash-alt"
                 backgroundColor="purple"
                 iconMarginLeft= '0px'
                 size="small"
-                top={-25}
-                left={200}
-                onClick={null}
+                top={-33}
+                left={185}
+                onClick={() => handleRemoval(panel.staffBooking.staffId, panel.staffBooking._id)}
             />
             <ButtonFab
                 iconFontAwesome="fas fa-pencil-alt"
@@ -170,8 +184,8 @@ export default function ExpansiblePanel({
                 iconMarginLeft= '0px'
                 fontSize=".8em"
                 size="small"
-                top={-25}
-                left={245}
+                top={-33}
+                left={230}
                 onClick={null}
             />
         </Fragment>
@@ -193,7 +207,7 @@ export default function ExpansiblePanel({
                         {showHiddenPanel(panel)}
                     </ExpansionPanel>
                     {showStatus(panel)}
-                    {showConfigBtns()}
+                    {showConfigBtns(panel)}
                 </div>
             ))}
         </div>

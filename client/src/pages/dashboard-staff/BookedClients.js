@@ -68,7 +68,7 @@ function BookedClients({ match, run }) {
     const onSearchChange = e => {
         const querySearched = e.target.value;
         const initialSkip = 0;
-        setData({ searchTerm: querySearched });
+        setData({ searchTerm: querySearched })
         getStaffBookingList(dispatch, match.params.staffId, initialSkip, false, querySearched)
         setIsSearching(true);
     }

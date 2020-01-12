@@ -10,7 +10,7 @@ import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 import StaffPanelHiddenContent from './staff-expansible-panel/StaffPanelHiddenContent';
 import StaffExpansiblePanel from './staff-expansible-panel/StaffExpansiblePanel';
 import { useStoreState, useStoreDispatch } from 'easy-peasy'
-import { getStaffBookingListForAdmin } from '../../../redux/actions/staffBookingActions';
+import { getStaffBookingListForAdmin, getAllClientsNameFromStaff } from '../../../redux/actions/staffBookingActions';
 import { showSnackbar } from '../../../redux/actions/snackbarActions';
 import AsyncAutoCompleteSearch from '../../../components/search/AsyncAutoCompleteSearch';
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
@@ -22,7 +22,7 @@ PanelHiddenContent.propTypes = {
     data: PropTypes.object.isRequired,
 };
 
-export default function PanelHiddenContent({ data }) {
+export default function PanelHiddenContent({ data, setRun, run }) {
     const [bookings, setBookings] = useState([]);
     const [docsLoading, setDocsLoading] = useState({
         skip: 0,
@@ -48,6 +48,8 @@ export default function PanelHiddenContent({ data }) {
         _id,
     } = data;
 
+    const autoCompleteUrl = `/api/staff-booking/list/clients-name-from-staff?staffId=${_id}`;
+
     const { staffName, isCustomLoading, isCustom2Loading } = useStoreState(state => ({
         isCustomLoading: state.globalReducer.cases.isCustomLoading,
         isCustom2Loading: state.globalReducer.cases.isCustom2Loading,
@@ -68,17 +70,28 @@ export default function PanelHiddenContent({ data }) {
                 totalDocsSize: res.data.totalSize,
             })
         })
-    }, [])
+    }, [run])
 
-    const styles = {
-
+    const onSearchChange = e => {
+        const querySearched = e.target.value;
+        console.log("querySearched", querySearched);
+        const initialSkip = 0;
+        getStaffBookingListForAdmin(dispatch, _id, initialSkip, false, querySearched)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setBookings(res.data.docs);
+        })
     }
 
     const showStaffAutoCompleteBar = () => (
         <div
             className="container-center my-5"
         >
-            <AsyncAutoCompleteSearch />
+            <AsyncAutoCompleteSearch
+                url={autoCompleteUrl}
+                circularProgressColor="secondary"
+                onSearchChange={onSearchChange}
+            />
         </div>
     );
 
@@ -113,6 +126,8 @@ export default function PanelHiddenContent({ data }) {
                 />
             }
             allUsers={bookings}
+            setRun={setRun}
+            run={run}
         />
     );
     //End ExpansionPanel Content

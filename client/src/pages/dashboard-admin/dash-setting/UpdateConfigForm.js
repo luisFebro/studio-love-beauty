@@ -78,7 +78,9 @@ export default function UpdateConfigForm() {
 
     const showRegulationText = () => (
         <div className="margin-auto-90">
-            <p className="text-center text-main-container font-weight-bold">Regras Pontos Fidelidade</p>
+            <p className="text-center text-main-container font-weight-bold">
+                Editar Texto - Regras Pontos Fidelidade:
+            </p>
             <div className="container-center text-break text-default">
                 <TextField
                     style={{fontSize: '1.3em'}}

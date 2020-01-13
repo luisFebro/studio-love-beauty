@@ -174,7 +174,7 @@ export default function StaffWithBookingsList() {
                             <SearchResult
                                 isLoading={isLoading}
                                 filteredUsersLength={filteredUsers.length}
-                                allUsersLength={totalDocsSize}
+                                allUsersLength={staffWithBookings.length}
                                 searchTerm={searchTerm}
                                 mainSubject="colaborador"
                             />

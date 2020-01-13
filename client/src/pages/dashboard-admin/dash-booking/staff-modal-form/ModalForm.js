@@ -183,6 +183,7 @@ export default function ModalForm({
             <TextField
                 required
                 label="NOME CLIENTE:"
+                autocomplete="off"
                 name="clientName"
                 value={clientName}
                 onChange={handleChange(setData, data)}

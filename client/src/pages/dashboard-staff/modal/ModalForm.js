@@ -179,6 +179,7 @@ export default function ModalForm({
                 required
                 label="NOME CLIENTE:"
                 name="clientName"
+                autocomplete="off"
                 onChange={handleChange(setData, data)}
                 error={errorClientName ? true : false}
                 variant="standard"

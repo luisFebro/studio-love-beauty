@@ -55,6 +55,7 @@ export default function ModalConfYesNo({ currItemFound }) {
                 name = currItemFound ? currItemFound.name : null;
                 break;
             case 'Produto':
+            case 'Agendamento':
                 name = currItemFound ? currItemFound.title : null;
                 break;
             default:
@@ -114,6 +115,11 @@ export default function ModalConfYesNo({ currItemFound }) {
                                                 }, 7000);
                                                 break;
                                             case 'Produto':
+                                                setTimeout(() => {
+                                                    deleteProduct(dispatch, _idUser);
+                                                }, 8000);
+                                                break;
+                                            case 'Agendamento':
                                                 setTimeout(() => {
                                                     deleteProduct(dispatch, _idUser);
                                                 }, 8000);

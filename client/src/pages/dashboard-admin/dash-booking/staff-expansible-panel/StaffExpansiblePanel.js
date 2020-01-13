@@ -15,6 +15,7 @@ import { showModalConfYesNo } from '../../../../redux/actions/modalActions';
 import { showSnackbar } from '../../../../redux/actions/snackbarActions';
 import { removeBooking } from '../../../../redux/actions/staffBookingActions';
 import ModalBtn from '../staff-modal-form/ModalBtn';
+import { default as ModalYesNoBtn }  from './modal-conf-yes-no/ModalBtn';
 // End Customized Data
 
 ExpansiblePanel.propTypes = {
@@ -104,16 +105,6 @@ export default function ExpansiblePanel({
 
     }
 
-    const handleRemoval = (staffId, itemId) => {
-        showSnackbar(dispatch, "Excluindo...", "warning", 6000);
-        removeBooking(dispatch, staffId, itemId)
-        .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            setRun(!run);
-            showSnackbar(dispatch, res.data.msg, 'success');
-        })
-    }
-
     const showStatus = panel => (
         <div className="animated zoomIn delay-1s">
             <div className="disabledLink">
@@ -169,14 +160,23 @@ export default function ExpansiblePanel({
 
     const showConfigBtns = panel => (
         <Fragment>
-            <ButtonFab
-                iconFontAwesome="fas fa-trash-alt"
-                backgroundColor="purple"
-                iconMarginLeft= '0px'
-                size="small"
-                top={-33}
-                left={185}
-                onClick={() => handleRemoval(panel.staffBooking.staffId, panel.staffBooking._id)}
+            <ModalYesNoBtn
+                button={{
+                    iconFontAwesome: "fas fa-trash-alt",
+                    backgroundColor: "purple",
+                    iconMarginLeft: '0px',
+                    size: "small",
+                    top: -33,
+                    left: 185
+                }}
+                modalData={{
+                    title: `Confirmação de exclusão de agendamento`,
+                    subTitle: `Excluir o agendamento do cliente:<br /><strong>${panel.staffBooking.clientName.cap()}</strong> ?`,
+                    staffId: panel.staffBooking.staffId,
+                    itemId: panel.staffBooking._id,
+                }}
+                setRun={setRun}
+                run={run}
             />
             <ModalBtn
                 button={{

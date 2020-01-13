@@ -50,10 +50,10 @@ export default function PanelHiddenContent({ data, setRun, run }) {
 
     const autoCompleteUrl = `/api/staff-booking/list/clients-name-from-staff?staffId=${_id}`;
 
-    const { staffName, isCustomLoading, isCustom2Loading } = useStoreState(state => ({
+    const { adminName, isCustomLoading, isCustom2Loading } = useStoreState(state => ({
         isCustomLoading: state.globalReducer.cases.isCustomLoading,
         isCustom2Loading: state.globalReducer.cases.isCustom2Loading,
-        staffName: state.userReducer.cases.currentUser.name
+        adminName: state.userReducer.cases.currentUser.name
     }));
     const dispatch = useStoreDispatch();
 
@@ -83,7 +83,8 @@ export default function PanelHiddenContent({ data, setRun, run }) {
 
     const showStaffAutoCompleteBar = () => (
         <div
-            className="container-center my-5"
+            style={{marginBottom: '75px'}}
+            className="container-center mt-5"
         >
             <AsyncAutoCompleteSearch
                 url={autoCompleteUrl}
@@ -149,7 +150,7 @@ export default function PanelHiddenContent({ data, setRun, run }) {
         return(
             sizeLoaded === totalDocsSize && sizeLoaded >= limit
             ? <p className="text-main-container text-center my-3">
-                {`${staffName.cap()}, isso é tudo. Não há mais clientes para mostrar.`}
+                {`${adminName && adminName.cap()}, isso é tudo. Não há mais clientes para mostrar.`}
               </p>
             : searchTerm.length === 0 && sizeLoaded >= limit && (
                 <div className="container-center my-3">

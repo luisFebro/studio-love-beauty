@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import ButtonFab from '../../../../components/buttons/material-ui/ButtonFab';
+import ButtonFab from '../../../../../components/buttons/material-ui/ButtonFab';
 import PropTypes from 'prop-types';
-import ModalTextField from './ModalTextField';
-import { buttonFabType } from '../../../../types';
-import handleChange from '../../../../utils/form/use-state/handleChange';
+import ModalConfYesNo from './ModalConfYesNo';
+import { buttonFabType } from '../../../../../types';
+import handleChange from '../../../../../utils/form/use-state/handleChange';
 
 ModalBtn.propTypes = {
     modal: PropTypes.object.isRequired,
@@ -12,13 +12,13 @@ ModalBtn.propTypes = {
 }
 
 export default function ModalBtn({
-    modal, button, setSelectedValue }) {
+    modalData, button, setSelectedValue, setRun, run }) {
     const [open, setOpen] = useState(false);
 
     const {
         title,
         iconFontAwesome,
-        variant,
+        iconMarginLeft,
         top,
         left,
         backgroundColor } = button;
@@ -44,17 +44,19 @@ export default function ModalBtn({
             <ButtonFab
                 title={title}
                 iconFontAwesome={iconFontAwesome}
-                variant={variant}
+                iconMarginLeft={iconMarginLeft}
                 top={top}
                 left={left}
                 style={styles.fab}
                 backgroundColor={backgroundColor}
                 onClick={onOpen}
             />
-            <ModalTextField
+            <ModalConfYesNo
                 open={open}
                 onClose={onClose}
-                modal={modal}
+                modalData={modalData}
+                setRun={setRun}
+                run={run}
             />
         </div>
     );

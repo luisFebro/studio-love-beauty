@@ -104,6 +104,7 @@ exports.getList = (req, res) => {
     });
 }
 
+// for autocomplete
 exports.getAllClientsNameFromStaff = (req, res) => {
     const staffId = req.query.staffId;
 

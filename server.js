@@ -37,6 +37,7 @@ app.use('/api/staff-booking', require('./routes/staffBooking'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/database', require('./routes/database'));
+app.use('/api/finance', require('./routes/finance'));
 // Serve static files such as images, CSS files, and JavaScript files for the React frontend <app></app>
 isProduction && app.use(express.static(path.join(__dirname, 'client/build')))
 // END MIDDLEWARES

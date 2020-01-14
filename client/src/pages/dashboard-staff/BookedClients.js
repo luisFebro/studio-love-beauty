@@ -89,7 +89,7 @@ function BookedClients({ match, run }) {
            _id: booking._id,
            mainHeading: booking.clientName.cap(),
            secondaryHeading: parse(`
-                > Data e Horário:
+                > Data e Horário Agendamento:
                 <br />
                 ${typeof booking.bookingDate === "undefined" ? "Sem Agendamento" : moment(booking.bookingDate).calendar(null, { sameElse: 'LLL'})}
                 <br />

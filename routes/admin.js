@@ -39,7 +39,7 @@ router.get("/verification-pass", readVerificationPass);
 router.post("/verification-pass", checkVerificationPass);
 
 // Services CRUD
-router.post("/service/:userId", mwIsAdmin, createService);
+router.post("/service/:userId", mwIsAdmin, createService); // :userId is used to verify mwIsAdmin
 router.get("/service/list/all", readServicesList);
 router.put("/service/:userId", mwIsAdmin, updateService);
 router.delete("/service/:userId", mwIsAdmin, deleteService);

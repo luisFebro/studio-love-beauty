@@ -13,6 +13,7 @@ import PanelHiddenContent from './PanelHiddenContent';
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
 
 export default function RegisteredUsersList() {
+    const [configBtns, setConfigBtns] = useState(false);
     const [data, setData] = useState({
         searchTerm: ""
     });
@@ -70,6 +71,7 @@ export default function RegisteredUsersList() {
             actions={actions}
             backgroundColor="var(--mainDark)"
             color="var(--mainWhite)"
+            statusAfterClick={configBtns}
             ToggleButton={
                 <ButtonFab
                     backgroundColor="var(--mainPink)"
@@ -77,6 +79,10 @@ export default function RegisteredUsersList() {
                     iconFontAwesome="fas fa-plus"
                     iconMarginLeft="0"
                     iconAfterClick="fas fa-minus"
+                    actionAfterClick={{
+                        setStatus: setConfigBtns,
+                        status: configBtns,
+                    }}
                 />
             }
             allUsers={allUsers}

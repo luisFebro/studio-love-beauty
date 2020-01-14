@@ -57,6 +57,7 @@ app.listen(PORT, () => {
 
 // NOTES
 // n1: bodyparser middleware - Allow the app to accept JSON on req.body || replaces body-parser package
+// you can also includes "app.use(express.urlencoded({extended: false}))"
 // n2: this was used before:
 /*
 // CORS - configure an Express server with CORS headers (because the React app is going to be published in a different port), JSON requests, and /api as the path

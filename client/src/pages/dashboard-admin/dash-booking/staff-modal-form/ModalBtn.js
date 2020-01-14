@@ -20,6 +20,8 @@ export default function ModalBtn({ modal, button, setSelectedValue, setRun, run 
         left,
         top,
         fontSize,
+        variant,
+        title,
         iconMarginLeft,
         iconFontAwesome,
         backgroundColor } = button;
@@ -39,6 +41,8 @@ export default function ModalBtn({ modal, button, setSelectedValue, setRun, run 
                 left={left}
                 top={top}
                 fontSize={fontSize}
+                title={title}
+                variant={variant}
                 iconMarginLeft={iconMarginLeft}
                 iconFontAwesome={iconFontAwesome}
                 backgroundColor={backgroundColor}

@@ -21,6 +21,7 @@ import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDot
 moment.updateLocale('pt-br');
 
 function BookedClients({ match, run }) {
+    const [staffBookingRun, setStaffBookingRun] = useState(false);
     const [isSearching, setIsSearching] = useState(false); // n1
     const [docsLoading, setDocsLoading] = useState({
         skip: 0,
@@ -63,7 +64,7 @@ function BookedClients({ match, run }) {
                 totalDocsSize: res.data.totalSize,
             })
         })
-    }, [run])
+    }, [run, staffBookingRun])
 
     const onSearchChange = e => {
         const querySearched = e.target.value;
@@ -113,6 +114,8 @@ function BookedClients({ match, run }) {
                 />
             }
             allUsers={allStaffBookings}
+            setStaffBookingRun={setStaffBookingRun}
+            staffBookingRun={staffBookingRun}
         />
     );
     //End ExpansionPanel Content

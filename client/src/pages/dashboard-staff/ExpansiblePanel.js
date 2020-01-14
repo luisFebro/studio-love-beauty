@@ -11,6 +11,7 @@ import clsx from 'clsx';
 // Customized Data
 import { useStoreDispatch } from 'easy-peasy';
 import ModalBtn from './modal/select/ModalBtn';
+import {default as ModalBtnEditInfo} from '../dashboard-admin/dash-booking/staff-modal-form/ModalBtn';
 import ButtonFab from '../../components/buttons/material-ui/ButtonFab';
 import { findAnItem } from '../../redux/actions/globalActions';
 import { showModalConfYesNo } from '../../redux/actions/modalActions';
@@ -70,7 +71,9 @@ export default function ExpansiblePanel({
     backgroundColor,
     ToggleButton,
     color,
-    allUsers }) {
+    allUsers,
+    setStaffBookingRun,
+    staffBookingRun }) {
 
     const classes = useStyles();
 
@@ -134,6 +137,25 @@ export default function ExpansiblePanel({
                     }}
                 />
             </div>
+            <ModalBtnEditInfo
+                button={{
+                    backgroundColor: "grey",
+                    iconMarginLeft:  '0px',
+                    variant: "extended",
+                    title: "editar info",
+                    size: "small",
+                    top: -27,
+                    left: 200,
+                }}
+                modal={{
+                    title: `Agendamento de Clientes<br />(EDIÇÃO)`,
+                    txtBtn: "Atualizar",
+                    iconBtn: "fas fa-exchange-alt",
+                    modalData: panel,
+                }}
+                setRun={setStaffBookingRun}
+                run={staffBookingRun}
+            />
         </div>
     );
 

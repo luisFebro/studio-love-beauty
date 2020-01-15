@@ -101,7 +101,8 @@ export default function ModalForm({
     const styles = {
         dialog: {
             margin: 'auto',
-            width: '90%'
+            width: '90%',
+            maxWidth: '450px'
         },
         form: {
             margin: 'auto',
@@ -183,7 +184,7 @@ export default function ModalForm({
             <TextField
                 required
                 label="NOME CLIENTE:"
-                autocomplete="off"
+                autoComplete="off"
                 name="clientName"
                 value={clientName}
                 onChange={handleChange(setData, data)}
@@ -194,7 +195,7 @@ export default function ModalForm({
                 margin="dense"
             />
             <Select
-              style={styles.fieldForm} // ADD HOUR CAN NOT EQUAL IN THE SAME DAY
+              style={styles.fieldForm}
               labelId="service"
               onChange={handleChange(setData, data)}
               name="service"

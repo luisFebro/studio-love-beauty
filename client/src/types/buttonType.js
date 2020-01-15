@@ -38,6 +38,7 @@ export const buttonMultiType = {
     backgroundColor: string,
     backColorOnHover: string,
     textTransform: oneOf(['uppercase', 'lowercase', 'capitalize']),
+    disabled: bool,
 }
 
 

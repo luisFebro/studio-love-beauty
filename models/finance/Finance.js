@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 const collectionName = "finances";
 
 const data = {
-    agentId: String,
     agentRole: {
         type: String,
         enum: ["colaborador", "admin"]

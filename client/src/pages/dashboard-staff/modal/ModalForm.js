@@ -88,7 +88,8 @@ export default function ModalForm({
     const styles = {
         dialog: {
             margin: 'auto',
-            width: '90%'
+            width: '90%',
+            maxWidth: '450px'
         },
         form: {
             margin: 'auto',
@@ -179,7 +180,7 @@ export default function ModalForm({
                 required
                 label="NOME CLIENTE:"
                 name="clientName"
-                autocomplete="off"
+                autoComplete="off"
                 onChange={handleChange(setData, data)}
                 error={errorClientName ? true : false}
                 variant="standard"

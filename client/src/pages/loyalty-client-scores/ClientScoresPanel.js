@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import HomeButton from '../../components/buttons/HomeButton';
 import { updateUser } from "../../redux/actions/userActions";
 import { showSnackbar } from "../../redux/actions/snackbarActions";
 import TitleComponent from '../../components/TitleComponent';
@@ -92,7 +91,7 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
         success &&
         <div className="mr-md-5 ml-md-4 mt-5 animated slideInLeft fast">
             <div style={{minWidth: 300}} className="mx-2">
-                <span className="text-main-container">{name.cap()},</span>
+                <span className="text-main-container">{name && name.cap()},</span>
                 <TitleComponent>
                    Veja aqui seus Pontos
                 </TitleComponent>
@@ -120,7 +119,6 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     </div>
                 </div>
                 <p style={{fontSize: "18px"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*Valor Decimal Arredondado." : null}</p>
-                <HomeButton hideComp="clientScoresPanel" />
             </div>
         </div>
     );

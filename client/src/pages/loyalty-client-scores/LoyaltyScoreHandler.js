@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import ModalStaticBtn from './modal-form/ModalStaticBtn';
 import { useStoreState } from 'easy-peasy';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
@@ -35,7 +36,27 @@ export default function LoyaltyScoreHandler() {
                 valuePaid={valuePaid}
                 verification={verification}
             />
-            <ImageLogo />
+            <div className="container-center-col">
+                <ImageLogo />
+                {showClientScoresPanel &&
+                <div>
+                    <ModalStaticBtn
+                        button={{
+                            title: "Finalizar",
+                            backgroundColor: 'var(--mainPink)',
+                            backColorOnHover: "pink",
+                        }}
+                        modal={{
+                            title:"Registro Financeiro",
+                            txtBtn: "Registrar e Voltar",
+                            iconBtn: "fas fa-save",
+                            modalData: {
+                                valuePaid,
+                            }
+                        }}
+                    />
+                </div>}
+            </div>
             <Fragment>
                {
                     !showPurchaseValue &&

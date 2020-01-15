@@ -46,7 +46,9 @@ export default function ButtonMulti({
     onClick,
     iconFontAwesome,
     component="button",
-    variant="contained", ...props }) {
+    variant="contained",
+    disabled,
+    ...props }) {
     const { sText, sBtnColors, sBtnDefaultColors, sIcon } = useStyles(props);
 
     const showIcon = iconFontAwesome => (
@@ -61,6 +63,7 @@ export default function ButtonMulti({
             size={size}
             variant={(variant === 'link') ? null : variant}
             color="primary"
+            disabled={disabled}
             component={component}
         >
             <span className={variant === 'contained' ? sText : null}>{title || children}</span>

@@ -6,9 +6,9 @@ const { msgG } = require('../_msgs/globalMsgs');
 exports.create = (req, res) => {
     const newFinanceData = req.body;
 
-    Finance.findOne({ description: req.body.description })
+    Finance.findOne({ agentName: req.body.agentName }) // duplicated data will be handled with prevent Default after clicking on submit.
     .exec((err, finance) => {
-        if(finance) return res.status(400).json(msgG("error.alreadyAdded", "operação financeira"))
+        // if(agentName) return res.status(400).json(msgG("error.alreadyAdded", "operação financeira"))
         const newFinanceOps = new Finance(newFinanceData);
 
         newFinanceOps.save((err, itemCreated) => {
@@ -68,7 +68,7 @@ exports.getCashOpsList = (req, res) => {
             queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
             queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
             break;
-        case 'total':
+        case 'all':
             queryCashOut = { cashOutValue: { $gt: 0}};
             queryCashIn = { cashInValue: { $gt: 0}};
             break;
@@ -76,9 +76,11 @@ exports.getCashOpsList = (req, res) => {
             console.log("Something did not work in the query switch in getCashOpsList")
     }
     Finance.find(queryCashOut)
+    .sort({ createdAt: -1 })
     .exec((err, cashOutOps) => {
         if (err) return res.status(500).json(msgG("error.systemError", err));
         Finance.find(queryCashIn)
+        .sort({ createdAt: -1 })
         .exec((err, cashInOps) => {
             if (err) return res.status(500).json(msgG("error.systemError", err));
             res.json({

@@ -6,11 +6,12 @@
     --mainBlack: "black";
     /*End Primary Colors*/
     --mainRed: #ed213a; /*#ed213a */
-    --lightRed: #ed213a;
+    --expenseRed: #ff4757;
     --mainWhite: #ecf0f1;
     --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
     --mainYellow: #fff200;
     --mainGreen: #4cd137;
+    --incomeGreen: #2ecc71;
     /*temp*/
     --mainBlue: #2a2a72;
     --lightBlue: #009ffd;
@@ -132,6 +133,18 @@ hr {
 .text-em-1 {font-size: 1em}
 .text-em-1-2 {font-size: 1.2em}
 .text-em-1-3 {font-size: 1.3em}
+.text-em-1-4 {font-size: 1.4em}
+.text-em-1-5 {font-size: 1.5em}
+.text-em-1-6 {font-size: 1.6em}
+.text-em-1-7 {font-size: 1.7em}
+.text-em-1-8 {font-size: 1.8em}
+.text-em-1-9 {font-size: 1.9em}
+.text-em-2 {font-size: 2.0em}
+.text-em-2-1 {font-size: 2.1em}
+.text-em-2-2 {font-size: 2.2em}
+.text-em-2-3 {font-size: 2.3em}
+.text-em-2-4 {font-size: 2.4em}
+.text-em-2-5 {font-size: 2.5em}
 
 /*Letters border*/
 
@@ -146,6 +159,9 @@ hr {
 
 .text-shadow { /*recommended*/
     text-shadow: 1px 1px 3px black;
+}
+.no-text-shadow { /*recommended*/
+    text-shadow: none;
 }
 .text-shadow-white {
    text-shadow: 1px 1px 3px white;

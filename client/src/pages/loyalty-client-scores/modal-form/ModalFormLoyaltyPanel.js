@@ -146,10 +146,12 @@ function ModalFormLoyaltyPanel({
             showSnackbar(dispatch, `Registro Financeiro Realizado!`, 'success', 5000)
             clearForm();
             onClose();
-            hideComponent(dispatch, "clientScoresPanel")
-            showComponent(dispatch, "login")
-            logout(dispatch);
-            history.push("/acesso/verificacao")
+            setTimeout(() => {
+                hideComponent(dispatch, "clientScoresPanel")
+                showComponent(dispatch, "login")
+                logout(dispatch);
+                history.push("/acesso/verificacao")
+            }, 2500)
         })
     };
 

@@ -21,5 +21,5 @@ export const easyStore = {
     animationReducer,
     adminReducer,
     componentReducer,
-    staffBookingReducer
+    staffBookingReducer,
 };

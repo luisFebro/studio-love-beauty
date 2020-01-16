@@ -71,6 +71,7 @@ export default function Illustration({
                 <p
                     className={`move-txt-from-center ${txtBorder} ${txtStyle || "text-main-container"}`}
                     style={{
+                        minWidth: '500px',
                         fontSize: fontSize || '2rem',
                         textAlign: txtAlign || "center",
                         color: txtColor || "black",

@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment } from 'react';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { CLIENT_URL } from '../../../config/clientUrl';
+import TitleContainer from '../../../components/TitleContainer';
 import truncateWords from '../../../utils/string/truncateWords';
 import styled from 'styled-components';
 import { readHighestScores } from '../../../redux/actions/userActions';
@@ -49,11 +50,11 @@ export default function RankingPondium() {
         <DivPodium
             className="my-3 container-center flex-column"
         >
-            <div
-                className="py-3 podium-title text-main-container text-border-white"
-            >
-                Podium Fidelidade
-            </div>
+            <TitleContainer
+                title="Podium Fidelidade"
+                color="var(--mainPink)"
+                my="my-4"
+            />
             <div className="podium-container">
                 <img
                     src={`${CLIENT_URL}/img/icons/podium.svg`}

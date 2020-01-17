@@ -23,7 +23,7 @@ export default function FinanceGraph({ dashData }) {
                         maxWidth: 400
                     }}
                     txtImgConfig = {{
-                        topPos: "-10%",
+                        topPos: "-5%",
                         txt: `NENHUM MOVIMENTO FINANCEIRO ENCONTRADO NESTE PERÍODO`,
                         txtStyle: "text-title",
                         txtBorder: "border-white",
@@ -73,12 +73,16 @@ export default function FinanceGraph({ dashData }) {
                           }}
                           rootProps={{ 'data-testid': '2' }}
                         />
-                        <section>
+                        <section className="d-flex justify-content-center align-items-center">
+                            <div className="mr-4">
+                                <img src={`${CLIENT_URL}/img/icons/money.svg`} width={70} height="auto" alt="dinheiro icone"/>
+                            </div>
                             <p
                                 style={{animationIterationCount: 3, color: balanceValue < 0 ? "var(--expenseRed)" : "var(--incomeGreen)" }}
                                 className="animated bounce delay-3s no-text-shadow text-center text-em-2-5 font-weight-bold"
                             >
-                                SALDO: R${balanceValue}</p>
+                                SALDO: R${balanceValue}
+                            </p>
                         </section>
                     </Tilt>
                 </div>

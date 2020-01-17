@@ -193,6 +193,8 @@ export default function Register() {
                     views={["month", "date"]}
                     label="Quando é o seu aniversário?"
                     name="birthday"
+                    okLabel="Selecionar"
+                    okCancel="Voltar"
                     value={selectedDate}
                     onChange={handleDateChange}
                     InputProps={{

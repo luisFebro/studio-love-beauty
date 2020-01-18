@@ -8,11 +8,12 @@ import TitleContainer from '../../../../components/TitleContainer';
 
 const isSmall = window.Helper.isSmallScreen();
 
-export default function FinanceGraph({ dashData }) {
+export default function FinanceGraph({ dashData, currComponent }) {
     const { cashInSumAll, cashOutSumAll } = dashData;
     const balanceValue = cashInSumAll - cashOutSumAll;
 
     return (
+        currComponent === "FinanceGraph" &&
         <div className="animated slideInUp m-5">
             {!cashInSumAll && !cashOutSumAll
             ? (
@@ -36,7 +37,7 @@ export default function FinanceGraph({ dashData }) {
                         options={{ max : 30, reverse: false }}
                     >
                         <TitleContainer
-                            title="GRÁFICO BALANÇO FINANCEIRO"
+                            title={isSmall ? "GRÁFICO BALANÇO" : "GRÁFICO BALANÇO FINANCEIRO"}
                             className="no-text-shadow"
                         />
                         <Chart
@@ -59,6 +60,7 @@ export default function FinanceGraph({ dashData }) {
                             bold: true,
                             legend: `${isSmall ? 'none' : true}`,
                             backgroundColor: '#f7f1e3',
+                            tooltip: { trigger: isSmall ? 'none' : true },
                             is3D: true,
                             textStyle: {
                                 color: 'white', // not working

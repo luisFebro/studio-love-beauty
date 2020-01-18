@@ -5,6 +5,8 @@ import truncateWords from '../utils/string/truncateWords';
 import { HashLink } from 'react-router-hash-link';
 import { ButtonContainerPressedEffectDark as Dark } from '../components/buttons/Default';
 
+const isSmall = window.Helper.isSmallScreen();
+
 Illustration.propTypes = {
     img: PropTypes.string.isRequired,
     imgStyle: PropTypes.object,
@@ -68,19 +70,21 @@ export default function Illustration({
                     src={img}
                     alt={alt}
                 />
-                <p
-                    className={`move-txt-from-center ${txtBorder} ${txtStyle || "text-main-container"}`}
-                    style={{
-                        minWidth: '500px',
-                        fontSize: fontSize || '2rem',
-                        textAlign: txtAlign || "center",
-                        color: txtColor || "black",
-                        top: topPos || "5%",
-                        left: leftPos || "50%",
-                    }}
-                >
-                    {truncateWords(txt, 55)}
-                </p>
+                <div className="container-center">
+                    <p
+                        className={`move-txt-from-center ${txtBorder} ${txtStyle || "text-main-container"}`}
+                        style={{
+                            minWidth: `${isSmall ? "300px" : "500px"}`,
+                            fontSize: fontSize || '2rem',
+                            textAlign: txtAlign || "center",
+                            color: txtColor || "black",
+                            top: `${isSmall ? "35%" : topPos || "5%"}`,
+                            left: leftPos || "50%",
+                        }}
+                    >
+                        {truncateWords(txt, 55)}
+                    </p>
+                </div>
             </DivWrapper>
             {showActionButton(actionButton)}
         </Fragment>

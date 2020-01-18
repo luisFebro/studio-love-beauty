@@ -3,6 +3,12 @@ import { convertDotToComma } from '../../../../utils/numbers/convertDotComma';
 import LoadMoreItemsButton from '../../../../components/buttons/LoadMoreItemsButton';
 import { getPeriodQuery } from '../../../../redux/actions/financeActions';
 import PropTypes from 'prop-types';
+import CashExpansiblePanel from './cash-expansible-panels/CashExpansiblePanel';
+import CashPanelHiddenContent from './cash-expansible-panels/CashPanelHiddenContent';
+import parse from 'html-react-parser';
+import moment from 'moment';
+
+const isSmall = window.Helper.isSmallScreen();
 
 CashInList.propTypes = {
     setCashInData: PropTypes.func,
@@ -25,7 +31,7 @@ export default function CashInList({
         root: {
             margin: '15px auto',
             paddingBottom: '25px',
-            width: '90%',
+            width: `${isSmall ? '100%' : '90%'}`,
             maxWidth: '450px',
             height: 'auto',
             borderRadius: '10px',
@@ -40,47 +46,70 @@ export default function CashInList({
         }
     }
 
+    const showTitleAndSummary = () => (
+        <section>
+            <p
+                className="pt-4 text-main-container text-center text-em-2-0"
+            >
+                ENTRADA
+            </p>
+            <p
+                className="py-3 px-3 text-main-container text-left"
+            >
+                Total de Operações: <strong className="text-em-2">{isParentLoading ? "..." : cashInData.totalSize}</strong>
+                <br />
+                Valor Total: {isSmall ? <br /> : null}<strong className="text-em-2">{isParentLoading ? "..." : `R$ ${convertDotToComma(cashInData.sumAll)}`}</strong>
+            </p>
+        </section>
+    );
+
+    // ExpansionPanel Content
+    const actions = cashInData.list.map(item => {
+        return({
+           _id: item._id,
+           mainHeading: item.cashInValue,
+           secondaryHeading: parse(`&#187; Realizado pelo ${item.agentRole.toUpperCase()}: <br /><strong>${item.agentName}<strong /><br />&#187; Atualizado ${moment(item.updatedAt).fromNow()}  atrás.`),
+           itemData: item,
+           hiddenContent: <CashPanelHiddenContent data={item} setRun={null} run={null} />
+        });
+    })
+
+    const showExpansionPanel = () => (
+        <CashExpansiblePanel
+            actions={actions}
+            backgroundColor="var(--incomeGreen)"
+            color="var(--mainWhite)"
+        />
+    );
+    //End ExpansionPanel Content
+
+    const showMoreItemsBtn = () => (
+        <LoadMoreItemsButton
+            url={`/api/finance/cash-ops/list/${period}?skip=${"SKIP"}${getPeriodQuery(period, chosenDate)}`}
+            objPathes={{
+                strList: "data.cashInOps.list",
+                strChunkSize: "data.cashInOps.chunkSize",
+                strTotalSize: "data.cashInOps.totalSize",
+            }}
+            setData={setCashInData}
+            data={cashInData}
+            button={{
+                title: "Carregar mais Registros",
+                loadingIndicator: "Carregando mais agora...",
+                backgroundColor: '#2ecc71',
+            }}
+        />
+    );
+
     return (
         <div style={styles.root}>
-            <section>
-                <p
-                    className="pt-4 text-main-container text-center text-em-2-0"
-                >
-                    ENTRADA
-                </p>
-                <p
-                    className="py-3 px-3 text-main-container text-left"
-                >
-                    Total de Operações: <strong className="text-em-2">{isParentLoading ? "..." : cashInData.totalSize}</strong>
-                    <br />
-                    Valor Total: <strong className="text-em-2">{isParentLoading ? "..." : `R$ ${convertDotToComma(cashInData.sumAll)}`}</strong>
-                </p>
-            </section>
+            {showTitleAndSummary()}
             {isParentLoading
             ? loadingIndicator
             : (
                 <React.Fragment>
-                    {cashInData.list.map(panel => (
-                        <div key={panel._id} style={styles.panel} className="text-em-2-5">
-                            <p>R$ {convertDotToComma(panel.cashInValue)}</p>
-                            <p>{panel.agentName}</p>
-                        </div>
-                    ))}
-                    <LoadMoreItemsButton
-                        url={`/api/finance/cash-ops/list/${period}?skip=${"SKIP"}${getPeriodQuery(period, chosenDate)}`}
-                        objPathes={{
-                            strList: "data.cashInOps.list",
-                            strChunkSize: "data.cashInOps.chunkSize",
-                            strTotalSize: "data.cashInOps.totalSize",
-                        }}
-                        setData={setCashInData}
-                        data={cashInData}
-                        button={{
-                            title: "Carregar mais Registros",
-                            loadingIndicator: "Carregando mais agora...",
-                            backgroundColor: '#2ecc71',
-                        }}
-                    />
+                    {showExpansionPanel()}
+                    {showMoreItemsBtn()}
                 </React.Fragment>
             )}
         </div>

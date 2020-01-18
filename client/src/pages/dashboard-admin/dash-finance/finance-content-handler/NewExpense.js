@@ -1,9 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function NewExpense() {
+NewExpense.propTypes = {
+    setCurrComponent: PropTypes.func,
+    currComponent: PropTypes.string,
+}
+
+export default function NewExpense({ setCurrComponent, currComponent }) {
     return (
-        <div className="animated slideInLeft d-none">
+        currComponent === "NewExpense" &&
+        <div id="new-expense" className="animated slideInRight">
             I am the new Expense.
+            <button onClick={() => setCurrComponent("FinanceGraph")}>Voltar</button>
         </div>
     );
 }

@@ -9,6 +9,8 @@ BigActionButton.propTypes = {
     color: PropTypes.string,
     backgroundColor: PropTypes.string,
     backColorOnHover: PropTypes.string,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
 }
 
 export default function BigActionButton({
@@ -17,6 +19,8 @@ export default function BigActionButton({
     backgroundColor,
     backColorOnHover,
     backColorOnKey,
+    className,
+    onClick,
     fontAwesomeIcon
 }) {
     const styles = {
@@ -26,22 +30,22 @@ export default function BigActionButton({
         border: 'none',
         fontWeight: 'bolder',
         fontSize: '1.5em',
-        padding: '25px 35px',
+        maxWidth: '250px',
+        width: '100%',
+        padding: '25px 15px',
         borderRadius: '20px',
     }
     return (
         <button
             style={styles}
-            className="pressed-effect d-flex text-shadow align-items-center"
+            className={`${className} pressed-effect d-flex text-center text-shadow align-items-center`}
+            onClick={onClick}
             onMouseOver={e => e.target.style.backgroundColor=backColorOnHover}
             onMouseOut={e => e.target.style.backgroundColor=backgroundColor}
             onKeyDown={e => e.target.style.backgroundColor=backColorOnKey}
         >
             {title}
             <i
-                onMouseOver={e => e.target.style.backgroundColor=backColorOnHover}
-                onMouseOut={e => e.target.style.backgroundColor=backgroundColor}
-                onKeyDown={e => e.target.style.backgroundColor=backColorOnKey}
                 className={`${fontAwesomeIcon} text-em-1-9 ml-3`}
             >
             </i>

@@ -12,6 +12,8 @@ CashOutList.propTypes = {
     queryData: PropTypes.object,
 }
 
+const isSmall = window.Helper.isSmallScreen();
+
 export default function CashOutList({
     setCashOutData,
     cashOutData,
@@ -26,7 +28,7 @@ export default function CashOutList({
         root: {
             margin: '15px auto',
             paddingBottom: '25px',
-            width: '90%',
+            width: `${isSmall ? '100%' : '90%'}`,
             maxWidth: '450px',
             minHeight: 'auto',
             borderRadius: '10px',

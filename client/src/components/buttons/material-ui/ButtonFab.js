@@ -25,6 +25,7 @@ export default function ButtonFab({
     iconFontSize,
     actionAfterClick,
     onClick,
+    shadowColor,
     title }) {
     const [toggle, setToggle] = useState(false);
 
@@ -41,7 +42,8 @@ export default function ButtonFab({
             left: `${left || 0}px`,
             outline: 'none',
             color: color || 'var(--mainWhite)',
-            backgroundColor:  backgroundColor || "#4834d4"
+            backgroundColor:  backgroundColor || "#4834d4",
+            filter: shadowColor ? `drop-shadow(.001em .15em .2em ${shadowColor})` : '',
         }
     }
 
@@ -53,13 +55,16 @@ export default function ButtonFab({
     const handleToggle = () => {
         setToggle(!toggle);
         actionAfterClick && actionAfterClick.setStatus(!actionAfterClick.status);
+        actionAfterClick && actionAfterClick.setFunction();
     }
 
 
     return (
         <Fab
             variant={variant || "round"}
-            onClick={iconAfterClick ? handleToggle : onClick}
+            onClick={
+                iconAfterClick
+                ? handleToggle : onClick}
             size={ size || "small" }
             aria-label={title}
             style={styles.fab}

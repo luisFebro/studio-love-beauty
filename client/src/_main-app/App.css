@@ -12,8 +12,8 @@
     --mainYellow: #fff200;
     --mainGreen: #4cd137;
     --incomeGreen: #2ecc71;
-    /*temp*/
     --mainBlue: #2a2a72;
+    --darkBlue: #2c3e50;
     --lightBlue: #009ffd;
 }
 
@@ -53,6 +53,10 @@ hr {
     max-width: 150px;
 }
 
+.z-index-minus-1 {
+    z-index: -1;
+}
+
 .fixedNav {
     position: fixed;
     width: 100%;
@@ -83,7 +87,6 @@ hr {
 .text-main-container,
 .text-sub-title {
     font: normal 1.7rem 'Cabin', sans-serif;
-    margin: 0;
 }
 
 .text-default,
@@ -166,6 +169,10 @@ hr {
 .text-shadow-white {
    text-shadow: 1px 1px 3px white;
 }
+
+.text-decoration-none {
+    text-decoration: none;
+}
 /*END TEXTS*/
 
 /*CONTAINERS*/
@@ -180,6 +187,10 @@ hr {
     justify-content: center;
     align-items: center;
     flex-flow: column wrap;
+}
+.item-align-center {
+    display: flex;
+    align-items: center;
 }
 .margin-auto-90 {
     margin: auto;
@@ -273,6 +284,10 @@ hr {
 .main-letters-shadow {
     font-size: 1.9rem;
     filter: drop-shadow(.001em .1em .1em var(--mainDark));
+}
+
+.shadow-elevation-white {
+    filter: drop-shadow(.001em .1em .1em var(--mainWhite));
 }
 
 .main-letters-shadow:hover {

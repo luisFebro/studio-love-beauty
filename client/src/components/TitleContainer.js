@@ -11,12 +11,14 @@ TitleContainer.propTypes = {
 
 export default function TitleContainer({ title, subTitle, color, my, className }) {
     return (
-        <p
-            className={`${my || "my-2"} ${className} text-em-2-5 text-main-container text-center font-weight-bold`}
-            style={{color: color}}
-        >
-            {title}
-            <span className="mt-2 text-em-2-0">{subTitle}</span>
-        </p>
+        <div className={`${my || "my-2"} ${className} container-center`}>
+            <h1
+                className={`text-em-2-5 text-center text-main-container font-weight-bold`}
+                style={{color: color}}
+            >
+                {title}
+                <span className="mt-2 text-em-2-0">{subTitle}</span>
+            </h1>
+        </div>
     );
 }

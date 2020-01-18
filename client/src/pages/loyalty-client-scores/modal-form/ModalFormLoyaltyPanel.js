@@ -20,7 +20,7 @@ import moment from 'moment';
 import { modalTextFieldDashboardType } from '../../../types';
 import { updateUser } from '../../../redux/actions/userActions';
 import { createBooking, getStaffBookingList } from '../../../redux/actions/staffBookingActions';
-import { getAllStaffNames, createFinance } from '../../../redux/actions/financeActions';
+import { getAllAvailableNames, createFinance } from '../../../redux/actions/financeActions';
 import { hideComponent, showComponent } from "../../../redux/actions/componentActions";
 import { logout } from "../../../redux/actions/authActions";
 import { readServicesList } from '../../../redux/actions/adminActions';
@@ -76,7 +76,7 @@ function ModalFormLoyaltyPanel({
         readServicesList(dispatch)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            getAllStaffNames(dispatch)
+            getAllAvailableNames(dispatch)
             .then(res => {
                 if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
                 setStaffNames(res.data)

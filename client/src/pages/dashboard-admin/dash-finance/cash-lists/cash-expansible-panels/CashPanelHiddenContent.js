@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CreatedAtBr from '../../../CreatedAtBr';
+import capitalize from '../../../../../utils/string/capitalize';
 
 CashHiddenContent.propTypes = {
     data: PropTypes.object.isRequired,
@@ -11,6 +12,7 @@ export default function CashHiddenContent({ data }) {
         service,
         description,
         paymentType,
+        installmentsIfCredit,
         createdAt,
     } = data;
 
@@ -34,13 +36,13 @@ export default function CashHiddenContent({ data }) {
             <p>
                 <span className="font-weight-bold">&#187; Descrição:</span>
                 <br />
-                {description}
+                {capitalize(description)}
             </p>
 
             <p>
                 <span className="font-weight-bold">&#187; Meio de Pamento:</span>
                 <br />
-                {paymentType}
+                {paymentType}{paymentType === 'crédito' ? ` em ${installmentsIfCredit} vezes.` : ""}
             </p>
 
             <CreatedAtBr

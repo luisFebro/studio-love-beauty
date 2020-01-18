@@ -2,24 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TitleContainer from '../../../../components/TitleContainer';
 import SideButton from '../../../../components/buttons/SideButton';
+import BalanceForm from './BalanceForm';
 
-NewExpense.propTypes = {
+NewIncome.propTypes = {
     setCurrComponent: PropTypes.func,
     currComponent: PropTypes.string,
 }
 
-
-export default function NewExpense({ setCurrComponent, currComponent }) {
+export default function NewIncome({
+    setCurrComponent,
+    currComponent,
+    setRun,
+    run }) {
     const styles = {
         root: {
-            width: '100%'
+            width: '100%',
         },
         mainContent: {
             display: 'flex',
             flexBasis: '90%',
-            minHeight: '500px' //temp
-        }
+            justifyContent: 'center',
+            minHeight: 'auto' //temp
+        },
     }
+
+    const showMainContent = () => (
+        <div style={styles.mainContent}>
+            <BalanceForm
+                setRun={setRun}
+                run={run}
+                setCurrComponent={setCurrComponent}
+                isExpenseForm={true}
+            />
+        </div>
+    );
 
     return (
         currComponent === "NewExpense" &&
@@ -27,15 +43,13 @@ export default function NewExpense({ setCurrComponent, currComponent }) {
             <TitleContainer
                 title="NOVA SAÍDA"
             />
-            <div className="my-5 animated slideInRight d-flex">
-                <SideButton
+           <div className="my-5 animated slideInRight d-flex">
+               <SideButton
                     onClick={() => setCurrComponent("FinanceGraph")}
                     fontAwesomeIcon="fas fa-angle-left"
                 />
-                <div style={styles.mainContent}>
-                    I am the new Expense.
-                </div>
-            </div>
+                {showMainContent()}
+           </div>
         </div>
     );
 }

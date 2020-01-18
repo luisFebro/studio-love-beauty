@@ -6,10 +6,23 @@ import { CLIENT_URL } from '../../../../config/clientUrl';
 import ButtonMulti from '../../../../components/buttons/material-ui/ButtonMulti';
 import handleChange from '../../../../utils/form/use-state/handleChange';
 import TextField from '@material-ui/core/TextField';
+import { showSnackbar } from '../../../../redux/actions/snackbarActions';
+
+//CUSTOM DATA
+import { convertCommaToDot } from '../../../../utils/numbers/convertDotComma';
 import { readServicesList } from '../../../../redux/actions/adminActions';
+import { getAllAvailableNames, createFinance } from '../../../../redux/actions/financeActions';
+import isMoneyBrValidAndAlert from '../../../../utils/numbers/isMoneyBrValidAndAlert';
+import moment from 'moment';
+import { withRouter } from 'react-router-dom';
 
 
-export default function BalanceForm({ isExpenseForm = false }) {
+function BalanceForm({
+    isExpenseForm = false,
+    setRun,
+    run,
+    setCurrComponent,
+    history }) {
     const [data, setData] = useState({
         paymentType: 'dinheiro',
         agentName: 'selecione nome:',
@@ -21,6 +34,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
         adminNamesList: [],
         // do not change
         statusCheck: 'pago',
+        formattedDate: moment(new Date()).format('LLLL'),
         agentRole: 'admin',
     })
     const {
@@ -31,8 +45,11 @@ export default function BalanceForm({ isExpenseForm = false }) {
         cashOutValue,
         description,
         service,
+        formattedDate,
         adminNamesList,
     } = data;
+
+    const [error, setError] = useState("");
 
     const { servicesList } = useStoreState(state => ({
         servicesList: state.adminReducer.cases.services,
@@ -40,7 +57,12 @@ export default function BalanceForm({ isExpenseForm = false }) {
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        readServicesList(dispatch);
+        readServicesList(dispatch)
+        getAllAvailableNames(dispatch, true)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setData({ ...data, adminNamesList: res.data})
+        })
     }, [])
 
     const styles = {
@@ -55,7 +77,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
         },
         form: {
             maxWidth: '400px',
-            background: 'var(--incomeGreen)',
+            background: `${isExpenseForm ? 'var(--expenseRed)' : 'var(--incomeGreen)'}`,
             borderRadius: '10px',
             padding: '25px'
         },
@@ -75,12 +97,67 @@ export default function BalanceForm({ isExpenseForm = false }) {
         }
     }
 
-    const handleSubmit = saveType => {
+    const clearForm = () => {
+        setData({
+            ...data,
+            paymentType: 'dinheiro',
+            agentName: 'selecione nome:',
+            installmentsIfCredit: 2,
+            cashInValue: "",
+            cashOutValue: "",
+            description: '',
+            service: 'outros',
+            formattedDate: moment(new Date()).format('LLLL'),
+            // do not change
+            statusCheck: 'pago',
+            agentRole: 'admin',
+        })
+    }
 
+    const handleSubmit = saveType => {
+        // Validation
+        let cashType = cashInValue;
+        if(isExpenseForm) {
+            cashType = cashOutValue;
+        }
+        if(!isMoneyBrValidAndAlert(cashType, showSnackbar, dispatch)) {
+            setError("cashValue");
+            return;
+        }
+
+        if(description === "") {
+            showSnackbar(dispatch, "Insira uma breve descrição", 'error')
+            setError("description");
+            return;
+        }
+        if(agentName === "selecione nome:") {
+            showSnackbar(dispatch, "Selecione Nome Admin", 'error')
+            setError("agentName");
+            return;
+        }
+
+        const bodyToSend = {
+            ...data,
+            cashInValue: parseFloat(convertCommaToDot(cashInValue)),
+            cashOutValue: parseFloat(convertCommaToDot(cashOutValue)),
+        }
+
+        showSnackbar(dispatch, "Adicionando...");
+        createFinance(dispatch, bodyToSend)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            showSnackbar(dispatch, res.data.msg, 'success', 6000);
+            clearForm();
+            setRun(!run)
+            if(saveType === "save-only") {
+                history.push("/admin/painel-de-controle/#grafico")
+                setCurrComponent("FinanceGraph")
+            }
+        })
     }
 
     const showForm = () => (
-        <form style={styles.form} className="position-relative">
+        <form onBlur={() => setError("")} style={styles.form} className="position-relative">
             <div style={styles.icon} className="animated rotateIn delay-1 position-absolute">
                 <img
                     src={`${CLIENT_URL}/img/icons/${isExpenseForm ? "less.svg" : "plus.svg"}`}
@@ -91,7 +168,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
             </div>
             <div>
                 <span className="text-white text-default text-em-1.5 font-weight-bold">
-                    {`VALOR ${isExpenseForm ? "QUE SAIU:*" : "QUE ENTROU:*"}`}
+                    {`VALOR EM R$ ${isExpenseForm ? "QUE SAIU:*" : "QUE ENTROU:*"}`}
                     <TextField
                         placeholder="0,00"
                         InputProps={{
@@ -101,6 +178,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
                         value={isExpenseForm ? cashOutValue : cashInValue}
                         onChange={handleChange(setData, data)}
                         variant="outlined"
+                        error={error === "cashValue" ? true : false}
                         autoComplete="off"
                         helperText={"Insira apenas números e vírgula"}
                         fullWidth
@@ -115,6 +193,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
                         name="description"
                         value={description}
                         onChange={handleChange(setData, data)}
+                        error={error === "description" ? true : false}
                         variant="outlined"
                         autoComplete="off"
                         multiline
@@ -131,6 +210,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
                       labelId="staff"
                       fullWidth
                       variant="outlined"
+                      error={error === "agentName" ? true : false}
                       name="agentName"
                       value={agentName}
                       onChange={handleChange(setData, data)}
@@ -138,14 +218,17 @@ export default function BalanceForm({ isExpenseForm = false }) {
                         <MenuItem value={agentName}>
                           selecione nome:
                         </MenuItem>
-                        <MenuItem value={'Fabiano'}>Fabiano</MenuItem>
-                        <MenuItem value={'Adriane'}>Adriane</MenuItem>
+                        {adminNamesList && adminNamesList.map((found, ind) => (
+                            <MenuItem key={ind} value={found}>
+                                {found.cap()}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </span>
             </div>
             <div className="mt-3">
                 <span className="text-white text-default text-em-1 font-weight-bold">
-                    FORMA DE PAGAMENTO:
+                    {`${isExpenseForm ? "DESPENSA COM:" : "FORMA DE PAGAMENTO:"}`}
                     <Select
                       style={styles.fieldForm}
                       fullWidth
@@ -196,7 +279,6 @@ export default function BalanceForm({ isExpenseForm = false }) {
                           name="service"
                           value={service}
                           onChange={handleChange(setData, data)}
-                          onChange={null}
                         >
                             <MenuItem value={service}>
                               outros
@@ -209,6 +291,9 @@ export default function BalanceForm({ isExpenseForm = false }) {
                         </Select>
                     </span>
                 )}
+                <div className="mt-3 text-center text-default font-weight-bold">
+                    Data Registro:<br />{formattedDate}
+                </div>
             </div>
             {showButtonActions()}
         </form>
@@ -228,7 +313,7 @@ export default function BalanceForm({ isExpenseForm = false }) {
             />
             <ButtonMulti
                 title="SALVAR"
-                onClick={() => handleSubmit("save")}
+                onClick={() => handleSubmit("save-only")}
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainDark)"
                 backColorOnHover="var(--mainDark)"
@@ -244,3 +329,5 @@ export default function BalanceForm({ isExpenseForm = false }) {
         </div>
     );
 }
+
+export default withRouter(BalanceForm);

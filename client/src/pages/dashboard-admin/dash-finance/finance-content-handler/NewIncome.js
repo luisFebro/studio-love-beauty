@@ -9,7 +9,11 @@ NewIncome.propTypes = {
     currComponent: PropTypes.string,
 }
 
-export default function NewIncome({ setCurrComponent, currComponent }) {
+export default function NewIncome({
+    setCurrComponent,
+    currComponent,
+    setRun,
+    run }) {
     const styles = {
         root: {
             width: '100%',
@@ -24,7 +28,11 @@ export default function NewIncome({ setCurrComponent, currComponent }) {
 
     const showMainContent = () => (
         <div style={styles.mainContent}>
-            <BalanceForm />
+            <BalanceForm
+                setRun={setRun}
+                run={run}
+                setCurrComponent={setCurrComponent}
+            />
         </div>
     );
 

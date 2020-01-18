@@ -5,6 +5,7 @@ import LoadingThreeDots from '../../../../components/loadingIndicators/LoadingTh
 import { CLIENT_URL } from '../../../../config/clientUrl';
 import Tilt from 'react-tilt';
 import TitleContainer from '../../../../components/TitleContainer';
+import { convertDotToComma } from '../../../../utils/numbers/convertDotComma';
 
 const isSmall = window.Helper.isSmallScreen();
 
@@ -83,7 +84,7 @@ export default function FinanceGraph({ dashData, currComponent }) {
                                 style={{animationIterationCount: 3, color: balanceValue < 0 ? "var(--expenseRed)" : "var(--incomeGreen)" }}
                                 className="animated bounce delay-3s no-text-shadow text-center text-em-2-5 font-weight-bold"
                             >
-                                SALDO: R${balanceValue}
+                                SALDO: R${convertDotToComma(balanceValue)}
                             </p>
                         </section>
                     </Tilt>

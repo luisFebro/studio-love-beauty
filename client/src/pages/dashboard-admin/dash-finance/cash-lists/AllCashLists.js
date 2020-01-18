@@ -16,6 +16,7 @@ AllCashLists.propTypes = {
 
 export default function AllCashLists({
     setDashData,
+    handlerRun,
     dashData,
     currComponent }) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -76,7 +77,7 @@ export default function AllCashLists({
                 totalSize: cashOutOps.totalSize,
             })
         })
-    }, [])
+    }, [handlerRun])
 
     return (
         currComponent === 'FinanceGraph' &&

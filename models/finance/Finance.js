@@ -28,7 +28,8 @@ const data = {
         lowercase: true,
     },
     description: {
-        type: String
+        type: String,
+        lowercase: true,
     },
     service: String,
     cashInValue: {

@@ -39,9 +39,9 @@ export const getCashOpsList = async (dispatch, period, skip, chosenDate) => {
     }
 };
 
-export const getAllStaffNames = async (dispatch) => {
+export const getAllAvailableNames = async (dispatch, isAdmin = false) => {
     try {
-        return await axios.get(`/api/finance/staff/list/names`, configTypeJson);
+        return await axios.get(`/api/finance/staff/list/names${isAdmin ? `?role=admin` : ""}`, configTypeJson);
     } catch (err) {
         return err.response;
     }

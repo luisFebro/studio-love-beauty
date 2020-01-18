@@ -5,7 +5,7 @@ const {
     readList,
     update,
     remove,
-    getAllStaffNames,
+    getAllAvailableNames,
     getCashOpsList,
 } = require('../../controllers/finance');
 
@@ -17,7 +17,7 @@ router.put("/:itemId", update);
 router.delete("/:itemId", remove);
 
 // LIST
-router.get("/staff/list/names", getAllStaffNames);
+router.get("/staff/list/names", getAllAvailableNames);
 
 
 module.exports = router;

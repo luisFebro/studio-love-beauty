@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import DashSectionTitle from '../../DashSectionTitle';
-import AllCashLists from './cash-lists/AllCashLists';
 import FinanceContentHandler from './finance-content-handler/FinanceContentHandler';
 
 export default function DashFinance() {
@@ -13,8 +12,7 @@ export default function DashFinance() {
     return (
         <div>
             <DashSectionTitle title="Controle Financeiro" backgroundColor="linear-gradient(to right, #000000, #434343)" />
-            <FinanceContentHandler dashData={dashData} />
-            <AllCashLists dashData={dashData} setDashData={setDashData} />
+            <FinanceContentHandler setDashData={setDashData} dashData={dashData} />
         </div>
     );
 }

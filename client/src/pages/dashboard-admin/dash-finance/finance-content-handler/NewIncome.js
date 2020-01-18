@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TitleContainer from '../../../../components/TitleContainer';
 import SideButton from '../../../../components/buttons/SideButton';
+import BalanceForm from './BalanceForm';
 
 NewIncome.propTypes = {
     setCurrComponent: PropTypes.func,
@@ -16,9 +17,16 @@ export default function NewIncome({ setCurrComponent, currComponent }) {
         mainContent: {
             display: 'flex',
             flexBasis: '90%',
-            minHeight: '500px' //temp
-        }
+            justifyContent: 'center',
+            minHeight: 'auto' //temp
+        },
     }
+
+    const showMainContent = () => (
+        <div style={styles.mainContent}>
+            <BalanceForm />
+        </div>
+    );
 
     return (
         currComponent === "NewIncome" &&
@@ -27,9 +35,7 @@ export default function NewIncome({ setCurrComponent, currComponent }) {
                 title="NOVA ENTRADA"
             />
            <div className="my-5 animated slideInLeft d-flex">
-               <div style={styles.mainContent}>
-                   I am the new income.
-               </div>
+                {showMainContent()}
                <SideButton
                     onClick={() => setCurrComponent("FinanceGraph")}
                 />

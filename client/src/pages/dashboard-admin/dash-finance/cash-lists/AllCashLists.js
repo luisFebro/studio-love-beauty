@@ -11,9 +11,13 @@ import PropTypes from 'prop-types';
 AllCashLists.propTypes = {
     setDashData: PropTypes.func,
     dashData: PropTypes.object,
+    currComponent: PropTypes.string,
 }
 
-export default function AllCashLists({ setDashData, dashData }) {
+export default function AllCashLists({
+    setDashData,
+    dashData,
+    currComponent }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [cashInData, setCashInData] = useState({
         sumAll: "...",
@@ -75,6 +79,7 @@ export default function AllCashLists({ setDashData, dashData }) {
     }, [])
 
     return (
+        currComponent === 'FinanceGraph' &&
         <section>
             <TitleContainer
                 title="HISTÓRICO"

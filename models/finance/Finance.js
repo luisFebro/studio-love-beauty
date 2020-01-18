@@ -6,11 +6,13 @@ const data = {
     statusCheck: {
         type: String,
         default: "pendente",
+        lowercase: true,
         enum: ["pendente", "pago"]
     },
     paymentType: {
         type: String,
         default: "dinheiro",
+        lowercase: true,
         enum: ["dinheiro", "débito", "crédito"]
     },
     installmentsIfCredit: {

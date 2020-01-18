@@ -11,7 +11,7 @@ export default function SideButton({
     const styles = {
         btn: {
             flexBasis: flexBasis || "10%",
-            height: height || '500px',
+            height: height || 'auto',
             backgroundColor:  backgroundColor || 'var(--lightGrey)',
         }
     }

@@ -131,13 +131,19 @@ function getQuery(period, date, month) {
 }
 
 // desc: for form select field
-exports.getAllStaffNames = (req, res) => {
-    User.find({ role: "colaborador"})
+exports.getAllAvailableNames = (req, res) => {
+    const roleQuery = req.query.role || "colaborador";
+
+    let role = { role: roleQuery}
+    if(roleQuery === "admin") {
+        role = { $and: [{_id: { $ne: "5dfe96756573501728ee72c6"}}, role] }
+    }
+    User.find(role)
     .select("name")
     .sort({ name: 1 })
     .exec((err, names) => {
         if (err) return res.status(400).json(msgG("error.systemError", err));
-        const resArray = names.map(staff => staff.name)
+        const resArray = names.map(person => person.name)
         res.json(resArray);
     })
 }

@@ -36,7 +36,7 @@ export default function FilterAndButtons({ setCurrComponent }) {
     const showNewIncomeBtn = () => (
         <div>
             <HashLink
-                smooth to="/admin/painel-de-controle/#new-income"
+                smooth to="/admin/painel-de-controle/#nova-entrada"
                 className="text-decoration-none"
             >
                 <BigActionButton
@@ -54,7 +54,7 @@ export default function FilterAndButtons({ setCurrComponent }) {
     const showNewExpenseBtn = () => (
         <div>
             <HashLink
-                smooth to="/admin/painel-de-controle/#new-expense"
+                smooth to="/admin/painel-de-controle/#nova-saida"
                 className="text-decoration-none"
             >
                 <BigActionButton

@@ -7,14 +7,18 @@
     /*End Primary Colors*/
     --mainRed: #ed213a; /*#ed213a */
     --expenseRed: #ff4757;
-    --mainWhite: #ecf0f1;
-    --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
-    --mainYellow: #fff200;
+    --lightGrey: #CAD3C8;
+
     --mainGreen: #4cd137;
     --incomeGreen: #2ecc71;
+
     --mainBlue: #2a2a72;
     --darkBlue: #2c3e50;
     --lightBlue: #009ffd;
+
+    --mainWhite: #ecf0f1;
+    --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
+    --mainYellow: #fff200;
 }
 
 /*@font-face {
@@ -272,22 +276,26 @@ hr {
 }
 
 /*MAIN SHADOW AND HOVER*/
-.shadow-elevation {
+.shadow-elevation-white {
+    filter: drop-shadow(.001em .1em .1em var(--mainWhite));
+}
+
+.shadow-elevation-black { /*recommended*/
+    filter: drop-shadow(.001em .001em .15em var(--mainDark))
+}
+
+.shadow-elevation { /*only imgs and static square shapes*/
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.20), 0 15px 12px rgba(0, 0, 0, 0.12);
 }
 .shadow-elevation-soft {
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.20), 0 10px 8px rgba(0, 0, 0, 0.12);
 }
 
-.shadow-elevation-img,
+.shadow-elevation-img, /*recommended*/
 .tranparent-img-shadow,
 .main-letters-shadow {
     font-size: 1.9rem;
     filter: drop-shadow(.001em .1em .1em var(--mainDark));
-}
-
-.shadow-elevation-white {
-    filter: drop-shadow(.001em .1em .1em var(--mainWhite));
 }
 
 .main-letters-shadow:hover {

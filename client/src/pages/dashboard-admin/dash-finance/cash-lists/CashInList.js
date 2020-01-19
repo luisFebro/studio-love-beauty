@@ -19,6 +19,8 @@ CashInList.propTypes = {
 }
 
 export default function CashInList({
+    setRun,
+    run,
     setCashInData,
     cashInData,
     queryData,
@@ -79,6 +81,8 @@ export default function CashInList({
             actions={actions}
             backgroundColor="var(--incomeGreen)"
             color="var(--mainWhite)"
+            setRun={setRun}
+            run={run}
         />
     );
     //End ExpansionPanel Content

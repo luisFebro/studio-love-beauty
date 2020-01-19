@@ -13,7 +13,7 @@ import parse from 'html-react-parser';
 // End Material UI
 import PropTypes from 'prop-types';
 // CUSTOM DATA
-import { removeBooking } from '../../../../../../redux/actions/staffBookingActions';
+import { removeFinance } from '../../../../../../redux/actions/financeActions';
 
 // END CUSTOM DATA
 
@@ -26,11 +26,11 @@ ModalConfYesNo.propTypes = {
 export default function ModalConfYesNo({ open, onClose, modalData, setRun, run }) {
     const dispatch = useStoreDispatch();
 
-    const { title ="fsfdsaf dfasfd", subTitle, staffId, itemId } = modalData;
+    const { title, subTitle, itemId } = modalData;
 
-    const handleRemoval = (staffId, itemId) => {
+    const handleRemoval = itemId => {
         showSnackbar(dispatch, "Excluindo...", "warning", 6000);
-        removeBooking(dispatch, staffId, itemId)
+        removeFinance(dispatch, itemId)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setRun(!run);
@@ -48,7 +48,7 @@ export default function ModalConfYesNo({ open, onClose, modalData, setRun, run }
                 />
                 <ButtonMulti
                     title="SIM"
-                    onClick={() => handleRemoval(staffId, itemId)}
+                    onClick={() => handleRemoval(itemId)}
                     backgroundColor= "var(--mainRed)"
                     backColorOnHover= "var(--mainRed)"
                 />

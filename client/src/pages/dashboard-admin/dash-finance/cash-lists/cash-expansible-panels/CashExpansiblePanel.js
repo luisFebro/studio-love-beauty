@@ -55,6 +55,7 @@ const getStatusColor = status => {
 export default function CashExpansiblePanel({
     actions,
     backgroundColor,
+    isCashOut = false,
     needToggleButton = true,
     color,
     setRun,
@@ -65,10 +66,6 @@ export default function CashExpansiblePanel({
     const classes = useStyles();
 
     const dispatch = useStoreDispatch();
-    // const [expanded, setExpanded] = React.useState(false);
-    // const handleChange = panel => (event, isExpanded) => {
-    //     setExpanded(isExpanded ? panel : false);
-    // };
 
     const styles = {
         expansionPanel: {
@@ -149,6 +146,7 @@ export default function CashExpansiblePanel({
     );
 
     const showStatus = panel => (
+        isCashOut !== true &&
         <div className="animated zoomIn delay-1s">
             <div className="enabledLink">
                 <ModalSelectBtn
@@ -166,6 +164,8 @@ export default function CashExpansiblePanel({
                         top: -30,
                         left: 35
                     }}
+                    setRun={setRun}
+                    run={run}
                 />
             </div>
             <div className="disabledLink">
@@ -199,8 +199,7 @@ export default function CashExpansiblePanel({
                 modalData={{
                     title: `Confirmação de exclusão`,
                     subTitle: `Excluir operação financeira no valor de:<br /><strong>R$ ${convertDotToComma(panel.itemData.cashInValue)}</strong> ?`,
-                    staffId: '123',
-                    itemId: '23',
+                    itemId: panel.itemData._id,
                 }}
                 setRun={setRun}
                 run={run}
@@ -216,14 +215,14 @@ export default function CashExpansiblePanel({
                     top: -27,
                     left: 250,
                 }}
-                modal={{
-                    title: `Agendamento de Clientes<br />(EDIÇÃO)`,
+                modalData={{
+                    title: `Edição Operação Financeira`,
                     txtBtn: "Atualizar",
                     iconBtn: "fas fa-exchange-alt",
-                    modalData: panel,
+                    itemData: panel.itemData,
                 }}
-                setRun={null}
-                run={null}
+                setRun={setRun}
+                run={run}
             />
         </div>
     );
@@ -232,7 +231,7 @@ export default function CashExpansiblePanel({
         <div className={classes.root}>
             {actions.map(panel => (
                 <div
-                    key={panel._id}
+                    key={panel.itemData._id}
                     className="position-relative"
                 >
                     <ExpansionPanel

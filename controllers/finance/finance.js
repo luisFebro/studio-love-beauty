@@ -88,7 +88,10 @@ exports.update = (req, res) => {
     { new: true })
     .exec((err, service) => {
         if (err) return res.status(500).json(msgG("error.systemError", err));
-        res.json(msgG("ok.updated", "Operação Financeira"));
+        res.json({
+            service,
+            msg: msgG("ok.updated", "Operação Financeira", "onlyMsg")
+        });
     })
 }
 

@@ -19,6 +19,8 @@ export default function AllCashLists({
     handlerRun,
     dashData,
     currComponent }) {
+    const [run, setRun] = useState(false);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [cashInData, setCashInData] = useState({
         sumAll: "...",
@@ -77,7 +79,7 @@ export default function AllCashLists({
                 totalSize: cashOutOps.totalSize,
             })
         })
-    }, [handlerRun])
+    }, [run, handlerRun])
 
     return (
         currComponent === 'FinanceGraph' &&
@@ -87,6 +89,8 @@ export default function AllCashLists({
             />
             <div style={{color: '#f7f1e3'}} className="text-shadow d-flex flex-column flex-md-row justify-content-between">
                 <CashInList
+                    setRun={setRun}
+                    run={run}
                     cashInData={cashInData}
                     setCashInData={setCashInData}
                     isParentLoading={isCustomLoading}

@@ -3,6 +3,7 @@ import { configTypeJson } from '../../utils/server/configTypeJson';
 import addSpacingPlusToQuery from '../../utils/string/addSpacingPlusToQuery';
 import { setCustomLoading } from './globalActions';
 
+// CRUD
 export const createFinance = async (dispatch, objToSend) => {
     try {
         return await axios.post(`/api/finance`, objToSend, configTypeJson);
@@ -11,6 +12,7 @@ export const createFinance = async (dispatch, objToSend) => {
     }
 };
 
+// read
 export const getPeriodQuery = (period, chosenDate) => {
     switch(period) {
         case 'day':
@@ -38,7 +40,26 @@ export const getCashOpsList = async (dispatch, period, skip, chosenDate) => {
         return err.response;
     }
 };
+// end read
+export const updateFinance = async (dispatch, itemId, bodyToSend) => {
+    try {
+        return await axios.put(`/api/finance/${itemId}`, bodyToSend, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+};
 
+export const removeFinance = async (dispatch, itemId) => {
+    try {
+        return await axios.delete(`/api/finance/${itemId}`, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+};
+//END CRUD
+
+
+// LIST
 export const getAllAvailableNames = async (dispatch, isAdmin = false) => {
     try {
         return await axios.get(`/api/finance/staff/list/names${isAdmin ? `?role=admin` : ""}`, configTypeJson);

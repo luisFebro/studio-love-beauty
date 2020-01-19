@@ -33,7 +33,7 @@ export default function CashHiddenContent({ data }) {
                 {service}
             </p>
 
-            <p>
+            <p className="text-break">
                 <span className="font-weight-bold">&#187; Descrição:</span>
                 <br />
                 {capitalize(description)}

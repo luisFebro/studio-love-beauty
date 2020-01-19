@@ -11,7 +11,7 @@ ModalBtn.propTypes = {
     setSelectedValue: PropTypes.func,
 }
 
-export default function ModalBtn({ modal, button, setSelectedValue }) {
+export default function ModalBtn({ modal, button, setSelectedValue, setRun, run }) {
     const [open, setOpen] = useState(false);
 
     const {
@@ -49,6 +49,8 @@ export default function ModalBtn({ modal, button, setSelectedValue }) {
                 open={open}
                 onClose={onClose}
                 modal={modal}
+                setRun={setRun}
+                run={run}
             />
         </div>
     );

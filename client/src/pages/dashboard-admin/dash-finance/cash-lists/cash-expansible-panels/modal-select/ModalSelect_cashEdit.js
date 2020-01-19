@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 // Redux
-import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import { closeModal } from '../../../../../../redux/actions/modalActions';
-import { updateBooking } from '../../../../../../redux/actions/staffBookingActions';
+import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../../../../../redux/actions/snackbarActions';
 import handleChange from '../../../../../../utils/form/use-state/handleChange';
 import parse from 'html-react-parser';
@@ -10,12 +8,16 @@ import parse from 'html-react-parser';
 import ButtonMulti from '../../../../../../components/buttons/material-ui/ButtonMulti';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 // import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { modalDefaultType } from '../../../../../../types';
+
+//CUSTOM DATA
+import { updateFinance } from '../../../../../../redux/actions/financeActions';
 
 ModalSelect_cashEdit.propTypes = {
     open: PropTypes.bool,
@@ -39,12 +41,14 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function ModalSelect_cashEdit({ open, onClose, modal }) {
+export default function ModalSelect_cashEdit({ open, onClose, modal, setRun, run }) {
     const [error, setError] = useState(false);
     const [data, setData] = useState({
         selected: "selecione novo status:",
+        paymentType: 'dinheiro',
+        installmentsIfCredit: 2,
     });
-    const { selected } = data;
+    const { selected, paymentType, installmentsIfCredit } = data;
 
     const { title, txtBtn, iconBtn, modalData } = modal;
 
@@ -66,9 +70,6 @@ export default function ModalSelect_cashEdit({ open, onClose, modal }) {
             itemsSelection = ["pago", "pendente"];
     }
 
-    const { _idStaff } = useStoreState(state => ({
-        _idStaff: state.userReducer.cases.currentUser._id,
-    }))
     const dispatch = useStoreDispatch();
 
     const styles = {
@@ -76,6 +77,11 @@ export default function ModalSelect_cashEdit({ open, onClose, modal }) {
             display: 'flex',
             justifyContent: 'center',
             marginTop: '28px'
+        },
+        fieldForm: {
+            backgroundColor: 'var(--mainWhite)',
+            textAlign:'center',
+            zIndex: 2000
         }
     }
 
@@ -88,15 +94,16 @@ export default function ModalSelect_cashEdit({ open, onClose, modal }) {
         }
 
         const objToSend = {
-            status: selected,
+            ...data,
+            statusCheck: selected,
         }
         onClose();
         showSnackbar(dispatch, "Alterando...", "warning", 3000);
-        updateBooking(dispatch, objToSend, modalData._id)
+        updateFinance(dispatch,  modalData._id, objToSend)
         .then(res => {
             clearForm();
-            showSnackbar(dispatch, `${modalData.staffName}, o status de ${modalData.clientName.cap()} foi alterado para ${selected.toUpperCase()}!`, 'success');
-            // getStaffBookingList(dispatch, _idStaff);
+            showSnackbar(dispatch, `O status mudou para ${selected.toUpperCase()}. Pagamento no ${paymentType.toUpperCase()}!`, 'success', 8000);
+            setRun(!run)
         })
     }
 
@@ -120,7 +127,7 @@ export default function ModalSelect_cashEdit({ open, onClose, modal }) {
         </section>
     );
 
-    const showSelect = () => (
+    const showMainSelect = () => (
         <form
             style={{ margin: 'auto', width: '90%' }}
             onBlur={() => setError(false)}
@@ -143,6 +150,54 @@ export default function ModalSelect_cashEdit({ open, onClose, modal }) {
             </Select>
         </form>
     );
+
+    const showPaySelect = () => (
+        <form
+            style={{ margin: 'auto', width: '90%' }}
+            onBlur={() => setError(false)}
+        >
+            <div className="mt-3">
+                <span className="text-white text-default text-em-1 font-weight-bold">
+                    "FORMA DE PAGAMENTO:
+                    <Select
+                      style={styles.fieldForm}
+                      fullWidth
+                      variant="outlined"
+                      name="paymentType"
+                      value={paymentType}
+                      onChange={handleChange(setData, data)}
+                    >
+                        <MenuItem value={paymentType}>
+                          dinheiro
+                        </MenuItem>
+                        <MenuItem value={'crédito'}>crédito</MenuItem>
+                        <MenuItem value={'débito'}>débito</MenuItem>
+                    </Select>
+                </span>
+            </div>
+            {paymentType === "crédito"
+            ? (
+                <div className="animated zoomIn mt-3">
+                    <span className="text-white text-default text-em-1 font-weight-bold">
+                        QTDE. PARCELAS:
+                        <br />
+                        <TextField
+                          InputProps={{
+                              style: {fontSize: '2em', width: '80px', backgroundColor: 'var(--mainWhite)',},
+                              inputProps: { min: 2, max: 12 }
+                          }}
+                          variant="outlined"
+                          type="number"
+                          name="installmentsIfCredit"
+                          value={installmentsIfCredit}
+                          onChange={handleChange(setData, data)}
+                        />
+                    </span>
+                </div>
+            ) : null}
+        </form>
+    );
+
     return (
         <Dialog
             open={open}
@@ -162,7 +217,8 @@ export default function ModalSelect_cashEdit({ open, onClose, modal }) {
                     Status atual: <strong>{modalData.statusCheck.cap()}</strong>
                 </p>
             </div>
-            {showSelect()}
+            {showMainSelect()}
+            {showPaySelect()}
             {showActionButtons()}
         </Dialog>
     );

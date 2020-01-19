@@ -1,111 +1,114 @@
-import React, { useState, useEffect } from 'react';
-import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import ButtonMulti from '../../../../../../components/buttons/material-ui/ButtonMulti';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import TextField from '@material-ui/core/TextField';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import parse from 'html-react-parser';
-import { CLIENT_URL } from '../../../../../../config/clientUrl';
-import PropTypes from 'prop-types';
-import handleChange from '../../../../../../utils/form/use-state/handleChange';
-
-// OPTIONALS
-import MenuItem from '@material-ui/core/MenuItem';
+import React, { useEffect, useState } from 'react';
 import Select from '@material-ui/core/Select';
-import detectErrorField from '../../../../../../utils/validation/detectErrorField';
-//datePicker
-import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
-import AlarmIcon from '@material-ui/icons/Alarm';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import moment from 'moment';
-// END OPTIONALS
-
-// CUSTOMIZED DATA
-import { modalTextFieldDashboardType } from '../../../../../../types';
-import { updateBooking } from '../../../../../../redux/actions/staffBookingActions';
-import { readServicesList } from '../../../../../../redux/actions/adminActions';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useStoreDispatch, useStoreState } from 'easy-peasy';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import ButtonMulti from '../../../../../../components/buttons/material-ui/ButtonMulti';
+import handleChange from '../../../../../../utils/form/use-state/handleChange';
+import TextField from '@material-ui/core/TextField';
 import { showSnackbar } from '../../../../../../redux/actions/snackbarActions';
-// END CUSTOMIZED DATA
+import parse from 'html-react-parser';
 
-ModalForm.propTypes = {
-    open: PropTypes.bool,
-    onClose: PropTypes.func,
-    modal: modalTextFieldDashboardType,
-    setRun: PropTypes.func,
-    run: PropTypes.bool,
-};
+//CUSTOM DATA
+import { convertCommaToDot } from '../../../../../../utils/numbers/convertDotComma';
+import { readServicesList } from '../../../../../../redux/actions/adminActions';
+import { updateFinance } from '../../../../../../redux/actions/financeActions';
+import isMoneyBrValidAndAlert from '../../../../../../utils/numbers/isMoneyBrValidAndAlert';
+import moment from 'moment';
 
 export default function ModalForm({
-    open, onClose, modal, setRun, run }) {
+        isExpenseForm = false,
+        setRun,
+        run,
+        open,
+        onClose,
+        modalData
+    }) {
     const [data, setData] = useState({
-        status: "3pendente",
-        staffName: '',
-        _id: '',
-        clientName: '',
-        service: "selecione tipo de serviço",
-        notes: '',
-        bookingDate: '',
-        formattedDate: '',
-    });
-
-    const { services } = useStoreState(state => ({
-        services: state.adminReducer.cases.services,
-    }));
-    const dispatch = useStoreDispatch();
-
+        paymentType: '',
+        agentName: '',
+        installmentsIfCredit: 2,
+        cashInValue: null,
+        cashOutValue: null,
+        description: '',
+        service: 'outros',
+        adminNamesList: [],
+        // do not change
+        statusCheck: '',
+        formattedDate: moment(new Date()).format('LLLL'),
+        agentRole: '',
+    })
     const {
-        _id,
-        staffName,
-        clientName,
+        paymentType,
+        installmentsIfCredit,
+        agentName,
+        cashInValue,
+        cashOutValue,
+        description,
         service,
-        notes,
-        bookingDate,
+        formattedDate,
+        adminNamesList,
     } = data;
 
-    const {
-        title,
-        txtBtn,
-        iconBtn,
-        modalData } = modal;
+    const {title, txtBtn, iconBtn, itemData} = modalData;
 
-    const [gotError, setGotError] = useState(false);
-    const [fieldError, setFieldError] = useState(null);
-    const errorBookingDate = fieldError && fieldError.bookingDate;
-    const errorClientName = fieldError && fieldError.clientName;
+    const [error, setError] = useState("");
 
-    const [selectedDate, handleDateChange] = useState(new Date());
-
+    const { servicesList } = useStoreState(state => ({
+        servicesList: state.adminReducer.cases.services,
+    }));
+    const dispatch = useStoreDispatch();
 
     useEffect(() => {
         readServicesList(dispatch)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            const { itemData } = modalData;
             setData({
-                _id: itemData._id,
+                ...data,
+                agentRole: itemData.agentRole,
+                statusCheck: itemData.statusCheck,
+                paymentType: itemData.paymentType,
+                installmentsIfCredit: itemData.installmentsIfCredit,
+                agentName: itemData.agentName,
+                cashInValue: itemData.cashInValue,
+                cashOutValue: itemData.cashOutValue,
+                description: itemData.description,
+                service: itemData.service,
+                formattedDate: itemData.formattedDate,
             })
         })
     }, [])
 
-    useEffect(() => {
-        setData({ ...data, bookingDate: selectedDate })
-    }, [selectedDate])
-
     const styles = {
-        dialog: {
-            margin: 'auto',
-            width: '90%',
-            maxWidth: '450px'
+        root: {
+            width: '100%',
+        },
+        mainContent: {
+            display: 'flex',
+            flexBasis: '90%',
+            justifyContent: 'center',
+            minHeight: 'auto' //temp
         },
         form: {
-            margin: 'auto',
-            width: '80%'
+            maxWidth: '400px',
+            background: `${isExpenseForm ? 'var(--expenseRed)' : 'var(--incomeGreen)'}`,
+            borderRadius: '10px',
+            padding: '25px'
         },
         fieldForm: {
-            margin: '9px 0',
+            backgroundColor: 'var(--mainWhite)',
+            textAlign:'center',
             zIndex: 2000
+        },
+        fieldFormValue: {
+            backgroundColor: 'var(--mainWhite)',
+            fontSize: '2.1em',
+            zIndex: 2000
+        },
+        icon: {
+            top: '-40px', left: '-30px',
+            animationIterationCount: 2,
         },
         actionButtons: {
             display: 'flex',
@@ -114,158 +117,179 @@ export default function ModalForm({
         }
     }
 
-    const clearForm = () => {
-        setGotError(false);
-        setFieldError(null);
-    }
-
     const handleSubmit = () => {
-        if(service === "selecione tipo de serviço") {
-            showSnackbar(dispatch, "Selecione um serviço.", 'error')
-            setGotError(true);
+        // Validation
+        let cashType = cashInValue;
+        if(isExpenseForm) {
+            cashType = cashOutValue;
+        }
+        if(!isMoneyBrValidAndAlert(cashType, showSnackbar, dispatch)) {
+            setError("cashValue");
             return;
         }
 
-        const convertDate = moment(bookingDate).utc().format();
-        const objToSend = {
-            ...data,
-            bookingDate: convertDate,
-            formattedDate: moment(bookingDate).format("LLL")
+        if(description === "") {
+            showSnackbar(dispatch, "Insira uma breve descrição", 'error')
+            setError("description");
+            return;
         }
 
-        showSnackbar(dispatch, "Processando...", 'warning', 5000)
-        updateBooking(dispatch, objToSend, _id)
+        const objToSend = {
+            ...data,
+            cashInValue: parseFloat(convertCommaToDot(cashInValue)),
+            cashOutValue: parseFloat(convertCommaToDot(cashOutValue)),
+        }
+
+        onClose();
+        showSnackbar(dispatch, "Alterando...", "warning", 3000);
+        updateFinance(dispatch,  itemData._id, objToSend)
         .then(res => {
-            if(res.status !== 200) {
-                showSnackbar(dispatch, res.data.msg, 'error')
-                const thisModalFields = Object.keys(data);
-                const foundObjError = detectErrorField(res.data.msg, thisModalFields);
-                setFieldError(foundObjError);
-                return;
-            }
-            clearForm();
-            onClose();
-            setRun(!run);
-            showSnackbar(dispatch, `Agendamento Atualizado!`, 'success', 8000)
+            showSnackbar(dispatch, `A operação financeira de ${itemData.agentName.toUpperCase()} foi atualizada.`, 'success', 8000);
+            setRun(!run)
         })
-    };
+    }
 
     const showTitle = () => (
-        <div className="text-center container-center">
+        <div className="text-center container-center font-weight-bold">
             <DialogTitle id="form-dialog-title">
                 {parse(title)}
             </DialogTitle>
-            <div>
-                <img
-                    width={135}
-                    height={135}
-                    src={`${CLIENT_URL}/img/illustrations/client-booking.svg`}
-                    alt="agendamento cliente"
-                />
-            </div>
         </div>
     );
 
     const showForm = () => (
-        <form style={styles.form} onBlur={() => {setGotError(false); setFieldError(null)}}>
-            <TextField
-                label="NOME COLABORADOR:"
-                value={staffName}
-                variant="standard"
-                fullWidth
-                margin="dense"
-                disabled
-            />
-            <TextField
-                required
-                label="NOME CLIENTE:"
-                autoComplete="off"
-                name="clientName"
-                value={clientName}
-                onChange={handleChange(setData, data)}
-                error={errorClientName ? true : false}
-                variant="standard"
-                type="text"
-                fullWidth
-                margin="dense"
-            />
-            <Select
-              style={styles.fieldForm}
-              labelId="service"
-              onChange={handleChange(setData, data)}
-              name="service"
-              value={service}
-              error={gotError ? true : false}
-            >
-                <MenuItem value={service}>
-                  selecione tipo de serviço:
-                </MenuItem>
-                {services && services.map(service => (
-                    <MenuItem key={service._id} value={service.name}>
-                        {service.name.cap()}
-                    </MenuItem>
-                ))}
-            </Select>
-            <br />
-            <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>
-                <DateTimePicker
-                    required
-                    disablePast
-                    variant="outlined"
-                    margin="dense"
-                    error={errorBookingDate ? true : false}
-                    ampm={false}
-                    placeholder="Data Agendamento"
-                    label={`Qual DIA e HORÁRIO?`}
-                    name="serviceDate"
-                    value={bookingDate}
-                    onChange={handleDateChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AlarmIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                />
-            </MuiPickersUtilsProvider>
-            <TextField
-                label="OBSERVAÇÕES:"
-                multiline
-                rows={4}
-                name="notes"
-                value={notes}
-                onChange={handleChange(setData, data)}
-                variant="outlined"
-                placeholder="Escreva detalhes adicionais do agendamento"
-                fullWidth
-                margin="dense"
-            />
+        <form onBlur={() => setError("")} style={styles.form} className="position-relative">
+            <div>
+                <span className="text-white text-default text-em-1.5 font-weight-bold">
+                    {`VALOR EM R$ ${isExpenseForm ? "QUE SAIU:*" : "QUE ENTROU:*"}`}
+                    <TextField
+                        placeholder="0,00"
+                        InputProps={{
+                            style: styles.fieldFormValue, // alignText is not working here... tried input types and variations
+                        }}
+                        name={`${isExpenseForm ? "cashOutValue" : "cashInValue"}`}
+                        value={isExpenseForm ? cashOutValue : cashInValue}
+                        onChange={handleChange(setData, data)}
+                        variant="outlined"
+                        error={error === "cashValue" ? true : false}
+                        autoComplete="off"
+                        helperText={"Insira apenas números e vírgula"}
+                        fullWidth
+                    />
+                </span>
+            </div>
+            <div className="mt-3">
+                <span className="text-white text-default text-em-1 font-weight-bold">
+                    DESCRIÇÃO*:
+                    <TextField
+                        style={styles.fieldForm}
+                        name="description"
+                        value={description}
+                        onChange={handleChange(setData, data)}
+                        error={error === "description" ? true : false}
+                        variant="outlined"
+                        autoComplete="off"
+                        multiline
+                        rows={1}
+                        fullWidth
+                    />
+                </span>
+            </div>
+            {isExpenseForm
+            ? (
+                <React.Fragment>
+                    <div className="mt-3">
+                        <span className="text-white text-default text-em-1 font-weight-bold">
+                            {`${isExpenseForm ? "DESPESA COM:" : null}`}
+                            <Select
+                              style={styles.fieldForm}
+                              fullWidth
+                              variant="outlined"
+                              name="paymentType"
+                              value={paymentType}
+                              onChange={handleChange(setData, data)}
+                            >
+                                <MenuItem value={paymentType}>
+                                  dinheiro
+                                </MenuItem>
+                                <MenuItem value={'crédito'}>crédito</MenuItem>
+                                <MenuItem value={'débito'}>débito</MenuItem>
+                            </Select>
+                        </span>
+                    </div>
+                    {paymentType === "crédito"
+                    ? (
+                        <div className="animated zoomIn mt-3">
+                            <span className="text-white text-default text-em-1 font-weight-bold">
+                                QTDE. PARCELAS:
+                                <br />
+                                <TextField
+                                  InputProps={{
+                                      style: {fontSize: '2em', width: '80px', backgroundColor: 'var(--mainWhite)',},
+                                      inputProps: { min: 2, max: 12 }
+                                  }}
+                                  variant="outlined"
+                                  type="number"
+                                  name="installmentsIfCredit"
+                                  value={installmentsIfCredit}
+                                  onChange={handleChange(setData, data)}
+                                />
+                            </span>
+                        </div>
+                    ) : null}
+                </React.Fragment>
+            ) : null}
+            <div className="mt-3">
+                {isExpenseForm
+                ? null
+                : (
+                    <span className="text-white text-default text-em-1 font-weight-bold">
+                        SERVIÇO:
+                        <Select
+                          style={styles.fieldForm}
+                          labelId="service"
+                          fullWidth
+                          variant="outlined"
+                          name="service"
+                          value={service}
+                          onChange={handleChange(setData, data)}
+                        >
+                            <MenuItem value={service}>
+                              outros
+                            </MenuItem>
+                            {servicesList && servicesList.map(service => (
+                                <MenuItem key={service._id} value={service.name}>
+                                    {service.name.cap()}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </span>
+                )}
+                <div className="mt-3 text-center text-default font-weight-bold">
+                    Data Registro:<br />{formattedDate}
+                </div>
+            </div>
         </form>
     );
 
     const showActionButtons = () => (
         <section style={styles.actionButtons}>
-            <ButtonMulti
-                title="Voltar"
-                onClick={() => {
-                    onClose();
-                    clearForm();
-                }}
-                variant="link"
-            />
-            <ButtonMulti
-                title={txtBtn}
-                onClick={handleSubmit}
-                iconFontAwesome={iconBtn}
-            />
-        </section>
+           <ButtonMulti
+               title="Voltar"
+               onClick={onClose}
+               variant="link"
+           />
+           <ButtonMulti
+               title={txtBtn}
+               onClick={handleSubmit}
+               iconFontAwesome={iconBtn}
+           />
+       </section>
     );
 
     return (
         <div>
             <Dialog
-                style={styles.dialog}
                 open={open}
                 aria-labelledby="form-dialog-title">
                 {showTitle()}
@@ -275,3 +299,4 @@ export default function ModalForm({
         </div>
     );
 }
+

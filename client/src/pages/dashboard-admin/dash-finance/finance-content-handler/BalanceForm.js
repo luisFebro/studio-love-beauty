@@ -228,7 +228,7 @@ function BalanceForm({
             </div>
             <div className="mt-3">
                 <span className="text-white text-default text-em-1 font-weight-bold">
-                    {`${isExpenseForm ? "DESPENSA COM:" : "FORMA DE PAGAMENTO:"}`}
+                    {`${isExpenseForm ? "DESPESA COM:" : "FORMA DE PAGAMENTO:"}`}
                     <Select
                       style={styles.fieldForm}
                       fullWidth
@@ -297,7 +297,6 @@ function BalanceForm({
             </div>
             {showButtonActions()}
         </form>
-
     );
 
     const showButtonActions = () => (

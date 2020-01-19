@@ -198,7 +198,7 @@ export default function CashExpansiblePanel({
                 }}
                 modalData={{
                     title: `Confirmação de exclusão`,
-                    subTitle: `Excluir operação financeira no valor de:<br /><strong>R$ ${convertDotToComma(panel.itemData.cashInValue)}</strong> ?`,
+                    subTitle: `Excluir operação financeira no valor de:<br /><strong>R$ ${convertDotToComma(panel.itemData[isCashOut ? "cashOutValue" : "cashInValue"])}</strong> ?`,
                     itemId: panel.itemData._id,
                 }}
                 setRun={setRun}
@@ -219,6 +219,7 @@ export default function CashExpansiblePanel({
                     title: `Edição Operação Financeira`,
                     txtBtn: "Atualizar",
                     iconBtn: "fas fa-exchange-alt",
+                    isCashOut: isCashOut,
                     itemData: panel.itemData,
                 }}
                 setRun={setRun}

@@ -7,7 +7,7 @@ CashHiddenContent.propTypes = {
     data: PropTypes.object.isRequired,
 };
 
-export default function CashHiddenContent({ data }) {
+export default function CashHiddenContent({ data, isCashOut = false }) {
     const {
         service,
         description,
@@ -27,11 +27,14 @@ export default function CashHiddenContent({ data }) {
             className="text-default enabledLink"
             style={{userSelect: 'text', margin: 'auto', width: '90%'}}
         >
-            <p>
-                <span className="font-weight-bold">&#187; Serviço:</span>
-                <br />
-                {service}
-            </p>
+            {!isCashOut
+            ? (
+                <p>
+                    <span className="font-weight-bold">&#187; Serviço:</span>
+                    <br />
+                    {service}
+                </p>
+            ) : null}
 
             <p className="text-break">
                 <span className="font-weight-bold">&#187; Descrição:</span>
@@ -40,7 +43,7 @@ export default function CashHiddenContent({ data }) {
             </p>
 
             <p>
-                <span className="font-weight-bold">&#187; Meio de Pamento:</span>
+                <span className="font-weight-bold">&#187; Meio de Pagamento:</span>
                 <br />
                 {paymentType}{paymentType === 'crédito' ? ` em ${installmentsIfCredit} vezes.` : ""}
             </p>

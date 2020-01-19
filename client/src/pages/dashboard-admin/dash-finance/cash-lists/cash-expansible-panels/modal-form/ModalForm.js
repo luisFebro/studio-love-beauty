@@ -11,14 +11,13 @@ import { showSnackbar } from '../../../../../../redux/actions/snackbarActions';
 import parse from 'html-react-parser';
 
 //CUSTOM DATA
-import { convertCommaToDot } from '../../../../../../utils/numbers/convertDotComma';
+import { convertCommaToDot, convertDotToComma } from '../../../../../../utils/numbers/convertDotComma';
 import { readServicesList } from '../../../../../../redux/actions/adminActions';
 import { updateFinance } from '../../../../../../redux/actions/financeActions';
 import isMoneyBrValidAndAlert from '../../../../../../utils/numbers/isMoneyBrValidAndAlert';
 import moment from 'moment';
 
 export default function ModalForm({
-        isExpenseForm = false,
         setRun,
         run,
         open,
@@ -51,7 +50,7 @@ export default function ModalForm({
         adminNamesList,
     } = data;
 
-    const {title, txtBtn, iconBtn, itemData} = modalData;
+    const {title, txtBtn, iconBtn, itemData, isCashOut} = modalData;
 
     const [error, setError] = useState("");
 
@@ -71,8 +70,8 @@ export default function ModalForm({
                 paymentType: itemData.paymentType,
                 installmentsIfCredit: itemData.installmentsIfCredit,
                 agentName: itemData.agentName,
-                cashInValue: itemData.cashInValue,
-                cashOutValue: itemData.cashOutValue,
+                cashInValue: convertDotToComma(itemData.cashInValue),
+                cashOutValue: convertDotToComma(itemData.cashOutValue),
                 description: itemData.description,
                 service: itemData.service,
                 formattedDate: itemData.formattedDate,
@@ -92,7 +91,7 @@ export default function ModalForm({
         },
         form: {
             maxWidth: '400px',
-            background: `${isExpenseForm ? 'var(--expenseRed)' : 'var(--incomeGreen)'}`,
+            background: `${isCashOut ? 'var(--expenseRed)' : 'var(--incomeGreen)'}`,
             borderRadius: '10px',
             padding: '25px'
         },
@@ -120,7 +119,7 @@ export default function ModalForm({
     const handleSubmit = () => {
         // Validation
         let cashType = cashInValue;
-        if(isExpenseForm) {
+        if(isCashOut) {
             cashType = cashOutValue;
         }
         if(!isMoneyBrValidAndAlert(cashType, showSnackbar, dispatch)) {
@@ -161,14 +160,14 @@ export default function ModalForm({
         <form onBlur={() => setError("")} style={styles.form} className="position-relative">
             <div>
                 <span className="text-white text-default text-em-1.5 font-weight-bold">
-                    {`VALOR EM R$ ${isExpenseForm ? "QUE SAIU:*" : "QUE ENTROU:*"}`}
+                    {`VALOR EM R$ ${isCashOut ? "QUE SAIU:*" : "QUE ENTROU:*"}`}
                     <TextField
                         placeholder="0,00"
                         InputProps={{
                             style: styles.fieldFormValue, // alignText is not working here... tried input types and variations
                         }}
-                        name={`${isExpenseForm ? "cashOutValue" : "cashInValue"}`}
-                        value={isExpenseForm ? cashOutValue : cashInValue}
+                        name={`${isCashOut ? "cashOutValue" : "cashInValue"}`}
+                        value={isCashOut ? cashOutValue : cashInValue}
                         onChange={handleChange(setData, data)}
                         variant="outlined"
                         error={error === "cashValue" ? true : false}
@@ -180,7 +179,7 @@ export default function ModalForm({
             </div>
             <div className="mt-3">
                 <span className="text-white text-default text-em-1 font-weight-bold">
-                    DESCRIÇÃO*:
+                    DESCRIÇÃO:
                     <TextField
                         style={styles.fieldForm}
                         name="description"
@@ -190,17 +189,17 @@ export default function ModalForm({
                         variant="outlined"
                         autoComplete="off"
                         multiline
-                        rows={1}
+                        rows={2}
                         fullWidth
                     />
                 </span>
             </div>
-            {isExpenseForm
+            {isCashOut
             ? (
                 <React.Fragment>
                     <div className="mt-3">
                         <span className="text-white text-default text-em-1 font-weight-bold">
-                            {`${isExpenseForm ? "DESPESA COM:" : null}`}
+                            {`${isCashOut ? "DESPESA COM:" : null}`}
                             <Select
                               style={styles.fieldForm}
                               fullWidth
@@ -240,7 +239,7 @@ export default function ModalForm({
                 </React.Fragment>
             ) : null}
             <div className="mt-3">
-                {isExpenseForm
+                {isCashOut
                 ? null
                 : (
                     <span className="text-white text-default text-em-1 font-weight-bold">

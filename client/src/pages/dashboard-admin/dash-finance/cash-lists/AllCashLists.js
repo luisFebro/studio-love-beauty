@@ -98,6 +98,8 @@ export default function AllCashLists({
                     loadingIndicator={<LoadingThreeDots color="var(--mainWhite)" />}
                 />
                 <CashOutList
+                    setRun={setRun}
+                    run={run}
                     cashOutData={cashOutData}
                     setCashOutData={setCashOutData}
                     isParentLoading={isCustomLoading}

@@ -70,9 +70,9 @@ export default function CashInList({
         return({
            _id: item._id,
            mainHeading: item.cashInValue,
-           secondaryHeading: parse(`&#187; Realizado pelo ${item.agentRole.toUpperCase()}: <br /><strong>${item.agentName}<strong /><br />&#187; Atualizado ${moment(item.updatedAt).fromNow()}  atrás.`),
+           secondaryHeading: parse(`&#187; Realizado pelo ${item.agentRole.toUpperCase()}: <br /><strong>${item.agentName.cap()}<strong /><br />&#187; Atualizado ${moment(item.updatedAt).fromNow()}  atrás.`),
            itemData: item,
-           hiddenContent: <CashPanelHiddenContent data={item} setRun={null} run={null} />
+           hiddenContent: <CashPanelHiddenContent data={item} />
         });
     })
 

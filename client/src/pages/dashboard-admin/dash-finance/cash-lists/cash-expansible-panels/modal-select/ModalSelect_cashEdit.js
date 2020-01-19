@@ -102,7 +102,7 @@ export default function ModalSelect_cashEdit({ open, onClose, modal, setRun, run
         updateFinance(dispatch,  modalData._id, objToSend)
         .then(res => {
             clearForm();
-            showSnackbar(dispatch, `O status mudou para ${selected.toUpperCase()}. Pagamento no ${paymentType.toUpperCase()}!`, 'success', 8000);
+            showSnackbar(dispatch, `O status mudou para ${selected.toUpperCase()}. Pagamento no ${paymentType.toUpperCase()}.`, 'success', 8000);
             setRun(!run)
         })
     }

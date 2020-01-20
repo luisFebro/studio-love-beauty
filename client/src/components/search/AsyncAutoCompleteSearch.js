@@ -106,7 +106,6 @@ export default function AsyncAutoCompleteSearch({
           includeInputInList
           disableOpenOnFocus={disableOpenOnFocus}
           freeSolo={freeSolo}
-          blurOnSelect={true}
           clearOnEscape
           autoComplete
           renderOption={option => (

@@ -11,11 +11,18 @@ export default function FinanceContentHandler({
     }) {
     const [currComponent, setCurrComponent] = useState("FinanceGraph");
     const [handlerRun, setHandlerRun] = useState(false);
+    const [filterData, setFilterData] = useState({
+        period: "day",
+        initialSkip: 0,
+        chosenDate: "",
+    })
 
     return (
         <div>
             <FilterAndButtons
                 setCurrComponent={setCurrComponent}
+                filterData={filterData}
+                setFilterData={setFilterData}
             />
             <div className="container-center">
                 <NewIncome
@@ -40,6 +47,7 @@ export default function FinanceContentHandler({
                 setDashData={setDashData}
                 currComponent={currComponent}
                 handlerRun={handlerRun}
+                filterData={filterData}
             />
         </div>
     );

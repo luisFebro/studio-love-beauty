@@ -6,6 +6,7 @@ export default function DashFinance() {
     const [dashData, setDashData] = useState({
         cashInSumAll: 0,
         cashOutSumAll: 0,
+        pendingSum: 0,
         period: 'dayMonth',
     })
 

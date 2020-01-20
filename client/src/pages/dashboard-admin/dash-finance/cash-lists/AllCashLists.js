@@ -19,12 +19,14 @@ export default function AllCashLists({
     setDashData,
     handlerRun,
     dashData,
-    currComponent }) {
+    currComponent,
+    filterData }) {
     const [run, setRun] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState("");
     const [cashInData, setCashInData] = useState({
         sumAll: "...",
+        pendingSum: 0,
         list: [],
         sumAll: 0,
         chunkSize: 0,
@@ -39,12 +41,7 @@ export default function AllCashLists({
         totalSize: 0,
     })
 
-    const [queryData, setQueryData] = useState({
-        period: "all",
-        initialSkip: 0,
-        chosenDate: "",
-    })
-    const { period, initialSkip, chosenDate } = queryData;
+    const { period, initialSkip, chosenDate } = filterData;
 
     const dispatch = useStoreDispatch();
 
@@ -56,9 +53,10 @@ export default function AllCashLists({
         setDashData({
             ...dashData,
             cashInSumAll: cashInData.sumAll,
+            pendingSum: cashInData.pendingSum,
             cashOutSumAll: cashOutData.sumAll,
         })
-    }, [cashInData.sumAll, cashOutData.sumAll])
+    }, [cashInData.sumAll, cashInData.pendingSum, cashOutData.sumAll])
 
     useEffect(() => {
         getCashOpsList(dispatch, period, initialSkip, chosenDate)
@@ -69,6 +67,7 @@ export default function AllCashLists({
                 ...cashInData,
                 list: cashInOps.list,
                 sumAll: cashInOps.sumAll,
+                pendingSum: cashInOps.pendingSum, //staff
                 chunkSize: cashInOps.chunkSize,
                 totalSize: cashInOps.totalSize,
             })
@@ -80,7 +79,7 @@ export default function AllCashLists({
                 totalSize: cashOutOps.totalSize,
             })
         })
-    }, [run, handlerRun])
+    }, [run, handlerRun, filterData])
 
 
     //auto complete
@@ -126,7 +125,7 @@ export default function AllCashLists({
                     needUserValueFunc={true}
                     backgroundColor='white'
                     disableOpenOnFocus={true}
-                    placeholder="Procure qualquer info"
+                    placeholder="Procure alguma coisa..."
                 />
             </div>
             <div style={{color: '#f7f1e3'}} className="text-shadow d-flex flex-column flex-md-row justify-content-between">
@@ -136,7 +135,7 @@ export default function AllCashLists({
                     cashInData={cashInData}
                     setCashInData={setCashInData}
                     isParentLoading={isCustomLoading}
-                    queryData={queryData}
+                    queryData={filterData}
                     loadingIndicator={<LoadingThreeDots color="var(--mainWhite)" />}
                 />
                 <CashOutList
@@ -145,7 +144,7 @@ export default function AllCashLists({
                     cashOutData={cashOutData}
                     setCashOutData={setCashOutData}
                     isParentLoading={isCustomLoading}
-                    queryData={queryData}
+                    queryData={filterData}
                     loadingIndicator={<LoadingThreeDots color="var(--mainWhite)"/>}
                 />
             </div>

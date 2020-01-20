@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BigActionButton from '../../../../components/buttons/big-action-button/BigActionButton';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,12 +8,14 @@ import MomentUtils from "@date-io/moment";
 import { CLIENT_URL } from '../../../../config/clientUrl.js';
 import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
+import handleChange from '../../../../utils/form/use-state/handleChange';
+import getMonthNowBr from '../../../../utils/dates/getMonthNowBr';
 
 FilterAndButtons.propTypes = {
     setCurrComponent: PropTypes.func,
 }
 
-export default function FilterAndButtons({ setCurrComponent }) {
+export default function FilterAndButtons({ setCurrComponent, setFilterData, filterData }) {
     const [selectedDate, handleDateChange] = useState(new Date());
 
     const styles = {
@@ -32,6 +34,28 @@ export default function FilterAndButtons({ setCurrComponent }) {
             top: '-25px', left: '-25px', transform: 'rotate(20deg)'
         }
     }
+
+    useEffect(() => {
+        const date = new Date(selectedDate);
+        const day = date.getDate();
+        const month = getMonthNowBr(selectedDate);
+        const year = date.getFullYear();
+
+        let dateToSend;
+        switch(filterData.period) {
+            case 'day':
+                dateToSend = `${day} de ${month} de ${year}`;
+                break;
+            case 'month':
+                dateToSend = `${month} de ${year}`;
+                break;
+            default:
+                dateToSend = "";
+        }
+
+        setFilterData({...filterData, chosenDate: dateToSend})
+
+    }, [selectedDate, filterData.period])
 
     const showNewIncomeBtn = () => (
         <div>
@@ -69,21 +93,24 @@ export default function FilterAndButtons({ setCurrComponent }) {
         </div>
     );
 
-    const displayDynamicField = () => (
+    const displayDynamicField = period => (
+        period !== "all" &&
         <span className="text-white text-default text-em-1 font-weight-bold">
             DIA:
             <br />
             <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>
                 <DatePicker
-                    style={styles.fieldForm}
-                    variant="inline"
+                    variant="outlined"
+                    inputProps={{
+                        style: styles.fieldForm
+                    }}
                     fullWidth
                     margin="dense"
-                    openTo="date"
                     autoOk={true}
                     disableToolbar={true}
-                    views={["date"]}
-                    name="dayMonth"
+                    views={period === "day" ? ["date"] : ["month", "year"]}
+                    openTo={`${period === "day" ? "date" : "month"}`}
+                    name={`${period === "day" ? "dayMonth" : "MonthYear"}`}
                     value={selectedDate}
                     onChange={handleDateChange}
                 />
@@ -104,22 +131,21 @@ export default function FilterAndButtons({ setCurrComponent }) {
                 PERÍODO SELECIONADO:
                 <Select
                   style={styles.fieldForm}
-                  labelId="staff"
                   fullWidth
                   variant="outlined"
-                  name="agentName"
-                  value={'POR DIA'}
-                  onChange={null}
+                  name="period"
+                  value={filterData.period}
+                  onChange={handleChange(setFilterData, filterData)}
                 >
-                    <MenuItem value={'POR DIA'}>
+                    <MenuItem value={'day'}>
                       POR DIA
                     </MenuItem>
-                    <MenuItem value={'POR MÊS'}>POR MÊS</MenuItem>
-                    <MenuItem value={'TODOS'}>TODOS</MenuItem>
+                    <MenuItem value={'month'}>POR MÊS</MenuItem>
+                    <MenuItem value={'all'}>TODOS</MenuItem>
                 </Select>
             </span>
             <div className="mt-3">
-                {displayDynamicField()}
+                {displayDynamicField(filterData.period)}
             </div>
         </form>
     );

@@ -18,7 +18,7 @@ export const getPeriodQuery = (period, chosenDate) => {
         case 'day':
             return `&thisDayMonth=${addSpacingPlusToQuery(chosenDate)}`;
         case 'month':
-            return `&thisMonth=${addSpacingPlusToQuery(chosenDate)}`;
+            return `&thisMonthYear=${addSpacingPlusToQuery(chosenDate)}`;
         case 'all':
             return ``;
         default:

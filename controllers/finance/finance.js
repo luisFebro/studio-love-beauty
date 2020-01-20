@@ -88,8 +88,8 @@ function getQuery(period, date, month, search) {
     let queryCashIn;
     switch(period) {
         case 'day':
-            queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `^${date}`, $options: 'i'}};
-            queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `^${date}`, $options: 'i'}};
+            queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `${date}`, $options: 'i'}};
+            queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `${date}`, $options: 'i'}};
             break;
         case 'month':
             queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
@@ -119,7 +119,7 @@ exports.getCashOpsList = (req, res) => {
     const search = req.query.search;
     const autocomplete = req.query.autocomplete || false;
     const date = req.query.thisDayMonth;
-    const month = req.query.thisMonth;
+    const month = req.query.thisMonthYear;
     const skip = parseInt(req.query.skip);
     const limit = 5;
 
@@ -145,6 +145,7 @@ exports.getCashOpsList = (req, res) => {
     const countQuery = {$count: 'value'};
     const cashInSumAllQuery = {$group: { _id: null, value: { $sum: '$cashInValue' }}};
     const cashOutSumAllQuery = {$group: { _id: null, value: { $sum: '$cashOutValue' }}};
+    const mergedPedingSum = Object.assign({}, queryCashIn, { statusCheck: 'pendente' });
 
     Finance.aggregate([
         {
@@ -153,6 +154,7 @@ exports.getCashOpsList = (req, res) => {
                 cashInChunkSize: [{$match: queryCashIn}, skipQuery, limitQuery, countQuery],
                 cashInTotalSize: [{$match: queryCashIn}, countQuery],
                 cashInSumAll: [{$match: queryCashIn}, cashInSumAllQuery],
+                pendingSum: [{$match: mergedPedingSum}, cashInSumAllQuery],
                 //
                 cashOutDocs: [{$match: queryCashOut}, sortQuery, skipQuery, limitQuery],
                 cashOutChunkSize: [{$match: queryCashOut}, skipQuery, limitQuery, countQuery],
@@ -167,6 +169,7 @@ exports.getCashOpsList = (req, res) => {
             cashInChunkSize,
             cashInTotalSize,
             cashInSumAll,
+            pendingSum,
             cashOutDocs,
             cashOutChunkSize,
             cashOutTotalSize,
@@ -179,6 +182,7 @@ exports.getCashOpsList = (req, res) => {
                 chunkSize: cashInChunkSize[0] === undefined ? 0 : cashInChunkSize[0].value, // n1
                 totalSize: cashInTotalSize[0] === undefined ? 0 : cashInTotalSize[0].value,
                 sumAll: cashInSumAll[0] === undefined ? 0 : cashInSumAll[0].value,
+                pendingSum: pendingSum[0] === undefined ? 0 : pendingSum[0].value,
             },
             cashOutOps: {
                 list: cashOutDocs,

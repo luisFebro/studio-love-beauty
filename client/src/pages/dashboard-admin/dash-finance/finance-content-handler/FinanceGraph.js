@@ -10,7 +10,7 @@ import { convertDotToComma } from '../../../../utils/numbers/convertDotComma';
 const isSmall = window.Helper.isSmallScreen();
 
 export default function FinanceGraph({ dashData, currComponent }) {
-    const { cashInSumAll, cashOutSumAll } = dashData;
+    const { cashInSumAll, cashOutSumAll, pendingSum } = dashData;
     const balanceValue = cashInSumAll - cashOutSumAll;
 
     return (
@@ -52,9 +52,9 @@ export default function FinanceGraph({ dashData, currComponent }) {
                         }
                           data={[
                             ['movimento', 'valores'],
-                            ['ENTRADA R$', cashInSumAll],
+                            ['ENTRADA R$', cashInSumAll - pendingSum],
                             ['SAÍDA R$', cashOutSumAll],
-                            ['PENDENTE R$', 200],
+                            ['PENDENTE R$', pendingSum],
                           ]}
                           options={{
                             fontSize: 30,

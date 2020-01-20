@@ -1,5 +1,5 @@
 // reference: https://material-ui.com/components/autocomplete/
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -21,10 +21,23 @@ function sleep(delay = 0) {
 }
 
 export default function AsyncAutoCompleteSearch({
-    url, circularProgressColor, onAutoSelectChange }) {
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
+    url,
+    circularProgressColor,
+    onAutoSelectChange,
+    backgroundColor,
+    needUserValueFunc = false,
+    freeSolo = false,
+    disableOpenOnFocus = false,
+    placeholder }) {
+    const [open, setOpen] = useState(false);
+    const [options, setOptions] = useState([]);
+    const [autoCompleteUrl, setAutoCompleteUrl] = useState(url);
     const loading = open && options.length === 0;
+
+    const onUserValueChange = e => {
+        const changedValue = e.target.value;
+        setAutoCompleteUrl(`/api/finance/cash-ops/list/all?search=${changedValue}&autocomplete=true`)
+    }
 
     React.useEffect(() => {
         let active = true;
@@ -34,7 +47,8 @@ export default function AsyncAutoCompleteSearch({
         }
 
         (async () => {
-            const response = await axios.get(url, configTypeJson);
+            const response = await axios.get(autoCompleteUrl, configTypeJson);
+            console.log("response", response);
             await sleep(1e3); // For demo purposes.
 
             if(active) {
@@ -45,7 +59,7 @@ export default function AsyncAutoCompleteSearch({
         return () => {
             active = false;
         };
-    }, [loading]);
+    }, [loading, autoCompleteUrl]);
 
     React.useEffect(() => {
         if(!open) {
@@ -55,7 +69,7 @@ export default function AsyncAutoCompleteSearch({
 
     const styles = {
         asyncAutoSearch: {
-            backgroundColor: 'var(--mainWhite)',
+            backgroundColor: backgroundColor || 'var(--mainWhite)',
             color: 'black',
             fontSize: '1.4em'
         },
@@ -90,18 +104,30 @@ export default function AsyncAutoCompleteSearch({
           noOptionsText="Nada encontrado, admin."
           autoHighlight
           includeInputInList
+          disableOpenOnFocus={disableOpenOnFocus}
+          freeSolo={freeSolo}
           blurOnSelect={true}
           clearOnEscape
           autoComplete
+          renderOption={option => (
+              <div className="text-em-1-4">
+                <span><i style={{color: 'grey'}} className="fas fa-search"></i></span>{" "}
+                {option}
+              </div>
+          )}
           renderInput={params => (
             <TextField
               {...params}
               style={styles.asyncAutoSearch}
-              placeholder="Procure pelo nome do cliente"
+              placeholder={placeholder}
               fullWidth
+              onChange={onUserValueChange}
               variant="outlined"
               InputProps={{
                 ...params.InputProps,
+                style: {
+                    fontSize: '1em',
+                },
                 startAdornment: (
                 <InputAdornment position="start">
                     <SearchIcon style={styles.icon} />

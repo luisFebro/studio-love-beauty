@@ -26,13 +26,17 @@ export const getPeriodQuery = (period, chosenDate) => {
     }
 }
 
-export const getCashOpsList = async (dispatch, period, skip, chosenDate) => {
+export const getCashOpsList = async (dispatch, period, skip, chosenDate, search, autocomplete) => {
     const periodQuery = getPeriodQuery(period, chosenDate);
+    const searchQuery = search ? `&search=${search}` : "";
+    const autocompleteQuery = autocomplete ? `&autocomplete=true` : "";
     console.log("periodQuery", periodQuery);
+
     setCustomLoading(dispatch, true);
 
     try {
-        const res = await axios.get(`/api/finance/cash-ops/list/${period}?skip=${skip}${periodQuery}`, configTypeJson);
+        const url = `/api/finance/cash-ops/list/${period}?skip=${skip}${periodQuery}${searchQuery}${autocompleteQuery}`;
+        const res = await axios.get(url, configTypeJson);
         setCustomLoading(dispatch, false);
         return res;
     } catch (err) {
@@ -41,6 +45,7 @@ export const getCashOpsList = async (dispatch, period, skip, chosenDate) => {
     }
 };
 // end read
+
 export const updateFinance = async (dispatch, itemId, bodyToSend) => {
     try {
         return await axios.put(`/api/finance/${itemId}`, bodyToSend, configTypeJson);

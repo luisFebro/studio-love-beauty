@@ -7,6 +7,7 @@ import { getCashOpsList } from '../../../../redux/actions/financeActions';
 import { showSnackbar } from '../../../../redux/actions/snackbarActions';
 import LoadingThreeDots from '../../../../components/loadingIndicators/LoadingThreeDots';
 import PropTypes from 'prop-types';
+import AsyncAutoCompleteSearch from '../../../../components/search/AsyncAutoCompleteSearch';
 
 AllCashLists.propTypes = {
     setDashData: PropTypes.func,
@@ -81,12 +82,53 @@ export default function AllCashLists({
         })
     }, [run, handlerRun])
 
+
+    //auto complete
+    const autoCompleteUrl = `/api/finance/cash-ops/list/all?search=a&autocomplete=true`
+    const onAutoSelectChange = selectedValue => {
+        const initialSkip = 0;
+        getCashOpsList(dispatch, period, initialSkip, chosenDate, selectedValue)
+        .then(res => {
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            const { cashInOps, cashOutOps } = res.data;
+            setCashInData({
+                ...cashInData,
+                list: cashInOps.list,
+                sumAll: cashInOps.sumAll,
+                chunkSize: cashInOps.chunkSize,
+                totalSize: cashInOps.totalSize,
+            })
+            setCashOutData({
+                ...cashOutData,
+                list: cashOutOps.list,
+                sumAll: cashOutOps.sumAll,
+                chunkSize: cashOutOps.chunkSize,
+                totalSize: cashOutOps.totalSize,
+            })
+        })
+    }
+
+    // end auto complete
     return (
         currComponent === 'FinanceGraph' &&
         <section>
             <TitleContainer
                 title="HISTÓRICO"
             />
+            <div
+                className="container-center mt-5"
+                style={{marginBottom: '75px'}}
+            >
+                <AsyncAutoCompleteSearch
+                    url={autoCompleteUrl}
+                    circularProgressColor="secondary"
+                    onAutoSelectChange={onAutoSelectChange}
+                    needUserValueFunc={true}
+                    backgroundColor='white'
+                    disableOpenOnFocus={true}
+                    placeholder="Procure qualquer info"
+                />
+            </div>
             <div style={{color: '#f7f1e3'}} className="text-shadow d-flex flex-column flex-md-row justify-content-between">
                 <CashInList
                     setRun={setRun}

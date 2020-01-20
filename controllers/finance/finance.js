@@ -18,14 +18,127 @@ exports.create = (req, res) => {
     })
 }
 
+
+// getCashOpsList
+const getAutoCompleteList = (docs, search, limit) => {
+    const searchData = [];
+
+    const checkIfObjHasKeyAndPush = (docKey, mongoDoc) => {
+        for(modelProperty in Finance.schema.paths) {
+            if(modelProperty === docKey) {
+                const value = mongoDoc[docKey];
+
+                if(searchData.includes(value) || typeof value === "undefined") {
+                    continue;
+                }
+
+                searchData.push(value);
+            }
+        }
+    }
+
+    docs.forEach(mongoDoc => {
+        for(var docKey in mongoDoc) {
+            checkIfObjHasKeyAndPush(docKey, mongoDoc)
+        }
+    })
+
+    let matches = searchData.filter(substr => substr.includes(search));
+    matches = matches.slice(0, limit);
+
+    return matches;
+}
+
+function handleSearch(search) {
+    let cashInSearch;
+    let cashOutSearch;
+
+    // var user_input = new RegExp("le", 'i');
+    let queries = [];
+    let property;
+    for (property in Finance.schema.paths) {
+        const regEx = { $regex: `${search}`, $options: 'i'}
+
+        if([
+            "installmentsIfCredit",
+            "cashOutValue",
+            "cashInValue",
+            "_id",
+            "createdAt",
+            "updatedAt",
+            "__v",].includes(property)) {
+            continue;
+        }
+
+        queries.push({ [property]: regEx });
+    }
+
+    cashInSearch = {$and: [{ cashInValue: { $gt: 0}}, { $or: queries }]};
+    cashOutSearch = {$and: [{ cashOutValue: { $gt: 0}}, { $or: queries }]};
+
+    return {
+        cashInSearch,
+        cashOutSearch,
+    }
+}
+
+
+function getQuery(period, date, month, search) {
+    let queryCashOut;
+    let queryCashIn;
+    switch(period) {
+        case 'day':
+            queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `^${date}`, $options: 'i'}};
+            queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `^${date}`, $options: 'i'}};
+            break;
+        case 'month':
+            queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
+            queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
+            break;
+        case 'all':
+            if(search) {
+                const { cashOutSearch, cashInSearch } = handleSearch(search);
+                queryCashOut = cashOutSearch;
+                queryCashIn = cashInSearch;
+                break;
+            }
+            queryCashOut = { cashOutValue: { $gt: 0}};
+            queryCashIn = { cashInValue: { $gt: 0}};
+            break;
+        default:
+            console.log("Something did not work in the query switch in getCashOpsList")
+    }
+    return {
+        queryCashOut,
+        queryCashIn,
+    }
+}
+
 exports.getCashOpsList = (req, res) => {
     const period = req.params.period;
+    const search = req.query.search;
+    const autocomplete = req.query.autocomplete || false;
     const date = req.query.thisDayMonth;
     const month = req.query.thisMonth;
     const skip = parseInt(req.query.skip);
     const limit = 5;
 
-    const { queryCashOut, queryCashIn } = getQuery(period, date, month);
+    const { queryCashOut, queryCashIn } = getQuery(period, date, month, search);
+
+    if(search && autocomplete) {
+        Finance.find({$or: [queryCashOut, queryCashIn]})
+        .select("-installmentsIfCredit -cashOutValue -cashInValue -_id -createdAt -updatedAt -__v")
+        .limit(7)
+        .exec((err, docs) => {
+            if (err) return res.status(500).json(msgG("error.systemError", err));
+            const limit = 7;
+            const finalSearch = getAutoCompleteList(docs, search, limit)
+            res.json(finalSearch);
+        })
+
+        return;
+    }
+
     const sortQuery = {$sort: {createdAt: -1, name: 1}};
     const skipQuery = {$skip: skip};
     const limitQuery = {$limit: limit};
@@ -107,32 +220,6 @@ exports.remove = (req, res) => {
 // END FINANCES CRUD
 
 // LISTS
-// getCashOpsList
-function getQuery(period, date, month) {
-    let queryCashOut;
-    let queryCashIn;
-    switch(period) {
-        case 'day':
-            queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `^${date}`, $options: 'i'}};
-            queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `^${date}`, $options: 'i'}};
-            break;
-        case 'month':
-            queryCashOut = { cashOutValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
-            queryCashIn = { cashInValue: { $gt: 0}, formattedDate: { $regex: `${month}`, $options: 'i'}};
-            break;
-        case 'all':
-            queryCashOut = { cashOutValue: { $gt: 0}};
-            queryCashIn = { cashInValue: { $gt: 0}};
-            break;
-        default:
-            console.log("Something did not work in the query switch in getCashOpsList")
-    }
-    return {
-        queryCashOut,
-        queryCashIn,
-    }
-}
-
 // desc: for form select field
 exports.getAllAvailableNames = (req, res) => {
     const roleQuery = req.query.role || "colaborador";

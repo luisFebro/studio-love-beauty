@@ -2,12 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    deleteAllFieldsInCollection
+    mwUserId,
+} = require("../controllers/user");
+
+const {
+    readAllDbFromModels,
 } = require('../controllers/database');
 
-// route api/database
-router.post('/delete-all-fields-collection', deleteAllFieldsInCollection);
+const { mwIsAdmin } = require("../controllers/auth");
 
+
+// route api/database
+// router.post('/delete-all-fields-collection', deleteAllFieldsInCollection);
+router.get('/db-from-models/list/:userId', mwIsAdmin, readAllDbFromModels);
+router.param("userId", mwUserId);
 
 
 

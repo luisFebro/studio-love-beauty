@@ -90,7 +90,7 @@ export default function PanelHiddenContent({ data, setRun, run }) {
                 url={autoCompleteUrl}
                 circularProgressColor="secondary"
                 onAutoSelectChange={onAutoSelectChange}
-                placeholder="Procure pelo nome do cliente"
+                placeholder="Procure por cliente"
             />
         </div>
     );

@@ -122,6 +122,14 @@ export const deleteService = async (dispatch, adminId, serviceId) => {
 };
 // END SERVICES CRUD
 
+export const readAllDbFromModels = async (dispatch, securityObj, model) => {
+    try {
+        return await axios.get(`/api/database/db-from-models/list/${securityObj.adminId}?modelName=${model}`, configTypeJson);
+    } catch (err) {
+        return err.response;
+    }
+};
+
 /* COMMENTS
 n1: LESSON: never use GET METHOD if you want to send an object to backend, even in the case if it is working on Postman.
 */

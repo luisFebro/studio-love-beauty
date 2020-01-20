@@ -14,7 +14,7 @@ const validateEmail = require('../../utils/validation/validateEmail');
 // MIDDLEWARES - mw
 exports.mwUserId = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
-        if(err || !user) return res.status(400).json(msg('error.notFound'));
+        if(err || !user) return res.status(400).json({ msg: "Você não está autorizado a acessar este dado ou _id do usuário não encontrado"});
         req.profile = user;
         next();
     });

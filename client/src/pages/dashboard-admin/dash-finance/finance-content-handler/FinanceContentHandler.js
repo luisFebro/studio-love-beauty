@@ -15,6 +15,7 @@ export default function FinanceContentHandler({
         period: "day",
         initialSkip: 0,
         chosenDate: "",
+        selectedDate: new Date(), // for calander date checking in FinanceGraph
     })
 
     return (
@@ -34,6 +35,7 @@ export default function FinanceContentHandler({
                 <FinanceGraph
                     dashData={dashData}
                     currComponent={currComponent}
+                    filterData={<filterData></filterData>}
                 />
                 <NewExpense
                     setRun={setHandlerRun}

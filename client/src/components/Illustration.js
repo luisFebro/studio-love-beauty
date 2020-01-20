@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import truncateWords from '../utils/string/truncateWords';
 import { HashLink } from 'react-router-hash-link';
 import { ButtonContainerPressedEffectDark as Dark } from '../components/buttons/Default';
+import parse from 'html-react-parser';
 
 const isSmall = window.Helper.isSmallScreen();
 
@@ -27,6 +28,7 @@ Illustration.propTypes = {
         txtBorder: PropTypes.string,
         topPos: PropTypes.string,
         leftPos: PropTypes.string,
+        truncatedLimit: PropTypes.number,
     })
 }
 
@@ -45,7 +47,8 @@ export default function Illustration({
             txtAlign,
             txtBorder,
             topPos,
-            leftPos
+            leftPos,
+            truncatedLimit,
         } = txtImgConfig;
 
     const showActionButton = (actionButton) => {
@@ -82,7 +85,7 @@ export default function Illustration({
                             left: leftPos || "50%",
                         }}
                     >
-                        {truncateWords(txt, 55)}
+                        {parse(truncateWords(txt, truncatedLimit || 55))}
                     </p>
                 </div>
             </DivWrapper>

@@ -53,7 +53,7 @@ export default function FilterAndButtons({ setCurrComponent, setFilterData, filt
                 dateToSend = "";
         }
 
-        setFilterData({...filterData, chosenDate: dateToSend})
+        setFilterData({...filterData, chosenDate: dateToSend, selectedDate: selectedDate})
 
     }, [selectedDate, filterData.period])
 

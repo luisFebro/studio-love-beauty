@@ -17,6 +17,7 @@ const {
     mwBackup
 } = require("../../controllers/user");
 
+const { mwIsAdmin } = require("../../controllers/auth");
 // @route  api/user
 // RUD
 router.get("/:userId", read); // requireSignin, mwIsAuth
@@ -27,9 +28,9 @@ router.delete('/:userId', mwBackup, remove);
 router.get("/confirm-account/:authUserId", confirmUserAccount);
 
 // LISTS
-router.get("/list/all", getList);
+router.get("/list/all", getList); // NEED TO BE DELETED BECAUSE EXPOSE ALL USERS DATA...
 router.get("/list/highest-scores", getHighestScores);
-router.get("/backup/list", readBackup);
+router.get("/:userId/backup/list", mwIsAdmin, readBackup);
 router.get("/staff-booking/list/:userId", getStaffClientList);
 
 

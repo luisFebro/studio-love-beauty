@@ -6,12 +6,21 @@ import { CLIENT_URL } from '../../../../config/clientUrl';
 import Tilt from 'react-tilt';
 import TitleContainer from '../../../../components/TitleContainer';
 import { convertDotToComma } from '../../../../utils/numbers/convertDotComma';
+import moment from 'moment';
 
 const isSmall = window.Helper.isSmallScreen();
 
-export default function FinanceGraph({ dashData, currComponent }) {
+export default function FinanceGraph({ dashData, currComponent, filterData }) {
     const { cashInSumAll, cashOutSumAll, pendingSum } = dashData;
     const balanceValue = cashInSumAll - cashOutSumAll;
+
+    const handleCalanderDate = selectedDate => {
+        console.log("selectedDate", selectedDate);
+        const text = moment(selectedDate).calendar(null, { sameElse: 'em' + 'll'}).toUpperCase();
+        const indToCut = text.indexOf("ÀS");
+        const res = text.slice(0, indToCut);
+        return res;
+    }
 
     return (
         currComponent === "FinanceGraph" &&
@@ -26,9 +35,10 @@ export default function FinanceGraph({ dashData, currComponent }) {
                     }}
                     txtImgConfig = {{
                         topPos: "-5%",
-                        txt: `NENHUM MOVIMENTO FINANCEIRO ENCONTRADO NESTE PERÍODO`,
+                        txt: `NENHUM MOVIMENTO FINANCEIRO ENCONTRADO<br /><strong>${handleCalanderDate(filterData.selectedDate)}</strong>`,
                         txtStyle: "text-title",
                         txtBorder: "border-white",
+                        truncatedLimit: 70,
                     }}
                 />
             ) : (

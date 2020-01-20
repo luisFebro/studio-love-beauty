@@ -8,6 +8,7 @@ import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
 import TextField from '@material-ui/core/TextField';
 import handleChange from '../../../utils/form/use-state/handleChange';
 import { Link } from 'react-router-dom';
+import BackUpToExcel from './BackUpToExcel';
 // Redux
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../../redux/actions/snackbarActions';
@@ -259,6 +260,7 @@ export default function UpdateConfigForm() {
             style={{margin: '0 auto 600px', width: '90%'}}>
             <form className="py-5 px-2">
                 {showRegulationText()}
+                <BackUpToExcel />
                 {showImageUploader()}
                 {showVerificationPassField()}
                 {showColorPicker()}

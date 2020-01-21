@@ -168,7 +168,7 @@ function ModalFormLoyaltyPanel({
     );
 
     const showForm = () => (
-        <form style={styles.form} onBlur={() => setGotError(null)}>
+        <form style={styles.form} onBlur={() => {setGotError(null); setPreventDefault(false);}}>
             <span className="text-default text-em-1 font-weight-bold">
                 COLABORADOR*
                 <Select

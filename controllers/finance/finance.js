@@ -43,7 +43,7 @@ const getAutoCompleteList = (docs, search, limit) => {
         }
     })
 
-    let matches = searchData.filter(substr => substr.includes(search));
+    let matches = searchData.filter(substr => substr.toLowerCase().includes(search.toLowerCase()));
     matches = matches.slice(0, limit);
 
     return matches;

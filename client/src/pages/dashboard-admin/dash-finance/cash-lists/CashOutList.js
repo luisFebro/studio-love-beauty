@@ -61,7 +61,7 @@ export default function CashOutList({
             >
                 Total de Operações: <strong className="text-em-2">{isParentLoading ? "..." : cashOutData.totalSize}</strong>
                 <br />
-                Valor Total: <strong className="text-em-2">{isParentLoading ? "..." : `R$ ${convertDotToComma(cashOutData.sumAll)}`}</strong>
+                Valor Total:{isSmall ? <br /> : null}<strong className="text-em-2">{isParentLoading ? "..." : `R$ ${convertDotToComma(cashOutData.sumAll)}`}</strong>
             </p>
         </section>
     );

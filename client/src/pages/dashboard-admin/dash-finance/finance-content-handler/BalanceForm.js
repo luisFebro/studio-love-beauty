@@ -159,7 +159,7 @@ function BalanceForm({
     }
 
     const showForm = () => (
-        <form onBlur={() => setError("")} style={styles.form} className="position-relative">
+        <form onBlur={() => {setError(""); setPreventDefault(false);}} style={styles.form} className="position-relative">
             <div style={styles.icon} className="animated rotateIn delay-1 position-absolute">
                 <img
                     src={`${CLIENT_URL}/img/icons/${isExpenseForm ? "less.svg" : "plus.svg"}`}

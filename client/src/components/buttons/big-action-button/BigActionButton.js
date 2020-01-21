@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import './pressedEffect.css'
 
+const isSmall = window.Helper.isSmallScreen();
+
 BigActionButton.propTypes = {
     title: PropTypes.string.isRequired,
     fontAwesomeIcon: PropTypes.string,
@@ -46,7 +48,7 @@ export default function BigActionButton({
         >
             {title}
             <i
-                className={`${fontAwesomeIcon} text-em-1-9 ml-3`}
+                className={`${fontAwesomeIcon} text-em-1-9 ${isSmall ? "ml-1" : "ml-3"}`}
             >
             </i>
         </button>

@@ -35,7 +35,7 @@ export default function FinanceGraph({ dashData, currComponent, filterData }) {
                         maxWidth: 400
                     }}
                     txtImgConfig = {{
-                        topPos: "60%",
+                        topPos: isSmall ? "90%" : "60%",
                         txt: `NENHUM MOVIMENTO FINANCEIRO ENCONTRADO<br /><strong>${handleCalanderDate(filterData.selectedDate)}</strong>`,
                         txtStyle: "text-title",
                         txtBorder: "border-white",

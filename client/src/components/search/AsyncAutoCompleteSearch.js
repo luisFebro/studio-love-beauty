@@ -27,6 +27,7 @@ export default function AsyncAutoCompleteSearch({
     onAutoSelectChange,
     noOptionsText,
     backgroundColor,
+    clearOnEscape = false,
     needUserValueFunc = false,
     freeSolo = false,
     disableOpenOnFocus = false,
@@ -108,7 +109,7 @@ export default function AsyncAutoCompleteSearch({
             setOpen(false);
           }}
           onChange={(event, value) => onAutoSelectChange(value)}
-          getOptionSelected={(option, value) => option === value}
+          getOptionSelected={(option, value) => option.toLowerCase() === value.toLowerCase()}
           getOptionLabel={option => option}
           options={options}
           loading={loading}
@@ -120,7 +121,7 @@ export default function AsyncAutoCompleteSearch({
           includeInputInList
           disableOpenOnFocus={disableOpenOnFocus}
           freeSolo={freeSolo}
-          clearOnEscape
+          clearOnEscape={clearOnEscape}
           autoComplete
           renderOption={option => (
               <div className="text-em-1-4">

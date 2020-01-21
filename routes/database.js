@@ -9,7 +9,7 @@ const {
     readAllDbFromModels,
 } = require('../controllers/database');
 
-const { mwIsAdmin } = require("../controllers/auth");
+const { mwIsAdmin, mwRequireAuth, mwIsAuth } = require("../controllers/auth");
 
 
 // route api/database

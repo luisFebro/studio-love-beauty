@@ -1,10 +1,10 @@
 // value string eg "10,60". it can not be dot
 export default function isMoneyBrValidAndAlert(string, showSnackbar, dispatch) {
-    if(typeof string !== "string") {
-        string = string.toString();
-    }
     if(!string) {
         string = "null"
+    }
+    if(typeof string !== "string") {
+        string = string.toString();
     }
     const endValue = string.slice(-1);
     const commaQuantity = string.match(new RegExp(",",'g'))

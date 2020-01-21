@@ -2,8 +2,24 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { msgG } = require('./_msgs/globalMsgs');
 const { msg } = require('./_msgs/auth');
+const expressJwt = require('express-jwt');
 
 // MIDDLEWARES
+exports.mwRequireAuth = expressJwt({
+    secret: process.env.JWT_SECRET,
+    userProperty: "auth"
+});
+
+exports.mwIsAuth = (req, res, next) => {
+    let user = req.profile && req.auth && req.profile._id.toString() === req.auth.id;
+    if (!user) {
+        return res.status(403).json({ // html code for Forbidden
+            msg: "Você não tem autorização para acessar este documento"
+        });
+    }
+    next();
+};
+
 exports.mwIsAdmin = (req, res, next) => {
     if(req.profile.role !== "admin") {
         return res.status(403).json(msg('error.accessDenied'));
@@ -26,7 +42,6 @@ exports.mwAuth = (req, res, next) => { // n1
     }
     next();
 }
-
 // END MIDDLEWARES
 
 // this will load the authorized user's data after and only if the token is valid in mwAuth

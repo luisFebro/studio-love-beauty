@@ -79,7 +79,7 @@ export default function BackUpToExcel() {
                 table={brDbName}
                 filename={brDbName}
                 sheet={`Studio Love Beauty - banco de dados - ${brDbName}`}
-                buttonText={isThisLoading ? "BAIXANDO..." : parse(`PRONTO PARA BAIXAR - <strong>${brDbName.toUpperCase()}</strong>`)}
+                buttonText={isThisLoading ? "BAIXANDO... UM INSTANTE..." : "PRONTO PARA BAIXAR"}
             />
             <table id={brDbName} className="d-none">
                 <thead>
@@ -124,6 +124,7 @@ export default function BackUpToExcel() {
 
     return (
         <div className="my-5 container-center">
+            <p className="text-left text-default font-weight-bold">Fazer cópia de dados do sistema via Excel:</p>
             <ButtonDropdown
                 dropdown={{
                     titleOptions: ['SELECIONE BOTÃO', "GERAR DADOS - USUÁRIOS", "GERAR DADOS - AGENDAMENTOS", "GERAR DADOS - FINANÇAS"],

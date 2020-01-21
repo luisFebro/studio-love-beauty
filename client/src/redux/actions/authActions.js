@@ -126,6 +126,24 @@ export const tokenConfig = getState => {
     return config;
 };
 
+export const getTokenOnly = getState => {
+    //getState method accesses redux store outside of a react component
+    const token = getState().authReducer.cases.token;
+
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    if (token) {
+        config.headers['x-auth-token'] = token;
+    }
+
+    return config;
+};
+
+
 
 /* COMMENTS
 n1: eg when user authenticated

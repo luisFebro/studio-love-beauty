@@ -91,9 +91,9 @@ export default function AsyncAutoCompleteSearch({
     }
 
     const highlightSearchResult = (string, search) => {
-        const reg = new RegExp(search, 'g');
+        const reg = new RegExp(search, 'gi');
         let newString = string.replace(reg, `<strong>${search}</strong>`);
-        newString = parse(newString);
+        newString = parse(newString.toLowerCase());
         return newString;
     }
 

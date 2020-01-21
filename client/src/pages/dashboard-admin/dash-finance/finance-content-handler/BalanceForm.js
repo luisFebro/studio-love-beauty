@@ -50,6 +50,7 @@ function BalanceForm({
     } = data;
 
     const [error, setError] = useState("");
+    const [preventDefault, setPreventDefault] = useState(false);
 
     const { servicesList } = useStoreState(state => ({
         servicesList: state.adminReducer.cases.services,
@@ -115,6 +116,7 @@ function BalanceForm({
     }
 
     const handleSubmit = saveType => {
+        setPreventDefault(true);
         // Validation
         let cashType = cashInValue;
         if(isExpenseForm) {
@@ -309,6 +311,7 @@ function BalanceForm({
                 backColorOnHover="var(--mainDark)"
                 iconFontAwesome="far fa-save"
                 textTransform='uppercase'
+                disabled={preventDefault ? true : false}
             />
             <ButtonMulti
                 title="SALVAR"
@@ -318,6 +321,7 @@ function BalanceForm({
                 backColorOnHover="var(--mainDark)"
                 iconFontAwesome="fas fa-save"
                 textTransform='uppercase'
+                disabled={preventDefault ? true : false}
             />
         </div>
     );

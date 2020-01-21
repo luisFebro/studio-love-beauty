@@ -52,7 +52,6 @@ export default function AsyncAutoCompleteSearch({
 
         (async () => {
             const response = await axios.get(autoCompleteUrl, configTypeJson);
-            console.log("response", response);
             await sleep(1e3); // For demo purposes.
 
             if(active && Array.isArray(response.data)) {

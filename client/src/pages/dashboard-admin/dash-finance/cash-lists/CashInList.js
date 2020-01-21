@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { convertDotToComma } from '../../../../utils/numbers/convertDotComma';
 import LoadMoreItemsButton from '../../../../components/buttons/LoadMoreItemsButton';
 import { getPeriodQuery } from '../../../../redux/actions/financeActions';

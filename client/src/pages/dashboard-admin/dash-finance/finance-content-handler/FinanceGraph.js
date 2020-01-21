@@ -15,10 +15,11 @@ export default function FinanceGraph({ dashData, currComponent, filterData }) {
     const balanceValue = cashInSumAll - cashOutSumAll;
 
     const handleCalanderDate = selectedDate => {
-        console.log("selectedDate", selectedDate);
-        const text = moment(selectedDate).calendar(null, { sameElse: 'em' + 'll'}).toUpperCase();
-        const indToCut = text.indexOf("ÀS");
-        const res = text.slice(0, indToCut);
+        const text = moment(selectedDate).calendar(null, { sameElse: 'LL'}).toUpperCase();
+
+        const indToCutAfter = text.indexOf("ÀS");
+        const res = indToCutAfter === -1 ? `EM ${text}` : `PARA ${text.slice(0, indToCutAfter)}`;
+
         return res;
     }
 
@@ -34,11 +35,11 @@ export default function FinanceGraph({ dashData, currComponent, filterData }) {
                         maxWidth: 400
                     }}
                     txtImgConfig = {{
-                        topPos: "-5%",
+                        topPos: "60%",
                         txt: `NENHUM MOVIMENTO FINANCEIRO ENCONTRADO<br /><strong>${handleCalanderDate(filterData.selectedDate)}</strong>`,
                         txtStyle: "text-title",
                         txtBorder: "border-white",
-                        truncatedLimit: 70,
+                        truncatedLimit: 100,
                     }}
                 />
             ) : (

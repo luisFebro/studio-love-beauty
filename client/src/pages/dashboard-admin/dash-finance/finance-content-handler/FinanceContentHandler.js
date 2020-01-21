@@ -35,7 +35,7 @@ export default function FinanceContentHandler({
                 <FinanceGraph
                     dashData={dashData}
                     currComponent={currComponent}
-                    filterData={<filterData></filterData>}
+                    filterData={filterData}
                 />
                 <NewExpense
                     setRun={setHandlerRun}

@@ -87,7 +87,8 @@ export default function AllCashLists({
     const autoCompleteUrl = `/api/finance/cash-ops/list/all?search=a&autocomplete=true`
     const onAutoSelectChange = selectedValue => {
         const initialSkip = 0;
-        getCashOpsList(dispatch, "all", initialSkip, chosenDate, selectedValue)
+        const handledPeriod = selectedValue === null ? period : "all";
+        getCashOpsList(dispatch, handledPeriod, initialSkip, chosenDate, selectedValue)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             const { cashInOps, cashOutOps } = res.data;

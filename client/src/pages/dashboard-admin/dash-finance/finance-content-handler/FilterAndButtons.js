@@ -53,7 +53,7 @@ export default function FilterAndButtons({ setCurrComponent, setFilterData, filt
                 dateToSend = "";
         }
 
-        setFilterData({...filterData, chosenDate: dateToSend, selectedDate: selectedDate})
+        setFilterData({...filterData, chosenDate: dateToSend, selectedDate: date})
 
     }, [selectedDate, filterData.period])
 
@@ -106,7 +106,8 @@ export default function FilterAndButtons({ setCurrComponent, setFilterData, filt
                     }}
                     fullWidth
                     margin="dense"
-                    autoOk={true}
+                    okLabel="Selecionar"
+                    cancelLabel="Voltar"
                     disableToolbar={true}
                     views={period === "day" ? ["date"] : ["month", "year"]}
                     openTo={`${period === "day" ? "date" : "month"}`}

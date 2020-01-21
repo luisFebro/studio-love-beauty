@@ -3,7 +3,6 @@ import isSmallScreen from '../utils/isSmallScreen';
 // End Dash Sessions
 
 // Material UI
-import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -111,25 +110,19 @@ export default function TabSessions({ data, needTabFullWidth = false }) {
                     )}
                 </Tabs>
             </AppBar>
-            <SwipeableViews
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={value}
-                onChangeIndex={handleChangeIndex}
-            >
-                {data && data.map((tab, ind) => {
-                    return(
-                        <TabPanel
-                            style={{overflow: 'hidden'}}
-                            key={ind}
-                            value={value}
-                            index={ind}
-                            dir={theme.direction}
-                        >
-                            {tab.tabContentPanel}
-                        </TabPanel>
-                    );
-                })}
-            </SwipeableViews>
+            {data && data.map((tab, ind) => {
+                return(
+                    <TabPanel
+                        style={{overflow: 'hidden'}}
+                        key={ind}
+                        value={value}
+                        index={ind}
+                        dir={theme.direction}
+                    >
+                        {tab.tabContentPanel}
+                    </TabPanel>
+                );
+            })}
         </div>
     );
 }

@@ -45,8 +45,9 @@ export default function AllCashLists({
 
     const dispatch = useStoreDispatch();
 
-    const { isCustomLoading } = useStoreState(state => ({
+    const { isCustomLoading, adminName } = useStoreState(state => ({
         isCustomLoading: state.globalReducer.cases.isCustomLoading,
+        adminName: state.userReducer.cases.currentUser.name,
     }))
 
     useEffect(() => {
@@ -86,7 +87,7 @@ export default function AllCashLists({
     const autoCompleteUrl = `/api/finance/cash-ops/list/all?search=a&autocomplete=true`
     const onAutoSelectChange = selectedValue => {
         const initialSkip = 0;
-        getCashOpsList(dispatch, period, initialSkip, chosenDate, selectedValue)
+        getCashOpsList(dispatch, "all", initialSkip, chosenDate, selectedValue)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             const { cashInOps, cashOutOps } = res.data;
@@ -123,6 +124,7 @@ export default function AllCashLists({
                     circularProgressColor="secondary"
                     onAutoSelectChange={onAutoSelectChange}
                     needUserValueFunc={true}
+                    noOptionsText={`Nada encontrado, ${adminName ? adminName.cap() : "Admin"}`}
                     backgroundColor='white'
                     disableOpenOnFocus={true}
                     placeholder="Procure alguma coisa..."

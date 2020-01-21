@@ -25,6 +25,7 @@ export default function AsyncAutoCompleteSearch({
     url,
     circularProgressColor,
     onAutoSelectChange,
+    noOptionsText,
     backgroundColor,
     needUserValueFunc = false,
     freeSolo = false,
@@ -37,26 +38,29 @@ export default function AsyncAutoCompleteSearch({
     const loading = open && options.length === 0;
 
     const onUserValueChange = e => {
-        const value = e.target.value;
-        const changedValue = value;
-        setUserValue(value);
+        const changedValue = e.target.value;
+        setUserValue(changedValue);
         setAutoCompleteUrl(`/api/finance/cash-ops/list/all?search=${changedValue}&autocomplete=true`)
     }
 
     React.useEffect(() => {
         let active = true;
 
-        if(!loading) {
-            return undefined;
-        }
+        // if(!loading) {
+        //     return undefined;
+        // }
 
         (async () => {
             const response = await axios.get(autoCompleteUrl, configTypeJson);
             console.log("response", response);
             await sleep(1e3); // For demo purposes.
 
-            if(active) {
-                setOptions(response.data);
+            if(active && Array.isArray(response.data)) {
+                if(response.data.length === 0) {
+                    setOptions([" "])
+                } else {
+                    setOptions(response.data)
+                }
             }
         })();
 
@@ -69,7 +73,7 @@ export default function AsyncAutoCompleteSearch({
         if(!open) {
             setOptions([]);
         }
-    }, [open]);
+    }, [open, userValue]);
 
     const styles = {
         asyncAutoSearch: {
@@ -112,7 +116,7 @@ export default function AsyncAutoCompleteSearch({
           loadingText="Carregando..."
           clearText="Limpar"
           closeText="Fechar"
-          noOptionsText="Nada encontrado, admin."
+          noOptionsText={noOptionsText}
           autoHighlight
           includeInputInList
           disableOpenOnFocus={disableOpenOnFocus}
@@ -122,7 +126,7 @@ export default function AsyncAutoCompleteSearch({
           renderOption={option => (
               <div className="text-em-1-4">
                 <span><i style={{color: 'grey'}} className="fas fa-search"></i></span>{" "}
-                {highlightSearchResult(option, userValue)}
+                {userValue ? highlightSearchResult(option, userValue) : option}
               </div>
           )}
           renderInput={params => (

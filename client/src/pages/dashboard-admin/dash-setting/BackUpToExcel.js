@@ -37,7 +37,8 @@ export default function BackUpToExcel() {
 
     const isArrayReady = dbDataList.length !== 0;
 
-    const { adminId } = useStoreState(state => ({
+    const { adminId, token } = useStoreState(state => ({
+        token: state.authReducer.cases.token,
         adminId: state.userReducer.cases.currentUser._id,
     }))
 
@@ -52,7 +53,7 @@ export default function BackUpToExcel() {
     const handleSubmit = adminId => {
         const securityObj = {
             adminId,
-            token: '123',
+            token,
         }
 
         setIsThisLoading(true);

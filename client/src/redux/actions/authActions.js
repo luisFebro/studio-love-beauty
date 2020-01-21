@@ -18,7 +18,7 @@ export const loadUser = () => (dispatch, getState) => {
         // readUser(dispatch, res.data.profile);
     })
     .catch(err => {
-        return err.response;
+        showSnackbar(dispatch, err.response.data.msg, 'error', 7000)
     });
 };
 
@@ -107,7 +107,7 @@ export const changePassword = async (dispatch, bodyPass, userId) => {
 
 
 // Setup config/headers and token
-export const tokenConfig = getState => {
+export const tokenConfig = getState => { // n2
     //getState method accesses redux store outside of a react component
     const token = getState().authReducer.cases.token;
     console.log('token from tokenConfig', token);
@@ -126,19 +126,14 @@ export const tokenConfig = getState => {
     return config;
 };
 
-export const getTokenOnly = getState => {
-    //getState method accesses redux store outside of a react component
-    const token = getState().authReducer.cases.token;
+export const getHeadersAuth = token => {
 
     const config = {
         headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+            'x-auth-token': token
         }
     };
-
-    if (token) {
-        config.headers['x-auth-token'] = token;
-    }
 
     return config;
 };
@@ -153,4 +148,6 @@ n1: eg when user authenticated
         x-auth-token: "eyJhbGciOiJIUzI1NiIsInR5..."
     }
 }
+
+n2: getState need to be wrapped inside redux dispatch function in order to work properly. eg dispatch(loadUser(getState))
 */

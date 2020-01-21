@@ -2,7 +2,7 @@ import axios from 'axios';
 import { configTypeJson } from '../../utils/server/configTypeJson';
 import { getBodyRequest } from '../../utils/server/getBodyRequest';
 import { setLoadingProgress } from './globalActions';
-import { getTokenOnly } from './authActions';
+import { getHeadersAuth } from './authActions';
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 
 
@@ -124,8 +124,9 @@ export const deleteService = async (dispatch, adminId, serviceId) => {
 // END SERVICES CRUD
 
 export const readAllDbFromModels = async (dispatch, securityObj, model) => {
+    alert(JSON.stringify(securityObj));
     try {
-        return await axios.get(`/api/database/db-from-models/list/${securityObj.adminId}?modelName=${model}`, configTypeJson);
+        return await axios.get(`/api/database/db-from-models/list/${securityObj.adminId}?modelName=${model}`, getHeadersAuth(securityObj.token));
     } catch (err) {
         return err.response;
     }

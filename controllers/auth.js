@@ -11,6 +11,7 @@ exports.mwRequireAuth = expressJwt({
 });
 
 exports.mwIsAuth = (req, res, next) => {
+    console.log(req.auth)
     let user = req.profile && req.auth && req.profile._id.toString() === req.auth.id;
     if (!user) {
         return res.status(403).json({ // html code for Forbidden
@@ -30,15 +31,13 @@ exports.mwIsAdmin = (req, res, next) => {
 exports.mwAuth = (req, res, next) => { // n1
     const token = req.header('x-auth-token'); // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYjQzMDFlZDM5YTRlMTI1NDYyNzdhOCIsImlhdCI6MTU3NDIxMDUwNCwiZXhwIjoxNTc0ODE1MzA0fQ.HAUlZ6lCHxRuieN5nizug_ZMTEuAmJ2Ck22uCcBkmeY"
 
-    if(!token) return console.log(msg('error.jwtNotFound', 'onlyMsg'));
+    if(!token) return console.log("New user accessed without JWT Token!");
 
     try {
-        // Verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // Add user from payload
         req.authObj = decoded; // eg { id: '5db4301ed39a4e12546277a8', iat: 1574210504, exp: 1574815304 } // iat refers to JWT_SECRET. This data is generated from jwt.sign
-    } catch (err) {
-        res.status(500).json(msgG('error.systemError', err))
+    } catch(err) {
+        console.log("This user has an Invalid or Expired JWT Token!")
     }
     next();
 }
@@ -46,8 +45,10 @@ exports.mwAuth = (req, res, next) => { // n1
 
 // this will load the authorized user's data after and only if the token is valid in mwAuth
 exports.loadAuthUser = (req, res) => {
-    const userId = req.authObj.id;
-    User.findById(userId)
+    if(!req.authObj) return res.status(401).json(msg('error.sessionEnded'));
+
+    const userIdInsideJwt = req.authObj.id;
+    User.findById(userIdInsideJwt)
         .select('-cpf')
         .exec((err, profile) => {
             if(err) return res.status(500).json(msgG('error.systemError', err))
@@ -83,12 +84,12 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     const { password, needKeepLoggedIn } = req.body;
     const { _id, name, role } = req.profile;
-    const expireAuthDays = `2h`; // default: 30m
+    const expiringTime = "30m"; // default: 30m
 
     jwt.sign(
         { id: _id },
         process.env.JWT_SECRET,
-        { expiresIn: expireAuthDays },
+        { expiresIn: expiringTime },
         (err, token) => {
             if(err) return res.status(500).json(msgG('error.systemError', err));
             res.json({

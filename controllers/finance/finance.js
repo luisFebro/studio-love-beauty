@@ -66,7 +66,7 @@ function handleSearch(search) {
             "_id",
             "createdAt",
             "updatedAt",
-            "__v",].includes(property)) {
+            "__v"].includes(property)) {
             continue;
         }
 

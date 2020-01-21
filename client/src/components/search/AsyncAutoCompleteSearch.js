@@ -8,6 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { configTypeJson } from '../../utils/server/configTypeJson';
+import parse from 'html-react-parser';
 
 AsyncAutoCompleteSearch.propTypes = {
     data: PropTypes.arrayOf(PropTypes.string),
@@ -32,10 +33,13 @@ export default function AsyncAutoCompleteSearch({
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [autoCompleteUrl, setAutoCompleteUrl] = useState(url);
+    const [userValue, setUserValue] = useState("");
     const loading = open && options.length === 0;
 
     const onUserValueChange = e => {
-        const changedValue = e.target.value;
+        const value = e.target.value;
+        const changedValue = value;
+        setUserValue(value);
         setAutoCompleteUrl(`/api/finance/cash-ops/list/all?search=${changedValue}&autocomplete=true`)
     }
 
@@ -82,6 +86,13 @@ export default function AsyncAutoCompleteSearch({
         }
     }
 
+    const highlightSearchResult = (string, search) => {
+        const reg = new RegExp(search, 'g');
+        let newString = string.replace(reg, `<strong>${search}</strong>`);
+        newString = parse(newString);
+        return newString;
+    }
+
     return (
         <Autocomplete
           id="asynchronous-demo"
@@ -111,7 +122,7 @@ export default function AsyncAutoCompleteSearch({
           renderOption={option => (
               <div className="text-em-1-4">
                 <span><i style={{color: 'grey'}} className="fas fa-search"></i></span>{" "}
-                {option}
+                {highlightSearchResult(option, userValue)}
               </div>
           )}
           renderInput={params => (

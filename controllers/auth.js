@@ -35,11 +35,11 @@ exports.mwSession = (req, res, next) => { // n1
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.authObj = decoded; // eg { id: '5db4301ed39a4e12546277a8', iat: 1574210504, exp: 1574815304 } // iat refers to JWT_SECRET. This data is generated from jwt.sign
+        next();
     } catch(err) {
         console.log("This user has an Invalid or Expired JWT Token! " + err)
         return res.status(401).json(msg('error.sessionEnded'));
     }
-    next();
 }
 // END MIDDLEWARES
 

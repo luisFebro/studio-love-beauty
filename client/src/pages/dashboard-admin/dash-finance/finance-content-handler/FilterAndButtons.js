@@ -105,9 +105,11 @@ export default function FilterAndButtons({ setCurrComponent, setFilterData, filt
                     }}
                     fullWidth
                     margin="dense"
-                    okLabel="Selecionar"
-                    cancelLabel="Voltar"
+                    okLabel={period === "day" ? "Selecionar" : ""}
+                    cancelLabel={period === "day" ? "Voltar" : ""}
+                    animateYearScrolling={true}
                     disableToolbar={true}
+                    autoOk={period === "day" ? false : true}
                     views={period === "day" ? ["date"] : ["month", "year"]}
                     openTo={`${period === "day" ? "date" : "month"}`}
                     name={`${period === "day" ? "dayMonth" : "MonthYear"}`}

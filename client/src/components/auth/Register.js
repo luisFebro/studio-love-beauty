@@ -188,13 +188,10 @@ export default function Register() {
                     error={errorBirthday ? true : false}
                     openTo="month"
                     autoOk={true}
-                    disableToolbar={true}
                     placeholder="Dia e Mês"
                     views={["month", "date"]}
                     label="Quando é o seu aniversário?"
                     name="birthday"
-                    okLabel="Selecionar"
-                    okCancel="Voltar"
                     value={selectedDate}
                     onChange={handleDateChange}
                     InputProps={{

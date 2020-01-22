@@ -18,8 +18,12 @@ export const loadUser = () => (dispatch, getState) => {
         // readUser(dispatch, res.data.profile);
     })
     .catch(err => {
-        showSnackbar(dispatch, err.response && err.response.data.msg, 'error', 10000)
-        err.response && logout(dispatch, false);
+        console.log("err", err)
+        console.log("err.response", err.response)
+        if(err.response && err.response.status !== 500) {
+            showSnackbar(dispatch, err.response.data.msg, 'error', 10000)
+            logout(dispatch, false);
+        }
     });
 };
 

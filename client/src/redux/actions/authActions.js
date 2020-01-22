@@ -18,7 +18,8 @@ export const loadUser = () => (dispatch, getState) => {
         // readUser(dispatch, res.data.profile);
     })
     .catch(err => {
-        showSnackbar(dispatch, err.response && err.response.data.msg, 'error', 7000)
+        showSnackbar(dispatch, err.response && err.response.data.msg, 'error', 10000)
+        err.response && logout(dispatch, false);
     });
 };
 
@@ -86,11 +87,11 @@ export const registerFacebook = (dispatch, body, resFacebook) => {
 };
 // Register Social Networks
 
-export const logout = dispatch => {
+export const logout = (dispatch, needSnackbar = true) => {
     dispatch({ type: 'LOGOUT_SUCCESS' });
     dispatch({ type: 'USER_CLEARED' });
     dispatch({ type: 'ALL_COMPONENTS_CLEARED' });
-    setTimeout(() => showSnackbar(dispatch, 'Sua sessão foi finalizada com sucesso!', 4000), 2000);
+    setTimeout(() => needSnackbar && showSnackbar(dispatch, 'Sua sessão foi finalizada com sucesso!', 4000), 2000);
 };
 
 export const changePassword = async (dispatch, bodyPass, userId) => {

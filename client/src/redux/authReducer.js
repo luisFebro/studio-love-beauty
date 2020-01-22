@@ -6,7 +6,7 @@ import { reducer } from 'easy-peasy';
 
 // REDUCERS
 const initialState = {
-    token: sessionStorage.getItem('token'), // n1 n3
+    token: localStorage.getItem('token'), // n1 n3
     tokenWhenLogin: '', // n2
     isUserAuthenticated: false,
 };
@@ -21,7 +21,7 @@ export const authReducer = {
                 };
             case 'LOGIN_EMAIL':
             case 'REGISTER_EMAIL':
-                sessionStorage.setItem('token', action.payload);
+                localStorage.setItem('token', action.payload);
                 return {
                     ...state,
                     isUserAuthenticated: true,

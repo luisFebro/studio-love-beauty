@@ -28,7 +28,6 @@ export default function FilterAndButtons({ setCurrComponent, setFilterData, filt
             textAlign:'center',
             fontSize: '1.5em',
             backgroundColor: "var(--mainWhite)",
-            zIndex: 2000
         },
         icon: {
             top: '-25px', left: '-25px', transform: 'rotate(20deg)'

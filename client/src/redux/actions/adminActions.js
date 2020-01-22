@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson, getHeaderToken } from '../../utils/server/getHeaders';
 import { getBodyRequest } from '../../utils/server/getBodyRequest';
 import { setLoadingProgress } from './globalActions';
-import { getHeadersAuth } from './authActions';
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 
 
 export const readAdmin = async dispatch => {
     try {
         // setLoadingOn(dispatch);
-        const res = await axios.get('/api/admin', configTypeJson);
+        const res = await axios.get('/api/admin', getHeaderJson);
         console.log('==ADMIN DATA LOADED==');
         dispatch({
             type: 'LOAD_ADMIN',
@@ -24,7 +23,7 @@ export const readAdmin = async dispatch => {
 
 export const updateAdmin = async (dispatch, bodyToSend) => {
     try {
-        return await axios.put('/api/admin', bodyToSend, configTypeJson);
+        return await axios.put('/api/admin', bodyToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -32,7 +31,7 @@ export const updateAdmin = async (dispatch, bodyToSend) => {
 
 export const updateConfig = async (dispatch, objToUpdate) => {
     try {
-        const res = await axios.put(`/api/admin/config`, objToUpdate, configTypeJson);
+        const res = await axios.put(`/api/admin/config`, objToUpdate, getHeaderJson);
         // dispatch({ type: 'UPDATE_BIZ_INFO', payload: objToUpdate });
         return res;
     } catch (err) {
@@ -42,7 +41,7 @@ export const updateConfig = async (dispatch, objToUpdate) => {
 
 export const updateBusinessInfo = async (dispatch, objToUpdate) => {
     try {
-        const res = await axios.put(`/api/admin/business-info/update`, objToUpdate, configTypeJson);
+        const res = await axios.put(`/api/admin/business-info/update`, objToUpdate, getHeaderJson);
         dispatch({ type: 'UPDATE_BIZ_INFO', payload: objToUpdate });
         return res;
     } catch (err) {
@@ -52,7 +51,7 @@ export const updateBusinessInfo = async (dispatch, objToUpdate) => {
 
 export const readVerificationPass = async () => { // L
     try {
-        const res = await axios.get(`/api/admin/verification-pass`, configTypeJson);
+        const res = await axios.get(`/api/admin/verification-pass`, getHeaderJson);
         return res;
     } catch (err) {
         return err.response;
@@ -62,7 +61,7 @@ export const readVerificationPass = async () => { // L
 export const checkVerificationPass = async (dispatch, objToSend) => { // L
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post(`/api/admin/verification-pass`, objToSend, configTypeJson);
+        const res = await axios.post(`/api/admin/verification-pass`, objToSend, getHeaderJson);
         setLoadingProgress(dispatch, false);
         return res;
     } catch (err) {
@@ -75,7 +74,7 @@ export const checkVerificationPass = async (dispatch, objToSend) => { // L
 export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.get(`/api/admin/list/staff-with-bookings?skip=${docsToSkip}`, configTypeJson);
+        const res = await axios.get(`/api/admin/list/staff-with-bookings?skip=${docsToSkip}`, getHeaderJson);
         setLoadingProgress(dispatch, false);
         dispatch({type: 'STAFF_WITH_BOOKINGS_READ', payload: res.data })
         return res;
@@ -90,7 +89,7 @@ export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
 // SERVICES CRUD
 export const createService = async (dispatch, adminId, bodyToSend) => {
     try {
-        return await axios.post(`/api/admin/service/${adminId}`, bodyToSend, configTypeJson);
+        return await axios.post(`/api/admin/service/${adminId}`, bodyToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -98,7 +97,7 @@ export const createService = async (dispatch, adminId, bodyToSend) => {
 
 export const readServicesList = async (dispatch) => {
     try {
-        const res = await axios.get(`/api/admin/service/list/all`, configTypeJson);
+        const res = await axios.get(`/api/admin/service/list/all`, getHeaderJson);
         dispatch({type: 'SERVICES_READ', payload: res.data })
         return res;
     } catch (err) {
@@ -108,7 +107,7 @@ export const readServicesList = async (dispatch) => {
 
 export const updateService = async (dispatch, adminId, itemId, bodyToSend) => {
     try {
-        return await axios.put(`/api/admin/service/${adminId}?serviceId=${itemId}`, bodyToSend, configTypeJson);
+        return await axios.put(`/api/admin/service/${adminId}?serviceId=${itemId}`, bodyToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -116,7 +115,7 @@ export const updateService = async (dispatch, adminId, itemId, bodyToSend) => {
 
 export const deleteService = async (dispatch, adminId, serviceId) => {
     try {
-        return await axios.delete(`/api/admin/service/${adminId}?serviceId=${serviceId}`, configTypeJson);
+        return await axios.delete(`/api/admin/service/${adminId}?serviceId=${serviceId}`, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -124,9 +123,8 @@ export const deleteService = async (dispatch, adminId, serviceId) => {
 // END SERVICES CRUD
 
 export const readAllDbFromModels = async (dispatch, securityObj, model) => {
-    alert(JSON.stringify(securityObj));
     try {
-        return await axios.get(`/api/database/db-from-models/list/${securityObj.adminId}?modelName=${model}`, getHeadersAuth(securityObj.token));
+        return await axios.get(`/api/database/db-from-models/list/${securityObj.adminId}?modelName=${model}`, getHeaderToken(securityObj.token));
     } catch (err) {
         return err.response;
     }

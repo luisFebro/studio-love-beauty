@@ -11,7 +11,6 @@ exports.mwRequireAuth = expressJwt({
 });
 
 exports.mwIsAuth = (req, res, next) => {
-    console.log(req.auth)
     let user = req.profile && req.auth && req.profile._id.toString() === req.auth.id;
     if (!user) {
         return res.status(403).json({ // html code for Forbidden
@@ -29,7 +28,7 @@ exports.mwIsAdmin = (req, res, next) => {
 };
 
 exports.mwAuth = (req, res, next) => { // n1
-    const token = req.header('x-auth-token'); // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYjQzMDFlZDM5YTRlMTI1NDYyNzdhOCIsImlhdCI6MTU3NDIxMDUwNCwiZXhwIjoxNTc0ODE1MzA0fQ.HAUlZ6lCHxRuieN5nizug_ZMTEuAmJ2Ck22uCcBkmeY"
+    const token = req.header("x-auth-token"); // this does not work with authorization header // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYjQzMDFlZDM5YTRlMTI1NDYyNzdhOCIsImlhdCI6MTU3NDIxMDUwNCwiZXhwIjoxNTc0ODE1MzA0fQ.HAUlZ6lCHxRuieN5nizug_ZMTEuAmJ2Ck22uCcBkmeY"
 
     if(!token) return console.log("New user accessed without JWT Token!");
 
@@ -37,7 +36,7 @@ exports.mwAuth = (req, res, next) => { // n1
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.authObj = decoded; // eg { id: '5db4301ed39a4e12546277a8', iat: 1574210504, exp: 1574815304 } // iat refers to JWT_SECRET. This data is generated from jwt.sign
     } catch(err) {
-        console.log("This user has an Invalid or Expired JWT Token!")
+        console.log("This user has an Invalid or Expired JWT Token! " + err)
     }
     next();
 }

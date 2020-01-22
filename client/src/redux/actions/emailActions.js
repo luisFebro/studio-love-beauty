@@ -1,11 +1,11 @@
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 import axios from 'axios';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 import { setLoadingProgress } from './globalActions';
 
 export const sendWelcomeConfirmEmail = async (bodyEmail, userId) => {
     try {
-        return await axios.post(`/api/email/client/welcome-and-confirm/${userId}`, bodyEmail, configTypeJson);
+        return await axios.post(`/api/email/client/welcome-and-confirm/${userId}`, bodyEmail, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -14,7 +14,7 @@ export const sendWelcomeConfirmEmail = async (bodyEmail, userId) => {
 export const sendBuyRequestEmail = async (dispatch, bodyEmail) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post('/api/email/admin/order-request', bodyEmail, configTypeJson);
+        const res = await axios.post('/api/email/admin/order-request', bodyEmail, getHeaderJson);
         setLoadingProgress(dispatch, false);
         return res;
     } catch (err) {
@@ -26,7 +26,7 @@ export const sendBuyRequestEmail = async (dispatch, bodyEmail) => {
 export const sendNewPasswordLink = async (dispatch, bodyEmail) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post('/api/email/client/new-password', bodyEmail, configTypeJson)
+        const res = await axios.post('/api/email/client/new-password', bodyEmail, getHeaderJson)
         setLoadingProgress(dispatch, false);
         return res;
     } catch(err) {

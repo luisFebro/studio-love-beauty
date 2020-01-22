@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { tokenConfig } from './authActions';
 import { setLoadingProgress, setErrorOn } from './globalActions';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 // get an obj with all infos of a item from a specific id
 export const getItem = (allProductsList, _id) => {
     const product = allProductsList.find(item => item._id === _id);
@@ -24,7 +24,7 @@ export const addProduct = product => async (dispatch, getState) => {
 export const readProduct = async (dispatch, idOrDashedTitle) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = axios.get(`/api/product/${idOrDashedTitle}`, configTypeJson)
+        const res = axios.get(`/api/product/${idOrDashedTitle}`, getHeaderJson)
         setLoadingProgress(dispatch, false);
         return res;
     } catch(err) {
@@ -42,7 +42,7 @@ export const updateProduct = async (dispatch, keyToUpdate, _idProduct) => {
         [`${targetKey}`]: keyToUpdate[targetKey]
     };
     try {
-        await axios.put(`/api/product/${_idProduct}`, keyToUpdate, configTypeJson);
+        await axios.put(`/api/product/${_idProduct}`, keyToUpdate, getHeaderJson);
         console.log('==CHANGING PRODUCT==');
         dispatch({ type: 'CHANGE_PRODUCT', payload: dataToUpdate }); // dataToUpdate
     } catch (e) {
@@ -53,7 +53,7 @@ export const updateProduct = async (dispatch, keyToUpdate, _idProduct) => {
 
 export const deleteProduct = async (dispatch, _idProduct) => {
     try {
-        await axios.delete(`/api/product/${_idProduct}`, configTypeJson);
+        await axios.delete(`/api/product/${_idProduct}`, getHeaderJson);
         console.log('==PRODUCT DELETED==');
         dispatch({ type: 'DELETE_PRODUCT', payload: _idProduct });
         // update
@@ -82,7 +82,7 @@ export const getAllProducts = async dispatch => {
 export const loadRelatedProducts = async (dispatch, productData) => {
     try {
         const { id, limit } = productData;
-        return await axios.get(`/api/product/list/related/${id}?limit=${limit}`, configTypeJson);
+        return await axios.get(`/api/product/list/related/${id}?limit=${limit}`, getHeaderJson);
     } catch(err) {
         return err.response;
     }
@@ -90,7 +90,7 @@ export const loadRelatedProducts = async (dispatch, productData) => {
 
 export const loadFavoriteProducts = async (userId) => {
     try {
-        return await axios.get(`/api/product/${userId}/list/favorite`, configTypeJson)
+        return await axios.get(`/api/product/${userId}/list/favorite`, getHeaderJson)
     } catch(err) {
         return err.response;
     }

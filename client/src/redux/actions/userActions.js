@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { showSnackbar } from './snackbarActions';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 import { setLoadingProgress } from './globalActions';
 // import { tokenConfig } from './authActions';
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 
 // RUD
 export const readUser = async (dispatch, _userId) => {
-    const res = await axios.get(`/api/user/${_userId}`, configTypeJson);
+    const res = await axios.get(`/api/user/${_userId}`, getHeaderJson);
     console.log('===CURRENT USER LOADED===');
     dispatch({
         type: 'USER_READ',
@@ -18,7 +18,7 @@ export const readUser = async (dispatch, _userId) => {
 export const updateUser = async (dispatch, objToSend, _idUser, needDispatch = true) => {
     const updateObj = Object.assign({}, {_id: _idUser}, objToSend);
     try {
-        const res = await axios.put(`/api/user/${_idUser}`, objToSend, configTypeJson);
+        const res = await axios.put(`/api/user/${_idUser}`, objToSend, getHeaderJson);
         dispatch({ type: 'USER_UPDATED', payload: needDispatch ? updateObj : null });
         return res;
     } catch (err) {
@@ -28,7 +28,7 @@ export const updateUser = async (dispatch, objToSend, _idUser, needDispatch = tr
 
 export const deleteUser = async (dispatch, _idUser) => { // n1
     try {
-        const res = await axios.delete(`/api/user/${_idUser}`, configTypeJson);
+        const res = await axios.delete(`/api/user/${_idUser}`, getHeaderJson);
         dispatch({ type: 'USER_DELETED', payload: _idUser });
         return res;
     } catch(err) {
@@ -39,7 +39,7 @@ export const deleteUser = async (dispatch, _idUser) => { // n1
 
 export const confirmUserAccount = async (userId) => {
     try {
-        return await axios.get(`/api/user/confirm-account/${userId}`, configTypeJson);
+        return await axios.get(`/api/user/confirm-account/${userId}`, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -49,7 +49,7 @@ export const confirmUserAccount = async (userId) => {
 export const readUserList = async (dispatch) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.get('/api/user/list/all', configTypeJson);
+        const res = await axios.get('/api/user/list/all', getHeaderJson);
         setLoadingProgress(dispatch, false);
         console.log('==ALL USERS UPDATED==');
         dispatch({ type: 'USER_READ_LIST', payload: res.data });
@@ -61,7 +61,7 @@ export const readUserList = async (dispatch) => {
 
 export const readHighestScores = async (dispatch) => {
     try {
-        const res = await axios.get('/api/user/list/highest-scores', configTypeJson);
+        const res = await axios.get('/api/user/list/highest-scores', getHeaderJson);
         dispatch({ type: "HIGHEST_SCORES_READ", payload: res.data})
     } catch (err) {
         return err;
@@ -72,7 +72,7 @@ export const readHighestScores = async (dispatch) => {
 export const addElemArrayUser = async (dispatch, objToSend) => {
     try {
         const { userId, changeField } = objToSend;
-        const res = await axios.put(`/api/user/field/array/push/${userId}`, changeField, configTypeJson);
+        const res = await axios.put(`/api/user/field/array/push/${userId}`, changeField, getHeaderJson);
         dispatch({ type: 'USER_READ', payload: res.data.user });
         return res;
     } catch (err) {
@@ -83,7 +83,7 @@ export const addElemArrayUser = async (dispatch, objToSend) => {
 export const removeElemArrayUser = async (dispatch, objToSend) => {
     try {
         const { userId, changeField } = objToSend;
-        const res = await axios.put(`/api/user/field/array/pull/${userId}`, changeField, configTypeJson);
+        const res = await axios.put(`/api/user/field/array/pull/${userId}`, changeField, getHeaderJson);
         dispatch({ type: 'USER_READ', payload: res.data.user });
         return res;
     } catch (err) {
@@ -101,7 +101,7 @@ export const sendNotification = async (dispatch, objToSend, _idClient) => {
     }
 
     try {
-        const res = await axios.put(`/api/user/lists/change-field/notifications/${_idClient}`, objToSend, configTypeJson);
+        const res = await axios.put(`/api/user/lists/change-field/notifications/${_idClient}`, objToSend, getHeaderJson);
         console.log('res from user Action', res);
         readUserList(dispatch);
         // change name form 'admin'to Loja Babadoo (this is how gonna be displayed to the user)

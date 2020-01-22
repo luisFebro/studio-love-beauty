@@ -4,7 +4,7 @@ import { useStoreDispatch } from 'easy-peasy';
 import PropTypes from 'prop-types';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import ButtonMulti from './material-ui/ButtonMulti';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 import getValObjWithStr from '../../utils/objects/getValObjWithStr';
 
 LoadMoreItemsButton.propTypes = {
@@ -71,7 +71,7 @@ export default function LoadMoreItemsButton({
         console.log("modifiedUrl", modifiedUrl);
 
         setIsThisLoading(true);
-        axios.get(modifiedUrl, configTypeJson)
+        axios.get(modifiedUrl, getHeaderJson)
         .then(res => {
             if(res.status !== 200) {
                 setIsThisLoading(false);

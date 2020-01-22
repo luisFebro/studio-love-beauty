@@ -38,7 +38,7 @@ export default function BackUpToExcel() {
     const isArrayReady = dbDataList.length !== 0;
 
     const { adminId, token } = useStoreState(state => ({
-        token: state.authReducer.cases.token,
+        token: state.authReducer.cases.tokenWhenLogin,
         adminId: state.userReducer.cases.currentUser._id,
     }))
 
@@ -60,7 +60,7 @@ export default function BackUpToExcel() {
         readAllDbFromModels(dispatch, securityObj, dbModelName)
         .then(res => {
             if(res.status !== 200) {
-                showSnackbar(dispatch, res.data.msg, 'error')
+                showSnackbar(dispatch, "This user has an Invalid or Expired JWT Token!", 'error')
                 setIsThisLoading(false);
                 return;
             }

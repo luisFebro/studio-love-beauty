@@ -6,7 +6,8 @@ import { reducer } from 'easy-peasy';
 
 // REDUCERS
 const initialState = {
-    token: localStorage.getItem('token'), // n1
+    token: sessionStorage.getItem('token'), // n1 n3
+    tokenWhenLogin: '', // n2
     isUserAuthenticated: false,
 };
 
@@ -20,10 +21,11 @@ export const authReducer = {
                 };
             case 'LOGIN_EMAIL':
             case 'REGISTER_EMAIL':
-                localStorage.setItem('token', action.payload);
+                sessionStorage.setItem('token', action.payload);
                 return {
                     ...state,
                     isUserAuthenticated: true,
+                    tokenWhenLogin: action.payload,
                 };
             case 'LOGIN_GOOGLE':
             case 'LOGIN_FACEBOOK':
@@ -39,6 +41,7 @@ export const authReducer = {
                 return {
                     ...state,
                     isUserAuthenticated: false,
+                    tokenWhenLogin: '',
                     token: null,
                 };
             default:
@@ -49,4 +52,7 @@ export const authReducer = {
 
 /* COMMENTS
 n1: localStorage.getItem('token') is null when user authenticates, and only when the user reloads it gets the token stored by setItem.
+n2: this is for an immeditate avsalability of token to send request from frontend in the first access. Otherwise, user will need to restart the page to have the token in the localstorage.
+n3: for security reasons, it is recommended to use sessionStorage. sessionStorage object is available only to that window/tab until the window is closed.
+https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#local-storage
 */

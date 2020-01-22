@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 import {
     setLoadingProgress,
     setCustomLoading,
@@ -7,7 +7,7 @@ import {
 
 export const createBooking = async (dispatch, objToSend, staffId) => { // L
     try {
-        return await axios.post(`/api/staff-booking/${staffId}`, objToSend, configTypeJson);
+        return await axios.post(`/api/staff-booking/${staffId}`, objToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -15,7 +15,7 @@ export const createBooking = async (dispatch, objToSend, staffId) => { // L
 
 export const removeBooking = async (dispatch, staffId, itemId) => { // L
     try {
-        return await axios.put(`/api/staff-booking/remove/${staffId}?removedId=${itemId}`, configTypeJson);
+        return await axios.put(`/api/staff-booking/remove/${staffId}?removedId=${itemId}`, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -23,7 +23,7 @@ export const removeBooking = async (dispatch, staffId, itemId) => { // L
 
 export const updateBooking = async (dispatch, objToSend, bookingId) => { // L
     try {
-        return await axios.put(`/api/staff-booking/${bookingId}`, objToSend, configTypeJson);
+        return await axios.put(`/api/staff-booking/${bookingId}`, objToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -32,7 +32,7 @@ export const updateBooking = async (dispatch, objToSend, bookingId) => { // L
 // update "atrasado" status
 export const checkStatusAndUpdateMany = async (dispatch, _staffId) => { // L
     try {
-        return await axios.put(`/api/staff-booking/status/${_staffId}`, configTypeJson);
+        return await axios.put(`/api/staff-booking/status/${_staffId}`, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -46,7 +46,7 @@ export const getStaffBookingList = async (dispatch, staffId, docsToSkip, needRea
 
     try {
         const url =`/api/user/staff-booking/list/${staffId}?skip=${docsToSkip}${search ? `&search=${search}` : null}`;
-        const res = await axios.get(url, configTypeJson);
+        const res = await axios.get(url, getHeaderJson);
         checkStatusAndUpdateMany(dispatch, staffId);
 
 
@@ -74,7 +74,7 @@ export const getStaffBookingListForAdmin = async (dispatch, staffId, docsToSkip,
 
     try {
         const url =`/api/user/staff-booking/list/${staffId}?skip=${docsToSkip}${search ? `&search=${search}` : null}`;
-        const res = await axios.get(url, configTypeJson);
+        const res = await axios.get(url, getHeaderJson);
         checkStatusAndUpdateMany(dispatch, staffId);
 
         needReadMore !== true
@@ -95,7 +95,7 @@ export const getStaffBookingListForAdmin = async (dispatch, staffId, docsToSkip,
 // This is fetched directly from component AsyncAutoCompleteSearch
 // export const getAllClientsNameFromStaff = async (dispatch, _staffId) => {
 //     try {
-//         return await axios.get(`/api/staff-booking/list/clients-name-from-staff?staffId=${_staffId}`, configTypeJson);
+//         return await axios.get(`/api/staff-booking/list/clients-name-from-staff?staffId=${_staffId}`, getHeaderJson);
 //     } catch (err) {
 //         return err.response;
 //     }

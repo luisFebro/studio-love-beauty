@@ -7,7 +7,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 import parse from 'html-react-parser';
 
 AsyncAutoCompleteSearch.propTypes = {
@@ -52,7 +52,7 @@ export default function AsyncAutoCompleteSearch({
         // }
 
         (async () => {
-            const response = await axios.get(autoCompleteUrl, configTypeJson);
+            const response = await axios.get(autoCompleteUrl, getHeaderJson);
             await sleep(1e3); // For demo purposes.
 
             if(active && Array.isArray(response.data)) {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { readUser } from './userActions';
 import { setLoadingProgress } from './globalActions';
 import { showSnackbar } from './snackbarActions';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 // import { postDataWithJsonObj } from '../../utils/promises/postDataWithJsonObj.js'
 
@@ -18,7 +18,7 @@ export const loadUser = () => (dispatch, getState) => {
         // readUser(dispatch, res.data.profile);
     })
     .catch(err => {
-        showSnackbar(dispatch, err.response.data.msg, 'error', 7000)
+        showSnackbar(dispatch, err.response && err.response.data.msg, 'error', 7000)
     });
 };
 
@@ -27,7 +27,7 @@ export const loadUser = () => (dispatch, getState) => {
 export const loginEmail = async (dispatch, objToSend) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post('/api/auth/login', objToSend, configTypeJson);
+        const res = await axios.post('/api/auth/login', objToSend, getHeaderJson);
         readUser(dispatch, res.data.authUserId);
         dispatch({ type: 'LOGIN_EMAIL', payload: res.data.token });
         setLoadingProgress(dispatch, false);
@@ -46,7 +46,7 @@ export const loginEmail = async (dispatch, objToSend) => {
 export const registerEmail = async (dispatch, objToSend) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post('/api/auth/register', objToSend, configTypeJson);
+        const res = await axios.post('/api/auth/register', objToSend, getHeaderJson);
         // dispatch({ type: 'REGISTER_EMAIL', payload: res.data.token });
         // readUser(dispatch, res.data.authUserId);
         setLoadingProgress(dispatch, false);
@@ -62,7 +62,7 @@ export const registerEmail = async (dispatch, objToSend) => {
 
 // Register Social Networks - note: login is done conditionally in the their auth component
 export const registerGoogle = (dispatch, body, resGoogle) => {
-    axios.post('/api/auth/register', body, configTypeJson)
+    axios.post('/api/auth/register', body, getHeaderJson)
     .then(res => {
         dispatch({ type: 'LOGIN_GOOGLE', payload: res.data.token })
         dispatch({ type: 'USER_GOOGLE_DATA', payload: resGoogle })
@@ -74,7 +74,7 @@ export const registerGoogle = (dispatch, body, resGoogle) => {
 };
 
 export const registerFacebook = (dispatch, body, resFacebook) => {
-    axios.post('/api/auth/register', body, configTypeJson)
+    axios.post('/api/auth/register', body, getHeaderJson)
     .then(res => {
         dispatch({ type: 'LOGIN_FACEBOOK', payload: res.data.token })
         dispatch({ type: 'USER_FACEBOOK_DATA', payload: resFacebook })
@@ -96,7 +96,7 @@ export const logout = dispatch => {
 export const changePassword = async (dispatch, bodyPass, userId) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post(`/api/auth/change-password?id=${userId}`, bodyPass, configTypeJson);
+        const res = await axios.post(`/api/auth/change-password?id=${userId}`, bodyPass, getHeaderJson);
         setLoadingProgress(dispatch, false);
         return res;
     } catch(err) {
@@ -125,20 +125,6 @@ export const tokenConfig = getState => { // n2
 
     return config;
 };
-
-export const getHeadersAuth = token => {
-
-    const config = {
-        headers: {
-            'Content-type': 'application/json',
-            'x-auth-token': token
-        }
-    };
-
-    return config;
-};
-
-
 
 /* COMMENTS
 n1: eg when user authenticated

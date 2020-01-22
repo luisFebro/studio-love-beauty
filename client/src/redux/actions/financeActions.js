@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { configTypeJson } from '../../utils/server/configTypeJson';
+import { getHeaderJson } from '../../utils/server/getHeaders';
 import addSpacingPlusToQuery from '../../utils/string/addSpacingPlusToQuery';
 import { setCustomLoading } from './globalActions';
 
 // CRUD
 export const createFinance = async (dispatch, objToSend) => {
     try {
-        return await axios.post(`/api/finance`, objToSend, configTypeJson);
+        return await axios.post(`/api/finance`, objToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -30,13 +30,12 @@ export const getCashOpsList = async (dispatch, period, skip, chosenDate, search,
     const periodQuery = getPeriodQuery(period, chosenDate);
     const searchQuery = search ? `&search=${search}` : "";
     const autocompleteQuery = autocomplete ? `&autocomplete=true` : "";
-    console.log("periodQuery", periodQuery);
 
     setCustomLoading(dispatch, true);
 
     try {
         const url = `/api/finance/cash-ops/list/${period}?skip=${skip}${periodQuery}${searchQuery}${autocompleteQuery}`;
-        const res = await axios.get(url, configTypeJson);
+        const res = await axios.get(url, getHeaderJson);
         setCustomLoading(dispatch, false);
         return res;
     } catch (err) {
@@ -48,7 +47,7 @@ export const getCashOpsList = async (dispatch, period, skip, chosenDate, search,
 
 export const updateFinance = async (dispatch, itemId, bodyToSend) => {
     try {
-        return await axios.put(`/api/finance/${itemId}`, bodyToSend, configTypeJson);
+        return await axios.put(`/api/finance/${itemId}`, bodyToSend, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -56,7 +55,7 @@ export const updateFinance = async (dispatch, itemId, bodyToSend) => {
 
 export const removeFinance = async (dispatch, itemId) => {
     try {
-        return await axios.delete(`/api/finance/${itemId}`, configTypeJson);
+        return await axios.delete(`/api/finance/${itemId}`, getHeaderJson);
     } catch (err) {
         return err.response;
     }
@@ -67,7 +66,7 @@ export const removeFinance = async (dispatch, itemId) => {
 // LIST
 export const getAllAvailableNames = async (dispatch, isAdmin = false) => {
     try {
-        return await axios.get(`/api/finance/staff/list/names${isAdmin ? `?role=admin` : ""}`, configTypeJson);
+        return await axios.get(`/api/finance/staff/list/names${isAdmin ? `?role=admin` : ""}`, getHeaderJson);
     } catch (err) {
         return err.response;
     }

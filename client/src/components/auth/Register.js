@@ -180,7 +180,7 @@ export default function Register() {
                   ),
                 }}
             />
-            <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>
+            <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}> {/*TODO: Do a component for pickers*/}
                 <DatePicker
                     required
                     variant="inline"

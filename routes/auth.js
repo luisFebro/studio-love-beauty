@@ -4,7 +4,7 @@ const {
     loadAuthUser,
     register,
     login,
-    mwAuth,
+    mwSession,
     changePassword
 } = require('../controllers/auth');
 
@@ -15,7 +15,7 @@ const {
 } = require('../controllers/_mw-validation/auth');
 
 // @route   api/auth
-router.get('/user', mwAuth, loadAuthUser);
+router.get('/user', mwSession, loadAuthUser);
 router.post('/register', mwValidateRegister, register);
 router.post('/login', mwValidateLogin, login);
 router.post('/change-password', mwValidatePassword, changePassword);

@@ -126,8 +126,10 @@ const getQuery = (role) => {
         case 'cliente':
             mainQuery = { role: 'cliente' };
             break;
-        case 'admin':
         case 'colaborador':
+            mainQuery = {role: 'colaborador'};
+            break;
+        case 'colaborador-and-admin':
             mainQuery = { $or: [{role: 'admin'}, {role: 'colaborador'}] };
             break;
         default:

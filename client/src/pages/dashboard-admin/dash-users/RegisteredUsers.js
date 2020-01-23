@@ -6,32 +6,51 @@ import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { readUserList } from '../../../redux/actions/userActions';
+import { showSnackbar } from '../../../redux/actions/snackbarActions';
 import moment from 'moment';
 import parse from 'html-react-parser';
 import PanelHiddenContent from './PanelHiddenContent';
 // End Redux
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
 
+
+const initialSkip = 0;
 export default function RegisteredUsersList() {
     const [configBtns, setConfigBtns] = useState(false);
     const [data, setData] = useState({
         searchTerm: ""
     });
-
     const { searchTerm } = data;
 
+    const [run, setRun] = useState(false);
+    const [clientsData, setClientsData] = useState({
+        list: [],
+        chunkSize: 0,
+        totalSize: 0,
+    });
+    const { list, chunkSize, totalSize } = clientsData;
+
     const { allUsers, isLoading } = useStoreState(state => ({
-        allUsers: state.userReducer.cases.allUsers,
         isLoading: state.globalReducer.cases.isLinearPLoading,
     }));
 
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        readUserList(dispatch)
-    }, [])
+        readUserList(dispatch, initialSkip, "colaborador-and-admin")
+        .then(res => {
 
-    const onlyManagingUsers = allUsers.filter(user => user.role !== "cliente" && user.cpf !== "023.248.892-42");
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setClientsData({
+                ...clientsData,
+                list: res.data.list,
+                chunkSize: res.data.chunkSize,
+                totalSize: res.data.totalSize
+            })
+        })
+    }, [run])
+
+    const onlyManagingUsers = list.filter(user => user.role !== "cliente" && user.cpf !== "023.248.892-42");
 
     const filteredUsers = onlyManagingUsers.filter(user => {
         return user.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -60,8 +79,9 @@ export default function RegisteredUsersList() {
     const actions = filteredUsers.map(user => {
         return({
            _id: user._id,
-           mainHeading: user.name,
+           mainHeading: user.name.cap(),
            secondaryHeading: parse(`> Função Gerenciamento: ${whichRole(user.role)} <br />> Atualizado ${moment(user.updatedAt).fromNow()}  atrás.`),
+           userData: user,
            hiddenContent: <PanelHiddenContent data={user} />
         });
     })
@@ -85,7 +105,8 @@ export default function RegisteredUsersList() {
                     }}
                 />
             }
-            allUsers={allUsers}
+            setRun={setRun}
+            run={run}
         />
     );
     //End ExpansionPanel Content
@@ -95,8 +116,8 @@ export default function RegisteredUsersList() {
             {showSearchBar()}
             <SearchResult
                 isLoading={isLoading}
-                filteredUsersLength={filteredUsers.length}
-                allUsersLength={onlyManagingUsers.length}
+                filteredUsersLength={list.length - 1} // need change
+                allUsersLength={list.length - 1}
                 searchTerm={searchTerm}
             />
             {isLoading

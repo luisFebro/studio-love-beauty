@@ -55,7 +55,7 @@ export default function ButtonFab({
     const handleToggle = () => {
         setToggle(!toggle);
         actionAfterClick && actionAfterClick.setStatus(!actionAfterClick.status);
-        actionAfterClick && actionAfterClick.setFunction();
+        actionAfterClick.setFunction && actionAfterClick.setFunction();
     }
 
 

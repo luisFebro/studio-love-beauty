@@ -74,7 +74,7 @@ export default function StaffWithBookingsList() {
     const showSearchBar = () => (
         <div className="container-center my-4">
             <SearchFilter
-                placeholder="Admin, procure pelo nome do colaborador"
+                placeholder="Admin, procure colaborador"
                 searchChange={onSearchChange}
             />
         </div>

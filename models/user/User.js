@@ -46,7 +46,7 @@ const data = {
         trim: true,
         maxlength: 40,
         required: true,
-        lowercase: false,
+        lowercase: true,
     },
     email: {
         type: String,

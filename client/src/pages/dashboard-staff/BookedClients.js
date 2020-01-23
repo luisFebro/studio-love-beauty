@@ -77,7 +77,7 @@ function BookedClients({ match, run }) {
     const showSearchBar = () => (
         <div className="container-center my-4">
             <SearchFilter
-                placeholder="Procure pelo nome do seu cliente"
+                placeholder="Procure seu cliente"
                 searchChange={onSearchChange}
             />
         </div>

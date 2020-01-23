@@ -120,14 +120,62 @@ exports.removeField = (req, res) => { // n1
 }
 
 // LISTS
+const getQuery = (role) => {
+    let mainQuery;
+    switch(role) {
+        case 'cliente':
+            mainQuery = { role: 'cliente' };
+            break;
+        case 'admin':
+        case 'colaborador':
+            mainQuery = { $or: [{role: 'admin'}, {role: 'colaborador'}] };
+            break;
+        default:
+            mainQuery = {};
+    }
+    return {
+        mainQuery
+    }
+}
 exports.getList = (req, res) => {
-    User.find({})
-        .select("-password")
-        .sort({ name: 1 })
-        .exec((err, data) => {
-            if(err) return res.status(500).json(msgG('error.systemError', err));
-            res.json(data);
-        });
+    const skip = parseInt(req.query.skip);
+    const role = req.query.role;
+    const search = req.query.search;
+
+    const sortQuery = {$sort: { name: 1 }};
+    const skipQuery = {$skip: skip};
+    const limitQuery = {$limit: 5};
+    const countQuery = {$count: 'value'};
+    const searchQuery = {name: {$regex: `${search}`, $options: 'i'}};
+
+    let { mainQuery } = getQuery(role);
+
+    if(search) {
+        mainQuery = Object.assign({}, mainQuery, searchQuery);
+    }
+
+    User.aggregate([
+        {
+            $facet: {
+                list: [{$match: mainQuery}, sortQuery, skipQuery, limitQuery],
+                chunkSize: [{$match: mainQuery}, skipQuery, limitQuery, countQuery],
+                totalSize: [{$match: mainQuery}, countQuery],
+            }
+        }
+    ])
+    .then(docs => {
+        const {
+            list,
+            chunkSize,
+            totalSize
+        } = docs[0];
+
+        res.json({
+            list,
+            chunkSize: chunkSize[0] === undefined ? 0 : chunkSize[0].value,
+            totalSize: totalSize[0] === undefined ? 0 : totalSize[0].value,
+        })
+    })
 }
 
 exports.getHighestScores = (req, res) => {
@@ -156,7 +204,7 @@ exports.getStaffClientList = (req, res) => {
     let query;
     let limit;
     if(req.query.search) {
-        query = {'clientName': { $regex: `^${req.query.search}`, $options: "i" }}
+        query = {'clientName': { $regex: `${req.query.search}`, $options: "i" }}
         limit = 10;
     } else {
         query = {'_id': {$in: bookingArrayIds }}

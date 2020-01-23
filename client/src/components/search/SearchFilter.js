@@ -39,12 +39,16 @@ export default function SearchFilter({ placeholder, searchChange }) {
       <InputBase
         name="searchTerm"
         autoComplete="off"
-        onBlur={searchChange}
         className={classes.input}
+        onBlur={searchChange}
         placeholder={placeholder}
-        inputProps={{ 'aria-label': placeholder }}
+        inputProps={{ 'aria-label': placeholder, style: { fontSize: '1.3em'} }}
       />
-      <IconButton className={classes.iconButton} aria-label="search">
+      <IconButton
+            className={classes.iconButton}
+            aria-label="search"
+            onClick={null} // Recommended to replace onBlur to this in next updates.
+       >
         <SearchIcon />
       </IconButton>
     </Paper>

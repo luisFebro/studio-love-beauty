@@ -5,60 +5,91 @@ import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
 import RankingPondium from './RankingPondium';
 import moment from 'moment';
 import parse from 'html-react-parser';
+import { convertDotToComma } from '../../../utils/numbers/convertDotComma';
 // Redux
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { readUserList } from '../../../redux/actions/userActions';
+import { showSnackbar } from '../../../redux/actions/snackbarActions';
 import ExpansiblePanel from '../ExpansiblePanel';
 import PanelHiddenContent from './PanelHiddenContent';
 // End Redux
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
+import LoadMoreItemsButton from '../../../components/buttons/LoadMoreItemsButton';
 
 moment.updateLocale('pt-br');
 
+const initialSkip = 0;
 export default function RegisteredClientsList() {
     const [configBtns, setConfigBtns] = useState(false);
-    const [data, setData] = useState({
-        searchTerm: ""
+    const [run, setRun] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [clientsData, setClientsData] = useState({
+        list: [],
+        chunkSize: 0,
+        totalSize: 0,
     });
+    const { list, chunkSize, totalSize } = clientsData;
 
-    const { searchTerm } = data;
-
-    const { allUsers, isLoading } = useStoreState(state => ({
-        allUsers: state.userReducer.cases.allUsers,
+    const { isLoading, adminName } = useStoreState(state => ({
         isLoading: state.globalReducer.cases.isLinearPLoading,
+        adminName: state.userReducer.cases.currentUser.name,
     }));
 
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        readUserList(dispatch)
-    }, [])
+        readUserList(dispatch, initialSkip, "cliente")
+        .then(res => {
 
-    const onlyClients = allUsers.filter(user => user.role === "cliente");
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setClientsData({
+                ...clientsData,
+                list: res.data.list,
+                chunkSize: res.data.chunkSize,
+                totalSize: res.data.totalSize
+            })
+        })
+    }, [run])
 
-    const filteredUsers = onlyClients.filter(user => {
+    const filteredUsers = list.filter(user => {
         return user.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
+    // search
     const onSearchChange = e => {
-        setData({ searchTerm: e.target.value });
+        const querySearched = e.target.value;
+        setSearchTerm(querySearched);
+
+        readUserList(dispatch, initialSkip, "cliente", querySearched)
+        .then(res => {
+
+            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            setClientsData({
+                ...clientsData,
+                list: res.data.list,
+                chunkSize: res.data.chunkSize,
+                totalSize: res.data.totalSize
+            })
+        })
     }
 
     const showSearchBar = () => (
         <div className="container-center my-4">
             <SearchFilter
-                placeholder="Admin, procure pelo nome do cliente"
+                placeholder="Admin, procure cliente"
                 searchChange={onSearchChange}
             />
         </div>
     );
+    // end search
 
     // ExpansionPanel Content
     const actions = filteredUsers.map(user => {
         return({
            _id: user._id,
-           mainHeading: user.name,
-           secondaryHeading: parse(`> Pontos Acumulados: <br />${typeof user.loyaltyScores === "undefined" ? "Sem pontuação" : user.loyaltyScores.currentScore} <br />> Atualizado ${moment(user.updatedAt).fromNow()}  atrás.`),
+           mainHeading: user.name.cap(),
+           secondaryHeading: parse(`> Pontos Acumulados: <br />${typeof user.loyaltyScores === "undefined" ? "Sem pontuação" : convertDotToComma(user.loyaltyScores.currentScore)} <br />> Atualizado ${moment(user.updatedAt).fromNow()}  atrás.`),
+           userData: user,
            hiddenContent: <PanelHiddenContent data={user} />
         });
     })
@@ -82,27 +113,50 @@ export default function RegisteredClientsList() {
                     }}
                 />
             }
-            allUsers={allUsers}
+            setRun={setRun}
+            run={run}
         />
     );
     //End ExpansionPanel Content
 
+
+    const showMoreItemsBtn = () => (
+        <LoadMoreItemsButton
+            url={`/api/user/list/all?skip=${"SKIP"}&role=cliente`}
+            objPathes={{
+                strList: "data.list",
+                strChunkSize: "data.chunkSize",
+                strTotalSize: "data.totalSize",
+            }}
+            setData={setClientsData}
+            data={clientsData}
+            remainingText="Clientes Restantes:"
+            msgAfterDone={`${adminName}, Isso é tudo! Não há mais Clientes`}
+            button={{
+                title: "Carregar mais Usuários",
+                loadingIndicator: "Carregando mais agora...",
+                backgroundColor: 'var(--mainPink)',
+            }}
+        />
+    );
+
     return (
         <Fragment>
             <RankingPondium />
+            {showSearchBar()}
+            <SearchResult
+                isLoading={isLoading}
+                filteredUsersLength={totalSize}
+                allUsersLength={totalSize}
+                searchTerm={searchTerm}
+                mainSubject="cliente"
+            />
             {isLoading
             ? <LoadingThreeDots />
             : (
                 <Fragment>
-                    {showSearchBar()}
-                    <SearchResult
-                        isLoading={isLoading}
-                        filteredUsersLength={filteredUsers.length}
-                        allUsersLength={onlyClients.length}
-                        searchTerm={searchTerm}
-                        mainSubject="cliente"
-                    />
                     <div className="text-default">{showExpansionPanel()}</div>
+                    {showMoreItemsBtn()}
                 </Fragment>
             )}
         </Fragment>

@@ -35,6 +35,7 @@ export default function LoadMoreItemsButton({
     data,
     currLoadedDocs,
     msgAfterDone,
+    remainingText = "Items Restantes:",
     button,
     limitDocs,
     customLoadingIndicator}) {
@@ -68,7 +69,6 @@ export default function LoadMoreItemsButton({
     const loadMoreDocs = () => {
         const moreDocsToSkip = skip + limit;
         const modifiedUrl = url.replace("SKIP", moreDocsToSkip);
-        console.log("modifiedUrl", modifiedUrl);
 
         setIsThisLoading(true);
         axios.get(modifiedUrl, getHeaderJson)
@@ -110,7 +110,7 @@ export default function LoadMoreItemsButton({
                                 iconFontAwesome={isThisLoading ? "" : "fas fa-chevron-circle-down"}
                             />
                         </div>
-                        <p className="text-center text-default my-3">Items Restantes: <strong className="text-em-2-0">{data.totalSize - chunkSize}</strong></p>
+                        <p className="text-center text-default my-3">{remainingText} <strong className="text-em-2-0">{data.totalSize - chunkSize}</strong></p>
                     </section>)
                 )}
             </Fragment>

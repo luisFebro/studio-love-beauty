@@ -18,9 +18,7 @@ export const loadUser = () => (dispatch, getState) => {
         // readUser(dispatch, res.data.profile);
     })
     .catch(err => {
-        console.log("err", err)
-        console.log("err.response", err.response)
-        if(err.response && err.response.status !== 500) {
+        if(err.response && err.response.data && err.response.data.msg.length !== 0) {
             showSnackbar(dispatch, err.response.data.msg, 'error', 10000)
             logout(dispatch, false);
         }

@@ -46,13 +46,17 @@ export const confirmUserAccount = async (userId) => {
 }
 
 // LISTS
-export const readUserList = async (dispatch) => {
+export const readUserList = async (dispatch, skip = 0, role = "", search = "") => {
+    const searchQuery = search ? `&search=${search}` : "";
+    const roleQuery = role ? `&role=${role}` : "";
+
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.get('/api/user/list/all', getHeaderJson);
+        const res = await axios.get(`/api/user/list/all?skip=${skip}${roleQuery}${searchQuery}`, getHeaderJson);
         setLoadingProgress(dispatch, false);
         console.log('==ALL USERS UPDATED==');
-        dispatch({ type: 'USER_READ_LIST', payload: res.data });
+        dispatch({ type: 'USER_READ_LIST', payload: res.data.list });
+        return res;
     } catch (err) {
         setLoadingProgress(dispatch, false);
         return err;

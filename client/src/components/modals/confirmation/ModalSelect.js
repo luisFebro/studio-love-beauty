@@ -79,6 +79,7 @@ export default function ModalSelect({ currItemFound }) {
     const setObjToSend = () => {
         if(isUserFunction) {
             if(data && data.role === "") return showSnackbar(dispatch, "Selecione uma opção", 'error');
+            // THIS WAS MOVED TO A SEPARATED COMPONENT
             updateUser(dispatch, data, _idTarget)
             .then(res => {
                 showSnackbar(dispatch, "O Tipo de Usuário foi alterado e movido.", 'success');

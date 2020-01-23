@@ -44,7 +44,7 @@ export default function RegisteredUsersList() {
     const showSearchBar = () => (
         <div className="container-center my-4">
             <SearchFilter
-                placeholder="Admin, procure pelo nome do usuário interno"
+                placeholder="Admin, procure usuário interno"
                 searchChange={onSearchChange}
             />
         </div>

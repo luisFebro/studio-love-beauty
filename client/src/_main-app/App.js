@@ -65,7 +65,7 @@ function App() {
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
                     <Route path="/regulamento/" exact component={RegulationPage} />
                     <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
-                    <Route path="/admin/painel-de-controle" exact component={Dashboard} />
+                    <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
                     <Route component={Default} />
                 </Switch>
                 {/*Modals and Snackbars*/}

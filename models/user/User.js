@@ -51,6 +51,7 @@ const data = {
     email: {
         type: String,
         required: true,
+        lowercase: true,
     },
     cpf:{
         type: String,

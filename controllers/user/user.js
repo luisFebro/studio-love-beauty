@@ -8,6 +8,8 @@ const { msgG } = require('../_msgs/globalMsgs');
 const { msg } = require('../_msgs/user');
 const validateEmail = require('../../utils/validation/validateEmail');
 
+const { ObjectId } = mongoose.Types;
+
 // fetching enum values exemple:
 // console.log(User.schema.path("role").enumValues); [ 'admin', 'colaborador', 'cliente' ]
 
@@ -122,6 +124,9 @@ exports.removeField = (req, res) => { // n1
 // LISTS
 const getQuery = (role) => {
     let mainQuery;
+    const me = {_id: { $ne: ObjectId("5dfe96756573501728ee72c6")}};
+    const adminStaffQuery = {"$or": [{role: "admin"}, {role: "colaborador"}]};
+
     switch(role) {
         case 'cliente':
             mainQuery = { role: 'cliente' };
@@ -129,8 +134,8 @@ const getQuery = (role) => {
         case 'colaborador':
             mainQuery = {role: 'colaborador'};
             break;
-        case 'colaborador-and-admin':
-            mainQuery = { $or: [{role: 'admin'}, {role: 'colaborador'}] };
+        case 'colaborador-e-admin':
+            mainQuery = {$and: [me, adminStaffQuery]}
             break;
         default:
             mainQuery = {};

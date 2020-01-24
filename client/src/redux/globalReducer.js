@@ -9,7 +9,9 @@ const initialState = {
     isCustomLoading: false,
     isCustom2Loading: false,
     errorMsg: null,
-    currentItemFound: null
+    currentItemFound: null,
+    run: false,
+    runName: '',
 };
 
 export const globalReducer = {
@@ -21,6 +23,13 @@ export const globalReducer = {
                     ...state,
                     currentItemFound: action.payload
                 };
+            case 'RUN_SET': {
+                return {
+                    ...state,
+                    run: !state.run,
+                    runName: action.payload,
+                }
+            }
             //Show
             case 'SHOW_LOADING':
                 return {

@@ -14,6 +14,7 @@ import parse from 'html-react-parser';
 import PropTypes from 'prop-types';
 // CUSTOM DATA
 import { deleteUser } from '../../../redux/actions/userActions';
+import { setRun } from '../../../redux/actions/globalActions';
 
 // END CUSTOM DATA
 
@@ -23,7 +24,7 @@ ModalConfYesNo.propTypes = {
     modalData: PropTypes.object,
 };
 
-export default function ModalConfYesNo({ open, onClose, modalData, setRun, run }) {
+export default function ModalConfYesNo({ open, onClose, modalData }) {
     const dispatch = useStoreDispatch();
 
     const { title, subTitle, itemData } = modalData;
@@ -36,7 +37,7 @@ export default function ModalConfYesNo({ open, onClose, modalData, setRun, run }
             .then(res => {
                 if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
                 showSnackbar(dispatch, `O Usuário ${itemData.name.cap()} foi excluído com sucesso!`, 'success', 6000);
-                setRun(!run);
+                setRun(dispatch, "registered");
             })
         }, 7100);
     }

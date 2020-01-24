@@ -10,9 +10,9 @@ export const findAnItem = (dispatch, allItemsList, _id, attachedObj) => {
     return finalItem;
 };
 
-// export const runComponent = (dispatch, nameComponent) => {
-
-// };
+export const setRun = (dispatch, runName) => {
+    return dispatch({ type: 'RUN_SET', payload: runName });
+};
 
 // SET LOADING
 // On: loading indicator displaying for miliseconds as long as the data is being fetched

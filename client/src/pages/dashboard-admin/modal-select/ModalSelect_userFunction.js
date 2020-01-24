@@ -16,6 +16,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import { modalDefaultType } from '../../../types';
+import { setRun } from '../../../redux/actions/globalActions';
 
 ModalSelect_userFunction.propTypes = {
     open: PropTypes.bool,
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function ModalSelect_userFunction({ open, onClose, modal, setRun, run }) {
+export default function ModalSelect_userFunction({ open, onClose, modal }) {
     const [error, setError] = useState(false);
     const [data, setData] = useState({
         selected: "selecione nova função:",
@@ -98,7 +99,7 @@ export default function ModalSelect_userFunction({ open, onClose, modal, setRun,
         .then(res => {
             clearForm();
             showSnackbar(dispatch, `O Tipo de Usuário foi alterado para ${selected.toUpperCase()} e movido.`, 'success');
-            setRun(!run)
+            setRun(dispatch, "registered")
         })
     }
 

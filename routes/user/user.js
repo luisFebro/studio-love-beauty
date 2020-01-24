@@ -28,7 +28,7 @@ router.delete('/:userId', mwBackup, remove);
 router.get("/confirm-account/:authUserId", confirmUserAccount);
 
 // LISTS
-router.get("/list/all", getList); // NEED TO BE DELETED BECAUSE EXPOSE ALL USERS DATA...
+router.get("/list/all", getList);
 router.get("/list/highest-scores", getHighestScores);
 router.get("/:userId/backup/list", mwIsAdmin, readBackup);
 router.get("/staff-booking/list/:userId", getStaffClientList);

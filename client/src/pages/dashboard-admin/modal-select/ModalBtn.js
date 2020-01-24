@@ -10,7 +10,7 @@ ModalBtn.propTypes = {
     button: PropTypes.shape(buttonFabType),
 }
 
-export default function ModalBtn({ modal, button, setRun, run }) {
+export default function ModalBtn({ modal, button }) {
     const [open, setOpen] = useState(false);
 
     const {
@@ -48,8 +48,6 @@ export default function ModalBtn({ modal, button, setRun, run }) {
                 open={open}
                 onClose={onClose}
                 modal={modal}
-                setRun={setRun}
-                run={run}
             />
         </div>
     );

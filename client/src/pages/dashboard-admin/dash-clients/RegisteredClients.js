@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useContext } from 'react';
 import SearchFilter from "../../../components/search/SearchFilter";
 import SearchResult from "../../../components/search/SearchResult";
 import ButtonFab from '../../../components/buttons/material-ui/ButtonFab';
@@ -19,10 +19,10 @@ import LoadMoreItemsButton from '../../../components/buttons/LoadMoreItemsButton
 moment.updateLocale('pt-br');
 
 const initialSkip = 0;
+let searchTerm = "";
 export default function RegisteredClientsList() {
     const [configBtns, setConfigBtns] = useState(false);
-    const [run, setRun] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [init, setInit] = useState(true);
     const [clientsData, setClientsData] = useState({
         list: [],
         chunkSize: 0,
@@ -30,7 +30,9 @@ export default function RegisteredClientsList() {
     });
     const { list, chunkSize, totalSize } = clientsData;
 
-    const { isLoading, adminName } = useStoreState(state => ({
+    const { isLoading, adminName, run, runName } = useStoreState(state => ({
+        run: state.globalReducer.cases.run,
+        runName: state.globalReducer.cases.runName,
         isLoading: state.globalReducer.cases.isLinearPLoading,
         adminName: state.userReducer.cases.currentUser.name,
     }));
@@ -38,27 +40,26 @@ export default function RegisteredClientsList() {
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        readUserList(dispatch, initialSkip, "cliente")
-        .then(res => {
+        if(init || runName === "registered") {
+            readUserList(dispatch, initialSkip, "cliente")
+            .then(res => {
 
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            setClientsData({
-                ...clientsData,
-                list: res.data.list,
-                chunkSize: res.data.chunkSize,
-                totalSize: res.data.totalSize
+                if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+                setClientsData({
+                    ...clientsData,
+                    list: res.data.list,
+                    chunkSize: res.data.chunkSize,
+                    totalSize: res.data.totalSize
+                })
+                setInit(false);
             })
-        })
-    }, [run])
-
-    const filteredUsers = list.filter(user => {
-        return user.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+        }
+    }, [run, runName])
 
     // search
     const onSearchChange = e => {
         const querySearched = e.target.value;
-        setSearchTerm(querySearched);
+        searchTerm = querySearched;
 
         readUserList(dispatch, initialSkip, "cliente", querySearched)
         .then(res => {
@@ -84,7 +85,7 @@ export default function RegisteredClientsList() {
     // end search
 
     // ExpansionPanel Content
-    const actions = filteredUsers.map(user => {
+    const actions = list.map(user => {
         return({
            _id: user._id,
            mainHeading: user.name.cap(),
@@ -113,8 +114,6 @@ export default function RegisteredClientsList() {
                     }}
                 />
             }
-            setRun={setRun}
-            run={run}
         />
     );
     //End ExpansionPanel Content
@@ -133,7 +132,7 @@ export default function RegisteredClientsList() {
             remainingText="Clientes Restantes:"
             msgAfterDone={`${adminName}, Isso é tudo! Não há mais Clientes`}
             button={{
-                title: "Carregar mais Usuários",
+                title: "Carregar mais Clientes",
                 loadingIndicator: "Carregando mais agora...",
                 backgroundColor: 'var(--mainPink)',
             }}

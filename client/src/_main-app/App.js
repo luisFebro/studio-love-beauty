@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
+import AddToHomescreen from 'react-add-to-homescreen';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
 import { useStoreDispatch, useStoreState } from 'easy-peasy'; // useStoreState
@@ -40,6 +41,12 @@ import AllModals from '../components/modals';
 import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
+const handleAddToHomescreenClick = () => {
+  alert(`
+    1. Open Share menu
+    2. Tap on "Add to Home Screen" button`);
+};
+
 function App() {
     const dispatch = useStoreDispatch();
 
@@ -70,6 +77,7 @@ function App() {
                 </Switch>
                 {/*Modals and Snackbars*/}
                 <AllModals />
+                <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} title="baixe nosso app aqui" />
                 <SnackbarMulti />
                 {/*End Modals and Snackbars*/}
                 <Footer />

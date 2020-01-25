@@ -54,8 +54,7 @@ export default function ExpansiblePanel({
     actions,
     backgroundColor,
     ToggleButton,
-    color,
-    allUsers }) {
+    color }) {
 
     const classes = useStyles();
 

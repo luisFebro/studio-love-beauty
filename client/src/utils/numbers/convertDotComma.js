@@ -3,9 +3,15 @@ function convertDotToComma(stringNumber) {
         stringNumber = JSON.stringify(stringNumber);
     }
 
-    return stringNumber.includes(".")
-    ? stringNumber.replace(".", ",")
-    : stringNumber;
+    let res;
+
+    if(stringNumber.includes(".")) {
+        const converted = parseFloat(stringNumber).toFixed(2);
+        res = converted.replace(".", ",")
+        return res;
+    } else {
+        return stringNumber;
+    }
 }
 
 function convertCommaToDot(stringNumber) {

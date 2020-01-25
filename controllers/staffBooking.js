@@ -35,12 +35,24 @@ exports.mwRemove = (req, res, next) => {
     })
 }
 
-exports.mwUniqueStaffIds = (req, res, next) => {
-    StaffBooking.distinct("staffId")
-    .exec((err, ids) => {
-        if(err) return res.status(400).json({ msg: "Nenhuma categoria foi encontrada."})
-        req.uniqueStaffIds = ids;
-        next();
+exports.mwRemoveAllBookingsFromAStaff = (req, res, next) => {
+    const staffId = req.profile._id;
+    const staffName = req.profile.name;
+    const searchQuery = { staffId: staffId };
+
+    StaffBooking.find(searchQuery)
+    .exec((err, staffDocs) => {
+        if(staffDocs.length !== 0) {
+            StaffBooking.deleteMany(searchQuery)
+            .exec(err => {
+                if(err) return res.status(500).json(msgG('error.systemError', err));
+                console.log(`Todos os Agendamentos de ${staffName.cap()} foram deletados`);
+                next();
+            })
+        } else {
+            console.log(`O usuário ${staffName.cap()} não possui agendamentos para serem deletados`);
+            next();
+        }
     })
 }
 // END MIDLEWARES

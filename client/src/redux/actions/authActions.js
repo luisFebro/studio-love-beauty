@@ -19,7 +19,7 @@ export const loadUser = () => (dispatch, getState) => {
     })
     .catch(err => {
         if(err.response && err.response.data && err.response.data.msg.length !== 0) {
-            showSnackbar(dispatch, err.response.data.msg, 'error', 10000)
+            showSnackbar(dispatch, err.response.data.msg, 'warning', 10000)
             logout(dispatch, false);
         }
     });

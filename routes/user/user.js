@@ -17,12 +17,13 @@ const {
     mwBackup
 } = require("../../controllers/user");
 
+const { mwRemoveAllBookingsFromAStaff } = require("../../controllers/staffBooking");
 const { mwIsAdmin } = require("../../controllers/auth");
 // @route  api/user
 // RUD
-router.get("/:userId", read); // requireSignin, mwIsAuth
-router.put("/:userId", update); // requireSignin, mwIsAuth
-router.delete('/:userId', mwBackup, remove);
+router.get("/:userId", read); //  mwIsAuth
+router.put("/:userId", update); // mwIsAuth
+router.delete('/:userId', mwRemoveAllBookingsFromAStaff, mwBackup, remove);
 // END RUD
 
 router.get("/confirm-account/:authUserId", confirmUserAccount);

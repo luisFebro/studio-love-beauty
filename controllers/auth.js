@@ -2,22 +2,23 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { msgG } = require('./_msgs/globalMsgs');
 const { msg } = require('./_msgs/auth');
-const expressJwt = require('express-jwt');
 
 // MIDDLEWARES
-exports.mwRequireAuth = expressJwt({
-    secret: process.env.JWT_SECRET,
-    userProperty: "auth"
-});
-
 exports.mwIsAuth = (req, res, next) => {
-    let user = req.profile && req.auth && req.profile._id.toString() === req.auth.id;
-    if (!user) {
-        return res.status(403).json({ // html code for Forbidden
-            msg: "Você não tem autorização para acessar este documento"
-        });
+    let token = req.header('x-auth-token') || req.header("authorization"); // authrization for postman tests
+    if(token.includes("Bearer ")) {
+        token = token.slice(7);
     }
-    next();
+
+    jwt.verify(
+        token,
+        process.env.JWT_SECRET,
+        (err, decoded) => {
+            let user = req.profile && decoded && req.profile._id.toString() === decoded.id;
+            if(err || !user) return res.status(403).json(msg('error.notAuthorized'));
+
+            next();
+        })
 };
 
 exports.mwIsAdmin = (req, res, next) => {

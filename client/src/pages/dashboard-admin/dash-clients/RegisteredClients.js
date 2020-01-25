@@ -28,7 +28,7 @@ export default function RegisteredClientsList() {
         chunkSize: 0,
         totalSize: 0,
     });
-    const { list, chunkSize, totalSize } = clientsData;
+    const { list, totalSize } = clientsData;
 
     const { isLoading, adminName, run, runName } = useStoreState(state => ({
         run: state.globalReducer.cases.run,

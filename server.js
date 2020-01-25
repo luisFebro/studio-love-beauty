@@ -55,7 +55,6 @@ app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });
 
-
 // NOTES
 // n1: bodyparser middleware - Allow the app to accept JSON on req.body || replaces body-parser package
 // you can also includes "app.use(express.urlencoded({extended: false}))"

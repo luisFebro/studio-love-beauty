@@ -27,6 +27,15 @@ exports.mwPhoto = (req, res, next) => {
     }
     next();
 };
+
+exports.mwUniqueStaffIds = (req, res, next) => {
+    StaffBooking.distinct("staffId")
+    .exec((err, ids) => {
+        if(err) return res.status(400).json({ msg: "Nenhuma categoria foi encontrada."})
+        req.uniqueStaffIds = ids;
+        next();
+    })
+}
 // END MIDDLEWARES
 
 exports.createOrUpdate = (req, res) => {
@@ -63,34 +72,6 @@ exports.updateBusinessInfo = (req, res) => {
         }
     );
 };
-
-// exports.createConfig = (req, res) => {
-//     let form = new formidable.IncomingForm();
-
-//     form.keepExtensions = true;
-//     form.parse(req, (err, fields, files) => { // fields from doc
-//         if (err) return res.status(400).json(msgG('error.systemErr', err));
-
-//         Admin.findById(adminId)
-//         .exec((err, admin) => {
-//             if(err) return res.status(500).json(msgG('error.systemError', err))
-
-//             if (files.trademark) {
-//                 const ONE_MEGABYTE = 1000000; // 1kb = 1000
-//                 if (files.trademark > ONE_MEGABYTE) return res.status(400).json({ msg: "Tamanho de imagem excedido"})
-//                 admin.trademark.data = fs.readFileSync(files.trademark.path); // provide media info
-//                 admin.trademark.contentType = files.trademark.type;
-//             } else {
-//                 return res.status(400).json(msg('error.noPhoto'))
-//             }
-
-//             admin.save((err, result) => {
-//                 if (err) return res.status(500).json(msgG('error.systemError', err));
-//                 res.json(result);
-//             });
-//         })
-//     });
-// }
 
 exports.updateConfig = (req, res) => {
     let form = new formidable.IncomingForm();
@@ -203,13 +184,13 @@ exports.getStaffWithBookings = (req, res) => {
     .sort({ staffBookingList: 1, name: 1 })
     .select("-birthday -cpf -phone -maritalStatus -email")
     .skip(skip)
-    .limit(5)
-    .exec((err, docs) => {
+    // .limit(5)
+    .exec((err, list) => {
         if (err) return res.status(400).json(msgG("error.systemError", err));
         res.json({
-            sizeLoaded: docs.length,
+            chunkSize: list.length,
             totalSize: staffIdsArray.length,
-            docs
+            list
         });
     })
 }

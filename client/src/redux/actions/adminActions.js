@@ -72,14 +72,12 @@ export const checkVerificationPass = async (dispatch, objToSend) => { // L
 
 // STAFF BOOKING
 export const getStaffWithBookingsList = async (dispatch, docsToSkip) => { // L
-    setLoadingProgress(dispatch, true);
+    // const searchQuery = search ? `&search=${search}` : "";
+
     try {
         const res = await axios.get(`/api/admin/list/staff-with-bookings?skip=${docsToSkip}`, getHeaderJson);
-        setLoadingProgress(dispatch, false);
-        dispatch({type: 'STAFF_WITH_BOOKINGS_READ', payload: res.data })
         return res;
     } catch (err) {
-        setLoadingProgress(dispatch, false);
         return err.response;
     }
 };

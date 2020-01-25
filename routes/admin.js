@@ -15,13 +15,13 @@ const {
     updateService,
     deleteService,
     // End
+    mwUniqueStaffIds,
     getStaffWithBookings,
     checkVerificationPass,
     readVerificationPass,
     createOrUpdateRegText,
 } = require('../controllers/admin');
 
-const { mwUniqueStaffIds } = require("../controllers/staffBooking");
 const { mwIsAdmin } = require("../controllers/auth");
 const { mwUserId } = require("../controllers/user");
 

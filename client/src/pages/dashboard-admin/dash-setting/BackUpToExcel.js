@@ -60,7 +60,7 @@ export default function BackUpToExcel() {
         readAllDbFromModels(dispatch, securityObj, dbModelName)
         .then(res => {
             if(res.status !== 200) {
-                showSnackbar(dispatch, "Por segurança, dados privados só ficam disponíveis no primeiro acesso sem recarregar a página. O token invalidou...", 'error', 9000)
+                showSnackbar(dispatch, "Por segurança, os dados ficam disponíveis por 30 minutos. Faça seu login novamente", 'error', 9000)
                 setIsThisLoading(false);
                 return;
             }

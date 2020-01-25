@@ -17,6 +17,21 @@ export default function SearchResult({
     allUsersLength,
     searchTerm,
     mainSubject = "usuário" }) {
+
+    const pluralizeBr = word => {
+        let res;
+        const wordLastLetter = word.slice(-1);
+        const vowals = ["a", "e", "i", "o", "e"];
+
+        if(vowals.includes(wordLastLetter)) {
+            res = word + "s";
+            return res.cap();
+        } else {
+            res = word + "es";
+            return res.cap();
+        }
+    }
+
     return (
         <div className="text-main-container my-5">
             {!filteredUsersLength
@@ -48,7 +63,7 @@ export default function SearchResult({
                                 ? ""
                                 : (
                                     <span>
-                                        {`${mainSubject.cap()}s Encontrados:`} <strong>{filteredUsersLength}</strong>
+                                        {`${pluralizeBr(mainSubject)} Encontrados:`} <strong>{filteredUsersLength}</strong>
                                     </span>
                                 )}
                             </h2>
@@ -60,7 +75,7 @@ export default function SearchResult({
                                 ? ""
                                 : (
                                     <span>
-                                        {`Total de ${mainSubject.cap()}s:`} <strong>{allUsersLength}</strong>
+                                        {`Total de ${pluralizeBr(mainSubject)}:`} <strong>{allUsersLength}</strong>
                                     </span>
                                 )}
                             </h2>

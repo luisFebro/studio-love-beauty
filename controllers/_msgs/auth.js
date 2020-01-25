@@ -18,7 +18,7 @@ const msg = (typeAndMsgName, customized = 'NeedCustomWord', options) => {
     ok.changedPassword = `Sua senha foi alterada com sucesso, ${customized}!`;
     error.jwtNotFound = "JWT token não foi encontrado";
     error.sessionEnded = 'A sua sessão terminou. Faça seu acesso login novamente.';
-    error.notAuthorized = "Você não está autorizado para executar esta ação";
+    error.notAuthorized = "Você não tem autorização para acessar este documento";
     error.accessDenied = "Acesso Negado. Somente admin";
     error.expiredAuthToken = 'O prazo para trocar a senha expirou.';
     error.noAuthToken = 'Não foi encontrado nenhuma solicitação de mudança de senha';

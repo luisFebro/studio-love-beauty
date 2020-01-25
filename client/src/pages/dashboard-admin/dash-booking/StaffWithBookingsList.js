@@ -15,33 +15,26 @@ import ExpansiblePanel from './ExpansiblePanel';
 import PanelHiddenContent from './PanelHiddenContent';
 // End Redux
 import LoadingThreeDots from '../../../components/loadingIndicators/LoadingThreeDots';
+import LoadMoreItemsButton from '../../../components/buttons/LoadMoreItemsButton';
 
 moment.updateLocale('pt-br');
 
+const initialSkip = 0;
+let searchTerm = "";
 export default function StaffWithBookingsList() {
     const [run, setRun] = useState(false);
     const [docsLoading, setDocsLoading] = useState({
-        skip: 0,
-        limit: 5,
-        sizeLoaded: 0,
-        totalDocsSize: 0,
-        loadingIndicator: "Pra já! Carregando agora..."
+        list: [],
+        chunkSize: 0,
+        totalSize: 0,
     })
     const {
-        skip,
-        limit,
-        sizeLoaded,
-        totalDocsSize,
-        loadingIndicator
+        list,
+        chunkSize,
+        totalSize,
     } = docsLoading;
 
-    const [data, setData] = useState({
-        searchTerm: ""
-    });
-    const { searchTerm } = data;
-
-    const { staffWithBookings, isLoading, isCustomLoading, adminName } = useStoreState(state => ({
-        staffWithBookings: state.adminReducer.cases.staffWithBookings,
+    const { isLoading, isCustomLoading, adminName } = useStoreState(state => ({
         isLoading: state.globalReducer.cases.isLinearPLoading,
         isCustomLoading: state.globalReducer.cases.isCustomLoading,
         adminName: state.userReducer.cases.currentUser.name,
@@ -50,38 +43,21 @@ export default function StaffWithBookingsList() {
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
-        const initialSkip = 0;
         getStaffWithBookingsList(dispatch, initialSkip)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             setDocsLoading({
                 ...docsLoading,
                 skip: 0,
-                sizeLoaded: res.data.sizeLoaded,
-                totalDocsSize: res.data.totalSize,
+                list: res.data.list,
+                chunkSize: res.data.chunkSize,
+                totalSize: res.data.totalSize,
             })
         })
-    }, [run])
-
-    const filteredUsers = staffWithBookings.filter(staff => {
-        return staff.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
-
-    const onSearchChange = e => {
-        setData({ searchTerm: e.target.value });
-    }
-
-    const showSearchBar = () => (
-        <div className="container-center my-4">
-            <SearchFilter
-                placeholder="Admin, procure colaborador"
-                searchChange={onSearchChange}
-            />
-        </div>
-    );
+    }, [])
 
     // ExpansionPanel Content
-    const actions = filteredUsers.map(staff => {
+    const actions = list.map(staff => {
         return({
            _id: staff._id,
            mainHeading: staff.name.cap(),
@@ -90,7 +66,6 @@ export default function StaffWithBookingsList() {
            hiddenContent: <PanelHiddenContent data={staff} setRun={setRun} run={run} />
         });
     })
-    // ${null} = typeof staff.staffDate === "undefined" ? "Sem Agendamento" : moment(staff.staffDate).calendar(null, { sameElse: 'LLL'}
 
     const showExpansionPanel = () => (
         <ExpansiblePanel
@@ -106,44 +81,31 @@ export default function StaffWithBookingsList() {
                     iconAfterClick="fas fa-minus"
                 />
             }
-            allUsers={staffWithBookings}
         />
     );
     //End ExpansionPanel Content
 
-    const loadMoreDocs = () => {
-        const moreDocsToSkip = skip + limit;
-        // getStaffBookingList(dispatch, match.params.staffId, moreDocsToSkip, true)
-        // .then(res => {
-        //     if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-        //     setDocsLoading({
-        //         ...docsLoading,
-        //         sizeLoaded: sizeLoaded + res.data.size,
-        //         skip: moreDocsToSkip,
-        //         totalDocsSize: res.data.totalSize,
-        //     })
-        // })
-    };
+    // NOT WORKING... DISABLED LIMIT IN BACKEND
+    const showMoreItemsBtn = () => (
+        <LoadMoreItemsButton
+            url={`/api/admin/list/staff-with-bookings?skip="SKIP"`}
+            objPathes={{
+                strList: "data.list",
+                strChunkSize: "data.chunkSize",
+                strTotalSize: "data.totalSize",
+            }}
+            setData={setDocsLoading}
+            data={docsLoading}
+            remainingText="Colaboradores Restantes:"
+            msgAfterDone={`${adminName}, Isso é tudo! Não há mais Colaboradores`}
+            button={{
+                title: "Carregar mais Colaboradores",
+                loadingIndicator: "Carregando mais agora...",
+                backgroundColor: 'var(--mainPink)',
+            }}
+        />
+    );
 
-    const showMoreButton = () => {
-        // return(
-            // sizeLoaded === totalDocsSize && sizeLoaded >= limit
-            // ? <p className="text-main-container text-center my-3">
-            //     {`${adminName.cap()}, isso é tudo. Não há mais colaboradores para mostrar.`}
-            //   </p>
-            // : searchTerm.length === 0 && sizeLoaded >= limit && (
-            //     <div className="container-center my-3">
-            //         <ButtonMulti
-            //             title={isCustomLoading ? loadingIndicator : "Carregar Mais Colaboradores"}
-            //             onClick={loadMoreDocs}
-            //             backgroundColor="var(--mainPink)"
-            //             backColorOnHover="var(--mainPink)"
-            //             iconFontAwesome={isCustomLoading ? "" : "fas fa-chevron-circle-down"}
-            //         />
-            //     </div>
-            // )
-        // );
-    };
 
     return (
         <Fragment>
@@ -151,7 +113,7 @@ export default function StaffWithBookingsList() {
             ? <LoadingThreeDots />
             : (
                 <Fragment>
-                    {staffWithBookings.length === 0
+                    {list.length === 0
                     ? (
                         <div className="py-5">
                             <Illustration
@@ -170,22 +132,15 @@ export default function StaffWithBookingsList() {
                         </div>
                     ) : (
                         <Fragment>
-                            {showSearchBar()}
                             <SearchResult
                                 isLoading={isLoading}
-                                filteredUsersLength={filteredUsers.length}
-                                allUsersLength={staffWithBookings.length}
+                                filteredUsersLength={totalSize}
+                                allUsersLength={totalSize}
                                 searchTerm={searchTerm}
                                 mainSubject="colaborador"
                             />
-                            {isLoading
-                            ? <LoadingThreeDots />
-                            : (
-                                <div>
-                                    <div className="text-default">{showExpansionPanel()}</div>
-                                    {showMoreButton()}
-                                </div>
-                            )}
+                            <div className="text-default">{showExpansionPanel()}</div>
+                            {showMoreItemsBtn()}
                         </Fragment>
                     )}
                 </Fragment>

@@ -115,7 +115,7 @@ export default function ExpansiblePanel({
                     iconFontAwesome: "fas fa-user-plus",
                 }}
                 modal={{
-                    title: "Selecione Nova Função",
+                    title: "Seleção de Nova Função",
                     txtBtn: "Alterar",
                     iconBtn: "fas fa-exchange-alt",
                     modalData: panel.userData

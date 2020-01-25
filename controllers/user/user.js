@@ -16,7 +16,7 @@ const { ObjectId } = mongoose.Types;
 // MIDDLEWARES - mw
 exports.mwUserId = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
-        if(err || !user) return res.status(400).json({ msg: "Você não está autorizado a acessar este dado ou _id do usuário não encontrado"});
+        if(err || !user) return res.status(400).json(msg("error.notFound"));
         req.profile = user;
         next();
     });
@@ -126,13 +126,15 @@ const getQuery = (role) => {
     let mainQuery;
     const me = {_id: { $ne: ObjectId("5dfe96756573501728ee72c6")}};
     const adminStaffQuery = {"$or": [{role: "admin"}, {role: "colaborador"}]};
+    const withNonEmptyArray = { $exists: true, $ne: [] }; // staffBookingList: withNonEmptyArray}
 
     switch(role) {
         case 'cliente':
             mainQuery = { role: 'cliente' };
             break;
         case 'colaborador':
-            mainQuery = {role: 'colaborador'};
+             // This is not being used. Check getStaffWithBookings in admin
+            mainQuery = { role: 'colaborador' };
             break;
         case 'colaborador-e-admin':
             mainQuery = {$and: [me, adminStaffQuery]}

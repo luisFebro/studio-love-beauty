@@ -1,6 +1,7 @@
 {
   "short_name": "slb",
   "name": "Studio Love Beauty",
+  "description": "App para verificação de pontos fidelidade e valorização do consumo de clientes",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
@@ -13,8 +14,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "/?source=pwa",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "scope": "/",
+  "theme_color": "#232528",
+  "background_color": "#000000"
 }

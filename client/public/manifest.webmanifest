@@ -1,7 +1,7 @@
 {
-  "short_name": "Weather",
-  "name": "Weather: Do I need an umbrella?",
-  "description": "Weather forecast information",
+  "short_name": "slb",
+  "name": "Studio Love Beauty",
+  "description": "App para verificação de pontos fidelidade e valorização do consumo de clientes",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
@@ -15,8 +15,8 @@
     }
   ],
   "start_url": "/?source=pwa",
-  "background_color": "#3367D6",
   "display": "standalone",
   "scope": "/",
-  "theme_color": "#3367D6"
+  "theme_color": "#232528",
+  "background_color": "#000000"
 }

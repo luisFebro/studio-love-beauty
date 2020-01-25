@@ -77,7 +77,11 @@ function App() {
                 </Switch>
                 {/*Modals and Snackbars*/}
                 <AllModals />
-                <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} title="baixe nosso app aqui" />
+                <AddToHomescreen
+                    onAddToHomescreenClick={handleAddToHomescreenClick}
+                    title="Baixe nosso app e acompanhe seus pontos"
+                    icon="/img/official-logo.jpg"
+                />
                 <SnackbarMulti />
                 {/*End Modals and Snackbars*/}
                 <Footer />

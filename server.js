@@ -40,6 +40,15 @@ app.use('/api/database', require('./routes/database'));
 app.use('/api/finance', require('./routes/finance'));
 // Serve static files such as images, CSS files, and JavaScript files for the React frontend <app></app>
 isProduction && app.use(express.static(path.join(__dirname, 'client/build')))
+// Redirect http to https: // n5
+if(isProduction) {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    else
+      next()
+  })
+}
 // END MIDDLEWARES
 
 // This solves the "Not found" issue when loading an URL other than index.html.
@@ -76,4 +85,5 @@ app.listen(PORT, () => {
 //     res.sendFile(path.join(__dirname + 'client/build/index.html')) // the "not found" issue may be occured becase of this path. client requires a slash before.
 // })
 n4: environment varibles works everywhere with dotenv, including controllers
+n5: https://jaketrent.com/post/https-redirect-node-heroku/
 */

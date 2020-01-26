@@ -14,7 +14,6 @@ import { loadUser } from '../redux/actions/authActions';
 import './App.css';
 import '../utils/globalHelpers';
 //GENERAL COMPONENTS
-import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
 //END GENERAL COMPONENTS
@@ -81,7 +80,6 @@ function App() {
                 <AddToHomescreen
                     onAddToHomescreenClick={handleAddToHomescreenClick}
                     title="Baixe nosso app e acompanhe seus pontos"
-                    icon="/img/official-logo.jpg"
                 />
                 <SnackbarMulti />
                 {/*End Modals and Snackbars*/}

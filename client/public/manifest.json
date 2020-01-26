@@ -35,10 +35,6 @@
       "src": "/favicon/mstile-150x150.png",
       "type": "image/png",
       "sizes": "150x150"
-    },
-    {
-      "src": "/favicon/safari-pinned-tab.svg",
-      "type": "image/svg+xml"
     }
   ]
 }

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
-import AddToHomescreen from 'react-add-to-homescreen';
+import PwaInstaller from '../components/pwa-installer/src/index';
+import { CLIENT_URL } from '../config/clientUrl';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
 import { useStoreDispatch, useStoreState } from 'easy-peasy'; // useStoreState
@@ -41,12 +42,6 @@ import AllModals from '../components/modals';
 import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
-const handleAddToHomescreenClick = () => {
-  alert(`
-    1. Open Share menu
-    2. Tap on "Add to Home Screen" button`);
-};
-
 function App() {
     const dispatch = useStoreDispatch();
 
@@ -77,9 +72,9 @@ function App() {
                 </Switch>
                 {/*Modals and Snackbars*/}
                 <AllModals />
-                <AddToHomescreen
-                    onAddToHomescreenClick={handleAddToHomescreenClick}
-                    title="Baixe nosso app e acompanhe seus pontos"
+                <PwaInstaller
+                    title="<strong>Baixe nosso app aqui</strong> e<br /> acomponhe seus pontos"
+                    icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
                 />
                 <SnackbarMulti />
                 {/*End Modals and Snackbars*/}

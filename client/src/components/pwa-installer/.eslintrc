@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "extends": [
+    "brainhub",
+    "prettier"
+  ],
+  "settings": {
+    "import/resolve": {
+      "moduleDirectory": [
+        "node_modules",
+        "src"
+      ]
+    }
+  }
+}

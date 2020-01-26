@@ -38,9 +38,9 @@
       "type": "image/svg+xml"
     }
   ],
-  "start_url": "/acesso-verificacao?source=pwa",
+  "start_url": "/acesso/verificacao?source=pwa",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/acesso/verificacao",
   "theme_color": "#e84393",
   "background_color": "#000000"
 }

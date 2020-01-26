@@ -31,7 +31,7 @@ mongoose
 // MIDDLEWARES
 app.use(express.json()); //n1
 app.use(cors()); //n2
-app.use(sslRedirect());
+app.use(sslRedirect()); // n5
 
 // routes
 app.use('/api/email', require('./routes/email'));
@@ -79,4 +79,5 @@ app.listen(PORT, () => {
 //     res.sendFile(path.join(__dirname + 'client/build/index.html')) // the "not found" issue may be occured becase of this path. client requires a slash before.
 // })
 n4: environment varibles works everywhere with dotenv, including controllers
+n5: SSL - secure sockets layer, always redirect to https page.
 */

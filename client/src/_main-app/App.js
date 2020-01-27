@@ -79,7 +79,7 @@ function App() {
                 {/*Modals and Snackbars*/}
                 <AllModals />
                 <PwaInstaller
-                    title="<strong>Baixe nosso app aqui</strong> e<br /> acompanhe seus pontos"
+                    title="<strong>Baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos pontos de fidelidade"
                     icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
                 />
                 <SnackbarMulti />

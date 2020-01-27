@@ -97,7 +97,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
 
     return (
         <div>
-            {shouldRender
+            {true
             ? (
                 <div
                   className="add-to-home-banner"

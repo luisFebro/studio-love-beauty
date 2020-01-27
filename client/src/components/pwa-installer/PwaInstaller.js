@@ -101,11 +101,15 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             ? (
                 <div
                   className="add-to-home-banner"
-                  onClick={handlePwaInstall}
                   data-aos="fade-up"
                   data-aos-duration="2000"
                  >
-                  <div data-aos="flip-left" className="add-to-home-content">
+
+                  <div
+                     onClick={handlePwaInstall}
+                     data-aos="flip-left"
+                     className="add-to-home-content"
+                  >
                     {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
                     {showTitle()}
                   </div>

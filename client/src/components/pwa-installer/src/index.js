@@ -68,7 +68,7 @@ export default function PwaInstaller({ title, icon }) {
     );
 
 
-    const shouldRender = bannerVisible; // bannerVisible && isIos() && !isInStandaloneMode();
+    const shouldRender = bannerVisible && isIos() && !isInStandaloneMode();
 
     return (
       <div>

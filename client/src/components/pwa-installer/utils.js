@@ -4,4 +4,4 @@ export const isIos = () => {
 };
 
 export const isInStandaloneMode = () =>
-  'standalone' in window.navigator && window.navigator.standalone;
+  (window.matchMedia('(display-mode: standalone)').matches);

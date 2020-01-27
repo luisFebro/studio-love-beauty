@@ -19,7 +19,7 @@ function closeWindow() {
 
 let deferredPrompt = null;
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
-    const [bannerVisible, setBannerVisible] = useState(true);
+    const [bannerVisible, setBannerVisible] = useState(false);
     const dispatch = useStoreDispatch();
 
     window.addEventListener('beforeinstallprompt', (e) => { // n1
@@ -29,6 +29,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         console.log("running beforeinstallprompt")
         deferredPrompt = e;
         console.log("deferredPrompt", deferredPrompt);
+        setBannerVisible(true);
     })
 
     const handlePwaInstall = () => {
@@ -92,11 +93,11 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         </div>
     );
 
-    const shouldRender = bannerVisible && !isInStandaloneMode(); // { // && isIos()
-    console.log("shouldRender6", shouldRender);
-    console.log("isInstadalone6", !isInStandaloneMode());
-    console.log("bannerVisible6", bannerVisible);
-    console.log("deferredPrompt6", deferredPrompt);
+    const shouldRender = bannerVisible && isIos() && !isInStandaloneMode(); //  { //
+    console.log("shouldRender7", shouldRender);
+    console.log("isInstadalone7", !isInStandaloneMode());
+    console.log("bannerVisible7", bannerVisible);
+    console.log("deferredPrompt7", deferredPrompt);
 
     return (
         <div>

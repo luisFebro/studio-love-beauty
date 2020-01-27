@@ -6,8 +6,6 @@
   "display": "standalone",
   "scope": "/acesso/verificacao",
   "categories": ["business", "lifestyle", "utilities"],
-  "dir": "auto",
-  "lang": "pt-br",
   "theme_color": "#000000",
   "background_color": "#000000",
   "icons": [

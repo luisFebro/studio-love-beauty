@@ -13,7 +13,7 @@ PwaInstaller.propTypes = {
 
 function closeWindow() {
     window.close();
-    return false; // preventing the browser to attempt to go to that URL (which it obviously isn't).
+    return false; // only desktop // preventing the browser to attempt to go to that URL (which it obviously isn't).
 }
 
 
@@ -40,11 +40,11 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
-                    showSnackbar(dispatch, 'Instalando App em instantes...', 'success', 7000)
+                    showSnackbar(dispatch, 'Instalando App em instantes...', 'warning', 7000)
                     setTimeout(() => {
                         showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
                         setTimeout(() => closeWindow(), 7000)
-                    }, 13000)
+                    }, 11000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                 }

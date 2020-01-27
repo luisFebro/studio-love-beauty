@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isIos, isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
@@ -29,7 +29,6 @@ window.addEventListener('beforeinstallprompt', (e) => { // n1
 
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(true);
-    const [shouldRender, setShouldRender] = useState(false);
     const dispatch = useStoreDispatch();
 
     const handlePwaInstall = () => {
@@ -68,15 +67,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         },
     }
 
-    useEffect(() => {
-        console.log("bannerVisible2", bannerVisible);
-        console.log("isInstadalone2", !isInStandaloneMode());
-        console.log("shouldRender2", shouldRender);
-        if(bannerVisible && !isInStandaloneMode()) { // && isIos()
-            setShouldRender(true);
-        }
-    }, [bannerVisible, isInStandaloneMode])
-
     // RENDER
     const showTitle = () => (
         <div
@@ -101,6 +91,11 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             <i className="fas fa-times text-white"></i>
         </div>
     );
+
+    const shouldRender = bannerVisible && !isInStandaloneMode(); // { // && isIos()
+    console.log("shouldRender3", shouldRender);
+    console.log("isInstadalone3", !isInStandaloneMode());
+    console.log("bannerVisible3", bannerVisible);
 
     return (
         <div>

@@ -22,14 +22,16 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     const [bannerVisible, setBannerVisible] = useState(true);
     const dispatch = useStoreDispatch();
 
-    window.addEventListener('beforeinstallprompt', (e) => { // n1
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        // e.preventDefault();
-        // Stash the event so it can be triggered later.
-        console.log("running beforeinstallprompt")
-        deferredPrompt = e;
-        console.log("deferredPrompt", deferredPrompt);
-    })
+    React.useEffect(() => {
+        window.addEventListener('beforeinstallprompt', (e) => { // n1
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            console.log("running beforeinstallprompt")
+            deferredPrompt = e;
+            console.log("deferredPrompt", deferredPrompt);
+        })
+    }, [])
 
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")

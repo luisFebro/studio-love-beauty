@@ -15,7 +15,7 @@ let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
-  e.preventDefault();
+  // e.preventDefault();
   // Stash the event so it can be triggered later.
   deferredPrompt = e;
 });
@@ -50,10 +50,10 @@ export default function PwaInstaller({ title, icon }) {
     const showTitle = () => (
         <div
             className="add-to-home-text text-default"
+            onClick={() => onPwaInstallerClick()}
         >
             <a
                 className="text-white"
-                onClick={() => onPwaInstallerClick()}
             >
               { parse(title) || 'Add to Home Screen'}
             </a>

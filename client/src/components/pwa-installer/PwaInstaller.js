@@ -31,13 +31,13 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
-                    showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
-                    setTimeout(() => {
-                        window.addEventListener('appinstalled', (evt) => {
-                          showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
-                          setTimeout(() => closeWindow(), 7000)
-                        });
-                    }, 7000)
+                    showSnackbar(dispatch, 'Instalando App... Já vai ficar disponível na tela inicial do seu dispositivo', 'success', 7000)
+                    // setTimeout(() => {
+                    //     window.addEventListener('appinstalled', (evt) => {
+                    //       showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                    //       setTimeout(() => closeWindow(), 7000)
+                    //     });
+                    // }, 7000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                 }
@@ -59,10 +59,10 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
 
     const styles = {
         icon: {
-            animationDelay: '7s',
+            animationDelay: '4s',
         },
         closeBtn: {
-            animationDelay: '10s',
+            animationDelay: '6s',
             zIndex: 2100,
         },
     }
@@ -97,7 +97,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
 
     return (
         <div>
-            {shouldRender
+            {true
             ? (
                 <div
                   className="add-to-home-banner"

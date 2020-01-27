@@ -30,9 +30,9 @@ export default function PwaInstaller({ title, icon }) {
         console.log(deferredPrompt)
         deferredPrompt.userChoice.then(function(choiceResult) {
             if(choiceResult.outcome === 'accepted') {
-                showSnackbar(dispatch, 'O app foi instalado', 'success')
+                showSnackbar(dispatch, 'O app do Salão Studio Love Beauty está sendo instalado...', 'success', 6000)
             } else {
-                showSnackbar(dispatch, 'A instalação foi cancelada', 'warning')
+                showSnackbar(dispatch, 'A instalação foi cancelada.', 'warning')
             }
 
             deferredPrompt = null;

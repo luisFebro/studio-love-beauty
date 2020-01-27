@@ -21,7 +21,6 @@
     "lodash.get": "^4.4.2",
     "moment": "^2.24.0",
     "react": "^16.12.0",
-    "react-add-to-homescreen": "1.1.0",
     "react-clock": "^2.4.0",
     "react-dom": "^16.12.0",
     "react-facebook-login": "^4.1.1",

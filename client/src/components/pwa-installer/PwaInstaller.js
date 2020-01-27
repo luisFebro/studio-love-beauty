@@ -45,7 +45,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                     if(choiceResult.outcome === 'accepted') {
                         showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
                     } else {
-                        showSnackbar(dispatch, 'A instalação foi cancelada.', 'warning')
+                        showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                     }
 
                       deferredPrompt = null;
@@ -103,20 +103,25 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     );
 
 
-    const shouldRender = bannerVisible // && !isInStandaloneMode(); //&& isIos() && !isInStandaloneMode();
+    const shouldRender = bannerVisible && !isInStandaloneMode(); // && !isInStandaloneMode(); //&& isIos() && ;
 
     return (
-      <div
-        id="panelAdd"
-        className="add-to-home-banner"
-        data-aos="fade-up"
-        data-aos-duration="2000"
-       >
-        <div data-aos="flip-left" className="add-to-home-content">
-          {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
-          {showTitle()}
+        <div>
+            {shouldRender
+            ? (
+                <div
+                  id="panelAdd"
+                  className="add-to-home-banner"
+                  data-aos="fade-up"
+                  data-aos-duration="2000"
+                 >
+                  <div data-aos="flip-left" className="add-to-home-content">
+                    {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
+                    {showTitle()}
+                  </div>
+                  {showCloseBtn()}
+                </div>
+            ) : null}
         </div>
-        {showCloseBtn()}
-      </div>
     );
 }

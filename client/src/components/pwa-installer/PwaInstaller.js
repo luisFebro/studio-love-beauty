@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isIos, isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
@@ -16,56 +16,46 @@ function closeWindow() {
     return false; // preventing the browser to attempt to go to that URL (which it obviously isn't).
 }
 
+let deferredPrompt = null;
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
-    const [bannerVisible, setBannerVisible] = useState(true);
+    const [bannerVisible, setBannerVisible] = useState(false);
     const dispatch = useStoreDispatch();
 
-    const handlePwa = () => {
-        let deferredPrompt = null;
-        const addBtn = document.querySelector('#panelAdd');
+    const handlePwaInstall = () => {
+        console.log("handlePwaInstall clicked")
         setBannerVisible(false);
 
+        if(deferredPrompt) {
+            // Show the prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then(function(choiceResult) {
+                if(choiceResult.outcome === 'accepted') {
+                    showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
+                    setTimeout(() => {
+                        window.addEventListener('appinstalled', (evt) => {
+                          showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                          setTimeout(() => closeWindow(), 7000)
+                        });
+                    }, 7000)
+                } else {
+                    showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
+                }
 
-        window.addEventListener('beforeinstallprompt', (e) => { // n1
-          // Prevent Chrome 67 and earlier from automatically showing the prompt
-          // e.preventDefault();
-          // Stash the event so it can be triggered later.
-          deferredPrompt = e;
-          setBannerVisible(true);
+                  deferredPrompt = null;
 
-          addBtn.addEventListener('click', (e) => {
-            setBannerVisible(false);
-
-            if(deferredPrompt) {
-                // Show the prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                deferredPrompt.userChoice.then(function(choiceResult) {
-                    if(choiceResult.outcome === 'accepted') {
-                        showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
-                        setTimeout(() => {
-                            window.addEventListener('appinstalled', (evt) => {
-                              showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
-                              setTimeout(() => closeWindow(), 7000)
-                            });
-                        }, 7000)
-                    } else {
-                        showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
-                    }
-
-                      deferredPrompt = null;
-
-                });
-            }
-
-          })
-        });
+            });
+        }
     }
 
-    useEffect(() => {
-        handlePwa();
-    }, [])
-
+    window.addEventListener('beforeinstallprompt', (e) => { // n1
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        // e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        setBannerVisible(true);
+        handlePwaInstall();
+    })
 
     const styles = {
         icon: {
@@ -110,7 +100,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             {shouldRender
             ? (
                 <div
-                  id="panelAdd"
                   className="add-to-home-banner"
                   onClick={handlePwaInstall}
                   data-aos="fade-up"

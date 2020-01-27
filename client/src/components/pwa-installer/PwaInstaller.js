@@ -20,6 +20,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
 });
 
+function closeWindow() {
+    window.close();
+    return false; // preventing the browser to attempt to go to that URL (which it obviously isn't).
+}
 
 export default function PwaInstaller({ title, icon }) {
     const [bannerVisible, setBannerVisible] = useState(true);
@@ -27,23 +31,31 @@ export default function PwaInstaller({ title, icon }) {
 
     window.addEventListener('appinstalled', (evt) => {
       showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+      setTimeout(() => closeWindow(), 7000)
     });
 
     async function onPwaInstallerClick() {
-      if(deferredPrompt) {
-        deferredPrompt.prompt();
-        console.log(deferredPrompt)
-        deferredPrompt.userChoice.then(function(choiceResult) {
-            if(choiceResult.outcome === 'accepted') {
-                showSnackbar(dispatch, 'O app do Salão Studio Love Beauty está sendo instalado...', 'success', 6000)
-            } else {
-                showSnackbar(dispatch, 'A instalação foi cancelada.', 'warning')
+        const btnAdd = document.getElementById("btnAdd");
+        btnAdd.addEventListener('click', (e) => {
+            // hide our user interface that shows our A2HS button
+            btnAdd.style.display = 'none';
+            // Show the prompt
+            if(deferredPrompt) {
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if(choiceResult.outcome === 'accepted') {
+                        showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
+                    } else {
+                        showSnackbar(dispatch, 'A instalação foi cancelada.', 'warning')
+                    }
+
+                      deferredPrompt = null;
+
+                });
             }
-
-            deferredPrompt = null;
-
         });
-      }
+
     }
 
     // RENDER
@@ -78,7 +90,7 @@ export default function PwaInstaller({ title, icon }) {
     return (
       <div>
         {shouldRender ? (
-          <div className="add-to-home-banner">
+          <div id="btnAdd" className="add-to-home-banner">
             <div className="add-to-home-content">
               {icon ? <img className="add-to-home-icon animated slideInLeft delay-2s" src={icon} /> : null}
               {showTitle()}

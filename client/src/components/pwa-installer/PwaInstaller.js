@@ -36,33 +36,39 @@ export default function PwaInstaller({ title, icon }) {
 
     async function onPwaInstallerClick() {
         const btnAdd = document.getElementById("btnAdd");
-        btnAdd.addEventListener('click', (e) => {
-            // hide our user interface that shows our A2HS button
-            btnAdd.style.display = 'none';
-            // Show the prompt
-            if(deferredPrompt) {
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                deferredPrompt.userChoice.then(function(choiceResult) {
-                    if(choiceResult.outcome === 'accepted') {
-                        showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
-                    } else {
-                        showSnackbar(dispatch, 'A instalação foi cancelada.', 'warning')
-                    }
+        // hide our user interface that shows our A2HS button
+        btnAdd.style.display = 'none';
+        // Show the prompt
+        if(deferredPrompt) {
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then(function(choiceResult) {
+                if(choiceResult.outcome === 'accepted') {
+                    showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
+                } else {
+                    showSnackbar(dispatch, 'A instalação foi cancelada.', 'warning')
+                }
 
-                      deferredPrompt = null;
+                  deferredPrompt = null;
 
-                });
-            }
-        });
+            });
+        }
+    }
 
+    const styles = {
+        icon: {
+            animationDelay: '7s',
+        },
+        closeBtn: {
+            animationDelay: '10s',
+            zIndex: 2100,
+        },
     }
 
     // RENDER
     const showTitle = () => (
         <div
             className="add-to-home-text text-default"
-            onClick={() => onPwaInstallerClick()}
         >
             <a
                 className="text-white"
@@ -76,8 +82,8 @@ export default function PwaInstaller({ title, icon }) {
 
     const showCloseBtn = () => (
         <div
-            style={{zIndex: 2100}}
-            className="add-to-home-close-btn animated rotateIn delay-4s"
+            style={styles.closeBtn}
+            className="add-to-home-close-btn animated rotateIn"
             onClick={handleCloseBannerBtnClick}
         >
             <i className="fas fa-times text-white"></i>
@@ -90,9 +96,15 @@ export default function PwaInstaller({ title, icon }) {
     return (
       <div>
         {shouldRender ? (
-          <div data-aos="fade-up" id="btnAdd" className="add-to-home-banner">
-            <div className="add-to-home-content">
-              {icon ? <img className="add-to-home-icon animated slideInLeft delay-2s" src={icon} /> : null}
+          <div
+            id="btnAdd"
+            onClick={() => onPwaInstallerClick()}
+            className="add-to-home-banner"
+            data-aos="fade-up"
+            data-aos-duration="2000"
+           >
+            <div data-aos="flip-left" className="add-to-home-content">
+              {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
               {showTitle()}
             </div>
             {showCloseBtn()}

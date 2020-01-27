@@ -45,7 +45,10 @@ import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
 function App() {
-    AOS.init();
+    AOS.init({
+        offset: 150,
+        delay: 1000,
+    });
     const dispatch = useStoreDispatch();
 
     useEffect(() => {

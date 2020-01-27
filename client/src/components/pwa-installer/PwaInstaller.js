@@ -23,19 +23,18 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     const handlePwa = () => {
         let deferredPrompt = null;
         const addBtn = document.querySelector('#panelAdd');
-        console.log("addBtn", addBtn);
-        addBtn.style.display = 'none';
+        setBannerVisible(false);
 
 
-        window.addEventListener('beforeinstallprompt', (e) => {
+        window.addEventListener('beforeinstallprompt', (e) => { // n1
           // Prevent Chrome 67 and earlier from automatically showing the prompt
           // e.preventDefault();
           // Stash the event so it can be triggered later.
           deferredPrompt = e;
-          addBtn.style.display = 'block';
+          setBannerVisible(true);
 
           addBtn.addEventListener('click', (e) => {
-            addBtn.style.display = 'none';
+            setBannerVisible(false);
 
             if(deferredPrompt) {
                 // Show the prompt
@@ -44,6 +43,12 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                 deferredPrompt.userChoice.then(function(choiceResult) {
                     if(choiceResult.outcome === 'accepted') {
                         showSnackbar(dispatch, 'Instalando App...', 'success', 6000)
+                        setTimeout(() => {
+                            window.addEventListener('appinstalled', (evt) => {
+                              showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                              setTimeout(() => closeWindow(), 7000)
+                            });
+                        }, 7000)
                     } else {
                         showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                     }
@@ -54,11 +59,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             }
 
           })
-        });
-
-        window.addEventListener('appinstalled', (evt) => {
-          showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
-          setTimeout(() => closeWindow(), 7000)
         });
     }
 
@@ -112,6 +112,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                 <div
                   id="panelAdd"
                   className="add-to-home-banner"
+                  onClick={handlePwaInstall}
                   data-aos="fade-up"
                   data-aos-duration="2000"
                  >
@@ -125,3 +126,8 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         </div>
     );
 }
+
+
+/* COMMENTS
+n1: If the user selects Install, the app is installed (available as standalone desktop app), and the Install button no longer shows (the onbeforeinstallprompt event no longer fires if the app is already installed).
+*/

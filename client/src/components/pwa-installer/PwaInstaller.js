@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { isIos, isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
@@ -19,6 +19,7 @@ function closeWindow() {
 let deferredPrompt = null;
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(false);
+    const [shouldRender, setShouldRender] = useState(false);
     const dispatch = useStoreDispatch();
 
     const handlePwaInstall = () => {
@@ -41,8 +42,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                 }
-
-                  deferredPrompt = null;
+                deferredPrompt = null;
 
             });
         }
@@ -66,6 +66,12 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             zIndex: 2100,
         },
     }
+
+    useEffect(() => {
+        if(bannerVisible && !isInStandaloneMode()) { // && isIos()
+            setShouldRender(true);
+        }
+    }, [shouldRender, isInStandaloneMode])
 
     // RENDER
     const showTitle = () => (
@@ -92,9 +98,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         </div>
     );
 
-
-    const shouldRender = bannerVisible && !isInStandaloneMode(); // && isIos() && ;
-
     return (
         <div>
             {shouldRender
@@ -104,7 +107,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                   data-aos="fade-up"
                   data-aos-duration="2000"
                  >
-
                   <div
                      onClick={handlePwaInstall}
                      data-aos="flip-left"

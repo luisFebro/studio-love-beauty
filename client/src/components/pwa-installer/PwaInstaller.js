@@ -18,32 +18,32 @@ function closeWindow() {
 
 
 let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => { // n1
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    // e.preventDefault();
-    // Stash the event so it can be triggered later.
-    console.log("running beforeinstallprompt")
-    deferredPrompt = e;
-    console.log("deferredPrompt", deferredPrompt);
-})
-
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(true);
     const dispatch = useStoreDispatch();
 
+    window.addEventListener('beforeinstallprompt', (e) => { // n1
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        // e.preventDefault();
+        // Stash the event so it can be triggered later.
+        console.log("running beforeinstallprompt")
+        deferredPrompt = e;
+        console.log("deferredPrompt", deferredPrompt);
+    })
+
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")
+        setBannerVisible(false);
 
         if(deferredPrompt) {
-            setBannerVisible(false);
             // Show the prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
-                    showSnackbar(dispatch, 'Instalando App... Já vai ficar disponível na tela inicial do seu dispositivo', 'success', 7000)
+                    showSnackbar(dispatch, 'Instalando App em instantes...', 'success', 7000)
                     setTimeout(() => {
-                        showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                        showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
                         setTimeout(() => closeWindow(), 7000)
                         // window.addEventListener('appinstalled', (evt) => {
                         // });

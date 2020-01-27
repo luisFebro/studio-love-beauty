@@ -32,12 +32,12 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
                     showSnackbar(dispatch, 'Instalando App... Já vai ficar disponível na tela inicial do seu dispositivo', 'success', 7000)
-                    // setTimeout(() => {
-                    //     window.addEventListener('appinstalled', (evt) => {
-                    //       showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
-                    //       setTimeout(() => closeWindow(), 7000)
-                    //     });
-                    // }, 7000)
+                    setTimeout(() => {
+                        showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                        setTimeout(() => closeWindow(), 7000)
+                        // window.addEventListener('appinstalled', (evt) => {
+                        // });
+                    }, 13000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                 }
@@ -93,11 +93,11 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     );
 
 
-    const shouldRender = bannerVisible && !isInStandaloneMode(); // && !isInStandaloneMode(); //&& isIos() && ;
+    const shouldRender = bannerVisible && !isInStandaloneMode(); // && isIos() && ;
 
     return (
         <div>
-            {true
+            {shouldRender
             ? (
                 <div
                   className="add-to-home-banner"

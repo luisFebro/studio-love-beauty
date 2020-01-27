@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
@@ -22,22 +22,17 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     const [bannerVisible, setBannerVisible] = useState(false);
     const dispatch = useStoreDispatch();
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener('beforeinstallprompt', (e) => { // n1
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
             // Stash the event so it can be triggered later.
-            console.log("running beforeinstallprompt")
             deferredPrompt = e;
-            console.log("deferredPrompt", deferredPrompt);
             setBannerVisible(true);
         })
     }, [])
 
     const handlePwaInstall = () => {
-        console.log("handlePwaInstall clicked")
-        console.log("deferredPrompt8", deferredPrompt);
-
         if(deferredPrompt) {
             // Show the prompt
             setBannerVisible(false);
@@ -96,11 +91,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         </div>
     );
 
-    const shouldRender = bannerVisible && !isInStandaloneMode(); //  { //
-    console.log("shouldRender9", shouldRender);
-    console.log("isInstadalone9", !isInStandaloneMode());
-    console.log("bannerVisible9", bannerVisible);
-    console.log("deferredPrompt9", deferredPrompt);
+    const shouldRender = bannerVisible && !isInStandaloneMode();
 
     return (
         <div>

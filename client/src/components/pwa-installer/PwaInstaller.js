@@ -22,6 +22,15 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     const [shouldRender, setShouldRender] = useState(false);
     const dispatch = useStoreDispatch();
 
+    window.addEventListener('beforeinstallprompt', (e) => { // n1
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        // e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        setBannerVisible(true);
+        // handlePwaInstall();
+    })
+
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")
         setBannerVisible(false);
@@ -48,14 +57,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         }
     }
 
-    window.addEventListener('beforeinstallprompt', (e) => { // n1
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        // e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        setBannerVisible(true);
-        handlePwaInstall();
-    })
 
     const styles = {
         icon: {
@@ -68,6 +69,8 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     }
 
     useEffect(() => {
+        console.log(bannerVisible);
+        console.log(!isInStandaloneMode);
         if(bannerVisible && !isInStandaloneMode()) { // && isIos()
             setShouldRender(true);
         }
@@ -106,16 +109,16 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                   className="add-to-home-banner"
                   data-aos="fade-up"
                   data-aos-duration="2000"
-                 >
-                  <div
-                     onClick={() => handlePwaInstall()}
-                     data-aos="flip-left"
-                     className="add-to-home-content"
-                  >
-                    {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
-                    {showTitle()}
-                  </div>
-                  {showCloseBtn()}
+                >
+                    <div
+                        onClick={() => handlePwaInstall()}
+                        data-aos="flip-left"
+                        className="add-to-home-content"
+                    >
+                        {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
+                        {showTitle()}
+                    </div>
+                    {showCloseBtn()}
                 </div>
             ) : null}
         </div>

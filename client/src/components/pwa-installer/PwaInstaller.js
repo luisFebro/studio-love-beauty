@@ -92,7 +92,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         <div
             style={styles.closeBtn}
             className="add-to-home-close-btn animated rotateIn"
-            onClick={handleCloseBannerBtnClick}
+            onClick={() => handleCloseBannerBtnClick()}
         >
             <i className="fas fa-times text-white"></i>
         </div>
@@ -108,7 +108,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                   data-aos-duration="2000"
                  >
                   <div
-                     onClick={handlePwaInstall}
+                     onClick={() => handlePwaInstall()}
                      data-aos="flip-left"
                      className="add-to-home-content"
                   >

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isIos, isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
-import { showSnackbar } from '../../../redux/actions/snackbarActions';
+import { showSnackbar } from '../../redux/actions/snackbarActions';
 import parse from 'html-react-parser';
 
 PwaInstaller.propTypes = {
@@ -73,7 +73,7 @@ export default function PwaInstaller({ title, icon }) {
     );
 
 
-    const shouldRender = bannerVisible; //&& isIos() && !isInStandaloneMode();
+    const shouldRender = bannerVisible && !isInStandaloneMode(); //&& isIos() && !isInStandaloneMode();
 
     return (
       <div>

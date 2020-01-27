@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
-import PwaInstaller from '../components/pwa-installer/src/PwaInstaller';
+import PwaInstaller from '../components/pwa-installer/PwaInstaller';
 import { CLIENT_URL } from '../config/clientUrl';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux

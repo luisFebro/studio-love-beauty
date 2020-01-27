@@ -33,21 +33,21 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
 
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")
-        setBannerVisible(false);
 
         if(deferredPrompt) {
+            setBannerVisible(false);
             // Show the prompt
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
                     showSnackbar(dispatch, 'Instalando App... Já vai ficar disponível na tela inicial do seu dispositivo', 'success', 7000)
-                    setTimeout(() => {
-                        showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
-                        setTimeout(() => closeWindow(), 7000)
-                        // window.addEventListener('appinstalled', (evt) => {
-                        // });
-                    }, 13000)
+                    // setTimeout(() => {
+                    //     showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                    //     setTimeout(() => closeWindow(), 7000)
+                    //     // window.addEventListener('appinstalled', (evt) => {
+                    //     // });
+                    // }, 13000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                 }
@@ -70,7 +70,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
 
     useEffect(() => {
         console.log(bannerVisible);
-        console.log(!isInStandaloneMode);
+        console.log(!isInStandaloneMode());
         if(bannerVisible && !isInStandaloneMode()) { // && isIos()
             setShouldRender(true);
         }
@@ -95,7 +95,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         <div
             style={styles.closeBtn}
             className="add-to-home-close-btn animated rotateIn"
-            onClick={() => handleCloseBannerBtnClick()}
+            onClick={handleCloseBannerBtnClick}
         >
             <i className="fas fa-times text-white"></i>
         </div>
@@ -111,7 +111,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                   data-aos-duration="2000"
                 >
                     <div
-                        onClick={() => handlePwaInstall()}
+                        onClick={handlePwaInstall}
                         data-aos="flip-left"
                         className="add-to-home-content"
                     >

@@ -16,20 +16,21 @@ function closeWindow() {
     return false; // preventing the browser to attempt to go to that URL (which it obviously isn't).
 }
 
+
 let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => { // n1
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    // e.preventDefault();
+    // Stash the event so it can be triggered later.
+    console.log("running beforeinstallprompt")
+    deferredPrompt = e;
+    console.log("deferredPrompt", deferredPrompt);
+})
+
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
-    const [bannerVisible, setBannerVisible] = useState(false);
+    const [bannerVisible, setBannerVisible] = useState(true);
     const [shouldRender, setShouldRender] = useState(false);
     const dispatch = useStoreDispatch();
-
-    window.addEventListener('beforeinstallprompt', (e) => { // n1
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        // e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        setBannerVisible(true);
-        // handlePwaInstall();
-    })
 
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")
@@ -42,17 +43,16 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
                     showSnackbar(dispatch, 'Instalando App... Já vai ficar disponível na tela inicial do seu dispositivo', 'success', 7000)
-                    // setTimeout(() => {
-                    //     showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
-                    //     setTimeout(() => closeWindow(), 7000)
-                    //     // window.addEventListener('appinstalled', (evt) => {
-                    //     // });
-                    // }, 13000)
+                    setTimeout(() => {
+                        showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+                        setTimeout(() => closeWindow(), 7000)
+                        // window.addEventListener('appinstalled', (evt) => {
+                        // });
+                    }, 13000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
                 }
                 deferredPrompt = null;
-
             });
         }
     }
@@ -69,9 +69,9 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     }
 
     useEffect(() => {
-        console.log("bannerVisible", bannerVisible);
-        console.log("isInstadalone", !isInStandaloneMode());
-        console.log("shouldRender", shouldRender);
+        console.log("bannerVisible2", bannerVisible);
+        console.log("isInstadalone2", !isInStandaloneMode());
+        console.log("shouldRender2", shouldRender);
         if(bannerVisible && !isInStandaloneMode()) { // && isIos()
             setShouldRender(true);
         }

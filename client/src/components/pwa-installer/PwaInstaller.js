@@ -19,7 +19,7 @@ function closeWindow() {
 
 let deferredPrompt = null;
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
-    const [bannerVisible, setBannerVisible] = useState(true);
+    const [bannerVisible, setBannerVisible] = useState(false);
     const dispatch = useStoreDispatch();
 
     React.useEffect(() => {
@@ -30,11 +30,13 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
             console.log("running beforeinstallprompt")
             deferredPrompt = e;
             console.log("deferredPrompt", deferredPrompt);
+            setBannerVisible(true);
         })
     }, [])
 
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")
+        console.log("deferredPrompt8", deferredPrompt);
 
         if(deferredPrompt) {
             // Show the prompt
@@ -53,6 +55,8 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                 }
                 deferredPrompt = null;
             });
+        } else {
+
         }
     }
 
@@ -93,10 +97,10 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     );
 
     const shouldRender = bannerVisible && !isInStandaloneMode(); //  { //
-    console.log("shouldRender8", shouldRender);
-    console.log("isInstadalone8", !isInStandaloneMode());
-    console.log("bannerVisible8", bannerVisible);
-    console.log("deferredPrompt8", deferredPrompt);
+    console.log("shouldRender9", shouldRender);
+    console.log("isInstadalone9", !isInStandaloneMode());
+    console.log("bannerVisible9", bannerVisible);
+    console.log("deferredPrompt9", deferredPrompt);
 
     return (
         <div>

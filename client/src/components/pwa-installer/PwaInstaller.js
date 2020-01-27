@@ -20,9 +20,14 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
 });
 
+
 export default function PwaInstaller({ title, icon }) {
     const [bannerVisible, setBannerVisible] = useState(true);
     const dispatch = useStoreDispatch();
+
+    window.addEventListener('appinstalled', (evt) => {
+      showSnackbar(dispatch, 'O app foi instalado com sucesso. Acesse o app na tela inicial do seu dispositivo', 'success', 6000)
+    });
 
     async function onPwaInstallerClick() {
       if(deferredPrompt) {
@@ -68,7 +73,7 @@ export default function PwaInstaller({ title, icon }) {
     );
 
 
-    const shouldRender = bannerVisible && isIos() && !isInStandaloneMode();
+    const shouldRender = bannerVisible; //&& isIos() && !isInStandaloneMode();
 
     return (
       <div>

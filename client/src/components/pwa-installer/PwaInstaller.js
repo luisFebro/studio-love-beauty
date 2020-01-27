@@ -85,12 +85,12 @@ export default function PwaInstaller({ title, icon }) {
     );
 
 
-    const shouldRender = bannerVisible && !isInStandaloneMode(); //&& isIos() && !isInStandaloneMode();
+    const shouldRender = bannerVisible // && !isInStandaloneMode(); //&& isIos() && !isInStandaloneMode();
 
     return (
       <div>
         {shouldRender ? (
-          <div id="btnAdd" className="add-to-home-banner">
+          <div data-aos="fade-up" id="btnAdd" className="add-to-home-banner">
             <div className="add-to-home-content">
               {icon ? <img className="add-to-home-icon animated slideInLeft delay-2s" src={icon} /> : null}
               {showTitle()}

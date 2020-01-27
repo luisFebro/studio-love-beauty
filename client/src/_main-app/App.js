@@ -14,10 +14,12 @@ import PrivateRouteStaff from '../components/auth/PrivateRouteStaff';
 import { loadUser } from '../redux/actions/authActions';
 import './App.css';
 import '../utils/globalHelpers';
-//GENERAL COMPONENTS
+//STYLING AND ANIMATION COMPONENTS
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
-//END GENERAL COMPONENTS
+//END STYLING AND ANIMATION COMPONENTS
 
 // PAGES
 import Home from '../pages/Home';
@@ -43,6 +45,7 @@ import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
 function App() {
+    AOS.init();
     const dispatch = useStoreDispatch();
 
     useEffect(() => {

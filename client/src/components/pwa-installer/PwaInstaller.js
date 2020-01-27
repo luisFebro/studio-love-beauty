@@ -1,7 +1,7 @@
 import './style.css';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { isIos, isInStandaloneMode } from './utils';
+import { isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import parse from 'html-react-parser';
@@ -19,7 +19,7 @@ function closeWindow() {
 
 let deferredPrompt = null;
 export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
-    const [bannerVisible, setBannerVisible] = useState(false);
+    const [bannerVisible, setBannerVisible] = useState(true);
     const dispatch = useStoreDispatch();
 
     window.addEventListener('beforeinstallprompt', (e) => { // n1
@@ -29,15 +29,14 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         console.log("running beforeinstallprompt")
         deferredPrompt = e;
         console.log("deferredPrompt", deferredPrompt);
-        setBannerVisible(true);
     })
 
     const handlePwaInstall = () => {
         console.log("handlePwaInstall clicked")
-        setBannerVisible(false);
 
         if(deferredPrompt) {
             // Show the prompt
+            setBannerVisible(false);
             deferredPrompt.prompt();
             // Wait for the user to respond to the prompt
             deferredPrompt.userChoice.then(function(choiceResult) {
@@ -46,8 +45,6 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                     setTimeout(() => {
                         showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
                         setTimeout(() => closeWindow(), 7000)
-                        // window.addEventListener('appinstalled', (evt) => {
-                        // });
                     }, 13000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')
@@ -93,11 +90,11 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
         </div>
     );
 
-    const shouldRender = bannerVisible && isIos() && !isInStandaloneMode(); //  { //
-    console.log("shouldRender7", shouldRender);
-    console.log("isInstadalone7", !isInStandaloneMode());
-    console.log("bannerVisible7", bannerVisible);
-    console.log("deferredPrompt7", deferredPrompt);
+    const shouldRender = bannerVisible && !isInStandaloneMode(); //  { //
+    console.log("shouldRender8", shouldRender);
+    console.log("isInstadalone8", !isInStandaloneMode());
+    console.log("bannerVisible8", bannerVisible);
+    console.log("deferredPrompt8", deferredPrompt);
 
     return (
         <div>

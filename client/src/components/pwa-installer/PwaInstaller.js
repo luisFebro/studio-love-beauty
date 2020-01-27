@@ -93,10 +93,10 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     );
 
     const shouldRender = bannerVisible && !isInStandaloneMode(); // { // && isIos()
-    console.log("shouldRender5", shouldRender);
-    console.log("isInstadalone5", !isInStandaloneMode());
-    console.log("bannerVisible5", bannerVisible);
-    console.log("deferredPrompt5", deferredPrompt);
+    console.log("shouldRender6", shouldRender);
+    console.log("isInstadalone6", !isInStandaloneMode());
+    console.log("bannerVisible6", bannerVisible);
+    console.log("deferredPrompt6", deferredPrompt);
 
     return (
         <div>

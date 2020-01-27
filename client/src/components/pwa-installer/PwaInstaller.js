@@ -69,12 +69,13 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
     }
 
     useEffect(() => {
-        console.log(bannerVisible);
-        console.log(!isInStandaloneMode());
+        console.log("bannerVisible", bannerVisible);
+        console.log("isInstadalone", !isInStandaloneMode());
+        console.log("shouldRender", shouldRender);
         if(bannerVisible && !isInStandaloneMode()) { // && isIos()
             setShouldRender(true);
         }
-    }, [shouldRender, isInStandaloneMode])
+    }, [bannerVisible, isInStandaloneMode])
 
     // RENDER
     const showTitle = () => (

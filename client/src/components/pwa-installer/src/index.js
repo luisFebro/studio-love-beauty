@@ -31,9 +31,8 @@ export default function PwaInstaller({ title, icon }) {
         deferredPrompt.userChoice.then(function(choiceResult) {
             if(choiceResult.outcome === 'accepted') {
                 showSnackbar(dispatch, 'O app foi instalado', 'success')
-                console.log();
             } else {
-                console.log('User chose to not install your PWA');
+                showSnackbar(dispatch, 'A instalação foi cancelada', 'warning')
             }
 
             deferredPrompt = null;

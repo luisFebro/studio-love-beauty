@@ -3,7 +3,6 @@ import { readUser } from './userActions';
 import { setLoadingProgress } from './globalActions';
 import { showSnackbar } from './snackbarActions';
 import { getHeaderJson } from '../../utils/server/getHeaders';
-import { CLIENT_URL } from '../../config/clientUrl';
 // naming structure: action > type > speficification e.g action: GET_MODAL_BLUE / func: getModalBlue
 // import { postDataWithJsonObj } from '../../utils/promises/postDataWithJsonObj.js'
 
@@ -11,7 +10,7 @@ import { CLIENT_URL } from '../../config/clientUrl';
 export const loadUser = () => (dispatch, getState) => {
     // dispatch({ type: 'USER_LOADING' });
     console.log('==USER LOADING==');
-    axios.get(CLIENT_URL + '/api/auth/user', tokenConfig(getState))
+    axios.get('/api/auth/user', tokenConfig(getState))
     .then(res => {
        // from user reducer
         dispatch({ type: 'AUTHENTICATE_USER_ONLY' });
@@ -31,7 +30,7 @@ export const loadUser = () => (dispatch, getState) => {
 export const loginEmail = async (dispatch, objToSend) => {
     setLoadingProgress(dispatch, true);
     try {
-        const res = await axios.post(CLIENT_URL + '/api/auth/login', objToSend, getHeaderJson);
+        const res = await axios.post('/api/auth/login', objToSend, getHeaderJson);
         readUser(dispatch, res.data.authUserId);
         dispatch({ type: 'LOGIN_EMAIL', payload: res.data.token });
         setLoadingProgress(dispatch, false);

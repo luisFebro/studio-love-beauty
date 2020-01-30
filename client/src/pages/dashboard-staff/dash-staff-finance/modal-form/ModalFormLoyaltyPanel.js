@@ -48,7 +48,7 @@ export default function ModalFormLoyaltyPanel({
     const { staffName } = modalData;
 
     const [data, setData] = useState({
-        agentName: 'selecione nome:',
+        agentName: staffName,
         agentRole: 'colaborador',
         service: 'selecione tipo:',
         description: '',
@@ -58,7 +58,6 @@ export default function ModalFormLoyaltyPanel({
 
     const {
         agentId,
-        agentName,
         service,
         description,
         cashInValue,
@@ -99,7 +98,7 @@ export default function ModalFormLoyaltyPanel({
     const clearForm = () => {
         setData({
             agentId: '',
-            agentName: 'selecione nome:',
+            agentName: staffName,
             agentRole: 'colaborador',
             service: 'selecione tipo:',
             description: '',

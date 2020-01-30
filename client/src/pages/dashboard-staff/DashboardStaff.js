@@ -1,7 +1,9 @@
 import React from 'react';
 import DashStaffBooking from './DashStaffBooking';
+import DashStaffFinance from './dash-staff-finance/DashStaffFinance';
 import { useStoreState } from 'easy-peasy';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import TabSessions from '../../components/TabSessions';
 import getDayGreetingBr from '../../utils/getDayGreetingBr';
 
@@ -13,6 +15,11 @@ export default function DashboardStaff() {
             tabLabel: "Agendamentos",
             tabIcon: <LibraryBooksIcon />,
             tabContentPanel: <DashStaffBooking />
+        },
+        {
+            tabLabel: "Finanças",
+            tabIcon: <MonetizationOnIcon />,
+            tabContentPanel: <DashStaffFinance />
         },
     ];
 

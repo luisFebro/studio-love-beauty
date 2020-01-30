@@ -1,7 +1,7 @@
 //GOAL: validate br-pt value string eg "10,60" that can not be a dot
+// note: "3something" turns into 3 and thus is valid. Although a warning should be displayed that all letters were eliminated...
 export default function isMoneyBrValidAndAlert(string, showSnackbar, dispatch) {
-    if(!string) { string = "null" }
-    if(typeof string !== "string") { string = string.toString(); }
+    if(!string || typeof string !== "string") { string = string.toString(); }
 
     const endValue = string.slice(-1);
     const commaQuantity = string.match(new RegExp(",",'g'))

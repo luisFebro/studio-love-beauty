@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ModalFormLoyaltyPanel from './ModalFormLoyaltyPanel';
-import { buttonMultiType } from '../../../types';
-import handleChange from '../../../utils/form/use-state/handleChange';
+import { buttonMultiType } from '../../../../types';
+import handleChange from '../../../../utils/form/use-state/handleChange';
 
 ModalStaticBtn.propTypes = {
     modal: PropTypes.object.isRequired,

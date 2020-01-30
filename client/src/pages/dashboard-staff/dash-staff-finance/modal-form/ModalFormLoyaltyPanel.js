@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import { withRouter } from 'react-router-dom';
-import ButtonMulti from '../../../components/buttons/material-ui/ButtonMulti';
+import ButtonMulti from '../../../../components/buttons/material-ui/ButtonMulti';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import parse from 'html-react-parser';
 import PropTypes from 'prop-types';
-import handleChange from '../../../utils/form/use-state/handleChange';
+import handleChange from '../../../../utils/form/use-state/handleChange';
 
 // OPTIONALS
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import moment from 'moment';
+import isMoneyBrValidAndAlert from '../../../../utils/numbers/isMoneyBrValidAndAlert';
 // END OPTIONALS
 
 // CUSTOMIZED DATA
-import { modalTextFieldDashboardType } from '../../../types';
-import { updateUser } from '../../../redux/actions/userActions';
-import { createBooking, getStaffBookingList } from '../../../redux/actions/staffBookingActions';
-import { getAllAvailableNames, createFinance } from '../../../redux/actions/financeActions';
-import { hideComponent, showComponent } from "../../../redux/actions/componentActions";
-import { logout } from "../../../redux/actions/authActions";
-import { readServicesList } from '../../../redux/actions/adminActions';
-import { showSnackbar } from '../../../redux/actions/snackbarActions';
-import { convertCommaToDot } from '../../../utils/numbers/convertDotComma';
+import { modalTextFieldDashboardType } from '../../../../types';
+import { updateUser } from '../../../../redux/actions/userActions';
+import { createFinance } from '../../../../redux/actions/financeActions';
+import { readServicesList } from '../../../../redux/actions/adminActions';
+import { showSnackbar } from '../../../../redux/actions/snackbarActions';
+import { convertCommaToDot } from '../../../../utils/numbers/convertDotComma';
 // END CUSTOMIZED DATA
+
+moment.locale = "pt-br";
 
 ModalFormLoyaltyPanel.propTypes = {
     open: PropTypes.bool,
@@ -34,10 +33,9 @@ ModalFormLoyaltyPanel.propTypes = {
     modal: modalTextFieldDashboardType,
 };
 
-function ModalFormLoyaltyPanel({
-    open, onClose, modal, history }) {
+export default function ModalFormLoyaltyPanel({
+    open, onClose, modal }) {
     //test
-    const [staffNames, setStaffNames] = useState([])
     const [preventDefault, setPreventDefault] = useState(false)
     const [gotError, setGotError] = useState(null);
 
@@ -47,41 +45,34 @@ function ModalFormLoyaltyPanel({
         iconBtn,
         modalData } = modal;
 
+    const { staffName } = modalData;
+
     const [data, setData] = useState({
         agentName: 'selecione nome:',
         agentRole: 'colaborador',
         service: 'selecione tipo:',
         description: '',
-        cashInValue: parseFloat(convertCommaToDot(modalData.valuePaid)),
+        cashInValue: null,
         formattedDate: moment(new Date()).format("LLL"),
     });
-
-    const { services } = useStoreState(state => ({
-        services: state.adminReducer.cases.services,
-    }));
-    const dispatch = useStoreDispatch();
 
     const {
         agentId,
         agentName,
         service,
         description,
+        cashInValue,
         formattedDate,
     } = data;
 
-
+    const { services } = useStoreState(state => ({
+        services: state.adminReducer.cases.services,
+    }));
+    const dispatch = useStoreDispatch();
 
 
     useEffect(() => {
         readServicesList(dispatch)
-        .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            getAllAvailableNames(dispatch)
-            .then(res => {
-                if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-                setStaffNames(res.data)
-            })
-        })
     }, [])
 
     const styles = {
@@ -112,7 +103,7 @@ function ModalFormLoyaltyPanel({
             agentRole: 'colaborador',
             service: 'selecione tipo:',
             description: '',
-            cashInValue: parseFloat(convertCommaToDot(modalData.valuePaid)),
+            cashInValue: null,
             formattedDate: moment(new Date()).format("LLL"),
         })
         setGotError(false);
@@ -120,38 +111,34 @@ function ModalFormLoyaltyPanel({
 
     const handleSubmit = () => {
         setPreventDefault(true);
-        if(agentName === "selecione nome:") {
-            showSnackbar(dispatch, "Selecione um nome.", 'error')
-            setGotError("agentName");
-            return;
-        }
+
         if(service === "selecione tipo:") {
             showSnackbar(dispatch, "Selecione um serviço.", 'error')
             setGotError("service");
             return;
         }
 
+        if(!isMoneyBrValidAndAlert(cashInValue, showSnackbar, dispatch)) {
+            setGotError("cashInValue");
+            return;
+        }
+
         let dataInformed;
         if(description === "") {
-            dataInformed = {...data, description: "não informado."}
+            dataInformed = {...data, description: "não informado.", cashInValue: parseFloat(cashInValue)}
         } else {
-            dataInformed = {...data}
+            dataInformed = {...data, cashInValue: parseFloat(cashInValue)}
         }
         const objToSend = dataInformed;
+        console.log("objToSend", objToSend);
 
         showSnackbar(dispatch, "Processando...", 'warning', 5000)
         createFinance(dispatch, objToSend)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
-            showSnackbar(dispatch, `Registro Financeiro Realizado!`, 'success', 5000)
+            showSnackbar(dispatch, `${staffName && staffName.cap()}, registro financeiro foi Efetuado!`, 'success', 6000)
             clearForm();
             onClose();
-            setTimeout(() => {
-                hideComponent(dispatch, "clientScoresPanel")
-                showComponent(dispatch, "login")
-                logout(dispatch);
-                history.push("/acesso/verificacao")
-            }, 2500)
         })
     };
 
@@ -170,26 +157,14 @@ function ModalFormLoyaltyPanel({
     const showForm = () => (
         <form style={styles.form} onBlur={() => {setGotError(null); setPreventDefault(false);}}>
             <span className="text-default text-em-1 font-weight-bold">
-                COLABORADOR*
-                <Select
-                  style={styles.fieldForm}
-                  labelId="staff"
-                  fullWidth
-                  variant="outlined"
-                  name="agentName"
-                  value={agentName}
-                  onChange={handleChange(setData, data)}
-                  error={gotError === "agentName" ? true : false}
-                >
-                    <MenuItem value={agentName}>
-                      selecione nome:
-                    </MenuItem>
-                    {staffNames && staffNames.map((name, ind) => (
-                        <MenuItem key={ind} value={name}>
-                            {name.cap()}
-                        </MenuItem>
-                    ))}
-                </Select>
+                COLABORADOR
+                <TextField
+                    value={staffName && staffName.cap()}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    disabled
+                />
             </span>
             <br />
             <span className="text-default text-em-1 font-weight-bold">
@@ -215,6 +190,23 @@ function ModalFormLoyaltyPanel({
                 </Select>
             </span>
             <br />
+            <br />
+            <span className="text-default text-em-1 font-weight-bold">
+                VALOR EM R$*
+                <TextField
+                    required
+                    name="cashInValue"
+                    value={cashInValue}
+                    onChange={handleChange(setData, data)}
+                    error={gotError === "cashInValue" ? true : false}
+                    helperText={"Insira apenas números e vírgula"}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                />
+            </span>
+            <br />
+            <br />
             <span className="text-default text-em-1 font-weight-bold">
                 DESCRIÇÃO
                 <TextField
@@ -226,18 +218,6 @@ function ModalFormLoyaltyPanel({
                     variant="outlined"
                     fullWidth
                     margin="dense"
-                />
-            </span>
-            <br />
-            <br />
-            <span className="text-default text-em-1 font-weight-bold">
-                VALOR
-                <TextField
-                    value={`R$ ${modalData && modalData.valuePaid}`}
-                    variant="outlined"
-                    fullWidth
-                    margin="dense"
-                    disabled
                 />
             </span>
             <br />
@@ -257,6 +237,14 @@ function ModalFormLoyaltyPanel({
 
     const showActionButtons = () => (
         <section style={styles.actionButtons}>
+            <ButtonMulti
+                title="Voltar"
+                onClick={() => {
+                    onClose();
+                    clearForm();
+                }}
+                variant="link"
+            />
             <ButtonMulti
                 title={txtBtn}
                 onClick={handleSubmit}
@@ -279,5 +267,3 @@ function ModalFormLoyaltyPanel({
         </div>
     );
 }
-
-export default withRouter(ModalFormLoyaltyPanel);

@@ -121,9 +121,9 @@ function Register({ history }) {
                     setFieldError(foundObjError);
                     return;
                 }
-                history.push(`/baixe-app/${name}`);
                 sendEmail(res.data.authUserId);
                 clearData();
+                history.push(`/baixe-app/${name}`);
             })
 
     };

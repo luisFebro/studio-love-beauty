@@ -59,7 +59,7 @@ export default function DownloadApp({ match }) {
     const showMainText = () => (
         <div className="container-center">
             <div className="text-center">
-                <p className="text-rem-5 text-left text-default">Ei, {truncate(userName.cap(), 10)}</p>
+                <p className="text-rem-5 text-left text-default">Ei, {truncate(userName.cap(), isSmall ? 10 : 30)}</p>
                 <div className="text-rem-2-5">
                     <p className="font-weight-bold">Você foi registrado(a) com sucesso! <i style={styles.icon}>🎉</i></p>
                     <p className="my-1 font-weight-bold" data-aos="fade-up" data-aos-delay="80">{parse(`Seja ${isSmall ? "<br />" : ""} bem-vindo(a)!`)}</p>

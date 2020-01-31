@@ -63,7 +63,7 @@ export default function DownloadApp({ match, location }) {
     const showMainText = () => (
         <div className="container-center">
             <div className="text-center">
-                <p className="text-rem-5 text-left text-default">Ei, {truncate(userName.cap(), isSmall ? 12 : 30)}</p>
+                <p className="pl-3 text-rem-5 text-left text-default">Oi,<br /> {truncate(userName.cap(), isSmall ? 22 : 30)}</p>
                 <div className="text-rem-2-5">
                     {isFromRegister
                     ? (

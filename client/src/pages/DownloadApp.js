@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import ScrollArray from '../keyframes/built/scroll-arrow/ScrollArray';
 import "../keyframes/gradientAnimation.css";
 import AOS from 'aos';
 import parse from 'html-react-parser';
 import PwaInstaller from '../components/pwa-installer/PwaInstaller';
 import { CLIENT_URL } from '../config/clientUrl';
+import { Link } from 'react-router-dom';
 
 const isSmall = window.Helper.isSmallScreen();
 const truncate = (name, leng) => window.Helper.truncate(name, leng);
@@ -20,17 +21,19 @@ const checkIfElemIsVisible = (elem, setRun, needPartially = false) => {
         if(!elem) throw Error("You need to declare an element as the first parameter");
 
         elem = document.querySelector(elem);
-        const rect = elem.getBoundingClientRect();
-        const elemTop = rect.top;
-        const elemBottom = rect.bottom;
+        if(elem) {
+            const rect = elem.getBoundingClientRect();
+            const elemTop = rect.top;
+            const elemBottom = rect.bottom;
 
-        let res;
-        const isTotallyVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
-        const isPartiallyVisible = elemTop < window.innerHeight && elemBottom >= 0;
+            let res;
+            const isTotallyVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+            const isPartiallyVisible = elemTop < window.innerHeight && elemBottom >= 0;
 
-        res = needPartially ? isPartiallyVisible : isTotallyVisible;
+            res = needPartially ? isPartiallyVisible : isTotallyVisible;
 
-        setRun(res);
+            setRun(res);
+        }
     }
 }
 
@@ -64,18 +67,28 @@ export default function DownloadApp({ match, location }) {
                 <div className="text-rem-2-5">
                     {isFromRegister
                     ? (
-                        <p className="font-weight-bold">Você foi registrado(a) com sucesso! <i style={styles.icon}>🎉</i></p>
-                    ) : null}
-                    <p className="my-1 font-weight-bold" data-aos="fade-up" data-aos-delay="80">{parse(`Seja ${isSmall ? "<br />" : ""} bem-vindo(a)!`)}</p>
-                    <ScrollArray />
-                    <p style={styles.margin} data-aos="fade-up">Baixe agora o app do salão e<br/>faça seu login de acesso por lá.</p>
-                    <ScrollArray margin={30}/>
-                    <p style={styles.margin} data-aos="fade-up">É leve e baixa em segundos!</p>
-                    <ScrollArray margin={30} />
-                    <div id="target" style={{minHeight: '200px 0'}}>
-                        <ScrollArray margin={20} />
-                    </div>
-                    <p>{!isInstalled ? parse("<br /><br />Foi instalado.<br/>Visite sua galeria<br />de Apps") : ""}</p>
+                        <Fragment>
+                            <p className="font-weight-bold">Você foi registrado(a) com sucesso! <i style={styles.icon}>🎉</i></p>
+                            <p className="my-1 font-weight-bold" data-aos="fade-up" data-aos-delay="80">{parse(`Seja ${isSmall ? "<br />" : ""} bem-vindo(a)!`)}</p>
+                            <ScrollArray />
+                            <p style={styles.margin} data-aos="fade-up">Baixe agora o app do salão e<br/>faça seu login de acesso por lá.</p>
+                            <ScrollArray margin={30}/>
+                            <p style={styles.margin} data-aos="fade-up">É leve e baixa em segundos!</p>
+                            <ScrollArray margin={30} />
+                            <div id="target" style={{minHeight: '200px 0'}}>
+                                <ScrollArray margin={20} />
+                            </div>
+                            <p>{!isInstalled ? parse("<br /><br />Foi instalado.<br/>Visite sua galeria<br />de Apps") : ""}</p>
+                        </Fragment>
+                    ) : (
+                        <Fragment>
+                            <p>Para baixar o app da Love Beauty Love</p>
+                            <ScrollArray margin={20}/>
+                            <br/>
+                            <br/>
+                            <p>Primeiro faça seu cadastro <Link to="/" style={{fontWeight: 'bold'}}>AQUI.</Link></p>
+                        </Fragment>
+                    )}
                 </div>
             </div>
         </div>

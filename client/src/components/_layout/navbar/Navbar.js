@@ -70,7 +70,7 @@ function Navbar({ history, location }) {
                         className="animated zoomIn slow"
                         style={{ fontSize: '2.3rem' }}
                     >
-                        Seja Bem Vindo(a)!
+                        CADASTRO
                     </span>
                 ) : (
                     <Fragment>

@@ -78,7 +78,6 @@ export default function DownloadApp({ match, location }) {
                             <div id="target" style={{minHeight: '200px 0'}}>
                                 <ScrollArray margin={20} />
                             </div>
-                            <p>{!isInstalled ? parse("<br /><br />Foi instalado.<br/>Visite sua galeria<br />de Apps") : ""}</p>
                         </Fragment>
                     ) : (
                         <Fragment>
@@ -106,3 +105,7 @@ export default function DownloadApp({ match, location }) {
         </div>
     );
 }
+
+/*
+<p>{!isInstalled ? parse("<br /><br />Foi instalado.<br/>Visite sua galeria<br />de Apps") : ""}</p>
+ */

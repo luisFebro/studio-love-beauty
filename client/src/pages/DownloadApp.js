@@ -21,7 +21,7 @@ const checkIfElemIsVisible = (elem, setRun, needPartially = false) => {
         if(!elem) throw Error("You need to declare an element as the first parameter");
 
         elem = document.querySelector(elem);
-        if(elem) {
+        if(true) { // not displaying. true ttemp
             const rect = elem.getBoundingClientRect();
             const elemTop = rect.top;
             const elemBottom = rect.bottom;
@@ -78,6 +78,12 @@ export default function DownloadApp({ match, location }) {
                             <div id="target" style={{minHeight: '200px 0'}}>
                                 <ScrollArray margin={20} />
                             </div>
+                            <PwaInstaller
+                                title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
+                                icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
+                                run={run}
+                                setIsInstalled={setIsInstalled}
+                            />
                         </Fragment>
                     ) : (
                         <Fragment>
@@ -96,12 +102,6 @@ export default function DownloadApp({ match, location }) {
     return (
         <div id="holder" className="text-white gradient-animation" style={{minHeight: '305vmin'}}>
             {showMainText()}
-            <PwaInstaller
-                title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
-                icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
-                run={run}
-                setIsInstalled={setIsInstalled}
-            />
         </div>
     );
 }

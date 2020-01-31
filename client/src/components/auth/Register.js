@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import TitleComponent from '../TitleComponent';
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Register() {
+function Register({ history }) {
     const [selectedDate, handleDateChange] = useState(new Date());
     const [data, setData] = useState({
         name: '',
@@ -120,9 +121,9 @@ export default function Register() {
                     setFieldError(foundObjError);
                     return;
                 }
+                history.push(`/baixe-app/${name}`);
                 sendEmail(res.data.authUserId);
                 clearData();
-                showSnackbar(dispatch, res.data.msg, 'success', 9000);
             })
 
     };
@@ -299,6 +300,8 @@ export default function Register() {
         </div>
     );
 }
+
+export default withRouter(Register);
 
 /*
 <div style={{whiteSpace: 'wrap'}}>

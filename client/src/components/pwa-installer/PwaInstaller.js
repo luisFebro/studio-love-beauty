@@ -5,10 +5,13 @@ import { isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import parse from 'html-react-parser';
+import AOS from 'aos';
+import ButtonMulti from '../../components/buttons/material-ui/ButtonMulti';
 
 PwaInstaller.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.string,
+  run: PropTypes.bool,
 }
 
 function closeWindow() {
@@ -18,9 +21,14 @@ function closeWindow() {
 
 
 let deferredPrompt = null;
-export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScreen
+export default function PwaInstaller({ title, icon, run = true }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(false);
     const dispatch = useStoreDispatch();
+
+    AOS.init({
+        offset: 50,
+        delay: 1000,
+    });
 
     useEffect(() => {
         window.addEventListener('beforeinstallprompt', (e) => { // n1
@@ -50,18 +58,17 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                 }
                 deferredPrompt = null;
             });
-        } else {
-
         }
     }
 
 
     const styles = {
         icon: {
-            animationDelay: '4s',
+            animationDelay: '3s',
         },
         closeBtn: {
-            animationDelay: '6s',
+            animationDelay: '5s',
+            animationIterationCount: 2,
             zIndex: 2100,
         },
     }
@@ -81,17 +88,23 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
 
     const handleCloseBannerBtnClick = () => setBannerVisible(false);
 
-    const showCloseBtn = () => (
+    const showActionBtn = () => (
         <div
             style={styles.closeBtn}
-            className="add-to-home-close-btn animated rotateIn"
-            onClick={handleCloseBannerBtnClick}
+            className="add-to-home-close-btn animated wobble"
+            // onClick={handleCloseBannerBtnClick}
         >
-            <i className="fas fa-times text-white"></i>
+            <ButtonMulti
+                title="baixar"
+                onClick={handlePwaInstall}
+                color="var(--mainWhite)"
+                backgroundColor="var(--mainPink)"
+                backColorOnHover="pink"
+            />
         </div>
     );
 
-    const shouldRender = bannerVisible && !isInStandaloneMode();
+    const shouldRender = run && bannerVisible && !isInStandaloneMode();
 
     return (
         <div>
@@ -110,7 +123,7 @@ export default function PwaInstaller({ title, icon }) { // A2HS = App to HomeScr
                         {icon ? <img style={styles.icon} className="add-to-home-icon animated slideInLeft" src={icon} /> : null}
                         {showTitle()}
                     </div>
-                    {showCloseBtn()}
+                    {showActionBtn()}
                 </div>
             ) : null}
         </div>

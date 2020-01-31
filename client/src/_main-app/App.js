@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ScrollToTop from 'react-router-scroll-top';
-import PwaInstaller from '../components/pwa-installer/PwaInstaller';
 import { CLIENT_URL } from '../config/clientUrl';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
@@ -15,7 +14,6 @@ import { loadUser } from '../redux/actions/authActions';
 import './App.css';
 import '../utils/globalHelpers';
 //STYLING AND ANIMATION COMPONENTS
-import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css/animate.min.css';
@@ -32,6 +30,7 @@ import Default from '../pages/Default';
 import Dashboard from '../pages/dashboard-admin';
 import DashboardStaff from '../pages/dashboard-staff';
 import RegulationPage from '../pages/RegulationPage';
+import DownloadApp from '../pages/DownloadApp';
 //END PAGES
 
 //LAYOUT
@@ -45,10 +44,6 @@ import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
 function App() {
-    AOS.init({
-        offset: 150,
-        delay: 1000,
-    });
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
@@ -72,16 +67,13 @@ function App() {
                     <Route path="/cliente/trocar-senha" exact component={ChangePassword} />
                     <Route path="/cliente/confirmacao-conta/:authUserId" exact component={ConfirmAccount} />
                     <Route path="/regulamento/" exact component={RegulationPage} />
+                    <Route path="/baixe-app/:userName" exact component={DownloadApp} />
                     <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
                     <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
                     <Route component={Default} />
                 </Switch>
                 {/*Modals and Snackbars*/}
                 <AllModals />
-                <PwaInstaller
-                    title="<strong>Baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade."
-                    icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
-                />
                 <SnackbarMulti />
                 {/*End Modals and Snackbars*/}
                 <Footer />

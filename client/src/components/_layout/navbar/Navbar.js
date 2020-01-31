@@ -74,6 +74,13 @@ function Navbar({ history, location }) {
                     </span>
                 ) : (
                     <Fragment>
+                        {locationNow.includes("baixe") &&
+                        <p
+                            className="ml-4 text-container-main font-weight-bold text-pink"
+                            style={{ fontSize: '2.3rem' }}
+                        >
+                            BAIXE O APP <span><i style={{animationIterationCount: 3}} className="fas fa-mobile animated bounce"></i></span>
+                        </p>}
                         {locationNow === "/regulamento" &&
                         <p
                             className="ml-4 text-container-main font-weight-bold text-pink"

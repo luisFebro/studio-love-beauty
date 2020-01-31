@@ -3,6 +3,7 @@ import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
+import ClientMobile from './ClientMobile';
 import ImageLogo from '../../components/ImageLogo';
 import HomeButton from '../../components/buttons/HomeButton';
 import { hideComponent, showComponent } from "../../redux/actions/componentActions";

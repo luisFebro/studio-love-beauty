@@ -34,11 +34,11 @@ const checkIfElemIsVisible = (elem, setRun, needPartially = false) => {
     }
 }
 
-export default function DownloadApp({ match }) {
+export default function DownloadApp({ match, location }) {
     const [userName, setUserName] = useState(match.params.userName);
     const [run, setRun] = useState(false);
     const [isInstalled, setIsInstalled] = useState(false);
-    console.log("isInstalled", isInstalled);
+    const isFromRegister = location.search.includes("isFromRegister=true");
 
     checkIfElemIsVisible("#target", setRun, true);
 
@@ -62,7 +62,10 @@ export default function DownloadApp({ match }) {
             <div className="text-center">
                 <p className="text-rem-5 text-left text-default">Ei, {truncate(userName.cap(), isSmall ? 12 : 30)}</p>
                 <div className="text-rem-2-5">
-                    <p className="font-weight-bold">Você foi registrado(a) com sucesso! <i style={styles.icon}>🎉</i></p>
+                    {isFromRegister
+                    ? (
+                        <p className="font-weight-bold">Você foi registrado(a) com sucesso! <i style={styles.icon}>🎉</i></p>
+                    ) : null}
                     <p className="my-1 font-weight-bold" data-aos="fade-up" data-aos-delay="80">{parse(`Seja ${isSmall ? "<br />" : ""} bem-vindo(a)!`)}</p>
                     <ScrollArray />
                     <p style={styles.margin} data-aos="fade-up">Baixe agora o app do salão e<br/>faça seu login de acesso por lá.</p>
@@ -80,7 +83,6 @@ export default function DownloadApp({ match }) {
 
     return (
         <div id="holder" className="text-white gradient-animation" style={{minHeight: '305vmin'}}>
-            {window.history.state.prevUrl}
             {showMainText()}
             <PwaInstaller
                 title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}

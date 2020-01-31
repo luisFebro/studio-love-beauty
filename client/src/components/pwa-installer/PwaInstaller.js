@@ -43,7 +43,7 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
             deferredPrompt = e;
             setBannerVisible(true);
         })
-    }, [])
+    }, [shouldRender])
 
     const handlePwaInstall = () => {
         if(deferredPrompt) {

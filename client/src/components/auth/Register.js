@@ -124,7 +124,6 @@ function Register({ history }) {
                 sendEmail(res.data.authUserId);
                 clearData();
                 history.push(`/baixe-app/${name}?isFromRegister=true`);
-                window.history.pushState({ prevUrl: window.location.href }, null, `/baixe-app/${name}`)
             })
 
     };

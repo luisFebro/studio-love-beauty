@@ -37,7 +37,8 @@ const checkIfElemIsVisible = (elem, setRun, needPartially = false) => {
 export default function DownloadApp({ match }) {
     const [userName, setUserName] = useState(match.params.userName);
     const [run, setRun] = useState(false);
-    console.log(run);
+    const [isInstalled, setIsInstalled] = useState(false);
+    console.log("isInstalled", isInstalled);
 
     checkIfElemIsVisible("#target", setRun, true);
 
@@ -71,6 +72,7 @@ export default function DownloadApp({ match }) {
                     <div id="target" style={{minHeight: '200px 0'}}>
                         <ScrollArray margin={20} />
                     </div>
+                    <p>{!isInstalled ? parse("<br /><br />Foi instalado.<br/>Visite sua galeria<br />de Apps") : ""}</p>
                 </div>
             </div>
         </div>
@@ -78,11 +80,13 @@ export default function DownloadApp({ match }) {
 
     return (
         <div id="holder" className="text-white gradient-animation" style={{minHeight: '305vmin'}}>
+            {window.history.state.prevUrl}
             {showMainText()}
             <PwaInstaller
                 title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
                 icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
                 run={run}
+                setIsInstalled={setIsInstalled}
             />
         </div>
     );

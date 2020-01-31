@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import { isInStandaloneMode } from '../../components/pwa-installer/utils';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
@@ -64,10 +65,15 @@ export default function LoyaltyScoreHandler() {
 
     return (
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
-            <PurchaseValue
-                success={showPurchaseValue}
-                setValuePaid={setValuePaid}
-            />
+            {isInStandaloneMode
+            ? (
+                <ClientMobile />
+            ) : (
+                <PurchaseValue
+                    success={showPurchaseValue}
+                    setValuePaid={setValuePaid}
+                />
+            )}
             <StaffConfirmation
                 success={showStaffConfirmation}
                 setVerification={setVerification}

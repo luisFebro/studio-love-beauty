@@ -12,6 +12,7 @@ PwaInstaller.propTypes = {
   title: PropTypes.string,
   icon: PropTypes.string,
   run: PropTypes.bool,
+  setIsInstalled: PropTypes.func,
 }
 
 function closeWindow() {
@@ -21,8 +22,11 @@ function closeWindow() {
 
 
 let deferredPrompt = null;
-export default function PwaInstaller({ title, icon, run = true }) { // A2HS = App to HomeScreen
+export default function PwaInstaller({ title, icon, run = true, setIsInstalled }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(false);
+
+    const shouldRender = run && bannerVisible && !isInStandaloneMode();
+
     const dispatch = useStoreDispatch();
 
     AOS.init({
@@ -31,6 +35,7 @@ export default function PwaInstaller({ title, icon, run = true }) { // A2HS = Ap
     });
 
     useEffect(() => {
+        setIsInstalled(shouldRender);
         window.addEventListener('beforeinstallprompt', (e) => { // n1
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
@@ -103,8 +108,6 @@ export default function PwaInstaller({ title, icon, run = true }) { // A2HS = Ap
             />
         </div>
     );
-
-    const shouldRender = run && bannerVisible && !isInStandaloneMode();
 
     return (
         <div>

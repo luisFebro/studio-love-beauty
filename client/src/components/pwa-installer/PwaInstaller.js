@@ -35,7 +35,7 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
     });
 
     useEffect(() => {
-        setIsInstalled(shouldRender);
+        setTimeout(() => setIsInstalled(shouldRender), 10000);
         window.addEventListener('beforeinstallprompt', (e) => { // n1
             // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();

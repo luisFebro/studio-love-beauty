@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import ScrollArray from '../keyframes/built/scroll-arrow/ScrollArray';
 import "../keyframes/gradientAnimation.css";
 import AOS from 'aos';
@@ -6,36 +6,9 @@ import parse from 'html-react-parser';
 import PwaInstaller from '../components/pwa-installer/PwaInstaller';
 import { CLIENT_URL } from '../config/clientUrl';
 import { Link } from 'react-router-dom';
-
+import checkIfElemIsVisible from '../utils/window/checkIfElemIsVisible';
 const isSmall = window.Helper.isSmallScreen();
 const truncate = (name, leng) => window.Helper.truncate(name, leng);
-
-const checkIfElemIsVisible = (elem, setRun, needPartially = false) => {
-    window.onscroll = function() {
-        const res = isElemVisible(elem) ? true : false;
-        console.log(res);
-        return;
-    };
-
-    function isElemVisible(elem, needPartially) {
-        if(!elem) throw Error("You need to declare an element as the first parameter");
-
-        elem = document.querySelector(elem);
-        if(true) { // not displaying. true ttemp
-            const rect = elem.getBoundingClientRect();
-            const elemTop = rect.top;
-            const elemBottom = rect.bottom;
-
-            let res;
-            const isTotallyVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
-            const isPartiallyVisible = elemTop < window.innerHeight && elemBottom >= 0;
-
-            res = needPartially ? isPartiallyVisible : isTotallyVisible;
-
-            setRun(res);
-        }
-    }
-}
 
 export default function DownloadApp({ match, location }) {
     const [userName, setUserName] = useState(match.params.userName);
@@ -43,7 +16,9 @@ export default function DownloadApp({ match, location }) {
     const [isInstalled, setIsInstalled] = useState(false);
     const isFromRegister = location.search.includes("isFromRegister=true");
 
-    checkIfElemIsVisible("#target", setRun, true);
+    useEffect(() => {
+        checkIfElemIsVisible("#target", setRun, true)
+    }, [run])
 
     AOS.init({
         offset: 50,
@@ -78,12 +53,6 @@ export default function DownloadApp({ match, location }) {
                             <div id="target" style={{minHeight: '200px 0'}}>
                                 <ScrollArray margin={20} />
                             </div>
-                            <PwaInstaller
-                                title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
-                                icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
-                                run={run}
-                                setIsInstalled={setIsInstalled}
-                            />
                         </Fragment>
                     ) : (
                         <Fragment>
@@ -102,7 +71,13 @@ export default function DownloadApp({ match, location }) {
     return (
         <div id="holder" className="text-white gradient-animation" style={{minHeight: '305vmin'}}>
             {showMainText()}
-            <p className="text-right">{"t1"}</p>
+            <PwaInstaller
+                title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
+                icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
+                run={run}
+                setIsInstalled={setIsInstalled}
+            />
+            <p className="text-right">{"t2"}</p>
         </div>
     );
 }

@@ -31,7 +31,6 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
 
     AOS.init({
         offset: 50,
-        delay: 1000,
     });
 
     useEffect(() => {

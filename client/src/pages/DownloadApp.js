@@ -17,9 +17,8 @@ export default function DownloadApp({ match, location }) {
     const isFromRegister = location.search.includes("isFromRegister=true");
 
     useEffect(() => {
-        checkIfElemIsVisible("#target", setRun, true)
+        checkIfElemIsVisible("#target", setRun, true);
     }, [run])
-    console.log("run", run);
 
     AOS.init({
         offset: 50,
@@ -77,7 +76,7 @@ export default function DownloadApp({ match, location }) {
                 run={run}
                 setIsInstalled={setIsInstalled}
             />
-            <span className="text-right">{"t7"}</span>
+            <span className="text-right">{"t8"}</span>
         </div>
     );
 }

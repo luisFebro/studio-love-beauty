@@ -123,7 +123,8 @@ function Register({ history }) {
                 }
                 sendEmail(res.data.authUserId);
                 clearData();
-                history.push(`/baixe-app/${name}?isFromRegister=true`);
+                showSnackbar(dispatch, 'Registrando...')
+                setTimeout(() => history.push(`/baixe-app/${name}?isFromRegister=true`), 5000);
             })
 
     };
@@ -275,7 +276,6 @@ function Register({ history }) {
             <ButtonMulti
                 onClick={() => {
                     registerThisUser();
-                    showSnackbar(dispatch, 'Registrando...');
                 }}
                 color="var(--mainWhite)"
                 backgroundColor="var(--mainPink)"

@@ -4,7 +4,7 @@
   "description": "App para verificação de pontos fidelidade e valorização do consumo de clientes",
   "start_url": "/acesso/verificacao?source=pwa",
   "display": "standalone",
-  "scope": "/acesso/verificacao",
+  "scope": "/",
   "categories": ["business", "lifestyle", "utilities"],
   "theme_color": "#000000",
   "background_color": "#000000",

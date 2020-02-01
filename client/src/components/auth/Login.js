@@ -48,7 +48,7 @@ function Login({ history }) {
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
             if(role === "cliente") {
-                setTimeout(() => showSnackbar(dispatch, `${getDayGreetingBr()}, ${name}, e bem-vindo(a) de novo!`, 'success', 9000), 3000);
+                setTimeout(() => showSnackbar(dispatch, `${getDayGreetingBr()}, ${name}!`, 'success', 9000), 3000);
                 hideComponent(dispatch, "login");
                 showComponent(dispatch, "purchaseValue");
                 history.push("/cliente/pontos-fidelidade");

@@ -196,6 +196,19 @@ exports.getStaffWithBookings = (req, res) => {
 }
 // END STAFF BOOKINGS
 
+exports.countAppDownloads = (req, res) => {
+    const countingField = { "app.downloads": 1 };
+    Admin.findOneAndUpdate(
+        { _id: adminId },
+        { $inc: countingField},
+        { new: true})
+    .select("app.downloads -_id")
+    .exec((err, update) => {
+        if(err) return res.status(500).json(msgG("error.systemError", err));
+        res.json(update);
+    })
+}
+
 /* COMMENTS
 n1: You can add or remove any field from businessInfo according to the client needs.
 */

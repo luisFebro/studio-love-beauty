@@ -21,6 +21,12 @@ const data = {
     },
     regulationText: {
         type: String,
+    },
+    app: {
+        downloads: {
+            type: Number,
+            default: 0,
+        }
     }
 }
 

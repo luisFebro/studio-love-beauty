@@ -128,6 +128,14 @@ export const readAllDbFromModels = async (dispatch, securityObj, model) => {
     }
 };
 
+export const countAppDownloads = async (dispatch) => {
+    try {
+        await axios.put(`/api/admin/app/downloads`, getHeaderJson);
+    } catch (err) {
+        return err.response;
+    }
+};
+
 /* COMMENTS
 n1: LESSON: never use GET METHOD if you want to send an object to backend, even in the case if it is working on Postman.
 */

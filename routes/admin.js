@@ -20,6 +20,7 @@ const {
     checkVerificationPass,
     readVerificationPass,
     createOrUpdateRegText,
+    countAppDownloads,
 } = require('../controllers/admin');
 
 const { mwIsAdmin } = require("../controllers/auth");
@@ -46,6 +47,8 @@ router.delete("/service/:userId", mwIsAdmin, deleteService);
 // End Services CRUD
 
 router.get("/list/staff-with-bookings", mwUniqueStaffIds, getStaffWithBookings);
+
+router.put("/app/downloads", countAppDownloads);
 
 router.param('adminId', mwAdminId);
 router.param('userId', mwUserId);

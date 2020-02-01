@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { isInStandaloneMode } from './utils';
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
+import { countAppDownloads } from '../../redux/actions/adminActions';
 import parse from 'html-react-parser';
 import AOS from 'aos';
 import ButtonMulti from '../../components/buttons/material-ui/ButtonMulti';
@@ -62,6 +63,7 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
                     showSnackbar(dispatch, 'Instalando App em instantes...', 'warning', 7000)
                     setTimeout(() => {
                         showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
+                        countAppDownloads(dispatch);
                         setTimeout(() => closeWindow(), 7000)
                     }, 11000)
                 } else {

@@ -77,7 +77,7 @@ export default function DownloadApp({ match, location }) {
                 run={run}
                 setIsInstalled={setIsInstalled}
             />
-            <span className="text-right">{"t5"}</span>
+            <span className="text-right">{"t6"}</span>
         </div>
     );
 }

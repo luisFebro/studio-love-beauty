@@ -37,11 +37,6 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
 
     useEffect(() => {
         // setTimeout(() => setIsInstalled(shouldRender), 10000);
-        if(run) {
-            setBannerVisible(true);
-        } else {
-            setBannerVisible(false);
-        }
         window.addEventListener('beforeinstallprompt', (e) => { // n1
             console.log("running beforeinstallprompt")
             // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -50,7 +45,7 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
             deferredPrompt = e;
             setBannerVisible(true);
         })
-    }, [run])
+    }, [])
 
     const handlePwaInstall = () => {
         if(deferredPrompt) {
@@ -61,9 +56,9 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
             deferredPrompt.userChoice.then(function(choiceResult) {
                 if(choiceResult.outcome === 'accepted') {
                     showSnackbar(dispatch, 'Instalando App em instantes...', 'warning', 7000)
+                    countAppDownloads(dispatch);
                     setTimeout(() => {
                         showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
-                        countAppDownloads(dispatch);
                         setTimeout(() => closeWindow(), 7000)
                     }, 11000)
                 } else {

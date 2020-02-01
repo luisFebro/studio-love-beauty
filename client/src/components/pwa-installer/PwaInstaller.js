@@ -24,11 +24,9 @@ function closeWindow() {
 let deferredPrompt = null;
 export default function PwaInstaller({ title, icon, run = true, setIsInstalled }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(false);
+    console.log("bannerVisible", bannerVisible);
 
     const shouldRender = run && bannerVisible && !isInStandaloneMode();
-    console.log("run", run);
-    console.log("isNotInStandaloneMode", !isInStandaloneMode());
-    console.log("bannerVisible", bannerVisible);
 
     const dispatch = useStoreDispatch();
 

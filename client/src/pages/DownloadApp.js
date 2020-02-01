@@ -102,6 +102,7 @@ export default function DownloadApp({ match, location }) {
     return (
         <div id="holder" className="text-white gradient-animation" style={{minHeight: '305vmin'}}>
             {showMainText()}
+            <p className="text-right">{"t1"}</p>
         </div>
     );
 }

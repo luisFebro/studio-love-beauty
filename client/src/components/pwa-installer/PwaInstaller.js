@@ -26,6 +26,9 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
     const [bannerVisible, setBannerVisible] = useState(false);
 
     const shouldRender = run && bannerVisible && !isInStandaloneMode();
+    console.log("run", run);
+    console.log("isInStandaloneMode", isInStandaloneMode);
+    console.log("bannerVisible", bannerVisible);
 
     const dispatch = useStoreDispatch();
 

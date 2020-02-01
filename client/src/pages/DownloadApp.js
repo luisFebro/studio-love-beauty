@@ -19,10 +19,10 @@ export default function DownloadApp({ match, location }) {
     useEffect(() => {
         checkIfElemIsVisible("#target", setRun, true)
     }, [run])
+    console.log("run", run);
 
     AOS.init({
         offset: 50,
-        delay: 1000,
     });
 
     const styles = {
@@ -44,7 +44,7 @@ export default function DownloadApp({ match, location }) {
                     ? (
                         <Fragment>
                             <p className="font-weight-bold">Você foi registrado(a) com sucesso! <i style={styles.icon}>🎉</i></p>
-                            <p className="my-1 font-weight-bold" data-aos="fade-up" data-aos-delay="80">{parse(`Seja ${isSmall ? "<br />" : ""} bem-vindo(a)!`)}</p>
+                            <p className="my-1 font-weight-bold" data-aos="fade-up" data-aos-delay="150">{parse(`Seja ${isSmall ? "<br />" : ""} bem-vindo(a)!`)}</p>
                             <ScrollArray />
                             <p style={styles.margin} data-aos="fade-up">Baixe agora o app do salão e<br/>faça seu login de acesso por lá.</p>
                             <ScrollArray margin={30}/>
@@ -77,10 +77,12 @@ export default function DownloadApp({ match, location }) {
                 run={run}
                 setIsInstalled={setIsInstalled}
             />
+            <span className="text-right">{"t5"}</span>
         </div>
     );
 }
 
 /*
 <p>{!isInstalled ? parse("<br /><br />Foi instalado.<br/>Visite sua galeria<br />de Apps") : ""}</p>
+FOR TESTING VERSIONS: <span className="text-right">{"t5"}</span>
  */

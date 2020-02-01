@@ -77,7 +77,6 @@ export default function DownloadApp({ match, location }) {
                 run={run}
                 setIsInstalled={setIsInstalled}
             />
-            <p className="text-right">{"t2"}</p>
         </div>
     );
 }

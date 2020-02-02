@@ -4,7 +4,6 @@ import { isThisApp } from '../../utils/window/isThisApp';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
-import ClientMobile from './ClientMobile';
 import ImageLogo from '../../components/ImageLogo';
 import HomeButton from '../../components/buttons/HomeButton';
 import { hideComponent, showComponent } from "../../redux/actions/componentActions";
@@ -65,15 +64,10 @@ export default function LoyaltyScoreHandler() {
 
     return (
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
-            {isThisApp()
-            ? (
-                <ClientMobile />
-            ) : (
-                <PurchaseValue
-                    success={showPurchaseValue}
-                    setValuePaid={setValuePaid}
-                />
-            )}
+            <PurchaseValue
+                success={showPurchaseValue}
+                setValuePaid={setValuePaid}
+            />
             <StaffConfirmation
                 success={showStaffConfirmation}
                 setVerification={setVerification}

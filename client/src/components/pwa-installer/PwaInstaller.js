@@ -44,6 +44,9 @@ export default function PwaInstaller({ title, icon, run = true }) { // A2HS = Ap
             deferredPrompt = e;
             setBannerVisible(true);
         })
+        window.addEventListener('appinstalled', (evt) => {
+          console.log('App Instalado!');
+        });
     }, [])
 
     const handlePwaInstall = () => {

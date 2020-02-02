@@ -1,18 +1,12 @@
 export const isThisApp = () => {
     const isInWebAppiOS = window.navigator.userAgent.toLowerCase();
-    console.log("isInWebAppiOS", isInWebAppiOS);
+    // console.log("isInWebAppiOS", isInWebAppiOS) = mozilla/5.0 (windows nt 6.1) applewebkit/537.36 (khtml, like gecko) chrome/79.0.3945.130 safari/537.36
     const resIos = /iphone|ipad|ipod/.test(isInWebAppiOS);
-    console.log("resIos", resIos);
 
-    const isAppFromChrome = !window.screenTop && !window.screenY;
-    console.log("isAppFromChrome", isAppFromChrome);
     const isAppFromFirefox = window.fullScreen;
-    console.log("isAppFromFirefox", isAppFromFirefox);
     const isAppFromSafari = window.navigator.standAlone;
-    console.log("isAppFromSafari", isAppFromSafari);
-    const isInWebAppChrome = (window.matchMedia('(display-mode: standalone)').matches);
-    console.log("isInWebAppChrome", isInWebAppChrome);
+    const isAppFromChrome = (window.matchMedia('(display-mode: standalone)').matches);
 
-    return resIos || isInWebAppChrome || isAppFromChrome || isAppFromFirefox || isAppFromSafari;
+    return resIos || isAppFromChrome || isAppFromFirefox || isAppFromSafari;
 }
 

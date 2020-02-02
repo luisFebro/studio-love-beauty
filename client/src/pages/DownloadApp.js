@@ -13,7 +13,6 @@ const truncate = (name, leng) => window.Helper.truncate(name, leng);
 export default function DownloadApp({ match, location }) {
     const [userName, setUserName] = useState(match.params.userName);
     const [run, setRun] = useState(false);
-    const [isInstalled, setIsInstalled] = useState(false);
     const isFromRegister = location.search.includes("isFromRegister=true");
 
     useEffect(() => {
@@ -74,9 +73,8 @@ export default function DownloadApp({ match, location }) {
                 title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
                 icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
                 run={run}
-                setIsInstalled={setIsInstalled}
             />
-            <span className="text-right for-version-test">{"t5"}</span>
+            <span className="text-right for-version-test">{"t6"}</span>
         </div>
     );
 }

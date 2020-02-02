@@ -23,7 +23,7 @@ function closeWindow() {
 
 
 let deferredPrompt = null;
-export default function PwaInstaller({ title, icon, run = true, setIsInstalled }) { // A2HS = App to HomeScreen
+export default function PwaInstaller({ title, icon, run = true }) { // A2HS = App to HomeScreen
     const [bannerVisible, setBannerVisible] = useState(false);
     console.log("bannerVisible", bannerVisible);
 
@@ -36,7 +36,6 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
     });
 
     useEffect(() => {
-        // setTimeout(() => setIsInstalled(shouldRender), 10000);
         // This event requires the page to reload in order to set correctly...
         window.addEventListener('beforeinstallprompt', (e) => { // n1
             // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -59,6 +58,7 @@ export default function PwaInstaller({ title, icon, run = true, setIsInstalled }
                     countAppDownloads(dispatch);
                     setTimeout(() => {
                         showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
+                        setTimeout(() => window.location.href = "/", 5000)
                         setTimeout(() => closeWindow(), 7000)
                     }, 11000)
                 } else {

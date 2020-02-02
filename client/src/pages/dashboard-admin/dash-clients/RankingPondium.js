@@ -25,7 +25,7 @@ export default function RankingPondium() {
                         key={id}
                         className={`${css[id]} text-main-container text-shadow-white`}
                     >
-                        {typeof loyaltyScores === "undefined"
+                        {!loyaltyScores
                         ? (
                           <p>
                             <i className="fas fa-question"></i>

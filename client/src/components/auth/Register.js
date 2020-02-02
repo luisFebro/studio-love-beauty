@@ -111,21 +111,24 @@ function Register({ history }) {
             phone
         };
 
-        registerEmail(dispatch, newUser)
-            .then(res => {
-                if(res.status !== 200) {
-                    showSnackbar(dispatch, res.data.msg, 'error', 6000);
-                    // detect field errors
-                    const thisModalFields = Object.keys(data);
-                    const foundObjError = detectErrorField(res.data.msg, thisModalFields);
-                    setFieldError(foundObjError);
-                    return;
-                }
-                sendEmail(res.data.authUserId);
-                clearData();
-                showSnackbar(dispatch, 'Registrando...')
-                setTimeout(() => history.push(`/baixe-app/${name}?isFromRegister=true`), 5000);
-            })
+        showSnackbar(dispatch, 'Registrando...')
+        setTimeout(() => history.push(`/baixe-app/${name}?isFromRegister=true`), 3000);
+
+        // registerEmail(dispatch, newUser)
+        //     .then(res => {
+        //         if(res.status !== 200) {
+        //             showSnackbar(dispatch, res.data.msg, 'error', 6000);
+        //             // detect field errors
+        //             const thisModalFields = Object.keys(data);
+        //             const foundObjError = detectErrorField(res.data.msg, thisModalFields);
+        //             setFieldError(foundObjError);
+        //             return;
+        //         }
+        //         sendEmail(res.data.authUserId);
+        //         clearData();
+        //         showSnackbar(dispatch, 'Registrando...')
+        //         setTimeout(() => history.push(`/baixe-app/${name}?isFromRegister=true`), 3000);
+        //     })
 
     };
 

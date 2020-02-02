@@ -230,7 +230,7 @@ exports.getAllAvailableNames = (req, res) => {
 
     let role = { role: roleQuery}
     if(roleQuery === "admin") {
-        role = { $and: [{_id: { $ne: "5dfe96756573501728ee72c6"}}, role] }
+        role = { $and: [{_id: { $ne: "5e360888051f2617d0df2245"}}, role] }
     }
     User.find(role)
     .select("name")

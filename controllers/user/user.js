@@ -124,7 +124,7 @@ exports.removeField = (req, res) => { // n1
 // LISTS
 const getQuery = (role) => {
     let mainQuery;
-    const me = {_id: { $ne: ObjectId("5dfe96756573501728ee72c6")}};
+    const me = {_id: { $ne: ObjectId("5e360888051f2617d0df2245")}};
     const adminStaffQuery = {"$or": [{role: "admin"}, {role: "colaborador"}]};
     const withNonEmptyArray = { $exists: true, $ne: [] }; // staffBookingList: withNonEmptyArray}
 

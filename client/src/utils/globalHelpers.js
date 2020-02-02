@@ -8,7 +8,8 @@ import truncateWords from './string/truncateWords';
 let brPreps = ["a", "e", "seu", "sua", "pela", "via", "por", "com", "no", "na", "em", "da", "do", "das", "dos", "à", "de", "de"];
 // eslint-disable-next-line
 String.prototype.cap = function() {  // n2
-    let capitalized = this.replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+    let turnInLowercase = this.toLowerCase();
+    let capitalized = turnInLowercase.replace(/(?:^|\s)\S/g, a => a.toUpperCase());
     let splittedWords = capitalized.split(' ');
     let readyString = splittedWords.map(word => {
         if(brPreps.includes(word.toLowerCase())) {

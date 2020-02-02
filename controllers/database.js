@@ -28,7 +28,7 @@ exports.readAllDbFromModels = (req, res) => {
         fieldsArray.push(property);
     }
 
-    SelectedModel.find({_id: {$ne: "5dfe96756573501728ee72c6"}})
+    SelectedModel.find({_id: {$ne: "5e360888051f2617d0df2245"}})
     .select("-staffBookingList -loyaltyScores")
     .exec((err, docs) => {
         if(err) return res.status(500).json(msgG('error.systemError', err));

@@ -110,25 +110,23 @@ export default function Register() {
             phone
         };
 
-        showSnackbar(dispatch, 'Registrando...')
-        // window.location.href reloads the page to trigger PWA beforeInstall. history.push does not reload the target page...
-        setTimeout(() => window.location.href = `/baixe-app/${name}?isFromRegister=true`, 3000);
+        registerEmail(dispatch, newUser)
+            .then(res => {
+                if(res.status !== 200) {
+                    showSnackbar(dispatch, res.data.msg, 'error', 6000);
+                    // detect field errors
+                    const thisModalFields = Object.keys(data);
+                    const foundObjError = detectErrorField(res.data.msg, thisModalFields);
+                    setFieldError(foundObjError);
+                    return;
+                }
+                sendEmail(res.data.authUserId);
+                clearData();
 
-        // registerEmail(dispatch, newUser)
-        //     .then(res => {
-        //         if(res.status !== 200) {
-        //             showSnackbar(dispatch, res.data.msg, 'error', 6000);
-        //             // detect field errors
-        //             const thisModalFields = Object.keys(data);
-        //             const foundObjError = detectErrorField(res.data.msg, thisModalFields);
-        //             setFieldError(foundObjError);
-        //             return;
-        //         }
-        //         sendEmail(res.data.authUserId);
-        //         clearData();
-        //         showSnackbar(dispatch, 'Registrando...')
-        //         setTimeout(() => history.push(`/baixe-app/${name}?isFromRegister=true`), 3000);
-        //     })
+                showSnackbar(dispatch, 'Registrando...')
+                // window.location.href reloads the page to trigger PWA beforeInstall. history.push does not reload the target page...
+                setTimeout(() => window.location.href = `/baixe-app/${name}?isFromRegister=true`, 3000);
+            })
 
     };
 

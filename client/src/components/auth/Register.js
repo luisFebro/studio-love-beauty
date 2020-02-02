@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import TitleComponent from '../TitleComponent';
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function Register({ history }) {
+export default function Register() {
     const [selectedDate, handleDateChange] = useState(new Date());
     const [data, setData] = useState({
         name: '',
@@ -112,7 +111,8 @@ function Register({ history }) {
         };
 
         showSnackbar(dispatch, 'Registrando...')
-        setTimeout(() => history.push(`/baixe-app/${name}?isFromRegister=true`), 3000);
+        // window.location.href reloads the page to trigger PWA beforeInstall. history.push does not reload the target page...
+        setTimeout(() => window.location.href = `/baixe-app/${name}?isFromRegister=true`, 3000);
 
         // registerEmail(dispatch, newUser)
         //     .then(res => {
@@ -303,8 +303,6 @@ function Register({ history }) {
         </div>
     );
 }
-
-export default withRouter(Register);
 
 /*
 <div style={{whiteSpace: 'wrap'}}>

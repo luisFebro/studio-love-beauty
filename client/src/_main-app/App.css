@@ -34,7 +34,7 @@
 
 /*Preventing the scrollbar to disappear in mobile apps*/
 html,
-body {
+body { /*duplicate!!!*/
     margin: 0;
     height: 100%;
 }
@@ -45,6 +45,9 @@ body {
     background: #000 !important;
     color: var(--mainDark) !important;
     user-select: none;
+    /* Disables pull-to-refresh and overscroll glow effect for PWA.
+         Still keeps swipe navigations. Try contain value for only disable pull to refresh */
+    overscroll-behavior-y: none;
 }
 
 a {

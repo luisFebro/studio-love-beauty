@@ -171,6 +171,7 @@ export default function Register() {
                 margin="dense"
                 id="name"
                 name="name"
+                autocomplete="off"
                 value={name}
                 type="name"
                 label="Qual é o seu nome?"

@@ -58,8 +58,8 @@ export default function PwaInstaller({ title, icon, run = true }) { // A2HS = Ap
                     countAppDownloads(dispatch);
                     setTimeout(() => {
                         showSnackbar(dispatch, 'Instalado com sucesso! Você já pode acessar o app pela sua tela inicial', 'success', 6000)
-                        setTimeout(() => window.location.href = "/", 7000)
                         setTimeout(() => closeWindow(), 7000)
+                        setTimeout(() => window.location.href = "/acesso/verificacao", 15000)
                     }, 11000)
                 } else {
                     showSnackbar(dispatch, 'A instalação do app foi cancelada.', 'warning')

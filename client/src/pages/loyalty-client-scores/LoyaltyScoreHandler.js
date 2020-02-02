@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import { isInStandaloneMode } from '../../components/pwa-installer/utils';
+import { isThisApp } from '../../utils/window/isThisApp';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';
@@ -65,7 +65,7 @@ export default function LoyaltyScoreHandler() {
 
     return (
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
-            {isInStandaloneMode
+            {isThisApp()
             ? (
                 <ClientMobile />
             ) : (

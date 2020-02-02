@@ -74,7 +74,6 @@ export default function DownloadApp({ match, location }) {
                 icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
                 run={run}
             />
-            <span className="text-right for-version-test">{"t7"}</span>
         </div>
     );
 }

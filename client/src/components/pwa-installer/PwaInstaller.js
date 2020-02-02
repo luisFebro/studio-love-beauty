@@ -1,7 +1,7 @@
 import './style.css';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { isInStandaloneMode } from './utils';
+import { isThisApp } from '../../utils/window/isThisApp';
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { countAppDownloads } from '../../redux/actions/adminActions';
@@ -27,7 +27,7 @@ export default function PwaInstaller({ title, icon, run = true }) { // A2HS = Ap
     const [bannerVisible, setBannerVisible] = useState(false);
     console.log("bannerVisible", bannerVisible);
 
-    const shouldRender = run && bannerVisible && !isInStandaloneMode();
+    const shouldRender = run && bannerVisible && !isThisApp();
 
     const dispatch = useStoreDispatch();
 

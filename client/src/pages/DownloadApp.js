@@ -71,7 +71,7 @@ export default function DownloadApp({ match, location }) {
             {showMainText()}
             <PwaInstaller
                 title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}
-                icon={`${CLIENT_URL}/favicon/android-chrome-192x192.png`}
+                icon={`${CLIENT_URL}/favicon/android-chrome-256x256.png`}
                 run={run}
             />
         </div>

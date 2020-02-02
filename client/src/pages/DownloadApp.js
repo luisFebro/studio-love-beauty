@@ -67,7 +67,7 @@ export default function DownloadApp({ match, location }) {
     );
 
     return (
-        <div id="holder" className="text-white gradient-animation" style={{minHeight: '305vmin'}}>
+        <div id="holder" className="text-white gradient-animation" style={{minHeight: '325vmin'}}>
             {showMainText()}
             <PwaInstaller
                 title={`<strong>${userName.cap()},<br />baixe nosso app aqui</strong><br />e tenha <strong>acesso rápido</strong><br />aos seus pontos de fidelidade.`}

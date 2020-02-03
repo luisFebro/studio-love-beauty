@@ -45,7 +45,7 @@ export default function PwaInstaller({ title, icon, run = true }) { // A2HS = Ap
             setBannerVisible(true);
         })
         window.addEventListener('appinstalled', (evt) => {
-          console.log('App Instalado!');
+          alert('App Instalado, Luis Febro!');
         });
     }, [])
 

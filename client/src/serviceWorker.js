@@ -1,3 +1,6 @@
+import { CLIENT_URL } from './config/clientUrl';
+import Toastify from './components/vanilla-js/toastify/toastify.js';
+import './components/vanilla-js/toastify/toastify.css';
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -9,6 +12,22 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
+
+const showToastify = (text, duration, backgroundColor) => {
+    Toastify({
+      text: text || "Hello I am the toastify notifier...",
+      duration: duration || 4000,
+      className: "toastify",
+      fontWeight: 'bold',
+      avatar: `${CLIENT_URL}/favicon/android-chrome-256x256.png`,
+      close: true,
+      gravity: "bottom",
+      position: 'left',
+      backgroundColor: backgroundColor || "#34495e", // dark blue
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      onClick: function(){} // Callback after click
+    }).showToastify();
+}
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -69,7 +88,7 @@ function registerValidSW(swUrl, config) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
-              alert("Novo conteudo está disponível e será usado quando todas as abas para esta página estiverem fechadas")
+              showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
               console.log(
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
@@ -83,7 +102,7 @@ function registerValidSW(swUrl, config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              alert("Conteúdo está armazenado para uso offline")
+              showToastify("Conteúdo atualizado para uso offline", 7000);
               console.log('Content is cached for offline use.');
 
               // Execute callback

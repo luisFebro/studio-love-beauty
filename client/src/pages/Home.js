@@ -4,7 +4,6 @@ import ImageLogo from "../components/ImageLogo";
 import { Link } from 'react-router-dom';
 
 export default function Home() {
-
     const showMainContent = () => (
         <div className="ml-md-4">
             <span className="text-right for-version-test">{"t14"}</span>

@@ -71,8 +71,8 @@ function registerValidSW(swUrl, config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
-              // alert("nova atualização");
-              showVanillaToast("Nova atualização", 10000)
+              showVanillaToast("Ei, nova Atualização do App disponível.<br/>", 8000)
+              showVanillaToast("Basta reiniciar o app para atualizar.", 8000)
               console.log(
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
@@ -86,8 +86,7 @@ function registerValidSW(swUrl, config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              // showToastify("Conteúdo atualizado para uso offline", 7000);
-              alert("conteúdo atualizado");
+              showVanillaToast("Conteúdo atualizado para uso offline", 7000)
               console.log('Content is cached for offline use.');
 
               // Execute callback
@@ -128,7 +127,7 @@ function checkValidServiceWorker(swUrl, config) {
       }
     })
     .catch(() => {
-        alert("Sem acesso à internet. App está funcionando em modo offline")
+      showVanillaToast("Sem acesso à internet. App está funcionando em modo offline", 7000)
       console.log(
         'No internet connection found. App is running in offline mode.'
       );

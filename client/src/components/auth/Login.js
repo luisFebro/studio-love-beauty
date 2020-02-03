@@ -11,6 +11,7 @@ import { loginEmail } from '../../redux/actions/authActions';
 import getDayGreetingBr from '../../utils/getDayGreetingBr';
 import PropTypes from 'prop-types';
 import KeypadButton from '../modals/keypad';
+import { isThisApp } from '../../utils/window/isThisApp';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -49,9 +50,13 @@ function Login({ history }) {
             }
             if(role === "cliente") {
                 setTimeout(() => showSnackbar(dispatch, `${getDayGreetingBr()}, ${name.cap()}!`, 'success', 9000), 3000);
-                hideComponent(dispatch, "login");
-                showComponent(dispatch, "purchaseValue");
-                history.push("/cliente/pontos-fidelidade");
+                if(true) { //isThisApp()
+                    history.push("/mobile-app");
+                } else {
+                    hideComponent(dispatch, "login");
+                    showComponent(dispatch, "purchaseValue");
+                    history.push("/cliente/pontos-fidelidade");
+                }
             }
         })
     };
@@ -76,7 +81,7 @@ function Login({ history }) {
 
     return (
         <div
-            className='animated zoomIn fast'
+            className='animated zoomIn fast container-center'
         >
             <Card className={classes.card}>
                 {showTitle()}

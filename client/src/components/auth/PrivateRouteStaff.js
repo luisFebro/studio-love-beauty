@@ -1,8 +1,10 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useStoreState } from 'easy-peasy';
+import { isThisApp } from '../../utils/window/isThisApp';
 // import { showSnackbar } from '../../redux/actions/snackbarActions';
 
+const isApp = isThisApp();
 export default function PrivateRouteAdm({ component: Component, ...rest }) {
     const { isUserAuthenticated, role } = useStoreState(state => ({
         isUserAuthenticated: state.authReducer.cases.isUserAuthenticated,
@@ -16,7 +18,7 @@ export default function PrivateRouteAdm({ component: Component, ...rest }) {
         return (
             <Redirect
                 to={{
-                    pathname: "/",
+                    pathname: true ? "/mobile-app" : "/",
                     state: { from: props.location }
                 }}
             />

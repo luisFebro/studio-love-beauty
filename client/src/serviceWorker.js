@@ -74,7 +74,7 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
               isToastActivated && showVanillaToast("Ei, nova Atualização do App disponível. 🎉", 6000);
-              setTimeout(() => isToastActivated && showVanillaToast("Basta reiniciar o app para atualizar. Se tiver usando alguma página do site, feche também.", 6000), 5000);
+              setTimeout(() => isToastActivated && showVanillaToast("Basta reiniciar o app para atualizar.", 6000), 5000);
               setTimeout(() => isToastActivated && showVanillaToast("Se tiver usando alguma página do site, feche também.", 8000), 10000);
               console.log(
                 'New content is available and will be used when all ' +

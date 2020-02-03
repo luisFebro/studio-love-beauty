@@ -61,6 +61,8 @@ function App() {
         <Fragment>
             <LinearProgress />
             <Route path="/mobile-app" exact component={ClientMobileApp} />
+            <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
+            <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
         </Fragment>
     );
 
@@ -91,7 +93,7 @@ function App() {
     return (
         <BrowserRouter>
             <ScrollToTop>
-                {isThisApp() ? showApp() : showWebsite()}
+                {true ? showApp() : showWebsite()}
             </ScrollToTop>
         </BrowserRouter>
     );

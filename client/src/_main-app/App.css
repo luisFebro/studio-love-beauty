@@ -227,6 +227,14 @@ hr {
     margin: auto;
     width: 80%;
 }
+.margin-auto-70 {
+    margin: auto;
+    width: 70%;
+}
+.margin-auto-60 {
+    margin: auto;
+    width: 60%;
+}
 /*END CONTAINERS*/
 
 /*IMAGES*/

@@ -90,7 +90,7 @@ function registerValidSW(swUrl, config) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
-              showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
+              // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
               alert("nova atualização");
               console.log(
                 'New content is available and will be used when all ' +
@@ -105,7 +105,7 @@ function registerValidSW(swUrl, config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              showToastify("Conteúdo atualizado para uso offline", 7000);
+              // showToastify("Conteúdo atualizado para uso offline", 7000);
               alert("conteúdo atualizado");
               console.log('Content is cached for offline use.');
 

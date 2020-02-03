@@ -23,7 +23,7 @@ const showToastify = (text, duration, backgroundColor) => {
         close: true,
         gravity: "bottom",
         position: 'left',
-        backgroundColor: backgroundColor || "#34495e", // dark blue
+        backgroundColor: backgroundColor || "pink", //#34495e dark blue
         stopOnFocus: true, // Prevents dismissing of toast on hover
         onClick: function(){} // Callback after click
     }).showToastify();
@@ -91,6 +91,7 @@ function registerValidSW(swUrl, config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
+              alert("nova atualização");
               console.log(
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
@@ -105,6 +106,7 @@ function registerValidSW(swUrl, config) {
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
               showToastify("Conteúdo atualizado para uso offline", 7000);
+              alert("conteúdo atualizado");
               console.log('Content is cached for offline use.');
 
               // Execute callback

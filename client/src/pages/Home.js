@@ -2,11 +2,12 @@ import React, { Fragment } from 'react';
 import Register from '../components/auth/Register';
 import ImageLogo from "../components/ImageLogo";
 import { Link } from 'react-router-dom';
+import showVanillaToast from '../components/vanilla-js/toastify/showVanillaToast';
 
 export default function Home() {
     const showMainContent = () => (
         <div className="ml-md-4">
-            <span className="text-right for-version-test">{"t21"}</span>
+            <span className="text-right for-version-test">{"t26"}</span>
             <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro <br /> e <br />participe de nosso plano de fidelidade</div>
             <div className="center-small">
                 <Register />
@@ -26,6 +27,7 @@ export default function Home() {
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             {showMainContent()}
             <ImageLogo />
+            {showVanillaToast("Ei, nova Atualização do App disponível.<br/> Basta reiniciar o app para atualizar.", 10000)}
         </div>
     );
 };

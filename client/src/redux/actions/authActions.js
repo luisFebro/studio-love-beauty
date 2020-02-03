@@ -8,16 +8,18 @@ import { getHeaderJson } from '../../utils/server/getHeaders';
 
 // Check token & load user
 export const loadUser = () => (dispatch, getState) => {
-    // dispatch({ type: 'USER_LOADING' });
+    setLoadingProgress(dispatch, true);
     console.log('==USER LOADING==');
     axios.get('/api/auth/user', tokenConfig(getState))
     .then(res => {
        // from user reducer
         dispatch({ type: 'AUTHENTICATE_USER_ONLY' });
         dispatch({ type: 'USER_READ', payload: res.data.profile });
+        setLoadingProgress(dispatch, false);
         // readUser(dispatch, res.data.profile);
     })
     .catch(err => {
+        setLoadingProgress(dispatch, false);
         if(err.response && err.response.data && err.response.data.msg.length !== 0) {
             showSnackbar(dispatch, err.response.data.msg, 'warning', 10000)
             logout(dispatch, false);

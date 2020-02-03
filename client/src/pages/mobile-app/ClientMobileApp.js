@@ -7,11 +7,12 @@ import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDot
 import { convertDotToComma } from '../../utils/numbers/convertDotComma';
 
 export default function ClientMobile() {
-    const { isUserAuth, role, loyaltyScores, userName } = useStoreState(state => ({
+    const { isUserAuth, role, loyaltyScores, userName, isLoading } = useStoreState(state => ({
         isUserAuth: state.authReducer.cases.isUserAuthenticated,
         role: state.userReducer.cases.currentUser.role,
         userName: state.userReducer.cases.currentUser.name,
         loyaltyScores: state.userReducer.cases.currentUser.loyaltyScores,
+        isLoading: state.globalReducer.cases.isLinearPLoading,
     }))
 
     const userScore = loyaltyScores && loyaltyScores.currentScore;
@@ -32,7 +33,7 @@ export default function ClientMobile() {
             <div className="margin-auto-90">
                 <ImageLogo />
             </div>
-            {role === undefined
+            {isLoading
             ? <LoadingThreeDots color="white" />
             : isUserAuth && role === "cliente"
             ? (

@@ -10,7 +10,7 @@ export default function LinearProgress() {
     const showLinearProgress = isLoading => {
         return(
             isLoading &&
-            <LProgress variant="determinate" value={completed} />
+            <LProgress variant="determinate" color="secondary" value={completed} />
         );
     }
 

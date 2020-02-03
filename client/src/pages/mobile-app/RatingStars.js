@@ -17,8 +17,7 @@ export default function RatingStars({ score }) {
         else if(score >= 500) { indScore = 4 }
 
         let arrayStarIds = ["star-100", "star-200", "star-300", "star-400", "star-500"];
-        console.log(indScore)
-        console.log(score)
+
         let star;
         let count = 0;
         for(star of arrayStarIds) {

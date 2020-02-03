@@ -8,9 +8,14 @@ RatingStars.propTypes = {
 }
 
 export default function RatingStars({ score }) {
-    const giveStarsForScore = score => {
+
+    const paintStarsForScore = score => {
         let indScore;
-        if(score >= 100 && score <= 199.95) { indScore = 0 }
+        if(!score) {
+            indScore = -1;
+        }
+
+        if(score >= 100 && score <= 199.95) { indScore = 0 } // L
         else if(score >= 200 && score <= 299.95) { indScore = 1 }
         else if(score >= 300 && score <= 399.95) { indScore = 2 }
         else if(score >= 400 && score <= 499.95) { indScore = 3 }
@@ -29,7 +34,7 @@ export default function RatingStars({ score }) {
     }
 
     useEffect(() => {
-        giveStarsForScore(score);
+        paintStarsForScore(score);
     }, []);
 
     return (
@@ -47,7 +52,6 @@ const RatingDiv = styled.div`
     text-align: center;
     perspective: 250px;
     position: absolute;
-    // top: 40%;
     width: 100%;
 
     & span {
@@ -69,6 +73,18 @@ const RatingDiv = styled.div`
       text-shadow: 0 0 30px grey;
     }
 `;
+
+
+/* COMMENTS
+LESSON: don't use switch if you are using numbers span. If else if instead.
+The exception is for unique matches of number in sequence like
+case 1:
+case 2:
+case 3:
+...
+
+But conditionals like case > 5 will return undefined.
+*/
 
 // StarRating.prototype.init = function() {
 //   this.stars = document.querySelectorAll('#rating span');

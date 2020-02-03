@@ -14,6 +14,7 @@ import './components/vanilla-js/toastify/toastify.css';
 // opt-in, read https://bit.ly/CRA-PWA
 
 const showToastify = (text, duration, backgroundColor) => {
+    console.log("running showToastify");
     const runToast = Toastify({
         text: text || "Hello I am the toastify notifier...",
         duration: duration || 4000,
@@ -92,6 +93,19 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
               alert("nova atualização");
+              Toastify({
+                      text: "Hello I am the toastify notifier...",
+                      duration: 20000,
+                      className: "toastify",
+                      fontWeight: 'bold',
+                      avatar: `${CLIENT_URL}/favicon/android-chrome-256x256.png`,
+                      close: true,
+                      gravity: "bottom",
+                      position: 'left',
+                      backgroundColor: "pink", //#34495e dark blue
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      onClick: function(){} // Callback after click
+                  }).showToastify();
               console.log(
                 'New content is available and will be used when all ' +
                   'tabs for this page are closed. See https://bit.ly/CRA-PWA.'

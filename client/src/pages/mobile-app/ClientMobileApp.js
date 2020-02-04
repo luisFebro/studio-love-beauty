@@ -119,45 +119,37 @@ export default function ClientMobile() {
     );
 
     return (
-        <Fragment>
-            <div className="my-3 container-center">
-                <img src="/img/official-logo.jpg" alt="logo" width={300} height="auto"/>
+        <div>
+            <div className="margin-auto-90">
+                <ImageLogo />
             </div>
-            <br/>
-            <br/>
-            {showGreeting()}
-            {showScores()}
-            <div className="mb-4">
-                <RatingStars score={userScore} />
-            </div>
-            <div className="mb-4">
-                {showRules()}
-            </div>
-        </Fragment>
+            {isLoading
+            ? <LoadingThreeDots color="white" />
+            : isUserAuth && role === "cliente"
+            ? (
+                <Fragment>
+                    <br/>
+                    <br/>
+                    {showGreeting()}
+                    {showScores()}
+                    <div className="mb-4">
+                        <RatingStars score={userScore} />
+                    </div>
+                    <div className="mb-4">
+                        {showRules()}
+                    </div>
+                </Fragment>
+            ) : showLogin()}
+        </div>
     );
 }
 
 /*
 ORIGINAL TO BE PUT WHEN INTERNET IS OKAY:
+ */
 
-<div>
-    <div className="margin-auto-90">
-        <ImageLogo />
-    </div>
-    {isLoading
-    ? <LoadingThreeDots color="white" />
-    : isUserAuth && role === "cliente"
-    ? (
-        <Fragment>
-            <div className="mb-2 text-white text-em-1-8 text-left text-default">Boa noite, {userName.cap()}!</div>
-            <div className="my-3 text-white text-em-2-5 text-center text-default">
-                Você tem agora:<br/>
-                <p className="text-em-4 my-3">{convertDotToComma(userScore)} Pontos</p>
-            </div>
-            <div>
-                <RatingStars score={userScore} />
-            </div>
-        </Fragment>
-    ) : showLogin()}
+/*
+<div className="my-3 container-center">
+    <img src="/img/official-logo.jpg" alt="logo" width={300} height="auto"/>
 </div>
  */

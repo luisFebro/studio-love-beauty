@@ -1,6 +1,7 @@
 import showVanillaToast from './components/vanilla-js/toastify/showVanillaToast';
 
 const isToastActivated = true;
+const currentVersion = "4.002.0-beta.1";
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -73,7 +74,7 @@ function registerValidSW(swUrl, config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
-              isToastActivated && showVanillaToast("Ei, nova Atualização do App disponível. 🎉", 6000);
+              isToastActivated && showVanillaToast(`Ei, nova Atualização do App disponível. 🎉<br />(nova versão: ${currentVersion})`, 6000);
               setTimeout(() => isToastActivated && showVanillaToast("Basta reiniciar o app para atualizar.", 6000), 5000);
               setTimeout(() => isToastActivated && showVanillaToast("Se tiver usando alguma página do site, feche também.", 8000), 10000);
               console.log(

@@ -6,7 +6,7 @@ import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
 import { useStoreDispatch, useStoreState } from 'easy-peasy'; // useStoreState
 import { readAdmin } from '../redux/actions/adminActions';
-import { isThisApp } from '../utils/window/isThisApp';
+import isThisApp from '../utils/window/isThisApp';
 // import { loadReCaptcha } from 'react-recaptcha-google';
 //
 import PrivateRouteAdm from '../components/auth/PrivateRouteAdm';
@@ -63,6 +63,7 @@ function App() {
             <Route path="/mobile-app" exact component={ClientMobileApp} />
             <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
             <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
+            <Route path="/regulamento/" exact component={RegulationPage} />
         </Fragment>
     );
 
@@ -93,7 +94,7 @@ function App() {
     return (
         <BrowserRouter>
             <ScrollToTop>
-                {true ? showApp() : showWebsite()}
+                {isThisApp() ? showApp() : showWebsite()}
             </ScrollToTop>
         </BrowserRouter>
     );

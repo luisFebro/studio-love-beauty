@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import LoadingThreeDots from '../components/loadingIndicators/LoadingThreeDots';
 import Paper from '@material-ui/core/Paper';
 import { readAdmin } from '../redux/actions/adminActions';
+import isThisApp from '../utils/window/isThisApp';
 
 export default function RegulationPage() {
     const [data, setData] = useState({
@@ -25,7 +26,7 @@ export default function RegulationPage() {
     return (
         <div className="margin-auto-80">
             <div className="d-flex justify-content-start">
-                <Link to="/">
+                <Link to={true ? "/mobile-app" : "/"}>
                     <ButtonMulti
                         title="voltar"
                         color="var(--mainWhite)"

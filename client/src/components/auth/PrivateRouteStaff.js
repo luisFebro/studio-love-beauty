@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useStoreState } from 'easy-peasy';
-import { isThisApp } from '../../utils/window/isThisApp';
+import isThisApp from '../../utils/window/isThisApp';
 // import { showSnackbar } from '../../redux/actions/snackbarActions';
 
 const isApp = isThisApp();
@@ -18,7 +18,7 @@ export default function PrivateRouteAdm({ component: Component, ...rest }) {
         return (
             <Redirect
                 to={{
-                    pathname: true ? "/mobile-app" : "/",
+                    pathname: isThisApp() ? "/mobile-app" : "/",
                     state: { from: props.location }
                 }}
             />

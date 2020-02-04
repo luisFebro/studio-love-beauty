@@ -1,7 +1,7 @@
 import './style.css';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { isThisApp } from '../../utils/window/isThisApp';
+import isThisApp from '../../utils/window/isThisApp';
 import { useStoreDispatch } from 'easy-peasy';
 import { showSnackbar } from '../../redux/actions/snackbarActions';
 import { countAppDownloads } from '../../redux/actions/adminActions';

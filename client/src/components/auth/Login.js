@@ -11,7 +11,7 @@ import { loginEmail } from '../../redux/actions/authActions';
 import getDayGreetingBr from '../../utils/getDayGreetingBr';
 import PropTypes from 'prop-types';
 import KeypadButton from '../modals/keypad';
-import { isThisApp } from '../../utils/window/isThisApp';
+import isThisApp from '../../utils/window/isThisApp';
 
 const useStyles = makeStyles(theme => ({
   card: {

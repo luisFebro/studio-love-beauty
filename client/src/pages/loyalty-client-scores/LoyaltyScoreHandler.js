@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
-import { isThisApp } from '../../utils/window/isThisApp';
+import isThisApp from '../../utils/window/isThisApp';
 import PurchaseValue from './PurchaseValue';
 import StaffConfirmation from './StaffConfirmation';
 import ClientScoresPanel from './ClientScoresPanel';

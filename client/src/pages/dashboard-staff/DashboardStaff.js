@@ -6,6 +6,8 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import TabSessions from '../../components/TabSessions';
 import getDayGreetingBr from '../../utils/getDayGreetingBr';
+import Navbar from '../../components/_layout/navbar';
+import isThisApp from '../../utils/window/isThisApp';
 
 export default function DashboardStaff() {
     const name = useStoreState(state => state.userReducer.cases.currentUser.name);
@@ -25,6 +27,10 @@ export default function DashboardStaff() {
 
     return (
         <div>
+            {isThisApp()
+            ? (
+                <Navbar />
+            ) : null}
             <p
                 style={{color: "white", margin: 0, paddingLeft: 20}}
                 className="text-default"

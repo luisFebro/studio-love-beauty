@@ -28,7 +28,8 @@ export default function RatingStars({ score }) {
         for(star of arrayStarIds) {
             if(count++ <= indScore) {
                 let selectedStar = document.querySelector("#" + star);
-                selectedStar.style.cssText = "color: #ff0; opacity: 1; transform: rotateX(0deg); text-shadow: 0 0 30px #ffc;"
+                const delayToAnimated = parseInt(`${count + 2}000`); // from 3 secs forwards...
+                setTimeout(() => selectedStar.style.cssText = "color: #ff0; opacity: 1; transform: rotateX(0deg); text-shadow: 0 0 30px #ffc;", delayToAnimated);
             }
         }
     }
@@ -51,7 +52,6 @@ export default function RatingStars({ score }) {
 const RatingDiv = styled.div`
     text-align: center;
     perspective: 250px;
-    position: absolute;
     width: 100%;
 
     & span {

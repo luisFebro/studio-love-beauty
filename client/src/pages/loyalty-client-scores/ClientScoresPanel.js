@@ -103,7 +103,6 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                     <p>
                         <span>Você Ganhou: </span>
                         <span ref={animatedNumber}>...</span>
-                        <span style={{color: "white"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*" : null}</span>
                     </p>
                     <div
                         className="animated bounce slow"
@@ -118,7 +117,6 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
                         <p>{gotBirthday ? showBirthdayMsg() : null}</p>
                     </div>
                 </div>
-                <p style={{fontSize: "18px"}}>{!Number.isInteger(cashCurrentScore) && showTotalPoints ? "*Valor Decimal Arredondado." : null}</p>
             </div>
         </div>
     );

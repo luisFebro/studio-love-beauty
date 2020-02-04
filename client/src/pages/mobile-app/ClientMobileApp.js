@@ -51,6 +51,17 @@ export default function ClientMobile() {
         </div>
     );
 
+    const showGreeting = () => (
+        <div className="position-relative">
+            <div className="ellipse"></div>
+            <div
+                style={{position: 'absolute', top: '-5px'}}
+                className="ml-2 mb-2 text-white text-shadow text-em-1-4 text-left text-default">
+                {getDayGreetingBr()},<br/> <span className="text-em-1-8">{userName.cap() + "!"}</span>
+            </div>
+        </div>
+    );
+
     const showScores = () => (
         <div className="my-3 text-white text-em-2-5 text-center text-default">
             Fidelidômetro:<br/>
@@ -114,14 +125,7 @@ export default function ClientMobile() {
             </div>
             <br/>
             <br/>
-            <div className="position-relative">
-                <div className="ellipse"></div>
-                <div
-                    style={{position: 'absolute', top: '-5px'}}
-                    className="ml-2 mb-2 text-white text-shadow text-em-1-4 text-left text-default">
-                    {getDayGreetingBr()},<br/> <span className="text-em-1-8">{userName.cap() + "!"}</span>
-                </div>
-            </div>
+            {showGreeting()}
             {showScores()}
             <div className="mb-4">
                 <RatingStars score={userScore} />

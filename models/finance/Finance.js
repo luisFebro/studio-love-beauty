@@ -27,6 +27,10 @@ const data = {
         type: String,
         lowercase: true,
     },
+    clientName: {
+        type: String,
+        lowercase: true,
+    },
     description: {
         type: String,
         lowercase: true,

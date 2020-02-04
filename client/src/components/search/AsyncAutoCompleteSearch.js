@@ -23,8 +23,10 @@ function sleep(delay = 0) {
 
 export default function AsyncAutoCompleteSearch({
     url,
+    autoCompleteUrlStr,
     circularProgressColor,
     onAutoSelectChange,
+    onValueChange,
     noOptionsText,
     backgroundColor,
     clearOnEscape = false,
@@ -41,7 +43,8 @@ export default function AsyncAutoCompleteSearch({
     const onUserValueChange = e => {
         const changedValue = e.target.value;
         setUserValue(changedValue);
-        setAutoCompleteUrl(`/api/finance/cash-ops/list/all?search=${changedValue}&autocomplete=true`)
+        onValueChange && onValueChange(changedValue);
+        setAutoCompleteUrl(autoCompleteUrlStr || `/api/finance/cash-ops/list/all?search=${changedValue}&autocomplete=true`)
     }
 
     React.useEffect(() => {

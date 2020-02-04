@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     const showMainContent = () => (
         <div className="ml-md-4">
-            <span className="text-right for-version-test">{""}</span>
+            <span className="text-right for-version-test">{"t1"}</span>
             <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro <br /> e <br />participe de nosso plano de fidelidade</div>
             <div className="center-small">
                 <Register />
@@ -22,6 +22,7 @@ export default function Home() {
             </Link>
         </div>
     );
+
     return(
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             {showMainContent()}

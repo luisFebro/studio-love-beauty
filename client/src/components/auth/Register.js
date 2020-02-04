@@ -174,7 +174,7 @@ export default function Register() {
                 autocomplete="off"
                 value={name}
                 type="name"
-                label="Qual é o seu nome?"
+                label="Qual é o seu nome e sobrenome?"
                 fullWidth
                 InputProps={{
                   startAdornment: (

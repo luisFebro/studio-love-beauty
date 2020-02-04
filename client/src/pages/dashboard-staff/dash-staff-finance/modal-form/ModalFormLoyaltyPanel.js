@@ -20,9 +20,11 @@ import isMoneyBrValidAndAlert from '../../../../utils/numbers/isMoneyBrValidAndA
 import { modalTextFieldDashboardType } from '../../../../types';
 import { updateUser } from '../../../../redux/actions/userActions';
 import { createFinance } from '../../../../redux/actions/financeActions';
+import { getAllAvailableNames } from '../../../../redux/actions/financeActions';
 import { readServicesList } from '../../../../redux/actions/adminActions';
 import { showSnackbar } from '../../../../redux/actions/snackbarActions';
 import { convertCommaToDot } from '../../../../utils/numbers/convertDotComma';
+import AsyncAutoCompleteSearch from '../../../../components/search/AsyncAutoCompleteSearch';
 // END CUSTOMIZED DATA
 
 moment.locale = "pt-br";
@@ -35,7 +37,6 @@ ModalFormLoyaltyPanel.propTypes = {
 
 export default function ModalFormLoyaltyPanel({
     open, onClose, modal }) {
-    //test
     const [preventDefault, setPreventDefault] = useState(false)
     const [gotError, setGotError] = useState(null);
 
@@ -49,6 +50,7 @@ export default function ModalFormLoyaltyPanel({
 
     const [data, setData] = useState({
         agentName: staffName,
+        clientName: '',
         agentRole: 'colaborador',
         service: 'selecione tipo:',
         description: '',
@@ -58,6 +60,7 @@ export default function ModalFormLoyaltyPanel({
 
     const {
         agentId,
+        clientName,
         service,
         description,
         cashInValue,
@@ -99,6 +102,7 @@ export default function ModalFormLoyaltyPanel({
         setData({
             agentId: '',
             agentName: staffName,
+            clientName: '',
             agentRole: 'colaborador',
             service: 'selecione tipo:',
             description: '',
@@ -117,6 +121,12 @@ export default function ModalFormLoyaltyPanel({
             return;
         }
 
+        if(clientName === "") {
+            showSnackbar(dispatch, "Selecione um cliente.", 'error')
+            // setGotError("clientName");
+            return;
+        }
+
         if(!isMoneyBrValidAndAlert(cashInValue, showSnackbar, dispatch)) {
             setGotError("cashInValue");
             return;
@@ -129,7 +139,6 @@ export default function ModalFormLoyaltyPanel({
             dataInformed = {...data, cashInValue: parseFloat(cashInValue)}
         }
         const objToSend = dataInformed;
-        console.log("objToSend", objToSend);
 
         showSnackbar(dispatch, "Processando...", 'warning', 5000)
         createFinance(dispatch, objToSend)
@@ -152,6 +161,17 @@ export default function ModalFormLoyaltyPanel({
             </DialogTitle>
         </div>
     );
+
+    //auto complete
+    const autoCompleteUrl = `/api/finance/staff/list/names?role=cliente`;
+    const onAutoSelectChange = selectedValue => {
+        setData({ ...data, clientName: selectedValue })
+    }
+
+    const onValueChange = changedValue => {
+        setData({ ...data, clientName: changedValue })
+    }
+    //end auto complete
 
     const showForm = () => (
         <form style={styles.form} onBlur={() => {setGotError(null); setPreventDefault(false);}}>
@@ -203,6 +223,27 @@ export default function ModalFormLoyaltyPanel({
                     fullWidth
                     margin="dense"
                 />
+            </span>
+            <br />
+            <br />
+            <span className="margin-auto-70 text-default text-em-1">
+                <div style={{maxWidth: '50px'}}>
+                    <span className="font-weight-bold text-left">CLIENTE*</span>
+                    <br />
+                    <AsyncAutoCompleteSearch
+                        url={autoCompleteUrl}
+                        autoCompleteUrlStr={autoCompleteUrl}
+                        circularProgressColor="secondary"
+                        freeSolo={true}
+                        onAutoSelectChange={onAutoSelectChange}
+                        onValueChange={onValueChange}
+                        needUserValueFunc={true}
+                        noOptionsText={`Nada encontrado...`}
+                        backgroundColor='white'
+                        disableOpenOnFocus={true}
+                        placeholder="Procure ou digite nome..."
+                    />
+                </div>
             </span>
             <br />
             <br />

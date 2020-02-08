@@ -108,7 +108,7 @@ function ClientMobileApp({ history }) {
                             />
                         </div>
                     </Tilt>
-                    {userScore > maxScore
+                    {userScore >= maxScore
                     ? (
                         <div>
                             <p>Parabéns!<br />Você ganhou um prêmio.</p>
@@ -171,6 +171,7 @@ function ClientMobileApp({ history }) {
             <SpeedDialButton
                 actions={speedDial.actions}
                 tooltipOpen={true}
+                size="large"
                 FabProps={{
                     backgroundColor: 'var(--mainPink)',
                     size: 'medium',

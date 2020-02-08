@@ -50,7 +50,7 @@ function Login({ history }) {
             }
             if(role === "cliente") {
                 setTimeout(() => showSnackbar(dispatch, `${name.cap()}, aqui você precisa de um colaborador do salão para validar sua nova pontuação`, 'success', 9000), 3000);
-                if(true) {
+                if(isThisApp()) {
                     history.push("/mobile-app");
                 } else {
                     hideComponent(dispatch, "login");

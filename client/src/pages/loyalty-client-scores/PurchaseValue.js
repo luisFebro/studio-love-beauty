@@ -11,15 +11,16 @@ PurchaseValue.propTypes = {
 }
 
 export default function PurchaseValue({ success, setValuePaid }) {
-    let { userName } = useStoreState(state => ({
+    let { userName, role } = useStoreState(state => ({
         userName: state.userReducer.cases.currentUser.name,
+        role: state.userReducer.cases.currentUser.name,
     }))
 
     useEffect(() => {
-        if(userName) {
+        if(userName && role === "cliente" ) {
             setTimeout(() => showVanillaToast(`${userName.cap()}, nesta sessão você precisa de um <br />colaborador do salão<br />para validar sua nova pontuação`, 9000), 3000);
         }
-    }, [userName])
+    }, [userName, role])
 
     return (
         success &&

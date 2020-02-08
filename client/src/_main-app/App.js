@@ -98,7 +98,7 @@ function App() {
     return (
         <BrowserRouter>
             <ScrollToTop>
-                {isThisApp() ? showApp() : showWebsite()}
+                {true ? showApp() : showWebsite()}
             </ScrollToTop>
         </BrowserRouter>
     );

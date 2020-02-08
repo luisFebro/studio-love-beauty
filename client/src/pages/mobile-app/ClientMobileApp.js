@@ -27,6 +27,7 @@ function ClientMobileApp({ history }) {
 
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     let { isUserAuth, role, loyaltyScores, userName, user } = useStoreState(state => ({
         isUserAuth: state.authReducer.cases.isUserAuthenticated,
@@ -232,9 +233,9 @@ function ClientMobileApp({ history }) {
     return (
         <div>
             <div className="margin-auto-90">
-                <ImageLogo />
+                <ImageLogo setLoading={setLoading} />
             </div>
-            {!user
+            {loading
             ? (
                 <LoadingThreeDots color="white" />
             ) : (

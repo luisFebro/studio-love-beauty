@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import ShowImgOrSpinner from './ShowImgOrSpinner';
 
-export default function ImageLogo() {
+export default function ImageLogo({ setLoading }) {
     const [showSpinner, setShowSpinner] = useState(true);
+    setLoading(showSpinner);
+
     return (
         <div className="mr-md-5 mt-md-5">
             <ShowImgOrSpinner

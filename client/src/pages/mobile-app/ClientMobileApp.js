@@ -24,6 +24,7 @@ import "./ellipse.css";
 const maxScore = 500;
 function ClientMobileApp({ history }) {
     const userScoreRef = useRef(null);
+
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
 
@@ -35,11 +36,12 @@ function ClientMobileApp({ history }) {
         isLoading: state.globalReducer.cases.isLinearPLoading,
     }))
 
+
     checkIfElemIsVisible("#rules", setShowMoreBtn)
 
     const dispatch = useStoreDispatch();
 
-    let userScore = loyaltyScores && loyaltyScores.currentScore;
+    const userScore = loyaltyScores && loyaltyScores.currentScore;
 
     useEffect(() => {
         if(isUserAuth && role === "cliente") {
@@ -52,6 +54,11 @@ function ClientMobileApp({ history }) {
             );
         }
     }, [role, isUserAuth])
+
+    const playBeep = () => {
+        const elem = document.querySelector("#appBtn");
+        elem.play();
+    }
 
     const showLogin = () => (
         <div className="my-5">
@@ -123,6 +130,7 @@ function ClientMobileApp({ history }) {
     const showRules = () => (
         <Link to="/regulamento">
             <div
+                onClick={null}
                 id="rules"
                 className="text-container font-weight-italic text-center"
                 style={{color: "var(--mainPink)", cursor: "pointer"}}
@@ -140,7 +148,10 @@ function ClientMobileApp({ history }) {
                     icon: <ExitToAppIcon />,
                     name: 'Desconectar',
                     backColor: 'var(--mainPink)',
-                    onClick: () => logout(dispatch)
+                    onClick: () => {
+                        logout(dispatch);
+                        playBeep();
+                    }
                 },
                 {
                     icon: <LoyaltyIcon />,
@@ -150,6 +161,7 @@ function ClientMobileApp({ history }) {
                         hideComponent(dispatch, "login");
                         showComponent(dispatch, "purchaseValue");
                         history.push("/cliente/pontos-fidelidade");
+                        playBeep();
                     },
                 }
             ]
@@ -193,6 +205,7 @@ function ClientMobileApp({ history }) {
                         {showRules()}
                     </div>
                     {showMoreOptionsBtn()}
+                    <audio id="appBtn" src="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav"></audio>
                 </Fragment>
             ) : showLogin()}
         </div>

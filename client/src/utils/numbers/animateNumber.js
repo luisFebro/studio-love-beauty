@@ -10,11 +10,17 @@ import { convertDotToComma } from './convertDotComma';
 //     setShowTotalPoints
 // );
 export default function animateNumber(ref, start, end, duration, next) {
+    console.log("ref from animate", ref);
     start = parseFloat(start);
     end = parseFloat(end);
-    console.log("end", end);
 
     var obj = ref;
+
+    if(!obj) {
+        next(true);
+        return;
+    }
+
     if(end === 0 || !end) {
         obj.innerHTML = 0;
         next(true);

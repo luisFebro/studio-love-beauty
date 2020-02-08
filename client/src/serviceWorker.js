@@ -1,7 +1,7 @@
 import showVanillaToast from './components/vanilla-js/toastify/showVanillaToast';
 
 const isToastActivated = true;
-const currentVersion = "4.1.0-1";
+const currentVersion = "4.3.0-1";
 // This optional code is used to register a service worker.
 // register() is not called by default.
 

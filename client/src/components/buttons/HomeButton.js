@@ -16,12 +16,12 @@ export default function HomeButton({ hideComp }) {
 
     return (
         <div className="my-5">
-            <Link to={true ? "/mobile-app" : "/acesso/verificacao" } style={{textDecoration: "none"}}>
+            <Link to={isThisApp() ? "/mobile-app" : "/acesso/verificacao" } style={{textDecoration: "none"}}>
                 <ButtonMulti
                     onClick={() => {
                         hideComponent(dispatch, hideComp)
                         showComponent(dispatch, "login")
-                        !true && logout(dispatch);
+                        !isThisApp() && logout(dispatch);
                     }}
                     color="var(--mainWhite)"
                     backgroundColor="var(--mainPink)"

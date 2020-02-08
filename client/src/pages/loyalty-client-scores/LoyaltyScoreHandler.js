@@ -9,6 +9,7 @@ import HomeButton from '../../components/buttons/HomeButton';
 import { hideComponent, showComponent } from "../../redux/actions/componentActions";
 import { logout } from "../../redux/actions/authActions";
 import { Link } from 'react-router-dom';
+import { setRun } from '../../redux/actions/globalActions';
 
 export default function LoyaltyScoreHandler() {
     const [valuePaid, setValuePaid]  = useState("0");
@@ -44,14 +45,15 @@ export default function LoyaltyScoreHandler() {
         const backColorOnHover = "pink";
         const backgroundColor = "var(--mainPink)";
         return(
-            <Link to={true ? "/mobile-app" : "/acesso/verificacao"} style={{textDecoration: "none"}}>
+            <Link to={isThisApp() ? "/mobile-app" : "/acesso/verificacao"} style={{textDecoration: "none"}}>
                 <button
                     className="text-shadow mt-5 pressed-to-left"
                     style={styles.finishButton}
                     onClick={() => {
                         hideComponent(dispatch, "clientScoresPanel")
                         showComponent(dispatch, "login")
-                        !true && logout(dispatch);
+                        !isThisApp() && logout(dispatch);
+                        if(isThisApp()) { window.location.href = `/mobile-app` }
                     }}
                     onMouseOver={e => e.target.style.backgroundColor=backColorOnHover}
                     onMouseOut={e => e.target.style.backgroundColor=backgroundColor}

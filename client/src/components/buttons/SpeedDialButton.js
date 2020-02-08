@@ -36,7 +36,6 @@ export default function SpeedDialButton({
     hidden }) {
     const classes = useStyles();
     const [isOpen, setOpen] = React.useState(false);
-    console.log("isOpen", isOpen);
 
     const handleOpen = () => {
         setOpen(true);
@@ -90,11 +89,6 @@ export default function SpeedDialButton({
                               tooltipTitle={action.name}
                               TooltipClasses={classes}
                               tooltipPlacement="left"
-                              PopperProps={{
-                                style: {
-                                    fontSize: '5em'
-                                }
-                              }}
                               tooltipOpen={tooltipOpen || false}
                               onClick={() => {
                                   action.onClick();

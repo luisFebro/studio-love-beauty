@@ -7,7 +7,7 @@ export default function InitialPageButton() {
 
     return (
         <div className="my-5">
-            <Link to={true ? "/mobile-app" : "/"} className="text-decoration-none">
+            <Link to={isThisApp() ? "/mobile-app" : "/"} className="text-decoration-none">
                 <ButtonMulti
                     title="Voltar"
                     color="var(--mainWhite)"

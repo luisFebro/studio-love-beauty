@@ -49,8 +49,8 @@ function Login({ history }) {
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
             if(role === "cliente") {
-                setTimeout(() => showSnackbar(dispatch, `${getDayGreetingBr()}, ${name.cap()}!`, 'success', 9000), 3000);
-                if(isThisApp()) {
+                setTimeout(() => showSnackbar(dispatch, `${name.cap()}, aqui você precisa de um colaborador do salão para validar sua nova pontuação`, 'success', 9000), 3000);
+                if(true) {
                     history.push("/mobile-app");
                 } else {
                     hideComponent(dispatch, "login");

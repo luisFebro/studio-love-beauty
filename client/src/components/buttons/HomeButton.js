@@ -4,6 +4,7 @@ import ButtonMulti from './material-ui/ButtonMulti';
 import { useStoreDispatch } from 'easy-peasy';
 import { hideComponent, showComponent } from "../../redux/actions/componentActions";
 import { logout } from "../../redux/actions/authActions";
+import isThisApp from '../../utils/window/isThisApp';
 import PropTypes from 'prop-types';
 
 HomeButton.propTypes = {
@@ -15,12 +16,12 @@ export default function HomeButton({ hideComp }) {
 
     return (
         <div className="my-5">
-            <Link to="/acesso/verificacao" style={{textDecoration: "none"}}>
+            <Link to={true ? "/mobile-app" : "/acesso/verificacao" } style={{textDecoration: "none"}}>
                 <ButtonMulti
                     onClick={() => {
                         hideComponent(dispatch, hideComp)
                         showComponent(dispatch, "login")
-                        logout(dispatch);
+                        !true && logout(dispatch);
                     }}
                     color="var(--mainWhite)"
                     backgroundColor="var(--mainPink)"

@@ -1,7 +1,7 @@
 import showVanillaToast from './components/vanilla-js/toastify/showVanillaToast';
 
 const isToastActivated = true;
-const currentVersion = "4.1.0-beta.1";
+const currentVersion = "4.1.0-1";
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -90,7 +90,7 @@ function registerValidSW(swUrl, config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              isToastActivated && showVanillaToast("Conteúdo atualizado para uso offline", 7000)
+              isToastActivated && showVanillaToast(`Novo conteúdo da <strong>versão ${currentVersion}</strong> foi baixado`, 7000)
               console.log('Content is cached for offline use.');
 
               // Execute callback

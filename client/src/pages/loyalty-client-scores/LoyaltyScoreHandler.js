@@ -44,14 +44,14 @@ export default function LoyaltyScoreHandler() {
         const backColorOnHover = "pink";
         const backgroundColor = "var(--mainPink)";
         return(
-            <Link to="/acesso/verificacao" style={{textDecoration: "none"}}>
+            <Link to={true ? "/mobile-app" : "/acesso/verificacao"} style={{textDecoration: "none"}}>
                 <button
                     className="text-shadow mt-5 pressed-to-left"
                     style={styles.finishButton}
                     onClick={() => {
                         hideComponent(dispatch, "clientScoresPanel")
                         showComponent(dispatch, "login")
-                        logout(dispatch);
+                        !true && logout(dispatch);
                     }}
                     onMouseOver={e => e.target.style.backgroundColor=backColorOnHover}
                     onMouseOut={e => e.target.style.backgroundColor=backgroundColor}

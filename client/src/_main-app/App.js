@@ -60,10 +60,14 @@ function App() {
     const showApp = () => (
         <Fragment>
             <LinearProgress />
-            <Route path="/mobile-app" exact component={ClientMobileApp} />
-            <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
-            <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
-            <Route path="/regulamento/" exact component={RegulationPage} />
+            <Switch>
+                <Route path="/mobile-app" exact component={ClientMobileApp} />
+                <PrivateRouteStaff path="/colaborador/quadro-administrativo/:staffId" exact component={DashboardStaff} />
+                <PrivateRouteAdm path="/admin/painel-de-controle" exact component={Dashboard} />
+                <Route path="/cliente/pontos-fidelidade" exact component={LoyaltyScoreHandler} />
+                <Route path="/regulamento/" exact component={RegulationPage} />
+                <Route component={Default} />
+            </Switch>
         </Fragment>
     );
 
@@ -94,7 +98,7 @@ function App() {
     return (
         <BrowserRouter>
             <ScrollToTop>
-                {isThisApp() ? showApp() : showWebsite()}
+                {true ? showApp() : showWebsite()}
             </ScrollToTop>
         </BrowserRouter>
     );

@@ -1,11 +1,12 @@
 import React, { Fragment, useRef, useEffect, useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import Tilt from 'react-tilt'
 import RatingStars from './RatingStars';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
 import { logout } from '../../redux/actions/authActions';
+import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import ImageLogo from '../../components/ImageLogo';
 import Login from '../../components/auth/Login';
-import { Link } from 'react-router-dom';
 import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDots';
 import { convertDotToComma } from '../../utils/numbers/convertDotComma';
 import animateNumber from '../../utils/numbers/animateNumber';
@@ -21,7 +22,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import "./ellipse.css";
 
 const maxScore = 500;
-export default function ClientMobile() {
+function ClientMobileApp({ history }) {
     const userScoreRef = useRef(null);
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
@@ -145,7 +146,11 @@ export default function ClientMobile() {
                     icon: <LoyaltyIcon />,
                     name: 'Adicionar Pontos',
                     backColor: 'var(--mainPink)',
-                    onClick: () => null,
+                    onClick: () => {
+                        hideComponent(dispatch, "login");
+                        showComponent(dispatch, "purchaseValue");
+                        history.push("/cliente/pontos-fidelidade");
+                    },
                 }
             ]
         }
@@ -193,6 +198,8 @@ export default function ClientMobile() {
         </div>
     );
 }
+
+export default withRouter(ClientMobileApp);
 
 /*
 <div className="my-3 container-center">

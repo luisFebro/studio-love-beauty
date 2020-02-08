@@ -39,7 +39,7 @@ function Login({ history }) {
             }
             const { msg, role, name, authUserId } = res.data;
             showSnackbar(dispatch, "Analisando Credenciais...", 'warning', 3000);
-            isThisApp() && showVanillaToast(`"Analisando Credenciais..."`, 3000)
+            isThisApp() && role !== 'cliente' && showVanillaToast(`"Analisando Credenciais..."`, 3000)
             if(role === "admin") {
                 setTimeout(() => isThisApp() && showVanillaToast(`Redirecionando...`, 9000), 2900);
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);

@@ -2,6 +2,7 @@ import React, { Fragment, useRef, useEffect, useState } from 'react';
 import Tilt from 'react-tilt'
 import RatingStars from './RatingStars';
 import { useStoreState, useStoreDispatch } from 'easy-peasy';
+import { logout } from '../../redux/actions/authActions';
 import ImageLogo from '../../components/ImageLogo';
 import Login from '../../components/auth/Login';
 import { Link } from 'react-router-dom';
@@ -11,12 +12,20 @@ import animateNumber from '../../utils/numbers/animateNumber';
 import getPercentage from '../../utils/numbers/getPercentage';
 import ReactjsPercentageCircle from '../../components/progressIndicators/ReactjsPercentageCircle/ReactjsPercentageCircle';
 import getDayGreetingBr from '../../utils/getDayGreetingBr';
+import checkIfElemIsVisible from '../../utils/window/checkIfElemIsVisible';
+// SpeedDial and Icons
+import SpeedDialButton from '../../components/buttons/SpeedDialButton';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+// End SpeedDial and Incons
 import "./ellipse.css";
 
 const maxScore = 500;
 export default function ClientMobile() {
     const userScoreRef = useRef(null);
+    const [showMoreBtn, setShowMoreBtn] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
+
     let { isUserAuth, role, loyaltyScores, userName, isLoading } = useStoreState(state => ({
         isUserAuth: state.authReducer.cases.isUserAuthenticated,
         role: state.userReducer.cases.currentUser.role,
@@ -25,6 +34,9 @@ export default function ClientMobile() {
         isLoading: state.globalReducer.cases.isLinearPLoading,
     }))
 
+    checkIfElemIsVisible("#rules", setShowMoreBtn)
+
+    const dispatch = useStoreDispatch();
 
     let userScore = loyaltyScores && loyaltyScores.currentScore;
 
@@ -110,6 +122,7 @@ export default function ClientMobile() {
     const showRules = () => (
         <Link to="/regulamento">
             <div
+                id="rules"
                 className="text-container font-weight-italic text-center"
                 style={{color: "var(--mainPink)", cursor: "pointer"}}
             >
@@ -117,6 +130,42 @@ export default function ClientMobile() {
             </div>
         </Link>
     );
+
+    const showMoreOptionsBtn = () => {
+        const speedDial = {
+            actions: [
+                //the order rendered is inverse from the bottom to top
+                {
+                    icon: <ExitToAppIcon />,
+                    name: 'Desconectar',
+                    backColor: 'var(--mainPink)',
+                    onClick: () => logout(dispatch)
+                },
+                {
+                    icon: <LoyaltyIcon />,
+                    name: 'Adicionar Pontos',
+                    backColor: 'var(--mainPink)',
+                    onClick: () => null,
+                }
+            ]
+        }
+
+        return(
+            <SpeedDialButton
+                actions={speedDial.actions}
+                tooltipOpen={true}
+                FabProps={{
+                    backgroundColor: 'var(--mainPink)',
+                    size: 'medium',
+                }}
+                root={{
+                    bottom: '20px',
+                    right: '20px',
+                }}
+                hidden={!showMoreBtn}
+            />
+        );
+    }
 
     return (
         <div>
@@ -138,15 +187,12 @@ export default function ClientMobile() {
                     <div className="mb-4">
                         {showRules()}
                     </div>
+                    {showMoreOptionsBtn()}
                 </Fragment>
             ) : showLogin()}
         </div>
     );
 }
-
-/*
-ORIGINAL TO BE PUT WHEN INTERNET IS OKAY:
- */
 
 /*
 <div className="my-3 container-center">

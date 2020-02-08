@@ -1,5 +1,9 @@
 // return number
 export default function getPercentage(targetValue, curValue) {
+    if(!curValue) {
+        return 0;
+    }
+
     if(curValue > targetValue) {
         return 100;
     }

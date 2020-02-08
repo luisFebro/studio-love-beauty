@@ -15,7 +15,7 @@ export default function animateNumber(ref, start, end, duration, next) {
     console.log("end", end);
 
     var obj = ref;
-    if(end === 0) {
+    if(end === 0 || !end) {
         obj.innerHTML = 0;
         next(true);
         return;

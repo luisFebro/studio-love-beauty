@@ -5,53 +5,38 @@ import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import MultiIconButton from './MultiIconButton';
-import EditIcon from '@material-ui/icons/Edit';
+// import EditIcon from '@material-ui/icons/Edit';
 import PropTypes from 'prop-types';
 
 SpeedDialButton.propTypes = {
-    actions: PropTypes.arrayOf(PropTypes.object)
+    actions: PropTypes.arrayOf(PropTypes.object),
+    direction: PropTypes.string,
+    tooltipOpen: PropTypes.bool,
+    FabProps: PropTypes.shape({
+        size: PropTypes.oneOf(["large", 'medium', 'small']),
+        backgroundColor: PropTypes.string,
+    }),
 };
 
-const useStyles2 = makeStyles({
-    tooltip: {
-        fontSize: 15
-    }
-});
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        zIndex: 1501,
-        top: 120,
-        left: 50,
-        position: 'absolute',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        // height: 100,
-        transform: 'translateZ(0px)',
-        flexGrow: 1
-    },
-    speedDialColor: {
-        backgroundColor: 'var(--mainYellow)'
-    },
-    speedDial: {
-        outline: 'none',
-        position: 'absolute'
-        // bottom: theme.spacing(2),
-        // left: theme.spacing(2),
-    },
+const useStyles = makeStyles({
     tooltip: {
         padding: '5px 10px',
         color: 'var(--mainWhite)',
         backgroundColor: 'var(--mainDark)',
-        fontSize: '150px'
+        fontSize: '150px',
     }
-}));
+});
 
-export default function SpeedDialButton({ actions }) {
+export default function SpeedDialButton({
+    actions,
+    direction,
+    tooltipOpen,
+    FabProps,
+    root,
+    hidden }) {
     const classes = useStyles();
-    const classes2 = useStyles2();
     const [isOpen, setOpen] = React.useState(false);
+    console.log("isOpen", isOpen);
 
     const handleOpen = () => {
         setOpen(true);
@@ -61,19 +46,41 @@ export default function SpeedDialButton({ actions }) {
         setOpen(false);
     };
 
+    const styles = {
+        root: {
+            zIndex: 1501,
+            position: root.position || 'fixed',
+            top: root.top, // LESSON: do not use 0 as default
+            left: root.left,
+            bottom: root.bottom,
+            right: root.right,
+            // display: 'flex',
+            // transform: 'translateZ(0px)',
+            // flexGrow: 1
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // height: 300, // this makes the button to be reallocated
+        }
+    }
+
     return (
-        <div className={classes.root}>
+        <div style={styles.root}>
             <Backdrop open={isOpen} />
             <SpeedDial
                 ariaLabel="SpeedDial tooltip example"
-                className={classes.speedDial}
-                hidden={false}
-                icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-                style={{ outline: 'none' }}
+                hidden={hidden || false}
+                icon={<SpeedDialIcon openIcon={null} />}
                 onClose={handleClose}
+                direction={direction || "up"}
+                FabProps={{
+                    style: {
+                        backgroundColor: FabProps.backgroundColor || '#000',
+                        outline: 'none',
+                    },
+                    size: FabProps.size || 'large',
+                }}
                 onOpen={handleOpen}
                 open={isOpen}
-                direction="down"
             >
                 {isOpen
                     ? actions.map(action => (
@@ -81,7 +88,14 @@ export default function SpeedDialButton({ actions }) {
                               key={action.name}
                               icon={<MultiIconButton backColor={action.backColor} buttonIcon={action.icon} />}
                               tooltipTitle={action.name}
-                              TooltipClasses={classes2}
+                              TooltipClasses={classes}
+                              tooltipPlacement="left"
+                              PopperProps={{
+                                style: {
+                                    fontSize: '5em'
+                                }
+                              }}
+                              tooltipOpen={tooltipOpen || false}
                               onClick={() => {
                                   action.onClick();
                                   handleClose();

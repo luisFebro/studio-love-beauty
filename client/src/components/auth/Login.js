@@ -50,7 +50,7 @@ function Login({ history }) {
             }
             if(role === "cliente") {
                 setTimeout(() => showSnackbar(dispatch, `${getDayGreetingBr()}, ${name.cap()}!`, 'success', 9000), 3000);
-                if(isThisApp()) {
+                if(true) {
                     history.push("/mobile-app");
                 } else {
                     hideComponent(dispatch, "login");

@@ -1,5 +1,4 @@
 export default function checkIfElemIsVisible(elem, setRun, needPartially = false) {
-    console.log("running check")
     let finalRes;
     window.onscroll = function() {
         const res = isElemVisible(elem, setRun, needPartially) ? true : false;

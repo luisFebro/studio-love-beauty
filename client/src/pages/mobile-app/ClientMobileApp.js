@@ -251,11 +251,7 @@ function ClientMobileApp({ history }) {
                         {showMoreOptionsBtn()}
                         <audio id="appBtn" src="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav"></audio>
                     </Fragment>
-                ) : null}
-                {!isUserAuth
-                ? (
-                    showLogin()
-                ) : null}
+                ) : showLogin()}
             </section>
         </div>
     );

@@ -7,7 +7,7 @@ import { logout } from '../../redux/actions/authActions';
 import { showComponent, hideComponent } from '../../redux/actions/componentActions';
 import ImageLogo from '../../components/ImageLogo';
 import Login from '../../components/auth/Login';
-import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDots';
+// import LoadingThreeDots from '../../components/loadingIndicators/LoadingThreeDots';
 import { convertDotToComma } from '../../utils/numbers/convertDotComma';
 import animateNumber from '../../utils/numbers/animateNumber';
 import getPercentage from '../../utils/numbers/getPercentage';
@@ -29,12 +29,11 @@ function ClientMobileApp({ history }) {
     const [showPercentage, setShowPercentage] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    let { isUserAuth, role, loyaltyScores, userName, user } = useStoreState(state => ({
+    let { isUserAuth, role, loyaltyScores, userName } = useStoreState(state => ({
         isUserAuth: state.authReducer.cases.isUserAuthenticated,
         role: state.userReducer.cases.currentUser.role,
         userName: state.userReducer.cases.currentUser.name,
         loyaltyScores: state.userReducer.cases.currentUser.loyaltyScores,
-        user: state.userReducer.cases.currentUser.name,
     }))
 
 
@@ -58,6 +57,7 @@ function ClientMobileApp({ history }) {
     }, [role, isUserAuth])
 
     const playBeep = () => {
+        // Not working
         const elem = document.querySelector("#appBtn");
         elem.play();
     }
@@ -105,8 +105,8 @@ function ClientMobileApp({ history }) {
                                 color: 'var(--mainPink)',
                                 position: 'absolute',
                                 top: '-5px',
-                                left: '225px'}}
-                            className="text-em-0-5"
+                                left: '220px'}}
+                            className="text-em-0-5 text-nowrap"
                         >
                             Última pontuação:<br />
                             <span className="text-em-1">
@@ -175,7 +175,7 @@ function ClientMobileApp({ history }) {
     const showRules = () => (
         <Link to="/regulamento">
             <div
-                onClick={null}
+                onClick={playBeep}
                 id="rules"
                 className="text-container font-weight-italic text-center"
                 style={{color: "var(--mainPink)", cursor: "pointer"}}
@@ -235,39 +235,43 @@ function ClientMobileApp({ history }) {
             <div className="margin-auto-90">
                 <ImageLogo setLoading={setLoading} />
             </div>
-            {loading
-            ? (
-                <LoadingThreeDots color="white" />
-            ) : (
-                <section>
-                    {isUserAuth && role === "cliente"
-                    ? (
-                        <Fragment>
-                            <br/>
-                            <br/>
-                            {showGreeting()}
-                            {showScores()}
-                            <div className="mb-4">
-                                <RatingStars score={userScore} />
-                            </div>
-                            <div className="mb-4">
-                                {showRules()}
-                            </div>
-                            {showMoreOptionsBtn()}
-                            <audio id="appBtn" src="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav"></audio>
-                        </Fragment>
-                    ) : null}
-                    {!isUserAuth
-                    ? (
-                        showLogin()
-                    ) : null}
-                </section>
-            )}
+            <section>
+                {isUserAuth && role === "cliente"
+                ? (
+                    <Fragment>
+                        <br/>
+                        <br/>
+                        {showGreeting()}
+                        {showScores()}
+                        <div className="mb-4">
+                            <RatingStars score={userScore} />
+                        </div>
+                        <div className="mb-4">
+                            {showRules()}
+                        </div>
+                        {showMoreOptionsBtn()}
+                        <audio id="appBtn" src="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav"></audio>
+                    </Fragment>
+                ) : null}
+                {!isUserAuth
+                ? (
+                    showLogin()
+                ) : null}
+            </section>
         </div>
     );
 }
 
 export default withRouter(ClientMobileApp);
+
+/*
+{loading
+? (
+    <LoadingThreeDots color="white" />
+) : (
+
+)}
+ */
 
 /*
 <div className="my-3 container-center">

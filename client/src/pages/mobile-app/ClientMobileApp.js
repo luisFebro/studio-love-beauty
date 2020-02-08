@@ -27,7 +27,6 @@ function ClientMobileApp({ history }) {
 
     const [showMoreBtn, setShowMoreBtn] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     let { isUserAuth, role, loyaltyScores, userName } = useStoreState(state => ({
         isUserAuth: state.authReducer.cases.isUserAuthenticated,
@@ -233,7 +232,7 @@ function ClientMobileApp({ history }) {
     return (
         <div>
             <div className="margin-auto-90">
-                <ImageLogo setLoading={setLoading} />
+                <ImageLogo />
             </div>
             <section>
                 {isUserAuth && role === "cliente"

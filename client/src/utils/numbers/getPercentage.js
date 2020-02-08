@@ -10,5 +10,5 @@ export default function getPercentage(targetValue, curValue) {
     let perc = (curValue / targetValue) * 100;
     const isInteger = Number.isInteger(parseFloat(perc));
     perc = isInteger ? perc.toFixed(0) : perc.toFixed(1)
-    return perc;
+    return parseFloat(perc);
 }

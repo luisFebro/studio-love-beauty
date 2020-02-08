@@ -1,7 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import InsertValue from '../../components/loyaltyScores/InsertValue';
 import HomeButton from '../../components/buttons/HomeButton';
+import showVanillaToast from '../../components/vanilla-js/toastify/showVanillaToast';
+import { useStoreState } from 'easy-peasy';
 
 PurchaseValue.propTypes = {
     success: PropTypes.bool,
@@ -9,6 +11,16 @@ PurchaseValue.propTypes = {
 }
 
 export default function PurchaseValue({ success, setValuePaid }) {
+    let { userName } = useStoreState(state => ({
+        userName: state.userReducer.cases.currentUser.name,
+    }))
+
+    useEffect(() => {
+        if(userName) {
+            setTimeout(() => showVanillaToast(`${userName.cap()}, nesta sessão você precisa de um <br />colaborador do salão<br />para validar sua nova pontuação`, 9000), 3000);
+        }
+    }, [userName])
+
     return (
         success &&
         <div className="mr-md-5 ml-md-4">

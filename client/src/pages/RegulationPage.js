@@ -26,7 +26,7 @@ export default function RegulationPage() {
     return (
         <div className="margin-auto-80">
             <div className="d-flex justify-content-start">
-                <Link to={true ? "/mobile-app" : "/"}>
+                <Link to={isThisApp() ? "/mobile-app" : "/"}>
                     <ButtonMulti
                         title="voltar"
                         color="var(--mainWhite)"

@@ -67,6 +67,12 @@ const data = {
         type: String,
         default: "Não selecionado"
     },
+    msgReadByUser: {
+        staffRequired: {
+            type: Boolean,
+            default: false,
+        }
+    }
 }
 
 const UserSchema = new Schema(data, { timestamps: true });

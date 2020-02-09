@@ -16,6 +16,7 @@ import getDayGreetingBr from '../../utils/getDayGreetingBr';
 import checkIfElemIsVisible from '../../utils/window/checkIfElemIsVisible';
 // SpeedDial and Icons
 import SpeedDialButton from '../../components/buttons/SpeedDialButton';
+import showVanillaToast from '../../components/vanilla-js/toastify/showVanillaToast';
 import LoyaltyIcon from '@material-ui/icons/Loyalty';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // End SpeedDial and Incons
@@ -34,7 +35,6 @@ function ClientMobileApp({ history }) {
         userName: state.userReducer.cases.currentUser.name,
         loyaltyScores: state.userReducer.cases.currentUser.loyaltyScores,
     }))
-
 
     checkIfElemIsVisible("#rules", setShowMoreBtn)
 
@@ -207,7 +207,7 @@ function ClientMobileApp({ history }) {
                         history.push("/cliente/pontos-fidelidade");
                         playBeep();
                     },
-                }
+                },
             ]
         }
 

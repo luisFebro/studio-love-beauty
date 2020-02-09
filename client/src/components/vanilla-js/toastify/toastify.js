@@ -56,6 +56,8 @@
       this.options.onClick = options.onClick; // Callback after click
       // my own props
       this.options.fontWeight = options.fontWeight;
+      this.options.needActionBtn = options.needActionBtn;
+      this.options.actionBtnText = options.actionBtnText;
       // end my own props
       // Returning the current object for chaining functions
       return this;
@@ -97,8 +99,39 @@
         divElement.style.fontWeight = this.options.fontWeight;
       }
 
-      // Adding the toast message
-      divElement.innerHTML = this.options.text;
+      // Adding an action button to the text.
+      if(this.options.needActionBtn) {
+        const p = document.createElement("p");
+        p.style.textAlign = 'justify';
+        p.innerHTML = this.options.text
+        divElement.appendChild(p);
+        const br = document.createElement("br");
+        divElement.appendChild(br);
+        divElement.appendChild(br.cloneNode());
+        const divBtnAction = document.createElement("div");
+        divBtnAction.appendChild(br);
+        divBtnAction.style.cssText = 'display: block; margin: 0px 10px;';
+        const btnAction = document.createElement("button");
+        btnAction.style.cssText = 'background-color: #000; border: none; color: #fff; font-weight: bold;'
+        btnAction.innerHTML = this.options.actionBtnText;
+        divBtnAction.appendChild(btnAction);
+        divElement.appendChild(divBtnAction);
+
+        // remove toast when click on button
+        divBtnAction.addEventListener(
+          "click",
+          function(event) {
+            event.stopPropagation();
+            this.removeElement(this.toastElement);
+            window.clearTimeout(this.toastElement.timeOutValue);
+            this.options.onClick();
+          }.bind(this)
+        );
+      } else {
+        // Adding the toast message
+          divElement.innerHTML = this.options.text;
+      }
+
 
       if (this.options.avatar !== "") {
         var avatarElement = document.createElement("img");

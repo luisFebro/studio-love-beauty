@@ -11,10 +11,13 @@ export default function showVanillaToast(
         backgroundColor: null,
         gravity: null,
         needActionBtn: false,
-        actionBtnText: '',
-        avatar: '',
-        onClick: '',
+        actionBtnText: null,
+        avatar: null,
+        onClick: null,
     }) {
+
+    console.log("options.avatar", options.avatar);
+    console.log("options.close", options.close);
 
     Toastify({
       text: title || "I am the the toast message",
@@ -22,8 +25,8 @@ export default function showVanillaToast(
       className: "toastify",
       fontWeight: 'bolder',
       positionLeft: true,
-      avatar: options.avatar === undefined ? `${CLIENT_URL}/favicon/android-chrome-256x256.png` : options.avatar,
-      close: options.close === undefined ? true : false,
+      avatar: !options.avatar ? `${CLIENT_URL}/favicon/android-chrome-256x256.png` : options.avatar,
+      close: !options.close ? true : false,
       gravity: options.gravity || "bottom",
       position: options.position || 'left',
       backgroundColor: options.backgroundColor || "#34495e", // dark blue,

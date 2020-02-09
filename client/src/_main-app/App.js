@@ -4,7 +4,7 @@ import ScrollToTop from 'react-router-scroll-top';
 import { CLIENT_URL } from '../config/clientUrl';
 import LinearProgress from '../components/loadingIndicators/LinearProgress';
 // Redux
-import { useStoreDispatch, useStoreState } from 'easy-peasy'; // useStoreState
+import { useStoreDispatch, useStoreState } from 'easy-peasy';
 import { readAdmin } from '../redux/actions/adminActions';
 import isThisApp from '../utils/window/isThisApp';
 // import { loadReCaptcha } from 'react-recaptcha-google';
@@ -46,6 +46,9 @@ import SnackbarMulti from '../components/Snackbar';
 // END MODALS ANS TOASTS
 
 function App() {
+    const { role } = useStoreState(state => ({
+        role: state.userReducer.cases.currentUser.role,
+    }));
     const dispatch = useStoreDispatch();
 
     useEffect(() => {
@@ -68,6 +71,10 @@ function App() {
                 <Route path="/regulamento/" exact component={RegulationPage} />
                 <Route component={Default} />
             </Switch>
+            {role === "colaborador" || role === "admin"
+            ? (
+                <SnackbarMulti />
+            ) : null}
         </Fragment>
     );
 

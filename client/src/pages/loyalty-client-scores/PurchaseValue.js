@@ -37,7 +37,7 @@ export default function PurchaseValue({ success, setValuePaid }) {
                     180000,
                     {
                         actionBtnText: 'Ok, entendi',
-                        avatar: '',
+                        avatar: ' ',
                         needActionBtn: true,
                         onClick: () => handleMsgReadByUser()
                     })

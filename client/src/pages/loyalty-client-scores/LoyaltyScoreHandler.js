@@ -41,7 +41,7 @@ export default function LoyaltyScoreHandler() {
     }
 
     const showHomeBtn = () => {
-        const title = "Voltar";
+        const title = "Finalizar";
         const backColorOnHover = "pink";
         const backgroundColor = "var(--mainPink)";
         return(

@@ -91,7 +91,9 @@ export default function ClientScoresPanel({ success, valuePaid, verification }) 
         success &&
         <div className="mr-md-5 ml-md-4 mt-5 animated slideInLeft fast">
             <div style={{minWidth: 300}} className="mx-2">
-                <span className="text-main-container">{name && name.cap()},</span>
+                <span className="text-main-container text-em-2-3">
+                    {name && name.cap()},
+                </span>
                 <TitleComponent>
                    Veja aqui seus Pontos
                 </TitleComponent>

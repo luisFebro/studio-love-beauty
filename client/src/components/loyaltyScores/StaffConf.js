@@ -11,9 +11,11 @@ import { showSnackbar } from '../../redux/actions/snackbarActions';
 import ButtonMulti from '../buttons/material-ui/ButtonMulti';
 import handleChange from '../../utils/form/use-state/handleChange';
 import detectErrorField from '../../utils/validation/detectErrorField';
+import { handleEnterPress } from '../../utils/event/isKeyPressed';
 import clearForm from '../../utils/form/use-state/clearForm';
 import { checkVerificationPass } from "../../redux/actions/adminActions";
 import PropTypes from 'prop-types';
+import showVanillaToast from '../../components/vanilla-js/toastify/showVanillaToast';
 
 StaffConf.propTypes = {
     success: PropTypes.bool,
@@ -49,7 +51,11 @@ export default function StaffConf({ success, setVerification }) {
         }
         checkVerificationPass(dispatch, bodyToSend)
         .then(res => {
-            if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
+            if(res.status !== 200) {
+                showSnackbar(dispatch, res.data.msg, 'error');
+                showVanillaToast("A senha de verificação está errada.", 5000, { backgroundColor: 'var(--mainRed)'})
+                return;
+            }
             showSnackbar(dispatch, res.data.msg, 'success');
             setVerification(true);
             hideComponent(dispatch, 'staffConfirmation')
@@ -73,6 +79,7 @@ export default function StaffConf({ success, setVerification }) {
                 variant="standard"
                 margin="dense"
                 onChange={handleChange(setData, data)}
+                onKeyPress={e => handleEnterPress(e, checkAccess)}
                 error={null}
                 name="pass"
                 value={pass}

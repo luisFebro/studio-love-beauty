@@ -222,7 +222,7 @@ function ClientMobileApp({ history }) {
                 }}
                 root={{
                     bottom: '20px',
-                    right: '20px',
+                    right: '40px',
                 }}
                 hidden={!showMoreBtn}
             />

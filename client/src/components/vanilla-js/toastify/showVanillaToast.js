@@ -16,9 +16,6 @@ export default function showVanillaToast(
         onClick: null,
     }) {
 
-    console.log("options.avatar", options.avatar);
-    console.log("options.close", options.close);
-
     Toastify({
       text: title || "I am the the toast message",
       duration: duration || 5000,

@@ -1,8 +1,8 @@
 import showVanillaToast from './components/vanilla-js/toastify/showVanillaToast';
 
-const isToastActivated = true;
+const isToastActivated = false;
 // WARNING: The currentVersion needs to be actually the NEXT ONE because the next cache client receives is not updated.
-const currentVersion = "4.6.3-1";
+const currentVersion = "4.6.5-1";
 // This optional code is used to register a service worker.
 // register() is not called by default.
 

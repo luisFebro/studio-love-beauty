@@ -221,7 +221,7 @@ function ClientMobileApp({ history }) {
                     size: 'medium',
                 }}
                 root={{
-                    bottom: '20px',
+                    bottom: '30px',
                     right: '40px',
                 }}
                 hidden={!showMoreBtn}

@@ -39,15 +39,12 @@ function Login({ history }) {
             }
             const { msg, role, name, authUserId } = res.data;
             showSnackbar(dispatch, "Analisando Credenciais...", 'warning', 3000);
-            isThisApp() && role !== 'cliente' && showVanillaToast("Analisando Credenciais...", 3000)
             if(role === "admin") {
-                setTimeout(() => isThisApp() && showVanillaToast(`Redirecionando...`, 9000), 2900);
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
                 setTimeout(() => history.push("/admin/painel-de-controle"), 5000);
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);
             }
             if(role === "colaborador") {
-                setTimeout(() => isThisApp() && showVanillaToast(`Redirecionando...`, 9000), 2900);
                 setTimeout(() => showSnackbar(dispatch, "Redirecionando...", 'warning', 4000), 2900);
                 setTimeout(() => history.push(`/colaborador/quadro-administrativo/${authUserId}`), 5000);
                 setTimeout(() => showSnackbar(dispatch, msg, 'success', 9000), 7000);

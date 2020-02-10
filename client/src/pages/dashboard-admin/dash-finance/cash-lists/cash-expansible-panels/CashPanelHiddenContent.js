@@ -12,6 +12,8 @@ export default function CashHiddenContent({ data, isCashOut = false }) {
         service,
         description,
         paymentType,
+        agentRole,
+        clientName,
         installmentsIfCredit,
         createdAt,
     } = data;
@@ -33,6 +35,15 @@ export default function CashHiddenContent({ data, isCashOut = false }) {
                     <span className="font-weight-bold">&#187; Serviço:</span>
                     <br />
                     {service}
+                </p>
+            ) : null}
+
+            {!isCashOut && agentRole === "colaborador"
+            ? (
+                <p>
+                    <span className="font-weight-bold">&#187; Cliente:</span>
+                    <br />
+                    {clientName && clientName.cap()}
                 </p>
             ) : null}
 

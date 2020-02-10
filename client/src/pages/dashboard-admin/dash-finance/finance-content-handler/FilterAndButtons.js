@@ -95,7 +95,7 @@ export default function FilterAndButtons({ setCurrComponent, setFilterData, filt
     const displayDynamicField = period => (
         period !== "all" &&
         <span className="text-white text-default text-em-1 font-weight-bold">
-            DIA:
+            {period === "day" ? "DIA:" : "MÊS:"}
             <br />
             <MuiPickersUtilsProvider utils={MomentUtils} locale={"pt-br"}>
                 <DatePicker

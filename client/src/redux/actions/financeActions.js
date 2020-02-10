@@ -27,6 +27,7 @@ export const getPeriodQuery = (period, chosenDate) => {
 }
 
 export const getCashOpsList = async (dispatch, period, skip, chosenDate, search, autocomplete) => {
+    console.log("Why period is displaying ALL in the first rendering?", period);
     const periodQuery = getPeriodQuery(period, chosenDate);
     const searchQuery = search ? `&search=${search}` : "";
     const autocompleteQuery = autocomplete ? `&autocomplete=true` : "";

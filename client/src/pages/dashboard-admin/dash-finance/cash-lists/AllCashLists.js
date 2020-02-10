@@ -41,7 +41,8 @@ export default function AllCashLists({
         totalSize: 0,
     })
 
-    const { period, initialSkip, chosenDate } = filterData;
+    let { period } = filterData;
+    const { initialSkip, chosenDate } = filterData;
 
     const dispatch = useStoreDispatch();
 
@@ -60,7 +61,7 @@ export default function AllCashLists({
     }, [cashInData.sumAll, cashInData.pendingSum, cashOutData.sumAll])
 
     useEffect(() => {
-        getCashOpsList(dispatch, period, initialSkip, chosenDate)
+        getCashOpsList(dispatch, period = "day", initialSkip, chosenDate)
         .then(res => {
             if(res.status !== 200) return showSnackbar(dispatch, res.data.msg, 'error')
             const { cashInOps, cashOutOps } = res.data;

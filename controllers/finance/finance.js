@@ -115,7 +115,7 @@ function getQuery(period, date, month, search) {
 }
 
 exports.getCashOpsList = (req, res) => {
-    const period = req.params.period;
+    const period = req.params.period || "day";
     const search = req.query.search;
     const autocomplete = req.query.autocomplete || false;
     const date = req.query.thisDayMonth;

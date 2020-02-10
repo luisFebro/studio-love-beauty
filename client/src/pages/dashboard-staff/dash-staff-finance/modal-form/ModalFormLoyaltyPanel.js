@@ -230,10 +230,9 @@ export default function ModalFormLoyaltyPanel({
             <br />
             <br />
             <span className="text-default text-em-1">
-                <span className="font-weight-bold text-left mb-5">
+                <span className="font-weight-bold">
                     NOME DO CLIENTE*
                 </span>
-                <br />
                 <AsyncAutoCompleteSearch
                     url={autoCompleteUrl}
                     formWidth="auto"
@@ -302,7 +301,7 @@ export default function ModalFormLoyaltyPanel({
         <div>
             <Dialog
                 style={styles.dialog}
-                open={true}
+                open={open}
                 aria-labelledby="form-dialog-title">
                 {showTitle()}
                 {showForm()}

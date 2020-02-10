@@ -33,7 +33,8 @@ export default function AsyncAutoCompleteSearch({
     needUserValueFunc = false,
     freeSolo = false,
     disableOpenOnFocus = false,
-    placeholder }) {
+    placeholder,
+    formWidth }) {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [autoCompleteUrl, setAutoCompleteUrl] = useState(url);
@@ -103,7 +104,7 @@ export default function AsyncAutoCompleteSearch({
     return (
         <Autocomplete
           id="asynchronous-demo"
-          style={{ width: 400 }}
+          style={{ width: formWidth || 400 }}
           open={open}
           onOpen={() => {
             setOpen(true);

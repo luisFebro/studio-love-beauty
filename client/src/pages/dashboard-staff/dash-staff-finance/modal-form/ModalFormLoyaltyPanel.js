@@ -209,7 +209,6 @@ export default function ModalFormLoyaltyPanel({
                 </Select>
             </span>
             <br />
-            <br />
             <span className="text-default text-em-1 font-weight-bold">
                 VALOR EM R$*
                 <TextField
@@ -220,30 +219,35 @@ export default function ModalFormLoyaltyPanel({
                     error={gotError === "cashInValue" ? true : false}
                     helperText={"Insira apenas números e vírgula"}
                     variant="outlined"
+                    inputProps={{
+                        style: {
+                            fontSize: '1.5em'
+                        }
+                    }}
                     fullWidth
-                    margin="dense"
                 />
             </span>
             <br />
             <br />
-            <span className="margin-auto-70 text-default text-em-1">
-                <div style={{maxWidth: '50px'}}>
-                    <span className="font-weight-bold text-left">CLIENTE*</span>
-                    <br />
-                    <AsyncAutoCompleteSearch
-                        url={autoCompleteUrl}
-                        autoCompleteUrlStr={autoCompleteUrl}
-                        circularProgressColor="secondary"
-                        freeSolo={true}
-                        onAutoSelectChange={onAutoSelectChange}
-                        onValueChange={onValueChange}
-                        needUserValueFunc={true}
-                        noOptionsText={`Nada encontrado...`}
-                        backgroundColor='white'
-                        disableOpenOnFocus={true}
-                        placeholder="Procure ou digite nome..."
-                    />
-                </div>
+            <span className="text-default text-em-1">
+                <span className="font-weight-bold text-left mb-5">
+                    NOME DO CLIENTE*
+                </span>
+                <br />
+                <AsyncAutoCompleteSearch
+                    url={autoCompleteUrl}
+                    formWidth="auto"
+                    autoCompleteUrlStr={autoCompleteUrl}
+                    circularProgressColor="secondary"
+                    freeSolo={true}
+                    onAutoSelectChange={onAutoSelectChange}
+                    onValueChange={onValueChange}
+                    needUserValueFunc={true}
+                    noOptionsText={`Nada encontrado...`}
+                    backgroundColor='white'
+                    disableOpenOnFocus={true}
+                    placeholder="Procure ou digite nome..."
+                />
             </span>
             <br />
             <br />
@@ -298,7 +302,7 @@ export default function ModalFormLoyaltyPanel({
         <div>
             <Dialog
                 style={styles.dialog}
-                open={open}
+                open={true}
                 aria-labelledby="form-dialog-title">
                 {showTitle()}
                 {showForm()}

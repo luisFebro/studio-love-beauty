@@ -10,12 +10,12 @@ export default function Home() {
     // }
     const showMainContent = () => (
         <div className="ml-md-4">
-            <span className="text-right for-version-test">{"HELLO TESTING TESTING TESTING IC AN NOT STOP TESTING, I am going to conquer the world..."}</span>
+            <span className="text-right for-version-test">{"TESTING MERGE..."}</span>
             <div className="my-4 text-container text-center">Amigo cliente, faça já o seu cadastro <br /> e <br />participe de nosso plano de fidelidade</div>
             <div className="center-small">
                 <Register />
             </div>
-            <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>
+            <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos <e></e> serviços</div>
             <Link to="/regulamento">
                 <div
                     className="my-5 text-container font-weight-italic text-center"

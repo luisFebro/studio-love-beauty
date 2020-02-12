@@ -2,9 +2,10 @@ import { CLIENT_URL } from './config/clientUrl';
 
 function urlBase64ToUint8Array(base64String) {
     if(!base64String) {
-        console.log("base64String is not passed or is in an invalid format other than string")
-        // return;
+        console.log("base64String is not passed or is in an invalid format other than string. Check if your PUBLIC_VAPID_KEY is declared correctly both in dev and production env.")
+        return;
     }
+
     const padding = "=".repeat((4 - base64String.length % 4) % 4)
     // eslint-disable-next-line
     const base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/")

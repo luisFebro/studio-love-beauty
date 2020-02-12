@@ -5,6 +5,7 @@ import App from './_main-app/App';
 import { createStore, StoreProvider } from 'easy-peasy';
 import { easyStore } from './redux/_easyStore';
 import * as serviceWorker from './serviceWorker';
+import * as subscription from './subscription';
 import { ProductProvider } from './data/contexts/mainContext';
 
 const store = createStore(easyStore);
@@ -22,3 +23,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register();
+subscription.subscribeUser();

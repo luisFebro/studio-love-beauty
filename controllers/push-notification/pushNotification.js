@@ -12,23 +12,30 @@ webpush.setVapidDetails(
 );
 
 // subscribe users
-exports.getPushNotification = (req, res, options = {}) => {
+exports.getPushNotification = (req, res) => {
     const subscription = req.body;
-    const { title } = options;
+    // const { title } = options;
+    console.log(subscription);
 
-    const createdPayload = JSON.stringify({ title });
+    const createdPayload = JSON.stringify({
+        title: 'Hello!',
+        body: 'It works.',
+    });
 
     res.status(201).json({}); // n2
 
     webpush
         .sendNotification(subscription, createdPayload)
-        .catch(err => console.error(err));
+        .then(result => console.log(result))
+        .catch(err => console.error(err.stack));
 
 };
 
 /* COMMENTS
 n1: lib reference: https://github.com/web-push-libs/web-push
 n2: Send 201 - resource created
+200 when an object is created and returned
+201 when an object is created but only its reference is returned (such as an ID or a link)
 n3: What is VAPID and WHY use it?
 VAPID (Voluntary Application Server Identification) is the newest way to receive and send push notifications through the web.
 

@@ -15,7 +15,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator) { // process.env.NODE_ENV === 'production' &&
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
@@ -26,7 +26,10 @@ export function register(config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+        const swFileName = process.env.NODE_ENV === 'production'
+          ? 'service-worker.js'
+          : 'custom-sw.js';
+      const swUrl = `${process.env.PUBLIC_URL}/${swFileName}`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -132,55 +135,4 @@ export function unregister() {
       registration.unregister();
     });
   }
-}
-
-
-// PUSH NOTIFICATION
-const publicVapidKey = process.env.REACT_PUBLIC_VAPID_KEY
-
-window.addEventListener("push", e => {
-  const data = e.data.json();
-  console.log("Push Recieved...");
-  window.registration.showNotification(data.title, {
-    body: "Notified by Traversy Media!",
-    icon: "http://image.ibb.co/frYOFd/tmlogo.png"
-  });
-});
-
-// Register SW, Register Push, Send Push
-async function send() {
-  // Register Service Worker
-  const register = await navigator.serviceWorker.register("/service-worker.js", {
-    scope: "/"
-  });
-
-  // Register Push
-  const subscription = await register.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
-  });
-
-  // Send Push Notification
-  await fetch("/subscribe", {
-    method: "POST",
-    body: JSON.stringify(subscription),
-    headers: {
-      "content-type": "application/json"
-    }
-  });
-}
-
-function urlBase64ToUint8Array(base64String) {
-  const padding = "=".repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
-    .replace(/\-/g, "+")
-    .replace(/_/g, "/");
-
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
 }

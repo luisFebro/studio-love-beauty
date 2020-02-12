@@ -43,7 +43,7 @@ export function subscribeUser() {
                 registration.pushManager.getSubscription()
                 .then(function(existedSubscription) {
                     if(existedSubscription === null) {
-                        console.log('No subscription detected, make a request.')
+                        console.log('No subscription detected, making a request.')
                         registration.pushManager.subscribe({
                             applicationServerKey: convertedVapidKey,
                             userVisibleOnly: true,
@@ -51,8 +51,10 @@ export function subscribeUser() {
                             sendSubscription(newSubscription)
                             console.log('New subscription added.')
                         }).catch(function(e) {
-                            if(Notification.permission !== 'granted') {
-                                console.log('Permission was not granted.')
+                            if(Notification.permission === 'denied') {
+                                console.log('Permission was not granted. User clicked on BLOCK BTN')
+                            } else if(Notification.permission === 'denied') {
+                                console.log("Permission was not granted. User clicked on X to IGNORE THE PROMPT")
                             } else {
                                 console.error('An error ocurred during the subscription process.', e)
                             }

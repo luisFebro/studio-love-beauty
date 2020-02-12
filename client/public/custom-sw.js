@@ -1,10 +1,10 @@
 self.addEventListener('push', event => { //n1
     const data = event.data.json();
-    console.log('New notification', data)
     const options = {
         body: data.body,
         icon: "http://image.ibb.co/frYOFd/tmlogo.png",
     }
+
     event.waitUntil(
         self.registration.showNotification(data.title, options)
     );

@@ -138,10 +138,10 @@ export function unregister() {
 // PUSH NOTIFICATION
 const publicVapidKey = process.env.REACT_PUBLIC_VAPID_KEY
 
-self.addEventListener("push", e => {
+window.addEventListener("push", e => {
   const data = e.data.json();
   console.log("Push Recieved...");
-  self.registration.showNotification(data.title, {
+  window.registration.showNotification(data.title, {
     body: "Notified by Traversy Media!",
     icon: "http://image.ibb.co/frYOFd/tmlogo.png"
   });

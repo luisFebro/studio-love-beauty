@@ -3,7 +3,7 @@ import { CLIENT_URL } from './config/clientUrl';
 function urlBase64ToUint8Array(base64String) {
     if(!base64String) {
         console.log("base64String is not passed or is in an invalid format other than string")
-        return;
+        // return;
     }
     const padding = "=".repeat((4 - base64String.length % 4) % 4)
     // eslint-disable-next-line

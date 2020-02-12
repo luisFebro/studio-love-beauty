@@ -1,16 +1,17 @@
 const webpush = require("web-push"); // n1
 
+// const vapidKeys = webpush.generateVAPIDKeys(); //generate it only once
+
 const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
-console.log("publicVapidKey", publicVapidKey);
 const privateVapidKey = process.env.PRIVATE_VAPID_KEY; // n3
-console.log("privateVapidKey", privateVapidKey);
 
 webpush.setVapidDetails(
-  "mailto:test@test.com",
+  `mailto:${process.env.EMAIL_DEV}`,
   publicVapidKey,
   privateVapidKey
 );
 
+// subscribe users
 exports.getPushNotification = (req, res, options = {}) => {
     const subscription = req.body;
     const { title } = options;
@@ -23,13 +24,16 @@ exports.getPushNotification = (req, res, options = {}) => {
         .sendNotification(subscription, createdPayload)
         .catch(err => console.error(err));
 
-});
+};
 
 /* COMMENTS
 n1: lib reference: https://github.com/web-push-libs/web-push
 n2: Send 201 - resource created
 n3: What is VAPID and WHY use it?
 VAPID (Voluntary Application Server Identification) is the newest way to receive and send push notifications through the web.
+
+Before it was handled by FCM/GCM keys (Firebase Cloud Messaging / Google Cloud Messaging). Google started everything... As VAPID is a new protocol for messaging in the web, most of the applications are migrating to it, because of the easier implementation.
+
 An application server can voluntarily identify itself to a push service using the described technique. This identification information can be used by the push service to attribute requests that are made by the same application server to a single entity. This can used to reduce the secrecy for push subscription URLs by being able to restrict subscriptions to a specific application server. An application server is further able to include additional information that the operator of a push service can use to contact the operator of the application server.
 So there are two reasons for VAPID.
 The first is to restrict the VALIDITY OF A SUBSCRIPTION to a specific application server (so, by using VAPID, only your server will be able to send notifications to a subscriber).

@@ -14,8 +14,6 @@ webpush.setVapidDetails(
 // subscribe users
 exports.getPushNotification = (req, res) => {
     const subscription = req.body;
-    // const { title } = options;
-    console.log(subscription);
 
     const createdPayload = JSON.stringify({
         title: 'Hello!',

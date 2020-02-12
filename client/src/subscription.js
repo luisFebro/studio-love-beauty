@@ -13,7 +13,7 @@ function urlBase64ToUint8Array(base64String) {
     }
     return outputArray
 }
-console.log(process.env.REACT_APP_PUBLIC_VAPID_KEY);
+
 const convertedVapidKey = urlBase64ToUint8Array(process.env.REACT_APP_PUBLIC_VAPID_KEY);
 
 function sendSubscription(subscription) { // n1
@@ -28,7 +28,8 @@ function sendSubscription(subscription) { // n1
 
 export function subscribeUser() {
     if('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(function(registration) {
+        navigator.serviceWorker.ready
+        .then(function(registration) {
                 if(!registration.pushManager) {
                     console.log('Push manager unavailable.')
                     return;

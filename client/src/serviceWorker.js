@@ -3,17 +3,6 @@ import showVanillaToast from './components/vanilla-js/toastify/showVanillaToast'
 const isToastActivated = false;
 // WARNING: The currentVersion needs to be actually the NEXT ONE because the next cache client receives is not updated.
 const currentVersion = "4.6.7-1";
-// This optional code is used to register a service worker.
-// register() is not called by default.
-
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on subsequent visits to a page, after all the
-// existing tabs open on the page have been closed, since previously cached
-// resources are updated in the background.
-
-// To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://bit.ly/CRA-PWA
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -60,8 +49,7 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
-  navigator.serviceWorker
-    .register(swUrl)
+    navigator.serviceWorker.register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
@@ -74,7 +62,6 @@ function registerValidSW(swUrl, config) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
-              // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
               isToastActivated && showVanillaToast(`Ei, nova Atualização do App disponível. 🎉<br />(nova versão: ${currentVersion})`, 6000);
               setTimeout(() => isToastActivated && showVanillaToast("Basta reiniciar o app para atualizar. Simples, hein?", 6000), 5000);
               setTimeout(() => isToastActivated && showVanillaToast("Se tiver usando alguma página do site, feche também.", 8000), 10000);
@@ -145,4 +132,55 @@ export function unregister() {
       registration.unregister();
     });
   }
+}
+
+
+// PUSH NOTIFICATION
+const publicVapidKey = process.env.REACT_PUBLIC_VAPID_KEY
+
+self.addEventListener("push", e => {
+  const data = e.data.json();
+  console.log("Push Recieved...");
+  self.registration.showNotification(data.title, {
+    body: "Notified by Traversy Media!",
+    icon: "http://image.ibb.co/frYOFd/tmlogo.png"
+  });
+});
+
+// Register SW, Register Push, Send Push
+async function send() {
+  // Register Service Worker
+  const register = await navigator.serviceWorker.register("/service-worker.js", {
+    scope: "/"
+  });
+
+  // Register Push
+  const subscription = await register.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+  });
+
+  // Send Push Notification
+  await fetch("/subscribe", {
+    method: "POST",
+    body: JSON.stringify(subscription),
+    headers: {
+      "content-type": "application/json"
+    }
+  });
+}
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, "+")
+    .replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
 }

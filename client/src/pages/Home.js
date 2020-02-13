@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Register from '../components/auth/Register';
 import ImageLogo from "../components/ImageLogo";
 import { Link } from 'react-router-dom';
-import SubscribeButton from '../components/pwa-push-notification/SubscribeButton';
+import ModalForPermission from '../components/pwa-push-notification/ModalForPermission';
 // import showVanillaToast from '../components/vanilla-js/toastify/showVanillaToast'
 
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
         <div style={{color: 'white'}} className="d-flex flex-column-reverse flex-md-row justify-content-center">
             {showMainContent()}
             <ImageLogo />
-            <SubscribeButton />
+            <ModalForPermission />
         </div>
     );
 };

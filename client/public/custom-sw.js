@@ -3,6 +3,7 @@ self.addEventListener('push', event => { //n1
     const options = {
         body: data.body,
         icon: "http://image.ibb.co/frYOFd/tmlogo.png",
+        requireInteraction: true,
     }
 
     event.waitUntil(

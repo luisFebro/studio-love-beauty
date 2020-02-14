@@ -16,7 +16,7 @@ export default function Home() {
             <div className="center-small">
                 <Register />
             </div>
-            <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos <e></e> serviços</div>
+            <div className="mt-3 text-container text-center">Acumule pontos e ganhe produtos e serviços</div>
             <Link to="/regulamento">
                 <div
                     className="my-5 text-container font-weight-italic text-center"

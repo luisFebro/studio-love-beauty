@@ -25,10 +25,6 @@
 
     <!-- HOMESCREEN MANIFEST -->
     <link rel="manifest" href="/manifest.json" />
-    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.10/pwacompat.min.js"
-        integrity="sha384-I1iiXcTSM6j2xczpDckV+qhhbqiip6FyD6R5CpuqNaWXvyDUvXN5ZhIiyLQ7uuTh"
-        crossorigin="anonymous">
-    </script>
     <!-- END HOMESCREEN MANIFEST -->
 
 
@@ -74,8 +70,11 @@
    <!-- END SEMANTIC-UI -->
 
     <!-- FONT AWESOME -->
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <!-- <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'> -->
     <!-- END - FONT AWESOME -->
+
+    <!-- Media attribute reference -->
+     <!-- <link rel="stylesheet" href="./style2.css" media="only screen and (min-width:501px)"> -->
 
   </head>
   <body>
@@ -83,6 +82,34 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+
+    <!-- SCRIPTS -->
+    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.10/pwacompat.min.js"
+        integrity="sha384-I1iiXcTSM6j2xczpDckV+qhhbqiip6FyD6R5CpuqNaWXvyDUvXN5ZhIiyLQ7uuTh"
+        crossorigin="anonymous">
+    </script>
+
+    <script>
+        const loadStyleSheet = path => {
+            if (document.createStyleSheet) {
+                 document.createStyleSheet(path);
+            } else {
+                 const stylesheet = document.createElement('link');
+                 stylesheet.href = path;
+                 stylesheet.rel = 'stylesheet';
+                 // stylesheet.type = 'text/css';
+                 stylesheet.integrity = 'sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ';
+                 stylesheet.crossOrigin = 'anonymous';
+                 document.getElementsByTagName('head')[0].appendChild(stylesheet)
+            }
+        }
+          // All of the objects are in the DOM, and all the images, scripts, links have finished loading.
+        window.onload = function () {
+            //FONT AWESOME
+            loadStyleSheet('https://use.fontawesome.com/releases/v5.7.0/css/all.css');
+        };
+    </script>
+
     <script>
         // this disable mini-bar from browser. the custom banner is set in download page....
         window.addEventListener('beforeinstallprompt', (e) => {

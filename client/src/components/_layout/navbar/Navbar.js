@@ -6,7 +6,7 @@ import { logout } from '../../../redux/actions/authActions';
 // import CategorySlider from './CategorySlider';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchCompleteWithImg from '../../SearchCompleteWithImg';
+// import SearchCompleteWithImg from '../../SearchCompleteWithImg';
 import UserDropDown from './UserDropDown';
 import KeyAccessDashboard from './KeyAccessDashboard';
 import MenuLogin from './menu-login';

@@ -18,7 +18,7 @@
     <meta name="msapplication-TileColor" content="#232528">
     <meta name="msapplication-navbutton-color" content="#232528">
     <meta name="apple-mobile-web-app-status-bar-style" content="#232528">
-    <meta rel="canonical" href="https://studiolovebeauty.com.br"/>
+    <link rel="canonical" href="https://studiolovebeauty.com.br"/>
     <!-- END TOOLBAR COLOR -->
 
 
@@ -48,7 +48,7 @@
     <!-- END - FAVICON -->
 
     <!-- GOOGLE FONTS -->
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Cabin|Lato|Indie+Flower&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin|Lato|Indie+Flower&display=swap" /></noscript>
     <!-- END GOOGLE FONTS -->
 
@@ -60,106 +60,97 @@
     <!-- END GOOGLE WEBMASTERS -->
 
     <!-- PREFETCHING -->
-    <link rel="preload" href="%PUBLIC_URL%/api/admin/photo/5db4301ed39a4e12546277a8">
+    <link rel="preload" as="image" href="%PUBLIC_URL%/api/admin/photo/5db4301ed39a4e12546277a8">
     <link rel="prefetch" href="https://archive.org/download/tock_20191221/Tock.mp3">
     <link rel="prefetch" href="/sounds/app-btn-sound.wav">
     <link rel="prefetch" href="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav">
     <!-- END PREFETCHING -->
 
     <!-- SEMANTIC-UI LEGACY -->
-   <style>
-        @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin);
+    <!-- above-the-fold content  n1-->
+       <style>
+            *,
+            :after, :before{
+              -webkit-box-sizing:inherit;
+              box-sizing:inherit
+            }
 
-        *,
-        :after, :before{
-          -webkit-box-sizing:inherit;
-          box-sizing:inherit
-        }
+            html {
+              line-height: 1.15;
+              -ms-text-size-adjust: 100%;
+              -webkit-text-size-adjust: 100%
+            }
 
-        html {
-          line-height: 1.15;
-          -ms-text-size-adjust: 100%;
-          -webkit-text-size-adjust: 100%
-        }
+            body {
+              margin: 0
+            }
 
-        body {
-          margin: 0
-        }
+            /*h1 {
+              font-size: 2em;
+              margin: .67em 0
+            }*/
 
-        article,aside,footer,header,nav,section {
-          display: block
-        }
+            figure {
+              margin: 1em 40px
+            }
 
-        h1 {
-          font-size: 2em;
-          margin: .67em 0
-        }
+            hr {
+              -webkit-box-sizing: content-box;
+              box-sizing: content-box;
+              height: 0;
+              overflow: visible
+            }
 
-        figcaption,figure,main {
-          display: block
-        }
+            pre {
+              font-family: monospace,monospace;
+              font-size: 1em
+            }
 
-        figure {
-          margin: 1em 40px
-        }
+            a {
+              background-color: transparent;
+              -webkit-text-decoration-skip: objects
+            }
 
-        hr {
-          -webkit-box-sizing: content-box;
-          box-sizing: content-box;
-          height: 0;
-          overflow: visible
-        }
+            abbr[title] {
+              border-bottom: none;
+              text-decoration: underline;
+              -webkit-text-decoration: underline dotted;
+              text-decoration: underline dotted
+            }
 
-        pre {
-          font-family: monospace,monospace;
-          font-size: 1em
-        }
+          /*  b,strong {
+              font-weight: inherit
+            }
 
-        a {
-          background-color: transparent;
-          -webkit-text-decoration-skip: objects
-        }
+            b,strong {
+              font-weight: bolder
+            }*/
 
-        abbr[title] {
-          border-bottom: none;
-          text-decoration: underline;
-          -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted
-        }
+            code,kbd,samp {
+              font-family: monospace,monospace;
+              font-size: 1em
+            }
 
-        b,strong {
-          font-weight: inherit
-        }
+            dfn {
+              font-style: italic
+            }
 
-        b,strong {
-          font-weight: bolder
-        }
+            mark {
+              background-color: #ff0;
+              color: #000
+            }
 
-        code,kbd,samp {
-          font-family: monospace,monospace;
-          font-size: 1em
-        }
+            small {
+              font-size: 80%
+            }
 
-        dfn {
-          font-style: italic
-        }
-
-        mark {
-          background-color: #ff0;
-          color: #000
-        }
-
-        small {
-          font-size: 80%
-        }
-
-        sub,sup {
-          font-size: 75%;
-          line-height: 0;
-          position: relative;
-          vertical-align: baseline
-        }
-   </style>
+            sub,sup {
+              font-size: 75%;
+              line-height: 0;
+              position: relative;
+              vertical-align: baseline
+            }
+       </style>
    <!-- END SEMANTIC-UI -->
 
     <!-- FONT AWESOME -->
@@ -195,7 +186,6 @@
         crossorigin="anonymous">
     </script>
 
-    <!-- above-the-fold content  -->
     <!-- <script>
         const loadStyleSheet = path => {
             if (document.createStyleSheet) {
@@ -228,3 +218,9 @@
     </script>
   </body>
 </html>
+
+
+<!-- /* COMMENTS
+n1:
+Above the fold, as it applies to Web design, is the portion of a Web page that is visible in a browser window when the page first loads. The portion of the page that requires scrolling in order to see content is called "below the fold."
+*/ -->

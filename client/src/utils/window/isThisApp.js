@@ -7,6 +7,6 @@ export default function isThisApp() {
     const isAppFromSafari = window.navigator.standAlone;
     const isAppFromChrome = (window.matchMedia('(display-mode: standalone)').matches);
 
-    return resIos || isAppFromChrome || isAppFromFirefox || isAppFromSafari;
+    return true // resIos || isAppFromChrome || isAppFromFirefox || isAppFromSafari;
 }
 

@@ -18,17 +18,13 @@
     <meta name="msapplication-TileColor" content="#232528">
     <meta name="msapplication-navbutton-color" content="#232528">
     <meta name="apple-mobile-web-app-status-bar-style" content="#232528">
-    <link rel="canonical" href="https://studio-love-beauty.herokuapp.com"/>
+    <link rel="canonical" href="https://studiolovebeauty.com.br"/>
     <!-- END TOOLBAR COLOR -->
 
 
 
     <!-- HOMESCREEN MANIFEST -->
     <link rel="manifest" href="/manifest.json" />
-    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.10/pwacompat.min.js"
-        integrity="sha384-I1iiXcTSM6j2xczpDckV+qhhbqiip6FyD6R5CpuqNaWXvyDUvXN5ZhIiyLQ7uuTh"
-        crossorigin="anonymous">
-    </script>
     <!-- END HOMESCREEN MANIFEST -->
 
 
@@ -52,7 +48,8 @@
     <!-- END - FAVICON -->
 
     <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Cabin|Lato|Indie+Flower&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin|Lato|Indie+Flower&display=swap" /></noscript>
     <!-- END GOOGLE FONTS -->
 
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"> -->
@@ -63,26 +60,153 @@
     <!-- END GOOGLE WEBMASTERS -->
 
     <!-- PREFETCHING -->
+    <link rel="preload" as="image" href="%PUBLIC_URL%/api/admin/photo/5db4301ed39a4e12546277a8">
     <link rel="prefetch" href="https://archive.org/download/tock_20191221/Tock.mp3">
     <link rel="prefetch" href="/sounds/app-btn-sound.wav">
     <link rel="prefetch" href="https://ia601500.us.archive.org/29/items/confirmation-keypad-sound/confirmation-keypad-sound.wav">
     <!-- END PREFETCHING -->
 
-    <!-- SEMANTIC-UI -->
-   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
-   </link>
+    <!-- SEMANTIC-UI LEGACY -->
+    <!-- above-the-fold content  n1-->
+       <style>
+            *,
+            :after, :before{
+              -webkit-box-sizing:inherit;
+              box-sizing:inherit
+            }
+
+            html {
+              line-height: 1.15;
+              -ms-text-size-adjust: 100%;
+              -webkit-text-size-adjust: 100%
+            }
+
+            body {
+              margin: 0
+            }
+
+            /*h1 {
+              font-size: 2em;
+              margin: .67em 0
+            }*/
+
+            figure {
+              margin: 1em 40px
+            }
+
+            hr {
+              -webkit-box-sizing: content-box;
+              box-sizing: content-box;
+              height: 0;
+              overflow: visible
+            }
+
+            pre {
+              font-family: monospace,monospace;
+              font-size: 1em
+            }
+
+            a {
+              background-color: transparent;
+              -webkit-text-decoration-skip: objects
+            }
+
+            abbr[title] {
+              border-bottom: none;
+              text-decoration: underline;
+              -webkit-text-decoration: underline dotted;
+              text-decoration: underline dotted
+            }
+
+          /*  b,strong {
+              font-weight: inherit
+            }
+
+            b,strong {
+              font-weight: bolder
+            }*/
+
+            code,kbd,samp {
+              font-family: monospace,monospace;
+              font-size: 1em
+            }
+
+            dfn {
+              font-style: italic
+            }
+
+            mark {
+              background-color: #ff0;
+              color: #000
+            }
+
+            small {
+              font-size: 80%
+            }
+
+            sub,sup {
+              font-size: 75%;
+              line-height: 0;
+              position: relative;
+              vertical-align: baseline
+            }
+       </style>
    <!-- END SEMANTIC-UI -->
 
     <!-- FONT AWESOME -->
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <!-- reference for deferring non-critical css: -->
+    <!-- https://web.dev/defer-non-critical-css/ -->
+    <link rel="preload" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" /></noscript>
+    <style>
+       .fa,.fab,.fal,.far,.fas {
+         -moz-osx-font-smoothing: grayscale;
+         -webkit-font-smoothing: antialiased;
+         display: inline-block;
+         font-style: normal;
+         font-variant: normal;
+         text-rendering: auto;
+         line-height: 1
+       }
+    </style>
     <!-- END - FONT AWESOME -->
 
+    <!-- Media attribute reference -->
+     <!-- <link rel="stylesheet" href="./style2.css" media="only screen and (min-width:501px)"> -->
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+
+    <!-- SCRIPTS -->
+    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.10/pwacompat.min.js"
+        integrity="sha384-I1iiXcTSM6j2xczpDckV+qhhbqiip6FyD6R5CpuqNaWXvyDUvXN5ZhIiyLQ7uuTh"
+        crossorigin="anonymous">
+    </script>
+
+    <!-- <script>
+        const loadStyleSheet = path => {
+            if (document.createStyleSheet) {
+                 document.createStyleSheet(path);
+            } else {
+                 const stylesheet = document.createElement('link');
+                 stylesheet.href = path;
+                 stylesheet.rel = 'stylesheet';
+                 // stylesheet.type = 'text/css';
+                 stylesheet.integrity = 'sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ';
+                 stylesheet.crossOrigin = 'anonymous';
+                 document.getElementsByTagName('head')[0].appendChild(stylesheet)
+            }
+        }
+          // All of the objects are in the DOM, and all the images, scripts, links have finished loading.
+        window.onload = function () {
+            //FONT AWESOME
+            loadStyleSheet('https://use.fontawesome.com/releases/v5.7.0/css/all.css');
+        };
+    </script> -->
+
     <script>
         // this disable mini-bar from browser. the custom banner is set in download page....
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -94,3 +218,9 @@
     </script>
   </body>
 </html>
+
+
+<!-- /* COMMENTS
+n1:
+Above the fold, as it applies to Web design, is the portion of a Web page that is visible in a browser window when the page first loads. The portion of the page that requires scrolling in order to see content is called "below the fold."
+*/ -->

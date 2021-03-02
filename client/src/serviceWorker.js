@@ -2,18 +2,7 @@ import showVanillaToast from './components/vanilla-js/toastify/showVanillaToast'
 
 const isToastActivated = false;
 // WARNING: The currentVersion needs to be actually the NEXT ONE because the next cache client receives is not updated.
-const currentVersion = "4.6.7-1";
-// This optional code is used to register a service worker.
-// register() is not called by default.
-
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on subsequent visits to a page, after all the
-// existing tabs open on the page have been closed, since previously cached
-// resources are updated in the background.
-
-// To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://bit.ly/CRA-PWA
+const currentVersion = "4.6.8";
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -26,7 +15,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator) { // process.env.NODE_ENV === 'production' &&
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
@@ -37,7 +26,10 @@ export function register(config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+        const swFileName = process.env.NODE_ENV === 'production'
+          ? 'service-worker.js'
+          : 'custom-sw.js';
+      const swUrl = `${process.env.PUBLIC_URL}/${swFileName}`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -60,8 +52,7 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
-  navigator.serviceWorker
-    .register(swUrl)
+    navigator.serviceWorker.register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
@@ -74,7 +65,6 @@ function registerValidSW(swUrl, config) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
-              // showToastify("Nova Atualização disponível. Basta fechar o App e abrir novamente para atualizar.", 8000);
               isToastActivated && showVanillaToast(`Ei, nova Atualização do App disponível. 🎉<br />(nova versão: ${currentVersion})`, 6000);
               setTimeout(() => isToastActivated && showVanillaToast("Basta reiniciar o app para atualizar. Simples, hein?", 6000), 5000);
               setTimeout(() => isToastActivated && showVanillaToast("Se tiver usando alguma página do site, feche também.", 8000), 10000);

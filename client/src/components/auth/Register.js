@@ -171,7 +171,7 @@ export default function Register() {
                 margin="dense"
                 id="name"
                 name="name"
-                autocomplete="off"
+                autoComplete="off"
                 value={name}
                 type="name"
                 label="Qual é o seu nome e sobrenome?"
@@ -250,6 +250,8 @@ export default function Register() {
             <Select
               style={{ margin: '9px 0' }}
               labelId="maritalStatus"
+              margin="dense"
+              fullwidth
               onChange={handleChange(setData, data)}
               name="maritalStatus"
               value={maritalStatus}

@@ -13,7 +13,7 @@ import animateNumber from '../../utils/numbers/animateNumber';
 import getPercentage from '../../utils/numbers/getPercentage';
 import ReactjsPercentageCircle from '../../components/progressIndicators/ReactjsPercentageCircle/ReactjsPercentageCircle';
 import getDayGreetingBr from '../../utils/getDayGreetingBr';
-import checkIfElemIsVisible from '../../utils/window/checkIfElemIsVisible';
+// import checkIfElemIsVisible from '../../utils/window/checkIfElemIsVisible';
 // SpeedDial and Icons
 import SpeedDialButton from '../../components/buttons/SpeedDialButton';
 import showVanillaToast from '../../components/vanilla-js/toastify/showVanillaToast';
@@ -26,7 +26,7 @@ const maxScore = 500;
 function ClientMobileApp({ history }) {
     const userScoreRef = useRef(null);
 
-    const [showMoreBtn, setShowMoreBtn] = useState(false);
+    // const [showMoreBtn, setShowMoreBtn] = useState(false);
     const [showPercentage, setShowPercentage] = useState(false);
 
     let { isUserAuth, role, loyaltyScores, userName } = useStoreState(state => ({
@@ -36,7 +36,7 @@ function ClientMobileApp({ history }) {
         loyaltyScores: state.userReducer.cases.currentUser.loyaltyScores,
     }))
 
-    checkIfElemIsVisible("#rules", setShowMoreBtn)
+    // checkIfElemIsVisible("#rules", setShowMoreBtn)
 
     const dispatch = useStoreDispatch();
 
@@ -224,7 +224,7 @@ function ClientMobileApp({ history }) {
                     bottom: '30px',
                     right: '40px',
                 }}
-                hidden={!showMoreBtn}
+                hidden={false}
             />
         );
     }
@@ -253,6 +253,7 @@ function ClientMobileApp({ history }) {
                     </Fragment>
                 ) : showLogin()}
             </section>
+            <p className="text-small text-left text-white">v4.6.8</p>
         </div>
     );
 }

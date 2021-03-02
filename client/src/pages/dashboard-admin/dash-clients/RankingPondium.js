@@ -68,11 +68,6 @@ export default function RankingPondium() {
 }
 
 const DivPodium = styled.div`
-    & {
-        display: flex;
-        justify-content: center;
-    }
-
     & i {
         font-size: 1.9em;
     }

@@ -1,40 +1,118 @@
-/* FONT RESIZE FUNCTION: https://stackoverflow.com/a/25990851/10010404 */
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin);
+
 :root {
-    /*Primary Colors*/
+    /*PALETTE COLORS n2
+    /*primary colors - name: deep purple 500*/
+    --themeP: #673ab7;
+    --themePLight: #9a67ea;
+    --themePDark: #320b86;
+    /*secondary colors - name: cyan (greenish-blue) 500*/
+    --themeS: #00bcd4;
+    --themeSLight: #62efff;
+    --themeSDark: #008ba3;
+    /*surface such as cards, sheets, and menus*/
+    --themeSurface: #f7f1e3; /*white variant*/
+    /*background*/
+    --themeBackground: #ecf0f1; /*white variant*/
+    /*on colors - text*/
+    --mainBlack: "black";
+    --mainWhite: #ecf0f1;
+    /*END PALETTE COLORS*/
+
+    /*GALLERY OF BEST COLORS*/
     --mainPink: #e84393;
     --mainDark: #232528;
-    --mainBlack: "black";
-    /*End Primary Colors*/
     --mainRed: #ed213a; /*#ed213a */
     --expenseRed: #ff4757;
     --lightGrey: #CAD3C8;
-
     --mainGreen: #4cd137;
     --incomeGreen: #2ecc71;
-
     --mainBlue: #2a2a72;
     --darkBlue: #2c3e50;
     --lightBlue: #009ffd;
-
-    --mainWhite: #ecf0f1;
     --mainDegrade: linear-gradient(to right, #ed213a, #93291e);
     --mainYellow: #fff200;
+    /*END GALLERY OF BEST COLORS*/
 }
 
-/*@font-face {
-    font-family: 'Organica 90 Regular';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Organica 90 Regular'), url('Organica 90.woff') format('woff');
+/*PALETTE COLORS*/
+/*primary colors*/
+.theme-p {
+    color: var(--themeP);
 }
-*/
+
+.theme-p-light {
+    color: var(--themePLight);
+}
+
+.theme-p-dark {
+    color: var(--themePDark);
+}
+
+/*secondary colors*/
+.theme-s {
+    color: var(--themeS);
+}
+
+.theme-s-light {
+    color: var(--themeSLight);
+}
+
+.theme-s-dark {
+    color: var(--themeSDark);
+}
+
+/*"on" colors - texts*/
+.text-white {
+    color: var(--mainWhite);
+}
+
+.text-black {
+    color: var(--mainBlack);
+}
+
+/*gallery*/
+.text-red {
+    color: var(--mainRed);
+}
+
+.text-yellow {
+    color: var(--mainYellow);
+}
+
+.text-pink {
+    color: var(--mainPink);
+}
+
+.text-blue {
+    color: var(--mainBlue);
+}
+/*END PALETTE COLORS*/
+
+/*TYPOGRAPHY*/
+.text-large {
+
+}
+
+.text-normal {
+
+}
+
+.text-small {
+
+}
+
+/*END TYPOGRAPHY*/
+
 * {
     box-sizing: border-box;
 }
 
 /*Preventing the scrollbar to disappear in mobile apps*/
-html,
-body { /*duplicate!!!*/
+html, body { /* body duplicate!!!*/
+    line-height: 1.15;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
     margin: 0;
     height: 100%;
 }
@@ -48,6 +126,10 @@ body {
     /* Disables pull-to-refresh and overscroll glow effect for PWA.
          Still keeps swipe navigations. Try contain value for only disable pull to refresh */
     overscroll-behavior-y: none;
+}
+
+article, aside, footer, header, nav, section, figcaption, figure, main {
+    display: block;
 }
 
 a {
@@ -117,26 +199,6 @@ hr {
 
 .text-lowe {
     text-transform: lowercase;
-}
-
-.text-red {
-    color: var(--mainRed);
-}
-
-.text-yellow {
-    color: var(--mainYellow);
-}
-
-.text-pink {
-    color: var(--mainPink);
-}
-
-.text-white {
-    color: var(--mainWhite);
-}
-
-.text-blue {
-    color: var(--mainBlue);
 }
 
 /*text font*/
@@ -502,4 +564,15 @@ n1: Bootstrap Reference
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) { ... }
+
+n2: Secondary colors are best to accent select parts of your UI.:
+Floating action buttons
+Selection controls, like sliders and switches
+Highlighting selected text
+Progress bars
+Links and headlines
+
+To see interfaces:
+https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=673AB7&secondary.color=00BCD4
+;
 */
